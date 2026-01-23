@@ -108,18 +108,18 @@
         <div class="carousel-inner">
             <!-- Slide 1 -->
             <div class="carousel-item active hero-carousel-item">
-                <img src="../assets/images/demo-data/hero-slider/amadikaBanner3.png" alt="Fashion Sale" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero/amadikaBanner3.png" alt="Fashion Sale" class="d-block w-100">
                 <!-- Optional Overlay/Content could go here -->
             </div>
             
             <!-- Slide 2 -->
             <div class="carousel-item hero-carousel-item">
-                <img src="../assets/images/demo-data/hero-slider/amadikaBanner2.png" alt="New Arrivals" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero/amadikaBanner2.png" alt="New Arrivals" class="d-block w-100">
             </div>
 
             <!-- Slide 3 -->
             <div class="carousel-item hero-carousel-item">
-                <img src="../assets/images/demo-data/hero-slider/amadikaBanner.png" alt="Special Offers" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero/amadikaBanner.png" alt="Special Offers" class="d-block w-100">
             </div>
         </div>
 
