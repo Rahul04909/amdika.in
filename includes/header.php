@@ -103,10 +103,7 @@
                                         <a href="#" class="nav-link">Contact</a>
                                     </div>
                                     
-                                    <!-- Right Text -->
-                                    <div class="right-nav-items py-2 py-lg-0">
-                                        <i class="fa-solid fa-bolt"></i> Daily Deals
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

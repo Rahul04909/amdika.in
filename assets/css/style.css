@@ -166,14 +166,7 @@ a {
     color: var(--primary-color);
 }
 
-.right-nav-items {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+
 
 /* Responsive */
 @media (max-width: 991px) {
@@ -211,8 +204,5 @@ a {
         width: 100%;
     }
 
-    .right-nav-items {
-        justify-content: flex-start;
-        padding: 10px 15px;
-    }
+
 }
