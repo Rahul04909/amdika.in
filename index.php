@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>Amadika.in</h1>
-    <p>Amadika.in is a website for the people of Madhya Pradesh, India.</p>
+    <p>An Ecommerce Project Comming Soon</p>
 </body>
 </html>
