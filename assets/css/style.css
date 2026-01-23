@@ -1,102 +1,164 @@
 :root {
-    --primary-color: #ff3333; /* Vibrant Red from reference */
-    --secondary-color: #2b3445; /* Dark Blue/Grey for text */
-    --light-bg: #f8f9fa; /* Light grey for background */
-    --border-color: #e5e5e5;
+    --primary-color: #ff3333;
+    --primary-hover: #d62222;
+    --secondary-color: #2b3445;
+    --text-muted: #7d879c;
+    --border-color: #e3e9ef;
     --white: #ffffff;
+    --light-bg: #f6f9fc;
 }
 
 body {
-    font-family: 'Rubik', sans-serif; /* Modern, clean font often used in e-commerce */
-    background-color: #f6f6f6;
+    font-family: 'Rubik', sans-serif;
+    background-color: #f6f9fc;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* --- Top Header (Main) --- */
 .main-header {
     background-color: var(--white);
-    padding: 15px 0;
+    padding: 12px 0;
+    /* Reduced padding */
     border-bottom: 1px solid var(--border-color);
 }
 
+.brand-logo img {
+    max-height: 40px;
+    /* Constrain logo height */
+}
+
+/* Search Bar */
 .search-bar-container {
-    max-width: 600px;
+    max-width: 650px;
     width: 100%;
 }
 
 .search-input-group {
-    border: 1px solid #eee;
-    background-color: #f6f7fb; /* Very subtle grey background for input */
-    border-radius: 4px;
+    border: 2px solid var(--primary-color);
+    /* Highlight search */
+    border-radius: 5px;
+    /* Softer corners */
+    background-color: var(--white);
     overflow: hidden;
+    height: 42px;
+    /* Fixed slim height */
+    display: flex;
 }
 
 .search-input {
     border: none;
-    background-color: transparent;
-    padding: 10px 20px;
+    flex-grow: 1;
+    padding: 0 15px;
     font-size: 14px;
-    width: 100%;
+    height: 100%;
+    color: var(--secondary-color);
 }
 
 .search-input:focus {
     outline: none;
-    box-shadow: none;
-    background-color: #fff;
 }
 
 .search-btn {
-    background-color: transparent;
+    background-color: var(--primary-color);
     border: none;
-    color: #777;
-    padding: 0 15px;
+    color: var(--white);
+    padding: 0 25px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background 0.3s;
 }
 
-.header-actions .action-item {
-    font-size: 14px;
-    color: var(--secondary-color);
-    font-weight: 500;
-    text-decoration: none;
+.search-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Header Actions (Wishlist, Cart, User) */
+.header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: flex-end;
+    gap: 20px;
 }
 
-.header-actions .icon {
-    font-size: 20px;
+.action-icon {
+    position: relative;
     color: var(--secondary-color);
+    font-size: 20px;
+    transition: color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-icon:hover {
+    color: var(--primary-color);
+}
+
+.icon-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: bold;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* --- Bottom Navigation --- */
 .bottom-header {
     background-color: var(--white);
     border-bottom: 1px solid var(--border-color);
+    height: 50px;
+    /* Fixed slim height for nav bar */
 }
 
+/* Categories Dropdown */
 .all-categories-btn {
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 14px 20px;
-    font-weight: 600;
-    text-transform: uppercase;
+    height: 50px;
+    /* Match bar height */
+    padding: 0 20px;
+    font-weight: 500;
     font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 260px; /* Fixed width for the category dropdown trigger */
-    text-decoration: none;
+    width: 250px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 .all-categories-btn:hover {
+    background-color: var(--primary-hover);
     color: var(--white);
-    background-color: #e02e2e;
+}
+
+/* Main Nav Links */
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .main-nav .nav-link {
     color: var(--secondary-color);
     font-weight: 500;
     font-size: 14px;
-    padding: 14px 20px;
+    padding: 0 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
     transition: color 0.2s;
 }
 
@@ -104,34 +166,53 @@ body {
     color: var(--primary-color);
 }
 
-.right-nav-items .nav-item-link {
+.right-nav-items {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    color: var(--secondary-color);
-    text-decoration: none;
-    margin-left: 20px;
-    font-weight: 500;
+    gap: 8px;
 }
 
-.right-nav-items .icon {
-    color: var(--primary-color);
-    font-size: 16px;
-}
-
-/* --- Responsive adjustments --- */
+/* Responsive */
 @media (max-width: 991px) {
-    .all-categories-btn {
-        width: auto;
-        padding: 10px 15px;
+    .main-header {
+        padding: 10px 0;
     }
-    
+
+    .bottom-header {
+        height: auto;
+    }
+
+    .all-categories-btn {
+        width: 100%;
+        height: 45px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
     .search-bar-container {
-        margin: 15px 0;
+        margin: 10px 0;
+    }
+
+    .header-actions {
+        gap: 15px;
     }
 
     .main-nav {
-        display: none; /* Hidden on mobile by default, handled by Bootstrap collapse */
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .main-nav .nav-link {
+        height: 40px;
+        width: 100%;
+    }
+
+    .right-nav-items {
+        justify-content: flex-start;
+        padding: 10px 15px;
     }
 }
