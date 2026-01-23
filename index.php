@@ -1,5 +1,8 @@
 <?php include 'includes/header.php'; ?>
 
+<!-- Hero Slider -->
+<?php include 'components/hero.php'; ?>
+
 <!-- Product Categories -->
 <?php include 'components/product-categories.php'; ?>
 
