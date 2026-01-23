@@ -1,16 +1,24 @@
 :root {
-    --primary-color: #ff3333;
-    --primary-hover: #d62222;
-    --secondary-color: #2b3445;
-    --text-muted: #7d879c;
-    --border-color: #e3e9ef;
+    /* Premium Palette */
+    --primary-color: #D32F2F;
+    /* Softer, premium red */
+    --primary-hover: #B71C1C;
+    --accent-gold: #D4A017;
+    /* Warm Golden Tone */
+    --secondary-color: #2D3436;
+    /* Soft Black/Dark Slate */
+    --text-muted: #636E72;
+    --border-color: #ECECEC;
     --white: #ffffff;
-    --light-bg: #f6f9fc;
+    --warm-bg: #FCFBF8;
+    /* Very subtle warm background */
+    --light-bg: #F5F5F5;
 }
 
 body {
     font-family: 'Rubik', sans-serif;
-    background-color: #f6f9fc;
+    background-color: var(--warm-bg);
+    /* Warm background */
 }
 
 a {
@@ -21,13 +29,11 @@ a {
 .main-header {
     background-color: var(--white);
     padding: 12px 0;
-    /* Reduced padding */
     border-bottom: 1px solid var(--border-color);
 }
 
 .brand-logo img {
     max-height: 40px;
-    /* Constrain logo height */
 }
 
 /* Search Bar */
@@ -37,14 +43,12 @@ a {
 }
 
 .search-input-group {
-    border: 2px solid var(--primary-color);
-    /* Highlight search */
+    border: 2px solid var(--accent-gold);
+    /* Gold border for premium feel */
     border-radius: 5px;
-    /* Softer corners */
     background-color: var(--white);
     overflow: hidden;
     height: 42px;
-    /* Fixed slim height */
     display: flex;
 }
 
@@ -95,7 +99,8 @@ a {
 }
 
 .action-icon:hover {
-    color: var(--primary-color);
+    color: var(--accent-gold);
+    /* Gold hover effect */
 }
 
 .icon-badge {
@@ -116,20 +121,21 @@ a {
 
 /* --- Bottom Navigation --- */
 .bottom-header {
-    background-color: var(--white);
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--secondary-color);
+    /* Dark background for contrast */
+    border-bottom: none;
     height: 50px;
-    /* Fixed slim height for nav bar */
 }
 
 /* Categories Dropdown */
 .all-categories-btn {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--accent-gold);
+    /* Gold button */
+    color: var(--secondary-color);
+    /* Dark text on gold */
     height: 50px;
-    /* Match bar height */
     padding: 0 20px;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -140,8 +146,8 @@ a {
 }
 
 .all-categories-btn:hover {
-    background-color: var(--primary-hover);
-    color: var(--white);
+    background-color: #C6920E;
+    /* Darker gold hover */
 }
 
 /* Main Nav Links */
@@ -152,7 +158,8 @@ a {
 }
 
 .main-nav .nav-link {
-    color: var(--secondary-color);
+    color: var(--white);
+    /* White text on dark bar */
     font-weight: 500;
     font-size: 14px;
     padding: 0 15px;
@@ -163,10 +170,9 @@ a {
 }
 
 .main-nav .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--accent-gold);
+    /* Gold text on hover */
 }
-
-
 
 /* Responsive */
 @media (max-width: 991px) {
@@ -202,7 +208,13 @@ a {
     .main-nav .nav-link {
         height: 40px;
         width: 100%;
+        color: var(--secondary-color);
     }
 
+    /* Dark text on mobile white bg */
+    .bottom-header {
+        background-color: var(--white);
+    }
 
+    /* White bg on mobile for better menu readability */
 }
