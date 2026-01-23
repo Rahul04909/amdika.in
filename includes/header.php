@@ -35,15 +35,22 @@
 
                 <!-- Search Bar -->
                 <div class="col-lg-7 col-md-12 order-lg-2 order-3 mt-2 mt-lg-0">
-                    <div class="search-bar-container mx-auto">
-                        <form action="#" method="GET">
-                            <div class="search-input-group">
-                                <input type="text" class="search-input" placeholder="Search for products, brands and more..." name="search">
-                                <button class="search-btn" type="button">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </form>
+                    <div class="d-flex align-items-center">
+                        <div class="search-bar-container flex-grow-1 me-2">
+                            <form action="#" method="GET">
+                                <div class="search-input-group">
+                                    <input type="text" class="search-input" placeholder="Search..." name="search">
+                                    <button class="search-btn" type="button">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Mobile Menu Toggle -->
+                        <button class="navbar-toggler d-lg-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                            <i class="fa-solid fa-bars fs-2 text-dark"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -88,11 +95,6 @@
                 <div class="col-lg-9 col-md-12">
                     <nav class="navbar navbar-expand-lg p-0">
                         <div class="container-fluid p-0">
-                            <!-- Mobile Toggle -->
-                            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-
                             <div class="collapse navbar-collapse" id="mainNavbar">
                                 <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between w-100">
                                     <!-- Menu Links -->
@@ -102,8 +104,6 @@
                                         <a href="#" class="nav-link">Blog</a>
                                         <a href="#" class="nav-link">Contact</a>
                                     </div>
-                                    
-
                                 </div>
                             </div>
                         </div>
