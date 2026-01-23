@@ -80,6 +80,7 @@
     overflow-x: auto;
     gap: 20px;
     padding-bottom: 5px;
+    padding-top: 10px; /* Prevent hover clipping */
     /* Tiny padding */
     scrollbar-width: none;
     /* Firefox */
