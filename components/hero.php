@@ -3,7 +3,7 @@
 .hero-section {
     position: relative;
     overflow: hidden;
-    margin-top: 1px; /* Separation from header */
+    margin-top: 0; /* Removed separation */
 }
 
 /* Base Carousel Item Styling */
@@ -30,6 +30,13 @@
     transition: all 0.3s ease;
     border: 1px solid rgba(0,0,0,0.1);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    /* Vertically Center */
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    margin: 0; /* Reset any bootstrap margins */
 }
 
 .hero-section:hover .hero-control-btn {
