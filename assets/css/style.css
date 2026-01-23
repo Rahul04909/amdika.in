@@ -301,3 +301,34 @@ a {
         font-size: 13px;
     }
 }
+
+/* Horizontal Scroll Slider */
+.category-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 5px;
+    /* Tiny padding */
+    scrollbar-width: none;
+    /* Firefox */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.category-item {
+    flex: 0 0 auto;
+    width: 160px;
+    /* Fixed width for consistent slider feel */
+}
+
+@media (max-width: 767px) {
+    .category-item {
+        width: 130px;
+        /* Smaller width on mobile */
+    }
+}
