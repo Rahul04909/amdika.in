@@ -1,11 +1,14 @@
 <?php include 'includes/header.php'; ?>
 
+<!-- Product Categories -->
+<?php include 'components/product-categories.php'; ?>
+
 <!-- Main Content Area Placeholder -->
 <div class="container mt-4">
     <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">Welcome to Amadika</h1>
-            <p class="col-md-8 fs-4">Your premium destination for online shopping. This area demonstrates the content below the new header.</p>
+            <p class="col-md-8 fs-4">Shop the latest trends with our premium collection.</p>
             <button class="btn btn-primary btn-lg" type="button">Start Shopping</button>
         </div>
     </div>
