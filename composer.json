@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^7.0",
+        "razorpay/razorpay": "^2.9",
+        "mpdf/mpdf": "^8.2",
+        "ckeditor/ckeditor": "~4.22.1"
+    }
+}
