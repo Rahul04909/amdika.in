@@ -108,18 +108,18 @@
         <div class="carousel-inner">
             <!-- Slide 1 -->
             <div class="carousel-item active hero-carousel-item">
-                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop" alt="Fashion Sale" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero-slider/amadikaBanner3.png" alt="Fashion Sale" class="d-block w-100">
                 <!-- Optional Overlay/Content could go here -->
             </div>
             
             <!-- Slide 2 -->
             <div class="carousel-item hero-carousel-item">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop" alt="New Arrivals" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero-slider/amadikaBanner2.png" alt="New Arrivals" class="d-block w-100">
             </div>
 
             <!-- Slide 3 -->
             <div class="carousel-item hero-carousel-item">
-                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop" alt="Special Offers" class="d-block w-100">
+                <img src="../assets/images/demo-data/hero-slider/amadikaBanner.png" alt="Special Offers" class="d-block w-100">
             </div>
         </div>
 
