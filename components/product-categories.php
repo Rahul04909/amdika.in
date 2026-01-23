@@ -1,3 +1,110 @@
+<style>
+/* --- Product Categories Component --- */
+.container-custom-rounded {
+    border-radius: 12px;
+}
+
+.border-gold {
+    border: 1px solid rgba(212, 160, 23, 0.2);
+}
+
+.text-gold {
+    color: var(--accent-gold);
+}
+
+.btn-outline-gold {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.btn-outline-gold:hover {
+    background-color: var(--accent-gold);
+    color: var(--white);
+}
+
+.category-card {
+    transition: all 0.3s ease;
+    background-color: var(--warm-bg);
+    border: 1px solid transparent;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: var(--accent-gold);
+    background-color: var(--white);
+    text-decoration: none;
+}
+
+.cat-img-wrapper {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--white);
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.category-card:hover .cat-img-wrapper {
+    box-shadow: 0 0 0 3px var(--accent-gold);
+}
+
+.category-card:hover .cat-name {
+    color: var(--primary-color) !important;
+}
+
+/* Mobile optimizations for categories */
+@media (max-width: 767px) {
+    .category-section .container-custom-rounded {
+        padding: 1.5rem 1rem !important;
+        /* Slightly less padding on mobile */
+    }
+
+    .cat-img-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cat-name {
+        font-size: 13px;
+    }
+}
+
+/* Horizontal Scroll Slider */
+.category-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 5px;
+    /* Tiny padding */
+    scrollbar-width: none;
+    /* Firefox */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.category-item {
+    flex: 0 0 auto;
+    width: 160px;
+    /* Fixed width for consistent slider feel */
+}
+
+@media (max-width: 767px) {
+    .category-item {
+        width: 130px;
+        /* Smaller width on mobile */
+    }
+}
+</style>
 <section class="category-section mt-4 mb-5">
     <div class="container container-custom-rounded bg-white p-4 shadow-sm border-gold position-relative">
         <!-- Section Header -->
