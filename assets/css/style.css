@@ -1,0 +1,137 @@
+:root {
+    --primary-color: #ff3333; /* Vibrant Red from reference */
+    --secondary-color: #2b3445; /* Dark Blue/Grey for text */
+    --light-bg: #f8f9fa; /* Light grey for background */
+    --border-color: #e5e5e5;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Rubik', sans-serif; /* Modern, clean font often used in e-commerce */
+    background-color: #f6f6f6;
+}
+
+/* --- Top Header (Main) --- */
+.main-header {
+    background-color: var(--white);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-bar-container {
+    max-width: 600px;
+    width: 100%;
+}
+
+.search-input-group {
+    border: 1px solid #eee;
+    background-color: #f6f7fb; /* Very subtle grey background for input */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.search-input {
+    border: none;
+    background-color: transparent;
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: #fff;
+}
+
+.search-btn {
+    background-color: transparent;
+    border: none;
+    color: #777;
+    padding: 0 15px;
+}
+
+.header-actions .action-item {
+    font-size: 14px;
+    color: var(--secondary-color);
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-actions .icon {
+    font-size: 20px;
+    color: var(--secondary-color);
+}
+
+/* --- Bottom Navigation --- */
+.bottom-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.all-categories-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 14px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 260px; /* Fixed width for the category dropdown trigger */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.all-categories-btn:hover {
+    color: var(--white);
+    background-color: #e02e2e;
+}
+
+.main-nav .nav-link {
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 14px 20px;
+    transition: color 0.2s;
+}
+
+.main-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+
+.right-nav-items .nav-item-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+.right-nav-items .icon {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 991px) {
+    .all-categories-btn {
+        width: auto;
+        padding: 10px 15px;
+    }
+    
+    .search-bar-container {
+        margin: 15px 0;
+    }
+
+    .main-nav {
+        display: none; /* Hidden on mobile by default, handled by Bootstrap collapse */
+    }
+}
