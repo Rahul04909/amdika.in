@@ -148,6 +148,7 @@ a {
 .all-categories-btn:hover {
     background-color: #C6920E;
     /* Darker gold hover */
+    color: var(--secondary-color);
 }
 
 /* Main Nav Links */
@@ -193,6 +194,12 @@ a {
 
     .search-bar-container {
         margin: 10px 0;
+        width: auto;
+        /* Let flex handle width */
+    }
+
+    .navbar-toggler {
+        padding: 5px;
     }
 
     .header-actions {
@@ -203,18 +210,94 @@ a {
         flex-direction: column;
         align-items: flex-start;
         height: auto;
+        border-top: 1px solid var(--border-color);
+        /* Add separator */
+        margin-top: 10px;
     }
 
     .main-nav .nav-link {
         height: 40px;
         width: 100%;
         color: var(--secondary-color);
+        padding-left: 0;
     }
 
-    /* Dark text on mobile white bg */
     .bottom-header {
         background-color: var(--white);
     }
+}
 
-    /* White bg on mobile for better menu readability */
+/* --- Product Categories Component --- */
+.container-custom-rounded {
+    border-radius: 12px;
+}
+
+.border-gold {
+    border: 1px solid rgba(212, 160, 23, 0.2);
+}
+
+.text-gold {
+    color: var(--accent-gold);
+}
+
+.btn-outline-gold {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.btn-outline-gold:hover {
+    background-color: var(--accent-gold);
+    color: var(--white);
+}
+
+.category-card {
+    transition: all 0.3s ease;
+    background-color: var(--warm-bg);
+    border: 1px solid transparent;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: var(--accent-gold);
+    background-color: var(--white);
+    text-decoration: none;
+}
+
+.cat-img-wrapper {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--white);
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.category-card:hover .cat-img-wrapper {
+    box-shadow: 0 0 0 3px var(--accent-gold);
+}
+
+.category-card:hover .cat-name {
+    color: var(--primary-color) !important;
+}
+
+/* Mobile optimizations for categories */
+@media (max-width: 767px) {
+    .category-section .container-custom-rounded {
+        padding: 1.5rem 1rem !important;
+        /* Slightly less padding on mobile */
+    }
+
+    .cat-img-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cat-name {
+        font-size: 13px;
+    }
 }
