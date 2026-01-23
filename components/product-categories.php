@@ -135,7 +135,7 @@
             <div class="category-item">
                 <a href="#" class="category-card d-block text-center p-3 rounded h-100">
                     <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Lamp" alt="Lighting" class="img-fluid rounded-circle">
+                        <img src="../assets/images/demo-data/product-categories-showcase/lightning-lamp.jpg" alt="Lighting" class="img-fluid rounded-circle">
                     </div>
                     <h6 class="cat-name fw-bold text-secondary mb-0">Lighting & Lamps</h6>
                 </a>
