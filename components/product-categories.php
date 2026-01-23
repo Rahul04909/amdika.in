@@ -19,7 +19,7 @@
                     <div class="cat-img-wrapper mb-3 mx-auto">
                         <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Electronics" alt="Electronics" class="img-fluid rounded-circle">
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Electronics</h6>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Wall Decor</h6>
                 </a>
             </div>
 
@@ -29,7 +29,7 @@
                     <div class="cat-img-wrapper mb-3 mx-auto">
                         <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Fashion" alt="Fashion" class="img-fluid rounded-circle">
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Fashion</h6>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Lighting & Lamps</h6>
                 </a>
             </div>
 
@@ -39,7 +39,7 @@
                     <div class="cat-img-wrapper mb-3 mx-auto">
                         <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Home" alt="Home Decor" class="img-fluid rounded-circle">
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Home Decor</h6>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Home Furnishings</h6>
                 </a>
             </div>
 
@@ -59,7 +59,7 @@
                     <div class="cat-img-wrapper mb-3 mx-auto">
                         <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Sports" alt="Sports" class="img-fluid rounded-circle">
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Sports</h6>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Decorative Showpieces</h6>
                 </a>
             </div>
 
@@ -69,7 +69,43 @@
                     <div class="cat-img-wrapper mb-3 mx-auto">
                         <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Toys" alt="Toys" class="img-fluid rounded-circle">
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Toys & Kids</h6>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Candels & Frangnences</h6>
+                </a>
+            </div>
+             <!-- Category Item 7 -->
+            <div class="col">
+                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
+                    <div class="cat-img-wrapper mb-3 mx-auto">
+                        <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Toys" alt="Toys" class="img-fluid rounded-circle">
+                    </div>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Table Decor</h6>
+                </a>
+            </div>
+             <!-- Category Item 8 -->
+            <div class="col">
+                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
+                    <div class="cat-img-wrapper mb-3 mx-auto">
+                        <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Toys" alt="Toys" class="img-fluid rounded-circle">
+                    </div>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Religious Items</h6>
+                </a>
+            </div>
+            <!-- Category Item 9 -->
+            <div class="col">
+                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
+                    <div class="cat-img-wrapper mb-3 mx-auto">
+                        <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Toys" alt="Toys" class="img-fluid rounded-circle">
+                    </div>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Storage & Organizers</h6>
+                </a>
+            </div>
+            <!-- Category Item 10 -->
+            <div class="col">
+                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
+                    <div class="cat-img-wrapper mb-3 mx-auto">
+                        <img src="https://via.placeholder.com/150/f8f9fa/2b3445?text=Toys" alt="Toys" class="img-fluid rounded-circle">
+                    </div>
+                    <h6 class="cat-name fw-bold text-secondary mb-0">Seasonal Decor</h6>
                 </a>
             </div>
         </div>
