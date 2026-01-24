@@ -229,19 +229,24 @@ a {
 
 /* --- Footer --- */
 .site-footer {
-    background-color: #FAF4F0;
+    background-color: var(--secondary-color);
     padding-top: 50px;
     padding-bottom: 20px;
     font-size: 14px;
-    color: var(--secondary-color);
-    border-top: 1px solid var(--border-color);
+    color: #dcdcdc;
+    /* Light text for dark bg */
+    border-top: 5px solid var(--accent-gold);
+    /* Consistent with header accents */
 }
 
 .footer-heading {
     font-weight: 700;
     margin-bottom: 15px;
     display: block;
-    color: var(--secondary-color);
+    color: var(--white);
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.5px;
 }
 
 .footer-links {
@@ -255,48 +260,62 @@ a {
 }
 
 .footer-links a {
-    color: var(--secondary-color);
+    color: #b0b0b0;
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .footer-links a:hover {
-    color: var(--primary-color);
+    color: var(--accent-gold);
+    /* Gold hover like navbar */
+    padding-left: 5px;
+    /* Subtle movement */
+    transition: all 0.2s;
 }
 
 .footer-address {
     line-height: 1.6;
-    color: var(--secondary-color);
+    color: #dcdcdc;
 }
 
 .footer-divider {
-    border-top: 1px solid #E0E0E0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 30px 0;
 }
 
 .category-text {
-    color: var(--text-muted);
+    color: #b0b0b0;
     font-size: 13px;
     line-height: 1.6;
     margin-top: 5px;
 }
 
 .more-link {
-    color: #F8931F;
+    color: var(--accent-gold);
     text-decoration: none;
+}
+
+.more-link:hover {
+    color: var(--white);
+    text-decoration: underline;
 }
 
 .footer-bottom-row {
     margin-top: 30px;
     padding-top: 30px;
-    border-top: 1px solid #E0E0E0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .payment-methods i {
     font-size: 24px;
     margin-right: 10px;
-    color: #555;
+    color: #cfcfcf;
     vertical-align: middle;
+    transition: color 0.2s;
+}
+
+.payment-methods i:hover {
+    color: var(--white);
 }
 
 .payment-methods img {
@@ -308,25 +327,44 @@ a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 32px;
-    height: 32px;
-    background-color: var(--secondary-color); /* Fallback */
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.1);
     color: var(--white);
     border-radius: 50%;
     margin-left: 5px;
     text-decoration: none;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
 }
 
-.social-icons a.fb { background-color: #1877F2; }
-.social-icons a.insta { background-color: #E4405F; }
-.social-icons a.x { background-color: #000; }
-.social-icons a.yt { background-color: #FF0000; }
-.social-icons a.in { background-color: #0A66C2; }
-
+/* Maintain brand colors on hover or keep uniform? 
+   Navbar uses gold. Let's use brand colors on hover for pop.
+*/
 .social-icons a:hover {
-    opacity: 0.8;
+    transform: translateY(-3px);
 }
+
+.social-icons a.fb:hover {
+    background-color: #1877F2;
+}
+
+.social-icons a.insta:hover {
+    background-color: #E4405F;
+}
+
+.social-icons a.x:hover {
+    background-color: #000;
+    border: 1px solid #333;
+}
+
+.social-icons a.yt:hover {
+    background-color: #FF0000;
+}
+
+.social-icons a.in:hover {
+    background-color: #0A66C2;
+}
+
 
 .chat-widget {
     position: fixed;
@@ -334,14 +372,21 @@ a {
     right: 30px;
     width: 50px;
     height: 50px;
-    background-color: #F8931F;
-    color: white;
+    background-color: var(--accent-gold);
+    color: var(--secondary-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     z-index: 9999;
+    transition: transform 0.3s;
+    border: none;
+}
+
+.chat-widget:hover {
+    transform: scale(1.1);
+    color: var(--white);
 }
