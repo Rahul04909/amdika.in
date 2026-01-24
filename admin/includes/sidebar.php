@@ -61,7 +61,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 20px 0;
+    padding: 0; /* Remove top/bottom padding for flush borders */
 }
 
 /* Scrollbar styling for sidebar */
@@ -81,7 +81,7 @@
     font-size: 11px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.4);
-    padding: 10px 25px;
+    padding: 15px 20px 5px 20px;
     font-weight: 600;
     letter-spacing: 0.5px;
     transition: opacity 0.2s;
@@ -95,18 +95,20 @@
 /* Menu Items */
 .sb-item {
     position: relative;
-    margin: 4px 15px;
+    margin: 0; /* Stacked */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Solid Border */
 }
 
 .sb-link {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    padding: 15px 20px;
     color: var(--sb-text);
     text-decoration: none !important;
-    border-radius: 8px;
+    border-radius: 0; /* Square edges for solid border look */
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
+    border-left: 4px solid transparent; /* Left accent bar */
 }
 
 .sb-link:hover {
@@ -114,9 +116,10 @@
     color: var(--white);
 }
 
-.sb-link.active {
+.sb-link.active, .sb-link:not(.collapsed) {
     background-color: var(--sb-active-bg);
     color: var(--sb-accent);
+    border-left-color: var(--sb-accent);
 }
 
 .sb-icon {
@@ -160,41 +163,54 @@
 /* Submenu */
 .sb-submenu {
     list-style: none;
-    padding: 5px 0 5px 20px; /* Indent */
+    padding: 0;
     margin: 0;
-    display: none; /* Handled by bootstrap collapse or custom JS, we'll use custom for smoother control if needed, but standard BS5 collapse is generally safe. Let's stick to standard BS5 collapse for robustness */
+    background-color: rgba(0,0,0,0.2); /* Darker background for submenu */
 }
 
 .sb-submenu .sb-link {
-    padding: 8px 15px 8px 30px;
+    padding: 10px 15px 10px 58px; /* Indent subitems */
     font-size: 13.5px;
-    opacity: 0.8;
+    opacity: 0.9;
+    border-bottom: none; /* No borders inside dropdown (optional) or keep? Let's remove for cleaner look */
+    border-left: none; /* No accent bar for subitems */
 }
 
 .sb-submenu .sb-link:hover {
     opacity: 1;
+    background-color: rgba(255,255,255,0.05);
+    color: var(--sb-accent);
 }
 
-/* Active Indicator Line (Optional Design Touch) */
+/* Active Indicator Line override */
 .sb-link.active::before {
-    content: '';
-    position: absolute;
-    left: -15px; /* Outside the padding */
-    top: 10%;
-    height: 80%;
-    width: 4px;
-    background-color: var(--sb-accent);
-    border-radius: 0 4px 4px 0;
-    display: block;
+    display: none; /* Removed the old floating indicator in favor of border-left */
 }
 
 /* Footer Section */
 .sb-footer {
-    padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Tooltip on Collapsed (Custom implementation for simplicity) */
+.sb-footer .sb-link {
+    color: #ff6b6b;
+}
+
+/* Tooltip on Collapsed */
+#amd-sidebar.collapsed .sb-item:hover {
+    overflow: visible; /* Allow tooltip to show */
+}
+
+#amd-sidebar.collapsed .sb-link {
+    justify-content: center;
+    padding: 15px 0;
+}
+
+#amd-sidebar.collapsed .sb-icon {
+    min-width: 0;
+}
+
 #amd-sidebar.collapsed .sb-item:hover::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -207,7 +223,7 @@
     border-radius: 4px;
     font-size: 12px;
     white-space: nowrap;
-    margin-left: 10px;
+    margin-left: 0;
     z-index: 9999;
     opacity: 1;
     pointer-events: none;
@@ -243,8 +259,8 @@ body.sb-collapsed #page-content-wrapper {
 
 @media (max-width: 991px) {
     #amd-sidebar {
-        transform: translateX(-100%); /* Hidden by default on mobile */
-        width: var(--sb-width); /* Full width when open on mobile usually, or standard width */
+        transform: translateX(-100%); 
+        width: var(--sb-width); 
     }
     
     #amd-sidebar.mobile-open {
@@ -256,7 +272,7 @@ body.sb-collapsed #page-content-wrapper {
     }
     
     body.sb-collapsed #amd-sidebar {
-        width: var(--sb-width); /* Don't shrink on mobile, just hide */
+        width: var(--sb-width); /* Don't shrink on mobile */
     }
 }
 </style>
@@ -269,18 +285,28 @@ body.sb-collapsed #page-content-wrapper {
         <img src="../assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
     </div>
 
-    <div class="sb-content">
+    <div class="sb-content" id="sidebarAccordion">
         <div class="sb-label">Main</div>
         
+        <!-- Dashboard Submenu -->
         <div class="sb-item" data-tooltip="Dashboard">
-            <a href="index.php" class="sb-link active">
+            <a href="#menuDashboard" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-th-large sb-icon"></i>
                 <span class="sb-text">Dashboard</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
+            <div class="collapse" id="menuDashboard">
+                <ul class="sb-submenu">
+                    <li><a href="index.php" class="sb-link">Overview</a></li>
+                    <li><a href="#" class="sb-link">Analytics</a></li>
+                    <li><a href="#" class="sb-link">Real-time</a></li>
+                </ul>
+            </div>
         </div>
 
+        <!-- Products Submenu -->
         <div class="sb-item" data-tooltip="Products">
-            <a href="#menuProducts" class="sb-link collapsed" data-bs-toggle="collapse">
+            <a href="#menuProducts" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-box sb-icon"></i>
                 <span class="sb-text">Products</span>
                 <i class="fas fa-chevron-right sb-arrow"></i>
@@ -290,38 +316,76 @@ body.sb-collapsed #page-content-wrapper {
                     <li><a href="#" class="sb-link">All Products</a></li>
                     <li><a href="#" class="sb-link">Add New</a></li>
                     <li><a href="#" class="sb-link">Categories</a></li>
+                    <li><a href="#" class="sb-link">Inventory</a></li>
                 </ul>
             </div>
         </div>
 
+        <!-- Orders Submenu -->
         <div class="sb-item" data-tooltip="Orders">
-            <a href="#" class="sb-link">
+            <a href="#menuOrders" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-shopping-cart sb-icon"></i>
                 <span class="sb-text">Orders</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
+             <div class="collapse" id="menuOrders">
+                <ul class="sb-submenu">
+                    <li><a href="#" class="sb-link">All Orders</a></li>
+                    <li><a href="#" class="sb-link">Pending</a></li>
+                    <li><a href="#" class="sb-link">Completed</a></li>
+                    <li><a href="#" class="sb-link">Returns</a></li>
+                </ul>
+            </div>
         </div>
 
+        <!-- Users Submenu -->
         <div class="sb-item" data-tooltip="Users">
-            <a href="#" class="sb-link">
+            <a href="#menuUsers" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-users sb-icon"></i>
                 <span class="sb-text">Users</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
+            <div class="collapse" id="menuUsers">
+                <ul class="sb-submenu">
+                    <li><a href="#" class="sb-link">All Users</a></li>
+                    <li><a href="#" class="sb-link">Add New</a></li>
+                    <li><a href="#" class="sb-link">Roles</a></li>
+                </ul>
+            </div>
         </div>
 
+        <!-- Reports Submenu -->
         <div class="sb-item" data-tooltip="Reports">
-            <a href="#" class="sb-link">
+            <a href="#menuReports" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-chart-line sb-icon"></i>
                 <span class="sb-text">Reports</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
+             <div class="collapse" id="menuReports">
+                <ul class="sb-submenu">
+                    <li><a href="#" class="sb-link">Sales Report</a></li>
+                    <li><a href="#" class="sb-link">User Traffic</a></li>
+                    <li><a href="#" class="sb-link">Product Perf.</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="sb-label mt-3">System</div>
 
+        <!-- Settings Submenu -->
         <div class="sb-item" data-tooltip="Settings">
-            <a href="#" class="sb-link">
+            <a href="#menuSettings" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-cog sb-icon"></i>
                 <span class="sb-text">Settings</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
+             <div class="collapse" id="menuSettings">
+                <ul class="sb-submenu">
+                    <li><a href="#" class="sb-link">General</a></li>
+                    <li><a href="#" class="sb-link">Payment</a></li>
+                    <li><a href="#" class="sb-link">Notifications</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
