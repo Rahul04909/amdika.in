@@ -218,7 +218,7 @@
             <div class="col-lg-3 col-md-6 mb-4">
                  <span class="footer-heading">Address</span>
                  <div class="footer-address">
-                    Reliance Retail Limited, 3rd Floor, Court House, Lokmanya Tilak Marg, Dhobi Talao, Mumbai, Maharashtra, India - 400002
+                    Ground Floor, Nirvana courtyard, C-27, Nirvana Country, Sector 50, Gurugram, Haryana, India - 122018
                     <br><br>
                     CIN: U01100MH1999PLC120563
                  </div>
@@ -268,7 +268,7 @@
                         <a href="#" class="text-decoration-none footer-bottom-link">Privacy Policy</a>
                     </div>
                     <div class="mt-2 footer-bottom-text" style="font-size: 12px;">
-                        © 2012-2025 URBAN LADDER
+                        © 2012-2025 AMADIKAA
                     </div>
                 </div>
                 
