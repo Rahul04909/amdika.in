@@ -39,32 +39,21 @@
     height: 70px;
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    justify-content: center; /* Center the logo */
+    padding: 0 15px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0,0,0,0.1); /* Slight darker tint */
+    background: rgba(0,0,0,0.1); 
 }
 
-.sb-logo-icon {
-    font-size: 24px;
-    color: var(--sb-accent); /* Gold */
-    min-width: 30px;
-    text-align: center;
+.sb-logo-img {
+    max-height: 40px;
+    max-width: 100%;
+    transition: all 0.3s;
 }
 
-.sb-logo-text {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    margin-left: 10px;
-    opacity: 1;
-    transition: opacity 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#amd-sidebar.collapsed .sb-logo-text {
-    opacity: 0;
-    pointer-events: none;
+#amd-sidebar.collapsed .sb-logo-img {
+    max-height: 25px; /* Smaller on collapse */
+    opacity: 0.8;
 }
 
 /* Menu Content */
@@ -277,10 +266,7 @@ body.sb-collapsed #page-content-wrapper {
 
 <nav id="amd-sidebar">
     <div class="sb-logo-area">
-        <div class="sb-logo-icon">
-            <i class="fas fa-crown"></i>
-        </div>
-        <span class="sb-logo-text">Amadika</span>
+        <img src="../assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
     </div>
 
     <div class="sb-content">

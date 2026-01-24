@@ -1,3 +1,85 @@
+<style>
+/* --- Admin Navbar Styles --- */
+.admin-navbar {
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* var(--card-shadow) */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 24px;
+    color: #2D3436; /* var(--secondary-color) */
+    transition: color 0.2s;
+}
+
+.menu-toggle:hover {
+    color: #D32F2F; /* var(--primary-color) */
+}
+
+.admin-search-group {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+}
+
+.admin-search-input {
+    border: 2px solid #eee;
+    padding: 8px 15px;
+    padding-right: 40px;
+    border-radius: 50px;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.admin-search-input:focus {
+    outline: none;
+    border-color: #D4A017; /* var(--accent-gold) */
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon-btn {
+    position: relative;
+    color: #555;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.nav-icon-btn .badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: #D32F2F; /* var(--primary-color) */
+    font-size: 10px;
+}
+
+.user-profile-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #D4A017; /* var(--accent-gold) */
+}
+</style>
+
 <nav class="admin-navbar navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
     <div class="d-flex align-items-center">
         <i class="fas fa-align-left primary-text fs-4 me-3 menu-toggle" id="menu-toggle"></i>
