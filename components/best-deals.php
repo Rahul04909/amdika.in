@@ -239,7 +239,7 @@
     <div class="best-deals-container">
         <!-- Header -->
         <div class="section-header-row">
-            <h2 class="best-deals-title">Best Deals on Smart Phones</h2>
+            <h2 class="best-deals-title">Best Deals on Leather Bags</h2>
             <a href="#" class="view-all-btn">VIEW ALL</a>
         </div>
 
