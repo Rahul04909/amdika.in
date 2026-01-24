@@ -6,6 +6,9 @@
 <!-- Product Categories -->
 <?php include 'components/product-categories.php'; ?>
 
+<!-- frontned top deals product showcase -->
+<?php include 'components/top-deals.php'; ?>
+
 <!-- Simple Footer for closing tags -->
 <?php include 'includes/footer.php'; ?>
 
