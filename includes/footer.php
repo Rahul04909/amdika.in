@@ -143,6 +143,19 @@
     transform: scale(1.1);
     color: var(--white);
 }
+
+.footer-bottom-text {
+    color: #b0b0b0;
+}
+
+.footer-bottom-link {
+    color: #b0b0b0;
+    transition: color 0.2s;
+}
+
+.footer-bottom-link:hover {
+    color: var(--accent-gold);
+}
 </style>
 <footer class="site-footer">
     <div class="container">
@@ -250,11 +263,11 @@
         <div class="footer-bottom-row">
             <div class="row align-items-center">
                 <div class="col-lg-4 mb-3 mb-lg-0">
-                    <div class="d-flex text-muted gap-3 text-small" style="font-size: 12px;">
-                        <a href="#" class="text-reset text-decoration-none">Terms of use</a>
-                        <a href="#" class="text-reset text-decoration-none">Privacy Policy</a>
+                    <div class="d-flex gap-3 text-small footer-bottom-text" style="font-size: 12px;">
+                        <a href="#" class="text-decoration-none footer-bottom-link">Terms of use</a>
+                        <a href="#" class="text-decoration-none footer-bottom-link">Privacy Policy</a>
                     </div>
-                    <div class="mt-2 text-muted" style="font-size: 12px;">
+                    <div class="mt-2 footer-bottom-text" style="font-size: 12px;">
                         © 2012-2025 URBAN LADDER
                     </div>
                 </div>
