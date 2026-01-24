@@ -1,7 +1,16 @@
 <style>
 /* --- Top Deals Component --- */
 .top-deals-section {
-    font-family: 'Poppins', sans-serif; /* Assuming font is available, fallback to sans-serif */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Matching styles from Product Categories */
+.container-custom-rounded {
+    border-radius: 12px;
+}
+
+.border-gold {
+    border: 1px solid rgba(212, 160, 23, 0.2);
 }
 
 .top-deals-title {
@@ -21,7 +30,7 @@
     transform: translateX(-50%);
     width: 50px;
     height: 4px;
-    background-color: #6c5ce7; /* Distinctive purple underline */
+    background-color: var(--accent-gold, #D4A017); /* Match theme gold */
     border-radius: 2px;
 }
 
@@ -29,21 +38,21 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 20px 5px; /* Padding for shadow */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+    padding: 20px 5px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     scroll-behavior: smooth;
 }
 
 .deals-scroll-container::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
 }
 
 .deal-card {
-    flex: 0 0 250px; /* Fixed width for cards */
+    flex: 0 0 250px;
     height: 380px;
-    background-color: #fff; /* Light warm background inside card if needed */
-    border-radius: 125px 125px 0 0; /* Arched top */
+    background-color: #fff;
+    border-radius: 125px 125px 0 0;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -59,9 +68,9 @@
 
 .deal-image-wrapper {
     width: 100%;
-    height: 75%; /* Occupy most of the card */
+    height: 75%;
     position: relative;
-    border-radius: 125px 125px 0 0; /* Match card radius */
+    border-radius: 125px 125px 0 0;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -79,7 +88,7 @@
 
 .deal-content {
     position: absolute;
-    bottom: 45px; /* Space for the red price bar */
+    bottom: 45px;
     width: 100%;
     text-align: center;
     background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
@@ -100,7 +109,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #c0392b; /* Deep Red */
+    background-color: #c0392b;
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -116,12 +125,10 @@
     opacity: 0.9;
 }
 
-/* Specific arch border color - optional if we want the orange border */
 .deal-card.orange-border {
-    border: 2px solid #ffaa00;
+    border: 2px solid var(--accent-gold, #D4A017); /* Use theme gold if available */
 }
 
-/* Responsive Grid for larger screens - if we want grid instead of slider on desktop */
 @media (min-width: 992px) {
     .deals-scroll-container {
         justify-content: center;
@@ -130,7 +137,7 @@
     }
     
     .deal-card {
-        flex: 0 0 calc(20% - 20px); /* 5 items in a row approx */
+        flex: 0 0 calc(20% - 20px);
         max-width: 250px;
         margin-bottom: 20px;
     }
@@ -138,7 +145,7 @@
 
 @media (max-width: 768px) {
     .deal-card {
-        flex: 0 0 200px; /* Smaller cards on mobile */
+        flex: 0 0 200px;
         height: 320px;
     }
     
@@ -148,13 +155,13 @@
 }
 </style>
 
-<section class="top-deals-section py-5 bg-white">
-    <div class="container-fluid">
-        <div class="text-center mb-5">
+<section class="top-deals-section mt-4 mb-5">
+    <div class="container container-custom-rounded bg-white p-4 shadow-sm border-gold position-relative">
+        <div class="text-center mb-4">
             <h2 class="top-deals-title">Furniture Deals</h2>
         </div>
 
-        <div class="deals-scroll-container pb-3">
+        <div class="deals-scroll-container pb-1">
             <!-- Card 1: Sofas -->
             <a href="#" class="deal-card text-decoration-none orange-border">
                 <div class="deal-image-wrapper">
