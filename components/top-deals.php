@@ -68,7 +68,7 @@
 
 .deal-image-wrapper {
     width: 100%;
-    height: 75%;
+    height: 65%; /* Reduced height to make room for title */
     position: relative;
     border-radius: 125px 125px 0 0;
     overflow: hidden;
@@ -87,27 +87,32 @@
 }
 
 .deal-content {
-    position: absolute;
-    bottom: 45px;
+    /* Position relative to flow in the flex container */
+    position: relative;
     width: 100%;
     text-align: center;
-    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-    padding-bottom: 10px;
+    background: transparent; /* Remove gradient */
+    padding: 0; /* Remove padding */
     z-index: 2;
+    flex-grow: 1; /* Grow to fill space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: auto; /* Reset bottom */
 }
 
 .deal-title {
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    color: #333; /* Dark color */
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-shadow: none; /* Remove shadow */
     margin: 0;
 }
 
 .deal-price-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: relative; /* Relative positioning in flex */
+    bottom: auto;
+    left: auto;
     width: 100%;
     background-color: #c0392b;
     color: white;
@@ -158,7 +163,7 @@
 <section class="top-deals-section mt-4 mb-5">
     <div class="container container-custom-rounded bg-white p-4 shadow-sm border-gold position-relative">
         <div class="text-center mb-4">
-            <h2 class="top-deals-title">Furniture Deals</h2>
+            <h2 class="top-deals-title">Our Top Deals</h2>
         </div>
 
         <div class="deals-scroll-container pb-1">
@@ -167,9 +172,9 @@
                 <div class="deal-image-wrapper">
                     <!-- Using placeholder or path provided by user if available. Using placeholder for now. -->
                     <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sofas" class="deal-image">
-                    <div class="deal-content">
-                        <h3 class="deal-title">Sofas</h3>
-                    </div>
+                </div>
+                <div class="deal-content">
+                    <h3 class="deal-title">Sofas</h3>
                 </div>
                 <div class="deal-price-bar">
                     <small>from</small> ₹9,999
@@ -180,9 +185,9 @@
             <a href="#" class="deal-card text-decoration-none orange-border">
                 <div class="deal-image-wrapper">
                     <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Recliner" class="deal-image">
-                    <div class="deal-content">
-                        <h3 class="deal-title">Recliner</h3>
-                    </div>
+                </div>
+                <div class="deal-content">
+                    <h3 class="deal-title">Recliner</h3>
                 </div>
                 <div class="deal-price-bar">
                     <small>from</small> ₹14,999
@@ -193,9 +198,9 @@
             <a href="#" class="deal-card text-decoration-none orange-border">
                 <div class="deal-image-wrapper">
                     <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Study Desks" class="deal-image">
-                    <div class="deal-content">
-                        <h3 class="deal-title">Study Desks</h3>
-                    </div>
+                </div>
+                <div class="deal-content">
+                    <h3 class="deal-title">Study Desks</h3>
                 </div>
                 <div class="deal-price-bar">
                     <small>from</small> ₹2,999
@@ -206,9 +211,9 @@
             <a href="#" class="deal-card text-decoration-none orange-border">
                 <div class="deal-image-wrapper">
                     <img src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Centre Tables" class="deal-image">
-                    <div class="deal-content">
-                        <h3 class="deal-title">Centre Tables</h3>
-                    </div>
+                </div>
+                <div class="deal-content">
+                    <h3 class="deal-title">Centre Tables</h3>
                 </div>
                 <div class="deal-price-bar">
                     <small>from</small> ₹1,999
@@ -219,9 +224,9 @@
             <a href="#" class="deal-card text-decoration-none orange-border">
                 <div class="deal-image-wrapper">
                     <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Shoe Racks" class="deal-image">
-                    <div class="deal-content">
-                        <h3 class="deal-title">Shoe Racks</h3>
-                    </div>
+                </div>
+                <div class="deal-content">
+                    <h3 class="deal-title">Shoe Racks</h3>
                 </div>
                 <div class="deal-price-bar">
                     <small>Upto</small> 50% off
