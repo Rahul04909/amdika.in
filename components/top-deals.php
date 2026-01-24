@@ -68,7 +68,7 @@
 
 .deal-image-wrapper {
     width: 100%;
-    height: 65%; /* Reduced height to make room for title */
+    height: 72%; /* Increased height to reduce whitespace below */
     position: relative;
     border-radius: 125px 125px 0 0;
     overflow: hidden;
@@ -91,33 +91,33 @@
     position: relative;
     width: 100%;
     text-align: center;
-    background: transparent; /* Remove gradient */
-    padding: 0; /* Remove padding */
+    background: transparent;
+    padding: 0;
     z-index: 2;
-    flex-grow: 1; /* Grow to fill space */
+    flex-grow: 1; /* Fills remaining space */
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: auto; /* Reset bottom */
+    bottom: auto;
 }
 
 .deal-title {
-    color: #333; /* Dark color */
+    color: #333;
     font-size: 1.1rem;
     font-weight: 600;
-    text-shadow: none; /* Remove shadow */
+    text-shadow: none;
     margin: 0;
 }
 
 .deal-price-bar {
-    position: relative; /* Relative positioning in flex */
+    position: relative;
     bottom: auto;
     left: auto;
     width: 100%;
     background-color: #c0392b;
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 8px 0; /* Slightly reduced padding */
     font-size: 1.1rem;
     font-weight: 700;
     z-index: 3;
@@ -131,7 +131,7 @@
 }
 
 .deal-card.orange-border {
-    border: 2px solid var(--accent-gold, #D4A017); /* Use theme gold if available */
+    border: 2px solid var(--accent-gold, #D4A017);
 }
 
 @media (min-width: 992px) {
@@ -152,8 +152,13 @@
     .deal-card {
         flex: 0 0 200px;
         height: 320px;
+        border-radius: 100px 100px 0 0; /* Adjusted for narrower card */
     }
     
+    .deal-image-wrapper {
+        border-radius: 100px 100px 0 0;
+    }
+
     .top-deals-title {
         font-size: 1.5rem;
     }
