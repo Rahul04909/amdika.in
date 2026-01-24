@@ -43,50 +43,92 @@
         }
 
         /* --- Dashboard Cards --- */
-        .stat-card {
+        /* --- KPI Cards Redesign --- */
+        .kpi-row {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 5px 2px 15px 2px; /* Bottom padding for scrollbar space */
+            margin-bottom: 20px;
+            scrollbar-width: thin; /* Firefox */
+        }
+
+        .kpi-row::-webkit-scrollbar {
+            height: 6px;
+        }
+        .kpi-row::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .kpi-card {
             background: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-card .icon-box {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            border-radius: 8px;
+            min-width: 160px; /* Ensure visibility */
+            flex: 1;
+            height: 70px; /* Minimal height */
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
+            border-left: 4px solid #ccc; /* Default fallback */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            cursor: pointer;
+            position: relative;
         }
 
-        .stat-card.primary .icon-box { background: rgba(211, 47, 47, 0.1); color: var(--primary-color); }
-        .stat-card.success .icon-box { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
-        .stat-card.warning .icon-box { background: rgba(241, 196, 15, 0.1); color: #f1c40f; }
-        .stat-card.info .icon-box { background: rgba(52, 152, 219, 0.1); color: #3498db; }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background-color: #fafafa;
+        }
 
-        .stat-card h3 {
-            font-size: 28px;
+        .kpi-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+            opacity: 0.8;
+            width: 25px;
+            text-align: center;
+        }
+
+        .kpi-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.1;
+        }
+
+        .kpi-value {
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 5px;
             color: var(--secondary-color);
         }
 
-        .stat-card p {
+        .kpi-label {
+            font-size: 0.75rem;
             color: #888;
-            margin: 0;
-            font-size: 14px;
+            white-space: nowrap;
+            margin-top: 2px;
         }
+
+        /* Accent & Border Colors */
+        .border-blue    { border-left-color: #3498db; }
+        .border-purple  { border-left-color: #9b59b6; }
+        .border-indigo  { border-left-color: #6610f2; }
+        .border-teal    { border-left-color: #1abc9c; }
+        .border-green   { border-left-color: #27ae60; }
+        .border-red     { border-left-color: #e74c3c; }
+        .border-orange  { border-left-color: #e67e22; }
+        .border-emerald { border-left-color: #2ecc71; }
+
+        .text-blue    { color: #3498db; }
+        .text-purple  { color: #9b59b6; }
+        .text-indigo  { color: #6610f2; }
+        .text-teal    { color: #1abc9c; }
+        .text-green   { color: #27ae60; }
+        .text-red     { color: #e74c3c; }
+        .text-orange  { color: #e67e22; }
+        .text-emerald { color: #2ecc71; }
         
         /* Table Styles override */
         .table thead th {
@@ -119,47 +161,81 @@
             <!-- Main Content -->
             <div class="container-fluid px-4">
                 
-                <!-- Quick Stats Row -->
-                <div class="row g-3 my-2">
-                    <div class="col-md-3">
-                        <div class="stat-card primary">
-                            <div class="icon-box">
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                            <h3>120</h3>
-                            <p>New Orders</p>
+                <!-- Ultra-Compact KPI Row -->
+                <div class="kpi-row">
+                    
+                    <!-- 1. Total Users (Blue) -->
+                    <div class="kpi-card border-blue" title="Active registered users">
+                        <i class="fas fa-users kpi-icon text-blue"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">4,250</span>
+                            <span class="kpi-label">Total Users</span>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="stat-card success">
-                            <div class="icon-box">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3>4,250</h3>
-                            <p>Total Users</p>
+                    <!-- 2. Total Orders (Purple) -->
+                    <div class="kpi-card border-purple" title="All time orders">
+                        <i class="fas fa-shopping-bag kpi-icon text-purple"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">1,250</span>
+                            <span class="kpi-label">Total Orders</span>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="stat-card warning">
-                            <div class="icon-box">
-                                <i class="fas fa-box"></i>
-                            </div>
-                            <h3>350</h3>
-                            <p>Products</p>
+                    <!-- 3. Total Products (Indigo) -->
+                    <div class="kpi-card border-indigo" title="Available products">
+                        <i class="fas fa-box-open kpi-icon text-indigo"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">350</span>
+                            <span class="kpi-label">Products</span>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="stat-card info">
-                            <div class="icon-box">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <h3>$12,500</h3>
-                            <p>Total Revenue</p>
+                    <!-- 4. Avg Monthly Sales (Teal) -->
+                    <div class="kpi-card border-teal" title="Average sales last 30 days">
+                        <i class="fas fa-chart-line kpi-icon text-teal"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">$8.5k</span>
+                            <span class="kpi-label">Avg. Sales</span>
                         </div>
                     </div>
+
+                    <!-- 5. Total Revenue (Green) -->
+                    <div class="kpi-card border-green" title="Total earnings">
+                        <i class="fas fa-file-invoice-dollar kpi-icon text-green"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">$125k</span>
+                            <span class="kpi-label">Revenue</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Out of Stock (Red) -->
+                    <div class="kpi-card border-red" title="Products with 0 inventory">
+                        <i class="fas fa-exclamation-circle kpi-icon text-red"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">12</span>
+                            <span class="kpi-label">Out of Stock</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. Pending Orders (Orange) -->
+                    <div class="kpi-card border-orange" title="Orders waiting processing">
+                        <i class="fas fa-clock kpi-icon text-orange"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">45</span>
+                            <span class="kpi-label">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 8. Completed Orders (Emerald) -->
+                    <div class="kpi-card border-emerald" title="Specifically completed orders">
+                        <i class="fas fa-check-circle kpi-icon text-emerald"></i>
+                        <div class="kpi-content">
+                            <span class="kpi-value">890</span>
+                            <span class="kpi-label">Completed</span>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Recent Orders / Charts (Placeholder) -->
