@@ -6,6 +6,9 @@
 <!-- Product Categories -->
 <?php include 'components/product-categories.php'; ?>
 
+<!-- Best Deals (Smartphones) -->
+<?php include 'components/best-deals.php'; ?>
+
 <!-- frontned top deals product showcase -->
 <?php include 'components/top-deals.php'; ?>
 
