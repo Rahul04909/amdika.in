@@ -44,91 +44,64 @@
 
         /* --- Dashboard Cards --- */
         /* --- KPI Cards Redesign --- */
-        .kpi-row {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 5px 2px 15px 2px; /* Bottom padding for scrollbar space */
-            margin-bottom: 20px;
-            scrollbar-width: thin; /* Firefox */
-        }
-
-        .kpi-row::-webkit-scrollbar {
-            height: 6px;
-        }
-        .kpi-row::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.1);
+        /* --- Ultra Compact 6-Card Grid --- */
+        .kpi-card-new {
+            background-color: #fff;
             border-radius: 10px;
-        }
-
-        .kpi-card {
-            background: var(--white);
-            border-radius: 8px;
-            min-width: 160px; /* Ensure visibility */
-            flex: 1;
-            height: 70px; /* Minimal height */
-            padding: 10px 15px;
+            padding: 15px;
             display: flex;
             align-items: center;
-            border-left: 4px solid #ccc; /* Default fallback */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-            cursor: pointer;
-            position: relative;
+            justify-content: flex-start;
+            gap: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        .kpi-card:hover {
-            transform: translateY(-2px);
+        .kpi-card-new:hover {
+            transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            background-color: #fafafa;
+            border-color: rgba(0,0,0,0.1);
         }
 
-        .kpi-icon {
-            font-size: 1.2rem;
-            margin-right: 12px;
-            opacity: 0.8;
-            width: 25px;
-            text-align: center;
+        .icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px; /* Soft square */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
-        .kpi-content {
+        .kpi-data {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
         .kpi-value {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--secondary-color);
         }
 
         .kpi-label {
-            font-size: 0.75rem;
-            color: #888;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            font-weight: 500;
             white-space: nowrap;
-            margin-top: 2px;
         }
 
-        /* Accent & Border Colors */
-        .border-blue    { border-left-color: #3498db; }
-        .border-purple  { border-left-color: #9b59b6; }
-        .border-indigo  { border-left-color: #6610f2; }
-        .border-teal    { border-left-color: #1abc9c; }
-        .border-green   { border-left-color: #27ae60; }
-        .border-red     { border-left-color: #e74c3c; }
-        .border-orange  { border-left-color: #e67e22; }
-        .border-emerald { border-left-color: #2ecc71; }
-
-        .text-blue    { color: #3498db; }
-        .text-purple  { color: #9b59b6; }
-        .text-indigo  { color: #6610f2; }
-        .text-teal    { color: #1abc9c; }
-        .text-green   { color: #27ae60; }
-        .text-red     { color: #e74c3c; }
-        .text-orange  { color: #e67e22; }
-        .text-emerald { color: #2ecc71; }
+        /* Color Variations */
+        .bg-soft-blue { background: rgba(52, 152, 219, 0.1); color: #3498db; }
+        .bg-soft-purple { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+        .bg-soft-indigo { background: rgba(102, 16, 242, 0.1); color: #6610f2; }
+        .bg-soft-green { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .bg-soft-orange { background: rgba(230, 126, 34, 0.1); color: #e67e22; }
+        .bg-soft-red { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
         
         /* Table Styles override */
         .table thead th {
@@ -162,77 +135,84 @@
             <div class="container-fluid px-4">
                 
                 <!-- Ultra-Compact KPI Row -->
-                <div class="kpi-row">
+                <!-- 6-Column KPI Grid -->
+                <div class="row g-3 mb-4">
                     
-                    <!-- 1. Total Users (Blue) -->
-                    <div class="kpi-card border-blue" title="Active registered users">
-                        <i class="fas fa-users kpi-icon text-blue"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">4,250</span>
-                            <span class="kpi-label">Total Users</span>
+                    <!-- 1. Total Users -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-blue">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">4,250</span>
+                                <span class="kpi-label">Users</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 2. Total Orders (Purple) -->
-                    <div class="kpi-card border-purple" title="All time orders">
-                        <i class="fas fa-shopping-bag kpi-icon text-purple"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">1,250</span>
-                            <span class="kpi-label">Total Orders</span>
+                    <!-- 2. Total Orders -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-purple">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">1,250</span>
+                                <span class="kpi-label">Orders</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 3. Total Products (Indigo) -->
-                    <div class="kpi-card border-indigo" title="Available products">
-                        <i class="fas fa-box-open kpi-icon text-indigo"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">350</span>
-                            <span class="kpi-label">Products</span>
+                    <!-- 3. Total Products -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-indigo">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">350</span>
+                                <span class="kpi-label">Products</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 4. Avg Monthly Sales (Teal) -->
-                    <div class="kpi-card border-teal" title="Average sales last 30 days">
-                        <i class="fas fa-chart-line kpi-icon text-teal"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">$8.5k</span>
-                            <span class="kpi-label">Avg. Sales</span>
+                    <!-- 4. Total Revenue -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-green">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">$125k</span>
+                                <span class="kpi-label">Revenue</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 5. Total Revenue (Green) -->
-                    <div class="kpi-card border-green" title="Total earnings">
-                        <i class="fas fa-file-invoice-dollar kpi-icon text-green"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">$125k</span>
-                            <span class="kpi-label">Revenue</span>
+                    <!-- 5. Pending Orders -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-orange">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">45</span>
+                                <span class="kpi-label">Pending</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 6. Out of Stock (Red) -->
-                    <div class="kpi-card border-red" title="Products with 0 inventory">
-                        <i class="fas fa-exclamation-circle kpi-icon text-red"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">12</span>
-                            <span class="kpi-label">Out of Stock</span>
-                        </div>
-                    </div>
-
-                    <!-- 7. Pending Orders (Orange) -->
-                    <div class="kpi-card border-orange" title="Orders waiting processing">
-                        <i class="fas fa-clock kpi-icon text-orange"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">45</span>
-                            <span class="kpi-label">Pending</span>
-                        </div>
-                    </div>
-
-                    <!-- 8. Completed Orders (Emerald) -->
-                    <div class="kpi-card border-emerald" title="Specifically completed orders">
-                        <i class="fas fa-check-circle kpi-icon text-emerald"></i>
-                        <div class="kpi-content">
-                            <span class="kpi-value">890</span>
-                            <span class="kpi-label">Completed</span>
+                    <!-- 6. Out of Stock -->
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="kpi-card-new">
+                            <div class="icon-circle bg-soft-red">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-value">12</span>
+                                <span class="kpi-label">Out of Stock</span>
+                            </div>
                         </div>
                     </div>
 
