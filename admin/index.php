@@ -42,66 +42,70 @@
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Dashboard Cards --- */
-        /* --- KPI Cards Redesign --- */
-        /* --- Ultra Compact 6-Card Grid --- */
-        .kpi-card-new {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            transition: all 0.2s ease;
-            height: 100%;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .kpi-card-new:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-color: rgba(0,0,0,0.1);
-        }
-
-        .icon-circle {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px; /* Soft square */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .kpi-data {
+        /* --- Solid Color KPI Cards --- */
+        .kpi-card-solid {
+            border-radius: 12px;
+            padding: 25px;
+            height: 120px; /* Taller for the solid look */
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
-            line-height: 1.2;
+            justify-content: center;
         }
 
-        .kpi-value {
-            font-size: 1.15rem;
+        .kpi-card-solid:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Content Z-Index to stay above watermark */
+        .kpi-content-solid {
+            position: relative;
+            z-index: 2;
+        }
+
+        .kpi-value-solid {
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--secondary-color);
+            line-height: 1;
+            margin-bottom: 5px;
+            display: block;
         }
 
-        .kpi-label {
-            font-size: 0.8rem;
-            color: #7f8c8d;
+        .kpi-label-solid {
+            font-size: 0.95rem;
             font-weight: 500;
-            white-space: nowrap;
+            opacity: 0.9;
         }
 
-        /* Color Variations */
-        .bg-soft-blue { background: rgba(52, 152, 219, 0.1); color: #3498db; }
-        .bg-soft-purple { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
-        .bg-soft-indigo { background: rgba(102, 16, 242, 0.1); color: #6610f2; }
-        .bg-soft-green { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
-        .bg-soft-orange { background: rgba(230, 126, 34, 0.1); color: #e67e22; }
-        .bg-soft-red { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+        /* Watermark Icon */
+        .kpi-icon-watermark {
+            position: absolute;
+            right: -10px;
+            bottom: -15px;
+            font-size: 80px;
+            opacity: 0.25;
+            transform: rotate(15deg); /* Dynamic tilt */
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .kpi-card-solid:hover .kpi-icon-watermark {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        /* Solid Gradients */
+        .bg-gradient-blue   { background: linear-gradient(135deg, #42a5f5, #1976d2); }
+        .bg-gradient-purple { background: linear-gradient(135deg, #ab47bc, #7b1fa2); }
+        .bg-gradient-indigo { background: linear-gradient(135deg, #5c6bc0, #303f9f); }
+        .bg-gradient-green  { background: linear-gradient(135deg, #66bb6a, #388e3c); }
+        .bg-gradient-orange { background: linear-gradient(135deg, #ffa726, #f57c00); }
+        .bg-gradient-red    { background: linear-gradient(135deg, #ef5350, #c62828); }
         
         /* Table Styles override */
         .table thead th {
@@ -134,84 +138,71 @@
             <!-- Main Content -->
             <div class="container-fluid px-4">
                 
-                <!-- Ultra-Compact KPI Row -->
-                <!-- 6-Column KPI Grid -->
-                <div class="row g-3 mb-4">
+                <!-- 6-Column KPI Grid (Solid Design) -->
+                <div class="row g-4 mt-4 mb-4">
                     
                     <!-- 1. Total Users -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-blue">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">4,250</span>
-                                <span class="kpi-label">Users</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-blue">
+                            <i class="fas fa-users kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">4,250</span>
+                                <span class="kpi-label-solid">Total Users</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 2. Total Orders -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-purple">
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">1,250</span>
-                                <span class="kpi-label">Orders</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-purple">
+                            <i class="fas fa-shopping-bag kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">1,250</span>
+                                <span class="kpi-label-solid">Total Orders</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 3. Total Products -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-indigo">
-                                <i class="fas fa-box-open"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">350</span>
-                                <span class="kpi-label">Products</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-indigo">
+                            <i class="fas fa-box-open kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">350</span>
+                                <span class="kpi-label-solid">Total Products</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 4. Total Revenue -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-green">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">$125k</span>
-                                <span class="kpi-label">Revenue</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-green">
+                            <i class="fas fa-file-invoice-dollar kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">$125k</span>
+                                <span class="kpi-label-solid">Total Revenue</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 5. Pending Orders -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-orange">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">45</span>
-                                <span class="kpi-label">Pending</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-orange">
+                            <i class="fas fa-clock kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">45</span>
+                                <span class="kpi-label-solid">Pending Orders</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 6. Out of Stock -->
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="kpi-card-new">
-                            <div class="icon-circle bg-soft-red">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-value">12</span>
-                                <span class="kpi-label">Out of Stock</span>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+                        <div class="kpi-card-solid bg-gradient-red">
+                            <i class="fas fa-exclamation-triangle kpi-icon-watermark"></i>
+                            <div class="kpi-content-solid">
+                                <span class="kpi-value-solid">12</span>
+                                <span class="kpi-label-solid">Out of Stock</span>
                             </div>
                         </div>
                     </div>
