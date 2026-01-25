@@ -29,7 +29,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     
     // Reliable Fallback: Absolute path from web root if we know it, or relative.
     // Since we are in WAMP wwith 'amadika' folder.
-    header("Location: /amadika/admin/login.php"); 
+    header("Location: /admin/login.php"); 
     exit;
 }
 ?>
