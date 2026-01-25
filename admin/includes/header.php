@@ -298,7 +298,7 @@
         <!-- User Profile -->
         <div class="profile-dropdown" id="profileDropdownContainer">
             <div class="profile-trigger" id="profileTrigger">
-                <img src="../assets/images/user-avtar.avif" alt="Admin" class="profile-img" onerror="this.src='https://via.placeholder.com/40/D4A017/ffffff?text=A'">
+                <img src="../../assets/images/user-avtar.avif" alt="Admin" class="profile-img" onerror="this.src='https://via.placeholder.com/40/D4A017/ffffff?text=A'">
                 <div class="profile-info">
                     <span class="profile-name">Rahul</span>
                     <span class="profile-role">Super Admin</span>
