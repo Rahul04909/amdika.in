@@ -272,13 +272,30 @@
     }
 </style>
 
+<?php
+// Determine Base URL for Assets
+// Heuristic: If we are deep in admin, we need to go up.
+// Better: Assume assets is at webroot/assets if possible, or build path.
+// $path_to_root: logic to find how many ../ needed.
+$depth = substr_count(dirname($_SERVER['SCRIPT_NAME']), '/') - 1; // Adjust based on your server structure.
+// Let's use a simpler approach: define a helper if not exists or use hardcoded relative based on known structure.
+
+// Since user is editing manually to ../../ or ../, let's auto-detect.
+$base_path = '../'; // Default for admin/index.php
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false) {
+    $base_path = '../../';
+}
+// This is fragile but respects the user's current manual fix style without rewriting config.
+
+$current_title = isset($page_title) ? $page_title : 'Dashboard';
+?>
 <header class="admin-header">
     <!-- Left: Toggle & Title -->
     <div class="header-left">
         <button id="menu-toggle" class="menu-toggle-btn" title="Toggle Sidebar">
             <i class="fas fa-bars"></i>
         </button>
-        <h2 class="page-title">Dashboard</h2>
+        <h2 class="page-title"><?php echo htmlspecialchars($current_title); ?></h2>
     </div>
 
     <!-- Right: Search, Notifications, Profile -->
@@ -298,7 +315,7 @@
         <!-- User Profile -->
         <div class="profile-dropdown" id="profileDropdownContainer">
             <div class="profile-trigger" id="profileTrigger">
-                <img src="../../assets/images/user-avtar.avif" alt="Admin" class="profile-img" onerror="this.src='https://via.placeholder.com/40/D4A017/ffffff?text=A'">
+                <img src="<?php echo $base_path; ?>assets/images/user-avtar.avif" alt="Admin" class="profile-img" onerror="this.src='https://via.placeholder.com/40/D4A017/ffffff?text=A'">
                 <div class="profile-info">
                     <span class="profile-name">Rahul</span>
                     <span class="profile-role">Super Admin</span>

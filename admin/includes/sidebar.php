@@ -280,9 +280,22 @@ body.sb-collapsed #page-content-wrapper {
 <!-- Mobile Overlay -->
 <div class="sb-overlay" id="sbOverlay"></div>
 
+<?php
+// Dynamic Path Logic
+$base_path = '../';
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false) {
+    $base_path = '../../';
+}
+
+// Active State Logic
+$current_page = basename($_SERVER['PHP_SELF']);
+$is_manage_cat = ($current_page == 'manage-category.php');
+$is_add_cat = ($current_page == 'add-category.php');
+$is_products_group = ($is_manage_cat || $is_add_cat);
+?>
 <nav id="amd-sidebar">
     <div class="sb-logo-area">
-        <img src="../../assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
+        <img src="<?php echo $base_path; ?>assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
     </div>
 
     <div class="sb-content" id="sidebarAccordion">
@@ -297,7 +310,7 @@ body.sb-collapsed #page-content-wrapper {
             </a>
             <div class="collapse" id="menuDashboard">
                 <ul class="sb-submenu">
-                    <li><a href="index.php" class="sb-link">Overview</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/index.php" class="sb-link">Overview</a></li>
                     <li><a href="#" class="sb-link">Analytics</a></li>
                     <li><a href="#" class="sb-link">Real-time</a></li>
                 </ul>
@@ -306,17 +319,17 @@ body.sb-collapsed #page-content-wrapper {
 
         <!-- Products Submenu -->
         <div class="sb-item" data-tooltip="Products">
-            <a href="#menuProducts" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
+            <a href="#menuProducts" class="sb-link <?php echo $is_products_group ? '' : 'collapsed'; ?>" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion" aria-expanded="<?php echo $is_products_group ? 'true' : 'false'; ?>">
                 <i class="fas fa-box sb-icon"></i>
                 <span class="sb-text">Products</span>
                 <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
-            <div class="collapse" id="menuProducts">
+            <div class="collapse <?php echo $is_products_group ? 'show' : ''; ?>" id="menuProducts">
                 <ul class="sb-submenu">
                     <li><a href="#" class="sb-link">All Products</a></li>
                     <li><a href="#" class="sb-link">Add New</a></li>
-                    <li><a href="../../admin/products/manage-category.php" class="sb-link">Manage Categories</a></li>
-                    <li><a href="../../admin/products/add-category.php" class="sb-link">Add Category</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/products/manage-category.php" class="sb-link <?php echo $is_manage_cat ? 'active text-warning' : ''; ?>">Manage Categories</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/products/add-category.php" class="sb-link <?php echo $is_add_cat ? 'active text-warning' : ''; ?>">Add Category</a></li>
                 </ul>
             </div>
         </div>

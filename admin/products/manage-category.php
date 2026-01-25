@@ -21,6 +21,8 @@ if (isset($_GET['delete'])) {
 // Fetch Categories
 $sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
 $result = $conn->query($sql);
+
+$page_title = 'Product Categories';
 ?>
 <!DOCTYPE html>
 <html lang="en">

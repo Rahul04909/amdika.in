@@ -58,6 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_msg = "Error: " . $conn->error;
     }
 }
+
+$page_title = 'Add New Category';
 ?>
 <!DOCTYPE html>
 <html lang="en">
