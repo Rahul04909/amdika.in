@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'includes/session_config.php';
 require_once '../database/db_config.php';
 
 // Check if already logged in
