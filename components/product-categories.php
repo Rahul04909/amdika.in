@@ -224,76 +224,58 @@
     </div>
 </section>
 
-<!-- Script for Autoplay and Horizontal Scroll -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const scrollContainer = document.getElementById('categoryScrollContainer');
-        const scrollLeftBtn = document.getElementById('catScrollLeftBtn');
-        const scrollRightBtn = document.getElementById('catScrollRightBtn');
-        
-        // Configuration
-        const scrollSpeed = 2; // Pixels per interval (Smooth continuous feel)
-        const intervalTime = 30; // Milliseconds
-        let isAutoScrolling = true;
-        let animationId;
+        const slider = document.getElementById('categoryScrollContainer');
+        const prevBtn = document.getElementById('catScrollLeftBtn');
+        const nextBtn = document.getElementById('catScrollRightBtn');
 
-        // Clone items for infinite scroll effect (optional, or just bounce back)
-        // For simplicity, we will just scroll and reset when reaching end
-        
-        // Autoplay Function
-        const autoScroll = () => {
-            if (!isAutoScrolling) return;
+        if (!slider) return;
 
-             // Check if we've reached the end
-             if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1) {
-                // If at end, smoothly scroll back to start
-                // Or snap back: scrollContainer.scrollLeft = 0;
-                 scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-                 
-                 // Pause briefly after reset then continue
-                 isAutoScrolling = false;
-                 setTimeout(() => {
-                     isAutoScrolling = true;
-                     autoScroll();
-                 }, 1000);
-                 return;
-            }
-
-            scrollContainer.scrollLeft += 1; // Slow constant scroll
-            animationId = requestAnimationFrame(autoScroll);
+        // Scroll Amount matches item width + gap
+        const getScrollAmount = () => {
+            // First item width + gap (20px defined in CSS)
+            const item = slider.querySelector('.category-item');
+            return item ? item.getBoundingClientRect().width + 20 : 200;
         };
 
-        // Start Auto Scroll
-        // Use Interval for consistent speed control instead of rAF which might be too fast
-        let autoScrollInterval = setInterval(() => {
-            if (isAutoScrolling) {
-                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1) {
-                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    scrollContainer.scrollLeft += 1;
-                }
-            }
-        }, 20); // Adjust speed here
-
-
-        // Button Controls
-        if(scrollLeftBtn && scrollRightBtn) {
-            scrollLeftBtn.addEventListener('click', function() {
-                scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
-            });
-
-            scrollRightBtn.addEventListener('click', function() {
-                scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        // Navigation
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
             });
         }
 
-        // Pause on Hover
-        scrollContainer.addEventListener('mouseenter', () => {
-            isAutoScrolling = false;
-        });
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
+        }
 
-        scrollContainer.addEventListener('mouseleave', () => {
-             isAutoScrolling = true;
-        });
+        // Autoplay Logic
+        let autoplayInterval;
+        const startAutoplay = () => {
+            autoplayInterval = setInterval(() => {
+                // Check if we are near the end
+                if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                    // Reset to start
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Scroll by one item
+                    slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+                }
+            }, 3000); // 3 Seconds per slide
+        };
+
+        const stopAutoplay = () => {
+            clearInterval(autoplayInterval);
+        };
+
+        // Initialize
+        startAutoplay();
+
+        // Pause on Hover
+        slider.addEventListener('mouseenter', stopAutoplay);
+        slider.addEventListener('mouseleave', startAutoplay);
     });
 </script>
