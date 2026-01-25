@@ -17,6 +17,9 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/amdika-logo.png">
 </head>
 <body>
 
