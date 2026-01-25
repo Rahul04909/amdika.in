@@ -1,242 +1,341 @@
 <style>
-/* --- Top Deals Component --- */
-.top-deals-section {
-    font-family: 'Poppins', sans-serif;
+/* --- Top Deals Widgets (Amazon Style) --- */
+.top-deals-container {
+    background-color: transparent; /* Container background transparent to let cards show */
 }
 
-/* Matching styles from Product Categories */
-.container-custom-rounded {
-    border-radius: 12px;
-}
-
-.border-gold {
-    border: 1px solid rgba(212, 160, 23, 0.2);
-}
-
-.top-deals-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #333;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-.top-deals-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 4px;
-    background-color: var(--accent-gold, #D4A017); /* Match theme gold */
-    border-radius: 2px;
-}
-
-.deals-scroll-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    padding: 20px 5px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-behavior: smooth;
-}
-
-.deals-scroll-container::-webkit-scrollbar {
-    display: none;
-}
-
-.deal-card {
-    flex: 0 0 250px;
-    height: 380px;
+/* Widget Card */
+.td-widget-card {
     background-color: #fff;
-    border-radius: 125px 125px 0 0;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #e0e0e0;
+    padding: 20px 20px 15px; /* Added 15px bottom padding */
+    height: 100%;
+    border: 1px solid #ddd;   /* Light gray border like screenshot */
     display: flex;
     flex-direction: column;
 }
 
-.deal-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+.td-widget-title {
+    font-size: 21px;          /* Larger title like "Best Sellers..." */
+    font-weight: 700;
+    color: #0F1111;           /* Amazon dark text */
+    margin-bottom: 10px;
+    line-height: 1.3;
 }
 
-.deal-image-wrapper {
+/* "See more" link */
+.td-see-more {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 13px;
+    color: #007185;
+    text-decoration: none;
+    font-weight: 500;
+}
+.td-see-more:hover {
+    color: #c7511f;
+    text-decoration: underline;
+}
+
+/* --- Widget Type 1: Single Hero + Thumbnails (Best Sellers) --- */
+.td-hero-img-wrapper {
     width: 100%;
-    height: 72%; /* Increased height to reduce whitespace below */
-    position: relative;
-    border-radius: 125px 125px 0 0;
-    overflow: hidden;
-    background-color: #f4f4f4;
-}
-
-.deal-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.deal-card:hover .deal-image {
-    transform: scale(1.05);
-}
-
-.deal-content {
-    /* Position relative to flow in the flex container */
-    position: relative;
-    width: 100%;
+    margin-bottom: 1px;
     text-align: center;
-    background: transparent;
-    padding: 0;
-    z-index: 2;
-    flex-grow: 1; /* Fills remaining space */
+}
+.td-hero-img {
+    max-width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+}
+.td-product-desc {
+    font-size: 13px;
+    color: #0F1111;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+.td-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.td-price-symbol {
+    font-size: 12px;
+    position: relative;
+    top: -5px;
+}
+.td-price-whole {
+    font-size: 21px; /* Emphasized price */
+    font-weight: 500;
+}
+.td-price-fraction {
+    font-size: 12px;
+    position: relative;
+    top: -5px;
+}
+.td-mrp {
+    font-size: 12px;
+    color: #565959;
+    text-decoration: line-through;
+}
+.td-thumbnails-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+.td-thumb-box {
+    border: 1px solid #a8a8a8;
+    border-radius: 4px;
+    padding: 2px;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: auto;
+}
+.td-thumb-img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.deal-title {
-    color: #333;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-shadow: none;
-    margin: 0;
+/* --- Widget Type 2: 2x2 Grid (Keep Shopping / Discounts) --- */
+.td-grid-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px; /* Negative margin for gaps */
+}
+.td-grid-col {
+    width: 50%;
+    padding: 0 5px 25px 5px; /* Bottom padding for spacing */
+    box-sizing: border-box;
+}
+.td-grid-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+}
+.td-grid-img-wrapper {
+    height: 120px; /* Uniform height for grid images */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+.td-grid-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure full image is seen */
+    align-self: center; /* Vertical center */
+}
+.td-grid-label {
+    font-size: 12px;
+    color: #0F1111;
+    line-height: 1.3;
+}
+.td-grid-price {
+    font-size: 15px; /* Price below image */
+    font-weight: 500;
+    color: #0F1111;
 }
 
-.deal-price-bar {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    width: 100%;
-    background-color: #c0392b;
-    color: white;
-    text-align: center;
-    padding: 8px 0; /* Slightly reduced padding */
-    font-size: 1.1rem;
-    font-weight: 700;
-    z-index: 3;
-}
-
-.deal-price-bar small {
-    font-size: 0.8rem;
-    font-weight: 400;
-    margin-right: 3px;
-    opacity: 0.9;
-}
-
-.deal-card.orange-border {
-    border: 2px solid var(--accent-gold, #D4A017);
-}
-
-@media (min-width: 992px) {
-    .deals-scroll-container {
-        justify-content: center;
-        flex-wrap: wrap;
-        overflow-x: visible;
+/* Mobile Adjustments */
+@media (max-width: 767px) {
+    .td-widget-card {
+        margin-bottom: 15px; /* Spacing between stacked cards */
+        height: auto;
     }
-    
-    .deal-card {
-        flex: 0 0 calc(20% - 20px);
-        max-width: 250px;
-        margin-bottom: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .deal-card {
-        flex: 0 0 200px;
-        height: 320px;
-        border-radius: 100px 100px 0 0; /* Adjusted for narrower card */
-    }
-    
-    .deal-image-wrapper {
-        border-radius: 100px 100px 0 0;
-    }
-
-    .top-deals-title {
-        font-size: 1.5rem;
+    .td-hero-img {
+        max-height: 200px;
     }
 }
 </style>
 
-<section class="top-deals-section mt-4 mb-5">
-    <div class="container container-custom-rounded bg-white p-4 shadow-sm border-gold position-relative">
-        <div class="text-center mb-4">
-            <h2 class="top-deals-title">Our Top Deals</h2>
-        </div>
+<section class="top-deals-section mb-4">
+    <div class="container top-deals-container p-0">
+        <div class="row g-3"> <!-- Bootstrap gutter -->
+            
+            <!-- Widget 1: Best Sellers (Single Large + Thumbs) -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="td-widget-card">
+                    <h3 class="td-widget-title">Best Sellers in Home & Kitchen</h3>
+                    
+                    <div class="td-hero-img-wrapper">
+                        <img src="assets/images/demo-data/product.jpg" alt="Garbage Bags" class="td-hero-img">
+                    </div>
+                    
+                    <div class="td-product-desc">
+                        Amazon Brand - Presto! Garbage Bags | Medium | 180 Count
+                    </div>
+                    
+                    <div class="td-price-block">
+                        <span class="td-price-symbol">₹</span>
+                        <span class="td-price-whole">335</span>
+                        <span class="td-mrp">M.R.P: ₹480.00</span>
+                    </div>
 
-        <div class="deals-scroll-container pb-1">
-            <!-- Card 1: Sofas -->
-            <a href="#" class="deal-card text-decoration-none orange-border">
-                <div class="deal-image-wrapper">
-                    <!-- Using placeholder or path provided by user if available. Using placeholder for now. -->
-                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sofas" class="deal-image">
-                </div>
-                <div class="deal-content">
-                    <h3 class="deal-title">Sofas</h3>
-                </div>
-                <div class="deal-price-bar">
-                    <small>from</small> ₹9,999
-                </div>
-            </a>
+                    <!-- Thumbnails Row -->
+                    <div class="td-thumbnails-row">
+                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
+                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
+                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
+                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
+                    </div>
 
-            <!-- Card 2: Recliner -->
-            <a href="#" class="deal-card text-decoration-none orange-border">
-                <div class="deal-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Recliner" class="deal-image">
+                    <a href="#" class="td-see-more">See more</a>
                 </div>
-                <div class="deal-content">
-                    <h3 class="deal-title">Recliner</h3>
-                </div>
-                <div class="deal-price-bar">
-                    <small>from</small> ₹14,999
-                </div>
-            </a>
+            </div>
 
-            <!-- Card 3: Study Desks -->
-            <a href="#" class="deal-card text-decoration-none orange-border">
-                <div class="deal-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Study Desks" class="deal-image">
-                </div>
-                <div class="deal-content">
-                    <h3 class="deal-title">Study Desks</h3>
-                </div>
-                <div class="deal-price-bar">
-                    <small>from</small> ₹2,999
-                </div>
-            </a>
+            <!-- Widget 2: Keep Shopping For (2x2 Grid with Prices) -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="td-widget-card">
+                    <h3 class="td-widget-title">Keep shopping for</h3>
+                    
+                    <div class="td-grid-row">
+                        <!-- Item 1 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Samsung S23" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Samsung Galaxy S...</div>
+                                <div class="td-grid-price">₹74,999</div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="iQOO 15" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">iQOO 15 (Legend...</div>
+                                <div class="td-grid-price">₹72,998</div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="OnePlus 15R" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">OnePlus 15R | 12...</div>
+                                <div class="td-grid-price">₹47,998</div>
+                            </div>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="iPhone 15" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">iPhone 15 256 GB...</div>
+                                <div class="td-grid-price">₹99,000</div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Card 4: Centre Tables -->
-            <a href="#" class="deal-card text-decoration-none orange-border">
-                <div class="deal-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Centre Tables" class="deal-image">
+                    <a href="#" class="td-see-more">See more</a>
                 </div>
-                <div class="deal-content">
-                    <h3 class="deal-title">Centre Tables</h3>
-                </div>
-                <div class="deal-price-bar">
-                    <small>from</small> ₹1,999
-                </div>
-            </a>
+            </div>
 
-            <!-- Card 5: Shoe Racks -->
-            <a href="#" class="deal-card text-decoration-none orange-border">
-                <div class="deal-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Shoe Racks" class="deal-image">
+            <!-- Widget 3: Discount Category A (2x2 Grid Images Only) -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="td-widget-card">
+                    <h3 class="td-widget-title">Up to 60% off | Cookware & tools</h3>
+                    
+                    <div class="td-grid-row">
+                        <!-- Item 1 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Cookware" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Cookware</div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Knives" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Knives & Tools</div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Colanders" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Colanders</div>
+                            </div>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Mugs" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Mugs & Cups</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="td-see-more">See more</a>
                 </div>
-                <div class="deal-content">
-                    <h3 class="deal-title">Shoe Racks</h3>
+            </div>
+
+            <!-- Widget 4: Discount Category B (2x2 Grid Images Only) -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="td-widget-card">
+                    <h3 class="td-widget-title">Up to 70% off | Kitchen products</h3>
+                    
+                    <div class="td-grid-row">
+                        <!-- Item 1 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Bottles" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Water Bottles</div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Spice Racks" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Spice Racks</div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Choppers" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Choppers</div>
+                            </div>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="td-grid-col">
+                            <div class="td-grid-item">
+                                <div class="td-grid-img-wrapper">
+                                    <img src="assets/images/demo-data/product.jpg" alt="Tools" class="td-grid-img">
+                                </div>
+                                <div class="td-grid-label">Kitchen Tools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="td-see-more">See more</a>
                 </div>
-                <div class="deal-price-bar">
-                    <small>Upto</small> 50% off
-                </div>
-            </a>
+            </div>
+
         </div>
     </div>
 </section>
