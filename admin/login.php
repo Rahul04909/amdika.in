@@ -21,10 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             // Password is correct
+            session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_id'] = $row['id'];
             $_SESSION['admin_username'] = $row['username'];
             
+            session_write_close();
             header("Location: index.php");
             exit;
         } else {
