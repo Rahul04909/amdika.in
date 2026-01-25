@@ -315,8 +315,8 @@ body.sb-collapsed #page-content-wrapper {
                 <ul class="sb-submenu">
                     <li><a href="#" class="sb-link">All Products</a></li>
                     <li><a href="#" class="sb-link">Add New</a></li>
-                    <li><a href="#" class="sb-link">Categories</a></li>
-                    <li><a href="#" class="sb-link">Inventory</a></li>
+                    <li><a href="../../admin/products/manage-category.php" class="sb-link">Manage Categories</a></li>
+                    <li><a href="../../admin/products/add-category.php" class="sb-link">Add Category</a></li>
                 </ul>
             </div>
         </div>
