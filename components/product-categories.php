@@ -121,105 +121,43 @@
 
         <!-- Categories Slider Container -->
         <div id="categoryScrollContainer" class="category-scroll-container">
-            <!-- Category Item 1 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Wall Decor" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Wall Decor</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 2 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Lighting" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Lighting & Lamps</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 3 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Home Decor" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Home Furnishings</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 4 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Beauty" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Beauty</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 5 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Sports" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Decorative Showpieces</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 6 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Candles" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Candels & Frangnences</h6>
-                </a>
-            </div>
+            <?php
+            // Include DB Config (using __DIR__ to be safe relative to this file)
+            require_once __DIR__ . '/../database/db_config.php';
             
-            <!-- Category Item 7 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Table Decor" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Table Decor</h6>
-                </a>
-            </div>
-
-             <!-- Category Item 8 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Religious" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Religious Items</h6>
-                </a>
-            </div>
-
-            <!-- Category Item 9 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Storage" class="img-fluid rounded-circle">
-                    </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Storage & Organizers</h6>
-                </a>
-            </div>
+            $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
+            $cat_result = $conn->query($cat_sql);
             
-            <!-- Category Item 10 -->
-            <div class="category-item">
-                <a href="#" class="category-card d-block text-center p-3 rounded h-100">
-                    <div class="cat-img-wrapper mb-3 mx-auto">
-                        <img src="assets/images/demo-data/product.jpg" alt="Seasonal" class="img-fluid rounded-circle">
+            if ($cat_result && $cat_result->num_rows > 0) {
+                while($cat = $cat_result->fetch_assoc()) {
+                    $cat_name = htmlspecialchars($cat['name']);
+                    $cat_slug = htmlspecialchars($cat['slug']); // Future use for links
+                    
+                    // Image Path Handling
+                    // DB stores 'assets/images/categories/...'
+                    // If empty or file missing, use placeholder.
+                    // Since included in index.php (root), path is relative to root.
+                    $img_src = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
+                    
+                    // Fallback if file doesn't exist (optional, expensive to check every file on render? 
+                    // Browsers handle 404s, but file_exists check prevents broken icons if desired. 
+                    // Let's rely on valid paths from Admin)
+                    ?>
+                    <div class="category-item">
+                        <a href="products.php?category=<?php echo $cat_slug; ?>" class="category-card d-block text-center p-3 rounded h-100">
+                            <div class="cat-img-wrapper mb-3 mx-auto">
+                                <img src="<?php echo $img_src; ?>" alt="<?php echo $cat_name; ?>" class="img-fluid rounded-circle" style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                            <h6 class="cat-name fw-bold text-secondary mb-0"><?php echo $cat_name; ?></h6>
+                        </a>
                     </div>
-                    <h6 class="cat-name fw-bold text-secondary mb-0">Seasonal Decor</h6>
-                </a>
-            </div>
+                    <?php
+                }
+            } else {
+                // Optional: Fallback if no categories found (or show nothing)
+                echo '<p class="text-center w-100 text-muted">No categories found.</p>';
+            }
+            ?>
         </div>
     </div>
 </section>
