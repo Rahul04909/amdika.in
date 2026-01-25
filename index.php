@@ -12,6 +12,9 @@
 <!-- frontned top deals product showcase -->
 <?php include 'components/top-deals.php'; ?>
 
+<!-- Garden Category Products -->
+<?php include 'components/category-products.php'; ?>
+
 <!-- Simple Footer for closing tags -->
 <?php include 'includes/footer.php'; ?>
 
