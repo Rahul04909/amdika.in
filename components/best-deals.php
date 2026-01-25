@@ -205,11 +205,17 @@
     .deals-banner-area {
         width: 100%;
         height: auto;
-        max-height: 200px; /* Limit height on mobile */
+        /* Removed max-height to allow full banner visibility without overlap */
+        margin-top: 15px; /* Add spacing between slider and banner */
+        border-radius: 4px;
+        overflow: hidden;
     }
 
     .deals-banner-img {
+        width: 100%;
+        height: auto; /* Allow natural height */
         object-fit: cover;
+        display: block; /* Remove inline-block spacing */
     }
 }
 
