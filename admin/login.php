@@ -41,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Amadika</title>
-    <!-- Content Security Policy to block injected scripts -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://via.placeholder.com;">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Content Security Policy: Strict, no external scripts -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+    <!-- Bootstrap 5 CSS (Local) -->
+    <link href="../assets/vendor/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome (Local CSS) -->
+    <link rel="stylesheet" href="../assets/vendor/css/all.min.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/amdika-logo.png">
     <!-- Custom CSS -->
@@ -275,7 +275,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (Local) -->
+    <script src="../assets/vendor/js/bootstrap.bundle.min.js"></script>
     <script>
         function togglePassword() {
             var passwordInput = document.getElementById("password");
