@@ -282,7 +282,7 @@ body.sb-collapsed #page-content-wrapper {
 
 <nav id="amd-sidebar">
     <div class="sb-logo-area">
-        <img src="../assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
+        <img src="../../assets/images/amdika-logo.png" alt="Amadika" class="sb-logo-img">
     </div>
 
     <div class="sb-content" id="sidebarAccordion">
