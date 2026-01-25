@@ -1,7 +1,7 @@
 <style>
 /* --- Category Products Component --- */
 .category-products-section {
-    background-color: #f1f3f6; /* Common e-commerce background */
+    background-color: #fff; /* Matched with Best Deals & Categories */
     padding: 16px 0;
 }
 
