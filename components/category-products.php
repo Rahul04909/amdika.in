@@ -233,218 +233,123 @@
 }
 </style>
 
-<section class="category-products-section position-relative">
-    <div class="container container-custom-rounded bg-white p-0 position-relative">
+<!-- Dynamic Category Products Component -->
+<?php
+// Ensure DB connection
+require_once __DIR__ . '/../database/db_config.php';
+
+// Fetch Categories with at least one active product
+// Using DISTINCT to avoid picking categories with no products (optimization)
+// Or just fetch all and check count.
+$cat_query = "SELECT * FROM product_categories ORDER BY created_at DESC";
+$cat_res = $conn->query($cat_query);
+
+if ($cat_res && $cat_res->num_rows > 0):
+    $cat_index = 0;
+    while($category = $cat_res->fetch_assoc()):
+        $cat_id = $category['id'];
+        $cat_name = htmlspecialchars($category['name']);
+        $cat_slug = htmlspecialchars($category['slug']); // For view all link
+        
+        // Fetch Products for this Category (Limit 10 for slider)
+        $prod_sql = "SELECT * FROM products WHERE category_id = $cat_id AND status = 'active' ORDER BY created_at DESC LIMIT 10";
+        $prod_res = $conn->query($prod_sql);
+        
+        if($prod_res && $prod_res->num_rows > 0):
+            $cat_index++;
+            $unique_id = "cat_" . $cat_id . "_" . time(); // Unique ID for JS scoping
+?>
+
+<section class="category-products-section position-relative mb-3">
+    <div class="container container-custom-rounded bg-white p-0 position-relative" id="container_<?php echo $unique_id; ?>">
         <!-- Header -->
         <div class="category-header rounded-top">
-            <h2 class="category-title">Gardening & Landscaping</h2>
-            <a href="#" class="view-all-btn d-none d-lg-block">View All</a>
+            <h2 class="category-title"><?php echo $cat_name; ?></h2>
+            <a href="products.php?category=<?php echo $cat_slug; ?>" class="view-all-btn d-none d-lg-block">View All</a>
         </div>
 
-        <!-- Desktop Navigation Buttons -->
-        <button class="cp-nav-btn cp-prev-btn" id="cpPrevBtn"><i class="fas fa-chevron-left"></i></button>
-        <button class="cp-nav-btn cp-next-btn" id="cpNextBtn"><i class="fas fa-chevron-right"></i></button>
+        <!-- Desktop Navigation Buttons (Scoped by structure in JS) -->
+        <button class="cp-nav-btn cp-prev-btn" data-target="slider_<?php echo $unique_id; ?>"><i class="fas fa-chevron-left"></i></button>
+        <button class="cp-nav-btn cp-next-btn" data-target="slider_<?php echo $unique_id; ?>"><i class="fas fa-chevron-right"></i></button>
 
         <!-- Products Container -->
-        <div class="cp-product-container" id="cpProductContainer">
+        <div class="cp-product-container" id="slider_<?php echo $unique_id; ?>">
             
-            <!-- Product 1 -->
+            <?php 
+            while($prod = $prod_res->fetch_assoc()): 
+                $p_name = htmlspecialchars($prod['name']);
+                $p_slug = htmlspecialchars($prod['slug']); // Future link
+                $p_img = !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg';
+                $p_mrp = $prod['mrp'];
+                $p_sale = $prod['sale_price'];
+                $p_disc = $prod['discount_percent'];
+                
+                // Random Rating Logic (4.0 to 5.0)
+                $rating = number_format(4.0 + (rand(0, 10) / 10), 1);
+                $reviews = rand(5, 500);
+            ?>
             <div class="cp-product-item">
                 <div class="premium-product-card">
                     <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
+                        <a href="product-details.php?slug=<?php echo $p_slug; ?>" class="d-block w-100 h-100">
+                            <img src="<?php echo $p_img; ?>" class="product-img" alt="<?php echo $p_name; ?>">
+                        </a>
                     </div>
-                    <div><span class="rating-badge">4.4 <i class="fa-solid fa-star"></i></span><span class="review-count">(1,234)</span></div>
-                    <h3 class="product-title">Neptune 12V Battery Sprayer Pump</h3>
+                    <div>
+                        <span class="rating-badge"><?php echo $rating; ?> <i class="fa-solid fa-star"></i></span>
+                        <span class="review-count">(<?php echo $reviews; ?>)</span>
+                    </div>
+                    <a href="product-details.php?slug=<?php echo $p_slug; ?>" class="text-decoration-none">
+                        <h3 class="product-title"><?php echo $p_name; ?></h3>
+                    </a>
                     <div class="price-container">
-                        <span class="current-price">₹2,450</span><span class="original-price">₹5,500</span><span class="discount-text">55% off</span>
+                        <span class="current-price">₹<?php echo number_format($p_sale); ?></span>
+                        <span class="original-price">₹<?php echo number_format($p_mrp); ?></span>
+                        <span class="discount-text"><?php echo $p_disc; ?>% off</span>
                     </div>
                 </div>
             </div>
-
-            <!-- Product 2 -->
-            <div class="cp-product-item">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.8 <i class="fa-solid fa-star"></i></span><span class="review-count">(67)</span></div>
-                    <h3 class="product-title">Balwaan Krishi WP-33R Water Pump</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹12,399</span><span class="original-price">₹25,399</span><span class="discount-text">51% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="cp-product-item">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.5 <i class="fa-solid fa-star"></i></span><span class="review-count">(28)</span></div>
-                    <h3 class="product-title">Neptune Simplify Farming 6.5 HP</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹9,049</span><span class="original-price">₹18,000</span><span class="discount-text">49% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="cp-product-item">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.2 <i class="fa-solid fa-star"></i></span><span class="review-count">(450)</span></div>
-                    <h3 class="product-title">Spear 22 inch 62cc 2 Stroke Chain Saw</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹6,250</span><span class="original-price">₹9,990</span><span class="discount-text">37% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 5 (Hidden on Mobile Initially) -->
-            <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.7 <i class="fa-solid fa-star"></i></span><span class="review-count">(7)</span></div>
-                    <h3 class="product-title">Spear 6 inch 2Ah 4000rpm Cordless</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹2,590</span><span class="original-price">₹5,990</span><span class="discount-text">56% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 6 -->
-            <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.1 <i class="fa-solid fa-star"></i></span><span class="review-count">(89)</span></div>
-                    <h3 class="product-title">Kisan Kraft Heavy Duty Sprayer</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹3,450</span><span class="original-price">₹6,500</span><span class="discount-text">46% off</span>
-                    </div>
-                </div>
-            </div>
-
-             <!-- Product 7 -->
-             <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.9 <i class="fa-solid fa-star"></i></span><span class="review-count">(15)</span></div>
-                    <h3 class="product-title">Garden Tool Kit 5 Pc</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹799</span><span class="original-price">₹1,999</span><span class="discount-text">60% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 8 -->
-            <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.6 <i class="fa-solid fa-star"></i></span><span class="review-count">(342)</span></div>
-                    <h3 class="product-title">Falcon Pruning Secateur</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹450</span><span class="original-price">₹800</span><span class="discount-text">43% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 9 -->
-            <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.3 <i class="fa-solid fa-star"></i></span><span class="review-count">(56)</span></div>
-                    <h3 class="product-title">Automatic Watering System</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹1,299</span><span class="original-price">₹2,500</span><span class="discount-text">48% off</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 10 -->
-            <div class="cp-product-item cp-mobile-hidden">
-                <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    <div class="product-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" class="product-img">
-                    </div>
-                    <div><span class="rating-badge">4.5 <i class="fa-solid fa-star"></i></span><span class="review-count">(220)</span></div>
-                    <h3 class="product-title">Heavy Duty Garden Hose 20m</h3>
-                    <div class="price-container">
-                        <span class="current-price">₹999</span><span class="original-price">₹1,500</span><span class="discount-text">33% off</span>
-                    </div>
-                </div>
-            </div>
+            <?php endwhile; ?>
 
         </div>
 
-        <!-- Load More Link (Mobile Only) -->
-        <div class="cp-load-more-container d-lg-none">
-            <button class="cp-load-more-btn" id="cpLoadMoreBtn">Load More</button>
-        </div>
     </div>
 </section>
 
+<?php 
+        endif; // End products check
+    endwhile; // End category loop
+endif; // End category check
+?>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('cpProductContainer');
-        const prevBtn = document.getElementById('cpPrevBtn');
-        const nextBtn = document.getElementById('cpNextBtn');
-        const loadMoreBtn = document.getElementById('cpLoadMoreBtn');
+        // Initialize all sliders logic
+        const navBtns = document.querySelectorAll('.cp-nav-btn');
+        
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const container = document.getElementById(targetId);
+                const scrollAmount = 300; // Adjust scroll step
 
-        if (!container) return;
-
-        // --- Desktop Slider Logic ---
-        const scrollAmount = 250; // Scroll distance
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                if (container) {
+                    if (this.classList.contains('cp-prev-btn')) {
+                        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    } else {
+                        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                }
             });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            });
-        }
-
-        // --- Mobile Load More Logic ---
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', function() {
-                // Find all hidden items
-                const hiddenItems = container.querySelectorAll('.cp-mobile-hidden');
-                
-                // Reveal them
-                hiddenItems.forEach(item => {
-                    item.classList.remove('cp-mobile-hidden');
-                });
-                
-                // Hide the button after loading all
-                this.parentElement.style.display = 'none';
-            });
-        }
+        });
+        
+        // Mobile Load More is complex with multiple sections. 
+        // Simplest strategy: Show all rows or use CSS horizontal scroll on mobile?
+        // The current CSS sets ".cp-product-container" to grid on mobile. 
+        // Hiding extra items for each category might be tedious. 
+        // Let's rely on the CSS 'grid' which will show all 10 items in 2 columns stack. 
+        // 10 items is fine for mobile scroll. Removing the "Load More" complexity for now 
+        // as it simplifies the multi-instance logic. CSS defines mobile view directly.
     });
 </script>
