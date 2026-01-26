@@ -205,30 +205,172 @@ $disc = $product['discount_percent'];
                     </div>
                 </div>
                 
-                <!-- Ratings & Reviews Stub -->
-                <div class="section-box">
+                <!-- Ratings & Reviews -->
+                <?php
+                // Review Submission Logic
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+                    $r_name = $conn->real_escape_string($_POST['r_name']);
+                    $r_email = $conn->real_escape_string($_POST['r_email']);
+                    $r_rating = intval($_POST['r_rating']);
+                    $r_message = $conn->real_escape_string($_POST['r_message']);
+                    $prod_id = $product['id'];
+
+                    // Image Upload
+                    $r_image_path = NULL;
+                    if (isset($_FILES['r_image']) && $_FILES['r_image']['error'] == 0) {
+                        $target_dir = "assets/images/reviews/";
+                        if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+                        $ext = strtolower(pathinfo($_FILES["r_image"]["name"], PATHINFO_EXTENSION));
+                        $new_name = "rev_" . time() . "_" . rand(100,999) . "." . $ext;
+                        if(move_uploaded_file($_FILES["r_image"]["tmp_name"], $target_dir . $new_name)){
+                            $r_image_path = "assets/images/reviews/" . $new_name;
+                        }
+                    }
+
+                    // Insert Review (Auto-Approved based on request to avoid status blocking)
+                    $is_sql = "INSERT INTO product_reviews (product_id, name, email, rating, message, image, status) VALUES 
+                              ($prod_id, '$r_name', '$r_email', $r_rating, '$r_message', '$r_image_path', 'approved')";
+                    
+                    if ($conn->query($is_sql)) {
+                        echo "<script>alert('Review submitted successfully!'); window.location.href='product-details.php?slug=$slug';</script>";
+                    } else {
+                        echo "<script>alert('Error submitting review.');</script>";
+                    }
+                }
+
+                // Fetch Reviews
+                $rev_sql = "SELECT * FROM product_reviews WHERE product_id = " . $product['id'] . " ORDER BY created_at DESC";
+                $rev_result = $conn->query($rev_sql);
+                $review_count = $rev_result->num_rows;
+                
+                // Calculate Avg
+                $avg_sql = "SELECT AVG(rating) as avg_rating FROM product_reviews WHERE product_id = " . $product['id'];
+                $avg_res = $conn->query($avg_sql)->fetch_assoc();
+                $avg_rating = $avg_res['avg_rating'] ? number_format($avg_res['avg_rating'], 1) : '0.0';
+                ?>
+                
+                <div class="section-box" id="reviews-section">
                     <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-                         <h3 class="section-title mb-0 border-0 p-0">Ratings & Reviews</h3>
-                         <button class="btn btn-outline-primary btn-sm">Rate Product</button>
+                         <div>
+                             <h3 class="section-title mb-0 border-0 p-0">Ratings & Reviews</h3>
+                             <div class="mt-1">
+                                <span class="rating-badge" style="background:#388e3c; padding:2px 8px; font-size:14px;"><?php echo $avg_rating; ?> <i class="fas fa-star"></i></span>
+                                <span class="text-muted ms-2" style="font-size:14px;"><?php echo $review_count; ?> Reviews</span>
+                             </div>
+                         </div>
+                         <button class="btn btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">Rate Product</button>
                     </div>
                     
-                    <div class="review-item">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="rating-badge" style="background:#388e3c; padding:0 4px; font-size:10px;">5 <i class="fas fa-star"></i></span>
-                            <span class="fw-bold" style="font-size:14px;">Excellent Product!</span>
+                    <?php if($review_count > 0): ?>
+                        <?php while($row = $rev_result->fetch_assoc()): ?>
+                            <div class="review-item">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="rating-badge" style="background:#388e3c; padding:0 4px; font-size:10px;"><?php echo $row['rating']; ?> <i class="fas fa-star"></i></span>
+                                    <span class="fw-bold" style="font-size:14px;"><?php echo htmlspecialchars($row['name']); ?></span>
+                                </div>
+                                <p class="mt-2 mb-1 text-muted" style="font-size:13px;"><?php echo nl2br(htmlspecialchars($row['message'])); ?></p>
+                                <?php if(!empty($row['image'])): ?>
+                                    <div class="mt-2">
+                                        <img src="<?php echo $row['image']; ?>" style="max-height:80px; border-radius:4px; border:1px solid #eee;">
+                                    </div>
+                                <?php endif; ?>
+                                <div class="reviewer-name text-muted mt-2" style="font-size:11px;">
+                                    <i class="fas fa-check-circle text-success" style="font-size:10px;"></i> Certified Buyer • <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <div class="text-center py-4 text-muted">
+                            <i class="far fa-comment-dots fa-2x mb-2 opacity-50"></i>
+                            <p>No reviews yet. Be the first to rate this product!</p>
                         </div>
-                        <p class="mt-2 mb-1 text-muted" style="font-size:13px;">Really loved the quality of this product. Delivered on time and packaging was good.</p>
-                        <div class="reviewer-name text-muted">Rahul S. <i class="fas fa-check-circle text-success" style="font-size:10px;"></i> Certified Buyer</div>
-                    </div>
-                     <div class="review-item border-0">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="rating-badge" style="background:#388e3c; padding:0 4px; font-size:10px;">4 <i class="fas fa-star"></i></span>
-                            <span class="fw-bold" style="font-size:14px;">Value for money</span>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Review Modal -->
+                <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Rate this Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3 text-center">
+                                        <label class="form-label d-block fw-bold">Your Rating</label>
+                                        <div class="rating-stars" style="font-size: 2rem; color: #ddd; cursor: pointer;">
+                                            <i class="fas fa-star Star" data-value="1"></i>
+                                            <i class="fas fa-star Star" data-value="2"></i>
+                                            <i class="fas fa-star Star" data-value="3"></i>
+                                            <i class="fas fa-star Star" data-value="4"></i>
+                                            <i class="fas fa-star Star" data-value="5"></i>
+                                        </div>
+                                        <input type="hidden" name="r_rating" id="ratingValue" value="5" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="r_name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="r_email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Review (Optional)</label>
+                                        <textarea class="form-control" name="r_message" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Photo (Optional)</label>
+                                        <input type="file" class="form-control" name="r_image" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" name="submit_review" class="btn btn-warning text-white fw-bold">Submit Review</button>
+                                </div>
+                            </form>
                         </div>
-                        <p class="mt-2 mb-1 text-muted" style="font-size:13px;">Good product for this price range. Satisfied with the purchase.</p>
-                        <div class="reviewer-name text-muted">Amit K. <i class="fas fa-check-circle text-success" style="font-size:10px;"></i> Certified Buyer</div>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const stars = document.querySelectorAll('.Star');
+                        const ratingInput = document.getElementById('ratingValue');
+                        
+                        // Default to 5 star
+                        highlightStars(5);
+
+                        stars.forEach(star => {
+                            star.addEventListener('click', function() {
+                                const val = parseInt(this.getAttribute('data-value'));
+                                ratingInput.value = val;
+                                highlightStars(val);
+                            });
+                            
+                            star.addEventListener('mouseover', function() {
+                                const val = parseInt(this.getAttribute('data-value'));
+                                highlightStars(val);
+                            });
+
+                            star.addEventListener('mouseout', function() {
+                                highlightStars(parseInt(ratingInput.value));
+                            });
+                        });
+
+                        function highlightStars(count) {
+                            stars.forEach(s => {
+                                const v = parseInt(s.getAttribute('data-value'));
+                                if(v <= count) {
+                                    s.style.color = '#ffc107'; // Gold
+                                } else {
+                                    s.style.color = '#ddd'; // Gray
+                                }
+                            });
+                        }
+                    });
+                </script>
 
             </div>
         </div>
