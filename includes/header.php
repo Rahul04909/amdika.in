@@ -67,9 +67,14 @@
                         </a>
                         
                         <!-- Cart -->
-                        <a href="#" class="action-icon">
+                        <?php 
+                        // Ensure session is started if not already
+                        if(session_status() === PHP_SESSION_NONE) session_start();
+                        $cart_count = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
+                        ?>
+                        <a href="cart.php" class="action-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="icon-badge">2</span>
+                            <span class="icon-badge" id="headerCartCount"><?php echo $cart_count; ?></span>
                         </a>
 
                         <!-- User Account -->
@@ -119,3 +124,21 @@
 </header>
 <!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function updateCartCount() {
+        const badge = document.getElementById('headerCartCount');
+        if(!badge) return;
+        
+        fetch('includes/cart_actions.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'action=count'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                badge.textContent = data.count;
+            }
+        });
+    }
+</script>

@@ -171,8 +171,8 @@ $disc = $product['discount_percent'];
 
                 <!-- Desktop Buttons -->
                 <div class="action-btn-row">
-                    <button class="btn-cart"><i class="fas fa-shopping-cart me-2"></i> Add to Cart</button>
-                    <button class="btn-buy"><i class="fas fa-bolt me-2"></i> Buy Now</button>
+                    <button class="btn-cart" onclick="addToCart(<?php echo $product['id']; ?>)"><i class="fas fa-shopping-cart me-2"></i> Add to Cart</button>
+                    <button class="btn-buy" onclick="buyNow(<?php echo $product['id']; ?>)"><i class="fas fa-bolt me-2"></i> Buy Now</button>
                 </div>
             </div>
 
@@ -402,9 +402,10 @@ $disc = $product['discount_percent'];
 </div>
 
 <!-- Mobile Sticky Footer -->
+<!-- Mobile Sticky Footer -->
 <div class="mobile-footer-actions">
-    <button class="mobile-btn" style="background: #fff; color: #212121; border-top: 1px solid #f0f0f0;">Add to Cart</button>
-    <button class="mobile-btn" style="background: #fb641b;">Buy Now</button>
+    <button class="mobile-btn" style="background: #fff; color: #212121; border-top: 1px solid #f0f0f0;" onclick="addToCart(<?php echo $product['id']; ?>)">Add to Cart</button>
+    <button class="mobile-btn" style="background: #fb641b;" onclick="buyNow(<?php echo $product['id']; ?>)">Buy Now</button>
 </div>
 
 <?php include 'includes/footer.php'; ?>
@@ -436,4 +437,37 @@ $disc = $product['discount_percent'];
         img.style.transform = 'scale(1)';
         img.style.transformOrigin = 'center center';
     });
+
+    // Cart Functions
+    function addToCart(id) {
+        fetch('includes/cart_actions.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `action=add&product_id=${id}&quantity=1`
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert('Item added to cart!');
+                // Update badge if method exists
+                if(typeof updateCartCount === 'function') updateCartCount();
+            } else {
+                alert('Error adding to cart.');
+            }
+        });
+    }
+
+    function buyNow(id) {
+        fetch('includes/cart_actions.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `action=add&product_id=${id}&quantity=1`
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                window.location.href = 'cart.php';
+            }
+        });
+    }
 </script>
