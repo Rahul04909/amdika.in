@@ -326,10 +326,10 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             </a>
             <div class="collapse <?php echo $is_products_group ? 'show' : ''; ?>" id="menuProducts">
                 <ul class="sb-submenu">
-                    <li><a href="#" class="sb-link">All Products</a></li>
-                    <li><a href="#" class="sb-link">Add New</a></li>
-                    <li><a href="<?php echo $base_path; ?>admin/products/manage-category.php" class="sb-link <?php echo $is_manage_cat ? 'active text-warning' : ''; ?>">Manage Categories</a></li>
-                    <li><a href="<?php echo $base_path; ?>admin/products/add-category.php" class="sb-link <?php echo $is_add_cat ? 'active text-warning' : ''; ?>">Add Category</a></li>
+                    <li><a href="../../admin/products/manage-products.php" class="sb-link">All Products</a></li>
+                    <li><a href="../../admin/products/add-product.php" class="sb-link">Add New</a></li>
+                    <li><a href="../../admin/products/manage-category.php" class="sb-link <?php echo $is_manage_cat ? 'active text-warning' : ''; ?>">Manage Categories</a></li>
+                    <li><a href="../../admin/products/add-category.php" class="sb-link <?php echo $is_add_cat ? 'active text-warning' : ''; ?>">Add Category</a></li>
                 </ul>
             </div>
         </div>
