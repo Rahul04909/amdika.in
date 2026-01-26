@@ -140,6 +140,16 @@ $disc = $product['discount_percent'];
             color: #fff; border: none;
         }
     }
+    
+    /* Social Share */
+    .share-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+    .share-text { font-size: 14px; font-weight: 500; color: #878787; }
+    .share-btn { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: transform 0.2s; text-decoration: none; font-size: 16px; }
+    .share-btn:hover { transform: translateY(-3px); color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.15); }
+    .share-wa { background: #25D366; }
+    .share-fb { background: #1877F2; }
+    .share-tw { background: #1DA1F2; }
+    .share-pi { background: #E60023; }
 </style>
 
 <div class="container-fluid mt-3 mb-5 px-lg-4">
@@ -196,6 +206,20 @@ $disc = $product['discount_percent'];
                 </div>
 
                 <!-- Offers Block Removed -->
+
+                <!-- Social Sharing -->
+                <?php 
+                $curr_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                $enc_url = urlencode($curr_url);
+                $enc_title = urlencode($product['name']);
+                ?>
+                <div class="share-container">
+                    <span class="share-text">Share this:</span>
+                    <a href="https://api.whatsapp.com/send?text=<?php echo $enc_title . ' ' . $enc_url; ?>" target="_blank" class="share-btn share-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $enc_url; ?>" target="_blank" class="share-btn share-fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/intent/tweet?url=<?php echo $enc_url; ?>&text=<?php echo $enc_title; ?>" target="_blank" class="share-btn share-tw" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="http://pinterest.com/pin/create/button/?url=<?php echo $enc_url; ?>&description=<?php echo $enc_title; ?>" target="_blank" class="share-btn share-pi" title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                </div>
 
                 <!-- Specs / Description -->
                 <div class="section-box">
