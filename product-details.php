@@ -195,13 +195,7 @@ $disc = $product['discount_percent'];
                     <?php endif; ?>
                 </div>
 
-                <!-- Offers -->
-                <div class="offers-block">
-                    <div class="offers-title">Available offers</div>
-                    <div class="offer-item"><i class="fas fa-tag offer-tag mt-1"></i> <span><strong>Bank Offer</strong> 5% Unlimited Cashback on Axis Bank Credit Card</span></div>
-                    <div class="offer-item"><i class="fas fa-tag offer-tag mt-1"></i> <span><strong>Bank Offer</strong> 10% Off on SBI Credit Card transactions</span></div>
-                    <div class="offer-item"><i class="fas fa-tag offer-tag mt-1"></i> <span><strong>Partner Offer</strong> Buy this product and get 6 month subscription free</span></div>
-                </div>
+                <!-- Offers Block Removed -->
 
                 <!-- Specs / Description -->
                 <div class="section-box">
