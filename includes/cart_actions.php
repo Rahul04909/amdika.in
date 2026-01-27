@@ -23,7 +23,11 @@ if ($action === 'add') {
         // Check if item exists in cart
         $stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE session_id = ? AND product_id = ?");
         $stmt->bind_param("si", $session_id, $product_id);
-        $stmt->execute();
+        
+        if (!$stmt->execute()) {
+             echo json_encode(['status' => 'error', 'message' => 'DB Select Error: ' . $stmt->error]);
+             exit;
+        }
         $result = $stmt->get_result();
         
         if ($result->num_rows > 0) {
@@ -32,12 +36,18 @@ if ($action === 'add') {
             $new_qty = $row['quantity'] + $qty;
             $update = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
             $update->bind_param("ii", $new_qty, $row['id']);
-            $update->execute();
+            if (!$update->execute()) {
+                echo json_encode(['status' => 'error', 'message' => 'DB Update Error: ' . $update->error]);
+                exit;
+            }
         } else {
             // Insert new item
             $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, quantity) VALUES (?, ?, ?)");
             $insert->bind_param("sii", $session_id, $product_id, $qty);
-            $insert->execute();
+            if (!$insert->execute()) {
+                echo json_encode(['status' => 'error', 'message' => 'DB Insert Error: ' . $insert->error]);
+                exit;
+            }
         }
         
         // Get updated count
@@ -47,7 +57,7 @@ if ($action === 'add') {
         
         echo json_encode(['status' => 'success', 'message' => 'Product added to cart', 'cart_count' => $total_items]);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid Product']);
+        echo json_encode(['status' => 'error', 'message' => 'Invalid Product ID: ' . $product_id]);
     }
 } 
 elseif ($action === 'update') {
