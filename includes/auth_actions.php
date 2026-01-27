@@ -1,5 +1,6 @@
 <?php
 ob_start();
+session_set_cookie_params(0, '/');
 session_start();
 require_once '../database/db_config.php';
 
@@ -89,11 +90,13 @@ elseif ($action === 'login') {
             // Update Cart with User ID (Merge session cart to user)
             $session_id = session_id();
             if ($session_id) {
-                // Determine if we should merge or just assign. For now, assign existing session cart to user.
                 $update_cart = $conn->prepare("UPDATE cart SET user_id = ? WHERE session_id = ?");
                 $update_cart->bind_param("is", $user['id'], $session_id);
                 $update_cart->execute();
             }
+            
+            // Explicitly save session
+            session_write_close();
 
             echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'user/index.php']);
         } else {
