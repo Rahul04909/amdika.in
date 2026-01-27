@@ -51,6 +51,18 @@ $grand_total = $total_price + $total_gst + $delivery_charge;
 $rzp_settings = $conn->query("SELECT key_id FROM razorpay_settings WHERE status='active' LIMIT 1")->fetch_assoc();
 $rzp_key = $rzp_settings['key_id'] ?? '';
 
+// Fetch User Details
+$user_id = $_SESSION['user_id'];
+$user_res = $conn->query("SELECT * FROM users WHERE id = $user_id");
+$user_data = $user_res->fetch_assoc();
+
+// Default values if not set
+$u_name = $user_data['name'] ?? '';
+$u_mobile = $user_data['mobile'] ?? '';
+$u_address = $user_data['address'] ?? '';
+$u_city = $user_data['city'] ?? '';
+$u_pincode = $user_data['pincode'] ?? '';
+$u_state = $user_data['state'] ?? '';
 ?>
 
 <style>
@@ -91,8 +103,8 @@ $rzp_key = $rzp_settings['key_id'] ?? '';
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="fw-bold"><?php echo $_SESSION['username'] ?? 'User'; ?></span>
-                        <span class="text-muted ms-2">+91 9999999999</span> <!-- Placeholder for phone if available -->
+                        <span class="fw-bold"><?php echo htmlspecialchars($u_name); ?></span>
+                        <span class="text-muted ms-2">+91 <?php echo htmlspecialchars($u_mobile); ?></span>
                     </div>
                 </div>
             </div>
@@ -106,22 +118,22 @@ $rzp_key = $rzp_settings['key_id'] ?? '';
                 <form id="addressForm">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Name" required value="<?php echo $_SESSION['username'] ?? ''; ?>">
+                            <input type="text" class="form-control" name="name" placeholder="Name" required value="<?php echo htmlspecialchars($u_name); ?>">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input type="tel" class="form-control" name="phone" placeholder="10-digit Mobile Number" pattern="[0-9]{10}" required>
+                            <input type="tel" class="form-control" name="phone" placeholder="10-digit Mobile Number" pattern="[0-9]{10}" required value="<?php echo htmlspecialchars($u_mobile); ?>">
                         </div>
                         <div class="col-md-6 mb-3">
-                             <input type="text" class="form-control" name="pincode" placeholder="Pincode" required>
+                             <input type="text" class="form-control" name="pincode" placeholder="Pincode" required value="<?php echo htmlspecialchars($u_pincode); ?>">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" name="city" placeholder="City/District/Town" required>
+                            <input type="text" class="form-control" name="city" placeholder="City/District/Town" required value="<?php echo htmlspecialchars($u_city); ?>">
                         </div>
                         <div class="col-md-12 mb-3">
-                            <textarea class="form-control" name="address" rows="3" placeholder="Address (Area and Street)" required></textarea>
+                            <textarea class="form-control" name="address" rows="3" placeholder="Address (Area and Street)" required><?php echo htmlspecialchars($u_address); ?></textarea>
                         </div>
                         <div class="col-md-6 mb-3">
-                             <input type="text" class="form-control" name="state" placeholder="State" required>
+                             <input type="text" class="form-control" name="state" placeholder="State" required value="<?php echo htmlspecialchars($u_state); ?>">
                         </div>
                         <div class="col-md-6 mb-3">
                             <input type="text" class="form-control" name="landmark" placeholder="Landmark (Optional)">

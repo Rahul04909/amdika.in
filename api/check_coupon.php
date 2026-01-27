@@ -11,7 +11,7 @@ if(empty($code)) {
 }
 
 // Find Coupon
-$sql = "SELECT * FROM coupon_codes WHERE code = '$code' AND status = 'active' AND start_date <= CURDATE() AND end_date >= CURDATE() LIMIT 1";
+$sql = "SELECT * FROM coupons WHERE code = '$code' AND valid_till >= CURDATE() LIMIT 1";
 $result = $conn->query($sql);
 
 if($result->num_rows > 0) {
