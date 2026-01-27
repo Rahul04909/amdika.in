@@ -1,3 +1,4 @@
+<?php
 // Use centralized session config
 require_once __DIR__ . '/session_config.php';
 
