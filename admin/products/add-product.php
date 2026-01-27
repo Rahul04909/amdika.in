@@ -62,12 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $gallery_json = json_encode($gallery_paths);
 
+    $gst_percent = intval($_POST['gst_percent']);
+
     $sql = "INSERT INTO products (
         category_id, name, slug, description, featured_image, gallery_images, video_url, 
-        mrp, sale_price, discount_percent, seo_title, seo_description, seo_keywords, schema_markup
+        mrp, sale_price, discount_percent, gst_percent, seo_title, seo_description, seo_keywords, schema_markup
     ) VALUES (
         $category_id, '$name', '$slug', '$description', '$featured_img_path', '$gallery_json', '$video_url',
-        $mrp, $sale_price, $discount_percent, '$seo_title', '$seo_description', '$seo_keywords', '$schema_markup'
+        $mrp, $sale_price, $discount_percent, $gst_percent, '$seo_title', '$seo_description', '$seo_keywords', '$schema_markup'
     )";
 
     if ($conn->query($sql)) {
@@ -179,7 +181,11 @@ $page_title = 'Add New Product';
                                         <label class="form-label">Sale Price</label>
                                         <input type="number" step="0.01" class="form-control" name="sale_price" id="sale_price" oninput="calcDiscount()">
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">GST Percentage (%)</label>
+                                        <input type="number" class="form-control" name="gst_percent" value="18" min="0" max="100">
+                                    </div>
+                                    <div class="col-md-5 mb-3">
                                         <label class="form-label">Discount Percentage</label>
                                         <input type="text" class="form-control" id="discount_display" readonly style="background-color: #f8f9fa; color: #198754; font-weight: bold;">
                                     </div>
