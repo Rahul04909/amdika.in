@@ -1,11 +1,10 @@
-<?php
+require_once 'includes/session_config.php';
 require_once 'database/db_config.php';
 require_once 'vendor/autoload.php';
 
 use Razorpay\Api\Api;
 use PHPMailer\PHPMailer\PHPMailer;
 
-session_start();
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
