@@ -1,6 +1,6 @@
 <?php
 require_once 'database/db_config.php';
-// Session start is usually in header or auth check, but let's ensure it here if header doesn't have it for guest.
+// Session start is usually in header or auth check, but let's ensure it here as well
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,21 +8,27 @@ if (session_status() === PHP_SESSION_NONE) {
 $page_title = 'My Cart';
 include 'includes/header.php';
 
-$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+$session_id = session_id();
 $products = [];
 $total_mrp = 0;
 $total_discount = 0;
 $total_price = 0;
 
-if (!empty($cart_items)) {
-    $ids = implode(',', array_keys($cart_items));
-    $sql = "SELECT * FROM products WHERE id IN ($ids)";
-    $result = $conn->query($sql);
+if ($session_id) {
+    // Fetch items from cart table joined with products
+    $sql = "SELECT p.*, c.quantity as qty, c.id as cart_row_id 
+            FROM cart c 
+            JOIN products p ON c.product_id = p.id 
+            WHERE c.session_id = ?";
+            
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $session_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     if ($result) {
         while($row = $result->fetch_assoc()) {
-            $qty = $cart_items[$row['id']];
-            $row['qty'] = $qty; // Attach quantity to product data
+            $qty = $row['qty'];
             $products[] = $row;
             
             $total_mrp += $row['mrp'] * $qty;

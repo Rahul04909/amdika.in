@@ -73,7 +73,21 @@ if(session_status() === PHP_SESSION_NONE) {
                         
                         <!-- Cart -->
                         <?php 
-                        $cart_count = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
+                        // Database connection for cart count
+                        if (!isset($conn)) {
+                            require_once __DIR__ . '/../database/db_config.php';
+                        }
+                        
+                        $session_id = session_id();
+                        $cart_count = 0;
+                        
+                        if ($session_id) {
+                            $stmt = $conn->prepare("SELECT SUM(quantity) as count FROM cart WHERE session_id = ?");
+                            $stmt->bind_param("s", $session_id);
+                            $stmt->execute();
+                            $res = $stmt->get_result()->fetch_assoc();
+                            $cart_count = $res['count'] ?? 0;
+                        }
                         ?>
                         <a href="cart.php" class="action-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
