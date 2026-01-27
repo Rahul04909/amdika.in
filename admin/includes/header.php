@@ -282,7 +282,7 @@ $depth = substr_count(dirname($_SERVER['SCRIPT_NAME']), '/') - 1; // Adjust base
 
 // Since user is editing manually to ../../ or ../, let's auto-detect.
 $base_path = '../'; // Default for admin/index.php
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false) {
     $base_path = '../../';
 }
 // This is fragile but respects the user's current manual fix style without rewriting config.
