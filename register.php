@@ -167,7 +167,7 @@ include 'includes/header.php';
                 <button type="submit" class="btn-register">Continue</button>
                 
                 <div class="existing-user">
-                    <a href="login.php" class="btn btn-outline-light text-primary shadow-sm py-2 px-4 w-100">Existing User? Log in</a>
+                    <a href="user/login.php" class="btn btn-outline-light text-primary shadow-sm py-2 px-4 w-100">Existing User? Log in</a>
                 </div>
             </form>
         </div>
@@ -261,7 +261,7 @@ include 'includes/header.php';
         .then(data => {
             if(data.status === 'success') {
                 alert('Registration Successful! Redirecting to login...');
-                window.location.href = 'login.php';
+                window.location.href = 'user/login.php';
             } else {
                 alert(data.message);
             }

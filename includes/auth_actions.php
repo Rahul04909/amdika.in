@@ -95,7 +95,7 @@ elseif ($action === 'login') {
                 $update_cart->execute();
             }
 
-            echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'index.php']);
+            echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'user/index.php']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid password']);
         }
