@@ -334,6 +334,21 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             </div>
         </div>
 
+        <!-- Coupons Submenu -->
+        <div class="sb-item" data-tooltip="Coupons">
+            <a href="#menuCoupons" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
+                <i class="fas fa-tags sb-icon"></i>
+                <span class="sb-text">Coupons</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
+            </a>
+            <div class="collapse" id="menuCoupons">
+                <ul class="sb-submenu">
+                    <li><a href="../../admin/coupon-codes/manage-coupon-codes.php" class="sb-link">Manage Coupons</a></li>
+                    <li><a href="../../admin/coupon-codes/add-coupon-code.php" class="sb-link">Add Coupon</a></li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Orders Submenu -->
         <div class="sb-item" data-tooltip="Orders">
             <a href="#menuOrders" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
