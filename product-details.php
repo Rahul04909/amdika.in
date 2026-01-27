@@ -452,7 +452,7 @@ $disc = $product['discount_percent'];
                 // Update badge if method exists
                 if(typeof updateCartCount === 'function') updateCartCount();
             } else {
-                alert('Error adding to cart.');
+                alert(data.message);
             }
         });
     }
