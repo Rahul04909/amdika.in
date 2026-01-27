@@ -1,6 +1,5 @@
 <?php
-// Ensure session is active
-if(session_status() === PHP_SESSION_NONE) session_start();
+require_once dirname(dirname(__DIR__)) . '/includes/session_config.php';
 // Get current page name for active state
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>

@@ -1,7 +1,6 @@
 <?php
 ob_start();
-session_set_cookie_params(0, '/');
-session_start();
+require_once 'session_config.php';
 require_once '../database/db_config.php';
 
 // Clear output

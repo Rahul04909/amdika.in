@@ -1,8 +1,5 @@
-<?php
-if(session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params(0, '/');
-    session_start();
-}
+// Use centralized session config
+require_once __DIR__ . '/session_config.php';
 
 // Determine Assets Path
 $current_script = $_SERVER['SCRIPT_NAME'];
