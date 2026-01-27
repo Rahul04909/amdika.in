@@ -97,7 +97,8 @@ elseif ($action === 'login') {
             // Explicitly save session
             session_write_close();
 
-            echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'user/index.php']);
+            $redirect = isset($_POST['redirect']) && !empty($_POST['redirect']) ? $_POST['redirect'] : 'user/index.php';
+            echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => $redirect]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid password']);
         }

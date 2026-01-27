@@ -106,6 +106,7 @@ include '../includes/header.php';
             <h3 class="d-md-none mb-4">Login</h3>
             
             <form id="loginForm">
+                <input type="hidden" name="redirect" value="<?php echo isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : ''; ?>">
                 <div class="form-group">
                     <input type="text" class="form-control" name="email" id="email" placeholder=" " required>
                     <label class="form-label">Email ID</label>

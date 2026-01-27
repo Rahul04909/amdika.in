@@ -196,7 +196,7 @@ if ($session_id) {
                     
                     <!-- Desktop Button (Hidden on mobile if using sticky) -->
                     <div class="place-order-wrapper d-none d-lg-block">
-                         <button class="btn-place-order">Place Order</button>
+                         <button class="btn-place-order" onclick="window.location.href='checkout.php'">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -209,7 +209,7 @@ if ($session_id) {
                         <div class="fw-bold fs-5">₹<?php echo number_format($final_payable); ?></div>
                     </div>
                     <div class="col-6">
-                         <button class="btn-place-order">Place Order</button>
+                         <button class="btn-place-order" onclick="window.location.href='checkout.php'">Place Order</button>
                     </div>
                 </div>
             </div>
