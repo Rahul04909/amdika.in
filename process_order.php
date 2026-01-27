@@ -39,7 +39,7 @@ try {
     $payment = $api->payment->fetch($payment_id);
     
     if ($payment->status == 'authorized') {
-        $payment->capture(['amount' => $payment->amount]);
+        $payment = $payment->capture(['amount' => $payment->amount]);
     }
     
     if ($payment->status != 'captured') {
