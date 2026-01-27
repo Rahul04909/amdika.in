@@ -407,10 +407,10 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
                 <span class="sb-text">Settings</span>
                 <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
-             <div class="collapse" id="menuSettings">
                 <ul class="sb-submenu">
                     <li><a href="#" class="sb-link">General</a></li>
                     <li><a href="#" class="sb-link">Payment</a></li>
+                    <li><a href="../../admin/smtp/manage-smtp.php" class="sb-link">SMTP Config</a></li>
                     <li><a href="#" class="sb-link">Notifications</a></li>
                 </ul>
             </div>
