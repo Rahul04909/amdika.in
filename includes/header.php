@@ -1,6 +1,14 @@
 <?php
 if(session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params(0, '/');
     session_start();
+}
+
+// Determine Assets Path
+$current_script = $_SERVER['SCRIPT_NAME'];
+$assets_path = 'assets/'; // Default for root files
+if (strpos($current_script, '/user/') !== false) {
+    $assets_path = '../assets/';
 }
 ?>
 <!DOCTYPE html>
@@ -21,10 +29,10 @@ if(session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $assets_path; ?>css/style.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/amdika-logo.png">
+    <link rel="icon" type="image/png" href="<?php echo $assets_path; ?>images/amdika-logo.png">
 </head>
 <body>
 
@@ -36,8 +44,8 @@ if(session_status() === PHP_SESSION_NONE) {
             <div class="row align-items-center">
                 <!-- Logo -->
                 <div class="col-lg-2 col-md-3 col-6">
-                    <a href="index.php" class="brand-logo">
-                        <img src="assets/images/amdika-logo.png" alt="Amadika" class="img-fluid">
+                    <a href="<?php echo $assets_path == '../assets/' ? '../index.php' : 'index.php'; ?>" class="brand-logo">
+                        <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="img-fluid">
                     </a>
                 </div>
 
