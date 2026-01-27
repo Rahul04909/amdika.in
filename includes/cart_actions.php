@@ -1,6 +1,7 @@
 <?php
 ob_start();
-if(session_status() === PHP_SESSION_NONE) session_start();
+// Use centralized session config
+require_once 'session_config.php';
 require_once '../database/db_config.php';
 
 // Clear output
