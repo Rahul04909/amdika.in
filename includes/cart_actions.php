@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Start buffering to catch any unwanted output
 session_start();
 require_once '../database/db_config.php';
 
@@ -7,6 +8,8 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
+// Clear any previous output (whitespace, warnings)
+ob_clean();
 header('Content-Type: application/json');
 
 $action = isset($_POST['action']) ? $_POST['action'] : '';
