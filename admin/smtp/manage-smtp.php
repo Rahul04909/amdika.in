@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="d-flex wrapper" id="wrapper">
-        <?php include '../../admin/includes/sidebar.php'; ?>
+        <?php include '../admin/includes/sidebar.php'; ?>
         <div id="page-content-wrapper">
              
              <div class="container-fluid mt-4">
