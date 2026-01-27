@@ -13,6 +13,8 @@ $products = [];
 $total_mrp = 0;
 $total_discount = 0;
 $total_price = 0;
+$total_gst = 0;
+$final_payable = 0;
 
 if ($session_id) {
     // Fetch items from cart table joined with products
@@ -31,9 +33,16 @@ if ($session_id) {
             $qty = $row['qty'];
             $products[] = $row;
             
+            $gst_percent = $row['gst_percent'];
+            $gst_amount = ($row['sale_price'] * $qty * $gst_percent) / 100;
+            
             $total_mrp += $row['mrp'] * $qty;
             $total_price += $row['sale_price'] * $qty;
+            $total_gst += $gst_amount;
         }
+        
+        $delivery_charge = 60;
+        $final_payable = $total_price + $total_gst + $delivery_charge;
     }
     $total_discount = $total_mrp - $total_price;
 }
@@ -129,6 +138,7 @@ if ($session_id) {
                                     <span class="final-price">₹<?php echo number_format($p['sale_price']); ?></span>
                                     <span class="disc-green"><?php echo $p['discount_percent']; ?>% Off</span>
                                 </div>
+                                <div class="small text-muted mb-2">GST <?php echo $p['gst_percent']; ?>% included</div>
                                 
                                 <div class="d-flex align-items-center flex-wrap gap-4">
                                     <div class="qty-control">
@@ -168,12 +178,16 @@ if ($session_id) {
                             <span class="text-success">- ₹<?php echo number_format($total_discount); ?></span>
                         </div>
                         <div class="price-row-item">
+                            <span>GST Amount</span>
+                            <span>₹<?php echo number_format($total_gst); ?></span>
+                        </div>
+                        <div class="price-row-item">
                             <span>Delivery Charges</span>
-                            <span class="text-success">Free</span>
+                            <span class="text-success">₹<?php echo number_format($delivery_charge); ?></span>
                         </div>
                         <div class="price-row-item total-row">
                             <span>Total Amount</span>
-                            <span>₹<?php echo number_format($total_price); ?></span>
+                            <span>₹<?php echo number_format($final_payable); ?></span>
                         </div>
                     </div>
                     <?php if($total_discount > 0): ?>
@@ -192,7 +206,7 @@ if ($session_id) {
                 <div class="row align-items-center">
                     <div class="col-6">
                         <small>Total Amount</small>
-                        <div class="fw-bold fs-5">₹<?php echo number_format($total_price); ?></div>
+                        <div class="fw-bold fs-5">₹<?php echo number_format($final_payable); ?></div>
                     </div>
                     <div class="col-6">
                          <button class="btn-place-order">Place Order</button>
