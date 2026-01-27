@@ -1,3 +1,8 @@
+<?php
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,8 +73,6 @@
                         
                         <!-- Cart -->
                         <?php 
-                        // Ensure session is started if not already
-                        if(session_status() === PHP_SESSION_NONE) session_start();
                         $cart_count = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
                         ?>
                         <a href="cart.php" class="action-icon">
