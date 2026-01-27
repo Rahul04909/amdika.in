@@ -86,9 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $gallery_json = json_encode($current_gallery);
 
+    $gst_percent = intval($_POST['gst_percent']);
+
     $sql = "UPDATE products SET 
         category_id=$category_id, name='$name', slug='$slug', description='$description', 
-        video_url='$video_url', mrp=$mrp, sale_price=$sale_price, discount_percent=$discount_percent,
+        video_url='$video_url', mrp=$mrp, sale_price=$sale_price, discount_percent=$discount_percent, gst_percent=$gst_percent,
         seo_title='$seo_title', seo_description='$seo_description', seo_keywords='$seo_keywords', 
         schema_markup='$schema_markup', status='$status', gallery_images='$gallery_json', updated_at=NOW()
         $featured_sql
@@ -219,15 +221,19 @@ $page_title = 'Edit Product';
                             <!-- Pricing -->
                             <div class="tab-pane fade" id="pricing">
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label class="form-label">MRP</label>
                                         <input type="number" step="0.01" class="form-control" name="mrp" id="mrp" value="<?php echo $prod['mrp']; ?>" oninput="calcDiscount()">
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label class="form-label">Sale Price</label>
                                         <input type="number" step="0.01" class="form-control" name="sale_price" id="sale_price" value="<?php echo $prod['sale_price']; ?>" oninput="calcDiscount()">
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">GST %</label>
+                                        <input type="number" class="form-control" name="gst_percent" value="<?php echo isset($prod['gst_percent']) ? $prod['gst_percent'] : 18; ?>" min="0" max="100">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
                                         <label class="form-label">Discount %</label>
                                         <input type="text" class="form-control" id="discount_display" value="<?php echo $prod['discount_percent']; ?>%" readonly style="background-color: #f8f9fa;">
                                     </div>
