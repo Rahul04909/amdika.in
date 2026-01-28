@@ -382,7 +382,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             </div>
         </div>
 
-        <!-- Reports Submenu -->
+        <!-- Reports Submenu
         <div class="sb-item" data-tooltip="Reports">
             <a href="#menuReports" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
                 <i class="fas fa-chart-line sb-icon"></i>
@@ -396,7 +396,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
                     <li><a href="#" class="sb-link">Product Perf.</a></li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
         <div class="sb-label mt-3">System</div>
 
