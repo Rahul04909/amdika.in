@@ -283,7 +283,7 @@ body.sb-collapsed #page-content-wrapper {
 <?php
 // Dynamic Path Logic
 $base_path = '../';
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false) {
     $base_path = '../../';
 }
 
@@ -354,9 +354,9 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
                 <span class="sb-text">Orders</span>
                 <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
-             <div class="collapse" id="menuOrders">
+            <div class="collapse" id="menuOrders">
                 <ul class="sb-submenu">
-                    <li><a href="#" class="sb-link">All Orders</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/orders/index.php" class="sb-link">All Orders</a></li>
                     <li><a href="#" class="sb-link">Pending</a></li>
                     <li><a href="#" class="sb-link">Completed</a></li>
                     <li><a href="#" class="sb-link">Returns</a></li>
