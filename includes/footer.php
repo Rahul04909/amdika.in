@@ -164,7 +164,6 @@
             <!-- Col 1: Download App -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">Download Our App</span>
-                <br>
                 <span class="footer-heading" style="font-size: 12px;">Coming Soon</span>
                 <div class="d-flex gap-2">
                      <a href="#">
@@ -281,18 +280,47 @@
             </div>
         </div>
 
-        <!-- Row 3: Brands & Delivery -->
+        <!-- Row 3: Best Sellers & Delivery -->
          <div class="row">
             <div class="col-lg-6 mb-4">
-                <span class="footer-heading">Popular Brands</span>
+                <span class="footer-heading">Our Best Selling Products</span>
                  <p class="category-text">
-                   Urban Ladder, Bluewud, Duroflex, HOME LIFESTYLEZ
+                   <?php
+                    // Fetch Best Selling (Most ordered) or Fallback to some products
+                    if(isset($conn)) {
+                        // Attempt to order by popularity (frequency in order_items)
+                        // Note: This assumes product_id is valid in order_items. 
+                        // If order_items table is empty, we fallback to just fetching products.
+                        $bs_sql = "
+                            SELECT p.name, COUNT(oi.id) as order_count 
+                            FROM products p 
+                            LEFT JOIN order_items oi ON p.id = oi.product_id 
+                            GROUP BY p.id 
+                            ORDER BY order_count DESC, p.created_at DESC 
+                            LIMIT 20
+                        ";
+                        
+                        $bs_res = $conn->query($bs_sql);
+                        $bs_prods = [];
+                        if($bs_res && $bs_res->num_rows > 0) {
+                            while($row = $bs_res->fetch_assoc()) {
+                                $bs_prods[] = htmlspecialchars($row['name']);
+                            }
+                            echo implode(', ', $bs_prods);
+                        } else {
+                             // Fallback if query fails or no products
+                             echo "Velvet Recliner, Teak Wood Bed, Marble Dining Table, Ergonomic Office Chair, Fabric Sofa Set, Modern Bookshelf";
+                        }
+                    } else {
+                         echo "Velvet Recliner, Teak Wood Bed, Marble Dining Table, Ergonomic Office Chair, Fabric Sofa Set, Modern Bookshelf";
+                    }
+                   ?>
                 </p>
             </div>
              <div class="col-lg-6 mb-4">
                 <span class="footer-heading">Delivering In</span>
                  <p class="category-text">
-                   Bengaluru, Mumbai, Delhi ... <a href="#" class="more-link">More</a>
+                   Mumbai, Delhi, Bengaluru, Hyderabad, Ahmedabad, Chennai, Kolkata, Surat, Pune, Jaipur, Lucknow, Kanpur, Nagpur, Indore, Thane, Bhopal, Visakhapatnam, Pimpri-Chinchwad, Patna, Vadodara, Ghaziabad, Ludhiana, Agra, Nashik, Faridabad, Meerut, Rajkot
                 </p>
             </div>
         </div>
