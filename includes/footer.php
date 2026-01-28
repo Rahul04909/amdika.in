@@ -230,9 +230,27 @@
         <!-- Row 2: Categories -->
         <div class="row">
             <div class="col-lg-6 mb-4">
-                <span class="footer-heading">Popular Furniture Categories</span>
+                <span class="footer-heading">Our Popular Categories</span>
                 <p class="category-text">
-                    Beds, King Size Bed, Queen Size Bed, Single Bed, Sofa Set, Recliners, Sofa cum Bed, Coffee Table, Chair, Study Chair, Study Table, Dining Table Set, Dining Chair, Office Table, Office Chair, Wardrobe, Bookshelves, Shoe Rack, Chest of Drawers
+                    <?php
+                    // Ensure connection exists
+                    if(isset($conn)) {
+                        $f_cat_sql = "SELECT name FROM product_categories ORDER BY name ASC";
+                        $f_cat_res = $conn->query($f_cat_sql);
+                        $f_cats = [];
+                        if($f_cat_res && $f_cat_res->num_rows > 0) {
+                            while($row = $f_cat_res->fetch_assoc()) {
+                                $f_cats[] = htmlspecialchars($row['name']);
+                            }
+                            echo implode(', ', $f_cats);
+                        } else {
+                             echo "Furniture, Decor, and more.";
+                        }
+                    } else {
+                        // Fallback if no DB connection
+                         echo "Beds, King Size Bed, Queen Size Bed, Single Bed, Sofa Set, Recliners, Sofa cum Bed, Coffee Table, Chair, Study Chair, Study Table, Dining Table Set, Dining Chair, Office Table, Office Chair, Wardrobe, Bookshelves, Shoe Rack, Chest of Drawers";
+                    }
+                    ?>
                 </p>
             </div>
              <div class="col-lg-6 mb-4">
