@@ -116,9 +116,28 @@ if (strpos($current_script, '/user/') !== false) {
             <div class="row align-items-center g-0">
                 <!-- Categories Button -->
                 <div class="col-lg-3 col-md-4 d-none d-lg-block">
-                    <div class="all-categories-btn">
-                        <span><i class="fa-solid fa-bars me-2"></i> All Categories</span>
-                        <i class="fa-solid fa-chevron-down"></i>
+                    <div class="categories-dropdown-wrapper">
+                        <div class="all-categories-btn">
+                            <span><i class="fa-solid fa-bars me-2"></i> All Categories</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <ul class="categories-dropdown-menu">
+                            <?php
+                            // Fetch Categories
+                            if(isset($conn)) {
+                                $h_cat_sql = "SELECT * FROM product_categories ORDER BY name ASC LIMIT 10"; // Limit to keep menu sane
+                                $h_cat_res = $conn->query($h_cat_sql);
+                                if($h_cat_res && $h_cat_res->num_rows > 0) {
+                                    while($h_row = $h_cat_res->fetch_assoc()) {
+                                        echo '<li><a href="shop.php?category='.urlencode($h_row['name']).'">'.htmlspecialchars($h_row['name']).' <i class="fa-solid fa-chevron-right"></i></a></li>';
+                                    }
+                                    echo '<li><a href="shop.php" class="text-center justify-content-center text-primary fw-bold" style="padding-left:20px;">View All Categories</a></li>';
+                                } else {
+                                     echo '<li><a href="#">No Categories Found</a></li>';
+                                }
+                            }
+                            ?>
+                        </ul>
                     </div>
                 </div>
 
