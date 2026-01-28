@@ -164,6 +164,8 @@
             <!-- Col 1: Download App -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">Download Our App</span>
+                <br>
+                <span class="footer-heading" style="font-size: 12px;">Coming Soon</span>
                 <div class="d-flex gap-2">
                      <a href="#">
                          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" style="height:35px;">
