@@ -311,8 +311,6 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             <div class="collapse" id="menuDashboard">
                 <ul class="sb-submenu">
                     <li><a href="<?php echo $base_path; ?>admin/index.php" class="sb-link">Overview</a></li>
-                    <li><a href="#" class="sb-link">Analytics</a></li>
-                    <li><a href="#" class="sb-link">Real-time</a></li>
                 </ul>
             </div>
         </div>
@@ -376,8 +374,6 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             <div class="collapse" id="menuUsers">
                 <ul class="sb-submenu">
                     <li><a href="<?php echo $base_path; ?>admin/users/index.php" class="sb-link">All Users</a></li>
-                    <li><a href="#" class="sb-link">Add New</a></li>
-                    <li><a href="#" class="sb-link">Roles</a></li>
                 </ul>
             </div>
         </div>
