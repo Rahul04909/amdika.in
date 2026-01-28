@@ -253,10 +253,28 @@
                     ?>
                 </p>
             </div>
-             <div class="col-lg-6 mb-4">
-                <span class="footer-heading">Popular Decor Categories</span>
+            <div class="col-lg-6 mb-4">
+                <span class="footer-heading">New Arrivals</span>
                  <p class="category-text">
-                    Home Decor, Carpets, Mirrors, Lighting, Study Lamps, Table Lamps, Floor Lamps, Ceiling Lights, Festive Lights, Wall Lights, Wall Decor, Wall Art, Wall Mirror, Wall Clocks, Bedsheets, Quilt, Cushion Cover, Showpiece, Artificial Plant, Photo Frame, Vase, Bathroom Accessories, Bath Mat, Bathroom Mirrors
+                    <?php
+                    // Fetch Recent Products
+                    if(isset($conn)) {
+                        $prod_sql = "SELECT name FROM products ORDER BY created_at DESC LIMIT 20";
+                        $prod_res = $conn->query($prod_sql);
+                        $prods = [];
+                        if($prod_res && $prod_res->num_rows > 0) {
+                            while($p_row = $prod_res->fetch_assoc()) {
+                                $prods[] = htmlspecialchars($p_row['name']);
+                            }
+                            echo implode(', ', $prods);
+                        } else {
+                             echo "Check out our latest collection of furniture and decor.";
+                        }
+                    } else {
+                        // Fallback
+                         echo "Home Decor, Carpets, Mirrors, Lighting, Study Lamps, Table Lamps, Floor Lamps, Ceiling Lights, Festive Lights, Wall Lights, Wall Decor, Wall Art, Wall Mirror, Wall Clocks, Bedsheets, Quilt, Cushion Cover, Showpiece, Artificial Plant, Photo Frame, Vase";
+                    }
+                    ?>
                 </p>
             </div>
         </div>
