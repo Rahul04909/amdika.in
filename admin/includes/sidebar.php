@@ -357,9 +357,9 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             <div class="collapse" id="menuOrders">
                 <ul class="sb-submenu">
                     <li><a href="<?php echo $base_path; ?>admin/orders/index.php" class="sb-link">All Orders</a></li>
-                    <li><a href="#" class="sb-link">Pending</a></li>
+                    <!-- <li><a href="#" class="sb-link">Pending</a></li>
                     <li><a href="#" class="sb-link">Completed</a></li>
-                    <li><a href="#" class="sb-link">Returns</a></li>
+                    <li><a href="#" class="sb-link">Returns</a></li> -->
                 </ul>
             </div>
         </div>
