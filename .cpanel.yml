@@ -3,3 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home4/amadik/public_html/
     - /bin/cp -R * $DEPLOYPATH
+
+# Cpanel Login Url - http://162.241.148.33:2082/
+# Cpanel Username - amadik
+# Cpanel Password - M';.';.hfhaker#66

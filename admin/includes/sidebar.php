@@ -283,7 +283,7 @@ body.sb-collapsed #page-content-wrapper {
 <?php
 // Dynamic Path Logic
 $base_path = '../';
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false) {
     $base_path = '../../';
 }
 
@@ -375,7 +375,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             </a>
             <div class="collapse" id="menuUsers">
                 <ul class="sb-submenu">
-                    <li><a href="#" class="sb-link">All Users</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/users/index.php" class="sb-link">All Users</a></li>
                     <li><a href="#" class="sb-link">Add New</a></li>
                     <li><a href="#" class="sb-link">Roles</a></li>
                 </ul>
