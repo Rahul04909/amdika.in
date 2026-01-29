@@ -1,5 +1,5 @@
 <?php
-require_once 'database/db_config.php';
+require_once '../database/db_config.php';
 
 $sql = "CREATE TABLE IF NOT EXISTS best_deals_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
