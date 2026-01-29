@@ -221,151 +221,109 @@
                 </div>
             </div>
 
-            <!-- Widget 2: Keep Shopping For (2x2 Grid with Prices) -->
+
+            <?php
+            // Helper function to fetch products with offset
+            function fetch_products_offset($conn, $limit, $offset) {
+                $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset";
+                $result = $conn->query($sql);
+                $items = [];
+                if ($result) {
+                    while($row = $result->fetch_assoc()) {
+                        $items[] = $row;
+                    }
+                }
+                return $items;
+            }
+
+            // Fetch batches
+            $widget2_items = fetch_products_offset($conn, 4, 1);
+            $widget3_items = fetch_products_offset($conn, 4, 5);
+            $widget4_items = fetch_products_offset($conn, 4, 9);
+            ?>
+
+            <!-- Widget 2: Trending Products (2x2 Grid) -->
             <div class="col-lg-3 col-md-6 col-12">
                 <div class="td-widget-card">
-                    <h3 class="td-widget-title">Keep shopping for</h3>
+                    <h3 class="td-widget-title">Trending Products</h3>
                     
                     <div class="td-grid-row">
-                        <!-- Item 1 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Samsung S23" class="td-grid-img">
+                        <?php if(!empty($widget2_items)): ?>
+                            <?php foreach($widget2_items as $item): ?>
+                                <div class="td-grid-col">
+                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                        <div class="td-grid-img-wrapper">
+                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
+                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
+                                                 class="td-grid-img">
+                                        </div>
+                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
+                                        <div class="td-grid-price">₹<?php echo number_format($item['sale_price']); ?></div>
+                                    </a>
                                 </div>
-                                <div class="td-grid-label">Samsung Galaxy S...</div>
-                                <div class="td-grid-price">₹74,999</div>
-                            </div>
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="iQOO 15" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">iQOO 15 (Legend...</div>
-                                <div class="td-grid-price">₹72,998</div>
-                            </div>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="OnePlus 15R" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">OnePlus 15R | 12...</div>
-                                <div class="td-grid-price">₹47,998</div>
-                            </div>
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="iPhone 15" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">iPhone 15 256 GB...</div>
-                                <div class="td-grid-price">₹99,000</div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="col-12 text-center text-muted">No products found.</div>
+                        <?php endif; ?>
                     </div>
 
-                    <a href="#" class="td-see-more">See more</a>
+                    <a href="products.php" class="td-see-more">See more</a>
                 </div>
             </div>
 
-            <!-- Widget 3: Discount Category A (2x2 Grid Images Only) -->
+            <!-- Widget 3: More to Explore (2x2 Grid) -->
             <div class="col-lg-3 col-md-6 col-12">
                 <div class="td-widget-card">
-                    <h3 class="td-widget-title">Up to 60% off | Cookware & tools</h3>
+                    <h3 class="td-widget-title">More to Explore</h3>
                     
                     <div class="td-grid-row">
-                        <!-- Item 1 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Cookware" class="td-grid-img">
+                        <?php if(!empty($widget3_items)): ?>
+                            <?php foreach($widget3_items as $item): ?>
+                                <div class="td-grid-col">
+                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                        <div class="td-grid-img-wrapper">
+                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
+                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
+                                                 class="td-grid-img">
+                                        </div>
+                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
+                                    </a>
                                 </div>
-                                <div class="td-grid-label">Cookware</div>
-                            </div>
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Knives" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Knives & Tools</div>
-                            </div>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Colanders" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Colanders</div>
-                            </div>
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Mugs" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Mugs & Cups</div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="col-12 text-center text-muted">No products found.</div>
+                        <?php endif; ?>
                     </div>
 
-                    <a href="#" class="td-see-more">See more</a>
+                    <a href="products.php" class="td-see-more">See more</a>
                 </div>
             </div>
 
-            <!-- Widget 4: Discount Category B (2x2 Grid Images Only) -->
+            <!-- Widget 4: Recommended for You (2x2 Grid) -->
             <div class="col-lg-3 col-md-6 col-12">
                 <div class="td-widget-card">
-                    <h3 class="td-widget-title">Up to 70% off | Kitchen products</h3>
+                    <h3 class="td-widget-title">Recommended for You</h3>
                     
                     <div class="td-grid-row">
-                        <!-- Item 1 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Bottles" class="td-grid-img">
+                        <?php if(!empty($widget4_items)): ?>
+                            <?php foreach($widget4_items as $item): ?>
+                                <div class="td-grid-col">
+                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                        <div class="td-grid-img-wrapper">
+                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
+                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
+                                                 class="td-grid-img">
+                                        </div>
+                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
+                                    </a>
                                 </div>
-                                <div class="td-grid-label">Water Bottles</div>
-                            </div>
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Spice Racks" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Spice Racks</div>
-                            </div>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Choppers" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Choppers</div>
-                            </div>
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="td-grid-col">
-                            <div class="td-grid-item">
-                                <div class="td-grid-img-wrapper">
-                                    <img src="assets/images/demo-data/product.jpg" alt="Tools" class="td-grid-img">
-                                </div>
-                                <div class="td-grid-label">Kitchen Tools</div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="col-12 text-center text-muted">No products found.</div>
+                        <?php endif; ?>
                     </div>
 
-                    <a href="#" class="td-see-more">See more</a>
+                    <a href="products.php" class="td-see-more">See more</a>
                 </div>
             </div>
 
