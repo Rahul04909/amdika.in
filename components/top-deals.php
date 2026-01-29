@@ -157,34 +157,67 @@
     <div class="container top-deals-container p-0">
         <div class="row g-3"> <!-- Bootstrap gutter -->
             
-            <!-- Widget 1: Best Sellers (Single Large + Thumbs) -->
+
+            <!-- Widget 1: Newly Added (Dynamic) -->
+            <?php
+            // Fetch Latest Product
+            $latest_prod_sql = "SELECT * FROM products ORDER BY id DESC LIMIT 1";
+            $latest_prod_res = $conn->query($latest_prod_sql);
+            $latest_prod = ($latest_prod_res && $latest_prod_res->num_rows > 0) ? $latest_prod_res->fetch_assoc() : null;
+            ?>
             <div class="col-lg-3 col-md-6 col-12">
                 <div class="td-widget-card">
-                    <h3 class="td-widget-title">Best Sellers in Home & Kitchen</h3>
+                    <h3 class="td-widget-title">Newly Added</h3>
                     
-                    <div class="td-hero-img-wrapper">
-                        <img src="assets/images/demo-data/product.jpg" alt="Garbage Bags" class="td-hero-img">
-                    </div>
-                    
-                    <div class="td-product-desc">
-                        Amazon Brand - Presto! Garbage Bags | Medium | 180 Count
-                    </div>
-                    
-                    <div class="td-price-block">
-                        <span class="td-price-symbol">₹</span>
-                        <span class="td-price-whole">335</span>
-                        <span class="td-mrp">M.R.P: ₹480.00</span>
-                    </div>
+                    <?php if($latest_prod): ?>
+                        <?php 
+                            $feat_img = !empty($latest_prod['featured_image']) ? $latest_prod['featured_image'] : 'assets/images/demo-data/product.jpg';
+                            $gallery = !empty($latest_prod['gallery_images']) ? json_decode($latest_prod['gallery_images'], true) : [];
+                            // Ensure we have at least 4 thumbs for layout, fill with placeholders or main img if needed
+                            $thumbs = array_slice($gallery, 0, 4);
+                        ?>
+                        <div class="td-hero-img-wrapper">
+                            <a href="product.php?slug=<?php echo $latest_prod['slug']; ?>">
+                                <img src="<?php echo $feat_img; ?>" alt="<?php echo htmlspecialchars($latest_prod['name']); ?>" class="td-hero-img">
+                            </a>
+                        </div>
+                        
+                        <div class="td-product-desc">
+                            <a href="product.php?slug=<?php echo $latest_prod['slug']; ?>" class="text-dark text-decoration-none">
+                                <?php echo htmlspecialchars($latest_prod['name']); ?>
+                            </a>
+                        </div>
+                        
+                        <div class="td-price-block">
+                            <span class="td-price-symbol">₹</span>
+                            <span class="td-price-whole"><?php echo number_format($latest_prod['sale_price']); ?></span>
+                            <?php if($latest_prod['mrp'] > $latest_prod['sale_price']): ?>
+                                <span class="td-mrp">M.R.P: ₹<?php echo number_format($latest_prod['mrp']); ?></span>
+                            <?php endif; ?>
+                        </div>
 
-                    <!-- Thumbnails Row -->
-                    <div class="td-thumbnails-row">
-                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
-                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
-                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
-                        <div class="td-thumb-box"><img src="assets/images/demo-data/product.jpg" class="td-thumb-img"></div>
-                    </div>
-
-                    <a href="#" class="td-see-more">See more</a>
+                        <!-- Thumbnails Row -->
+                        <div class="td-thumbnails-row">
+                            <?php foreach($thumbs as $img): ?>
+                                <div class="td-thumb-box">
+                                    <img src="<?php echo $img; ?>" class="td-thumb-img">
+                                </div>
+                            <?php endforeach; ?>
+                            <?php 
+                                // Fill remaining slots if any
+                                for($i = count($thumbs); $i < 4; $i++): 
+                            ?>
+                                <div class="td-thumb-box"><img src="<?php echo $feat_img; ?>" class="td-thumb-img"></div>
+                            <?php endfor; ?>
+                        </div>
+                        
+                        <a href="products.php" class="td-see-more">See more</a>
+                    <?php else: ?>
+                        <div class="text-center py-4">
+                            <p class="text-muted">No products found.</p>
+                            <a href="products.php" class="td-see-more">See more</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
