@@ -177,13 +177,13 @@
                             $thumbs = array_slice($gallery, 0, 4);
                         ?>
                         <div class="td-hero-img-wrapper">
-                            <a href="product.php?slug=<?php echo $latest_prod['slug']; ?>">
+                            <a href="product-details.php?slug=<?php echo $latest_prod['slug']; ?>">
                                 <img src="<?php echo $feat_img; ?>" alt="<?php echo htmlspecialchars($latest_prod['name']); ?>" class="td-hero-img">
                             </a>
                         </div>
                         
                         <div class="td-product-desc">
-                            <a href="product.php?slug=<?php echo $latest_prod['slug']; ?>" class="text-dark text-decoration-none">
+                            <a href="product-details.php?slug=<?php echo $latest_prod['slug']; ?>" class="text-dark text-decoration-none">
                                 <?php echo htmlspecialchars($latest_prod['name']); ?>
                             </a>
                         </div>
