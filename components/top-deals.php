@@ -251,7 +251,7 @@
                         <?php if(!empty($widget2_items)): ?>
                             <?php foreach($widget2_items as $item): ?>
                                 <div class="td-grid-col">
-                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
                                         <div class="td-grid-img-wrapper">
                                             <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
                                                  alt="<?php echo htmlspecialchars($item['name']); ?>" 
@@ -280,7 +280,7 @@
                         <?php if(!empty($widget3_items)): ?>
                             <?php foreach($widget3_items as $item): ?>
                                 <div class="td-grid-col">
-                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
                                         <div class="td-grid-img-wrapper">
                                             <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
                                                  alt="<?php echo htmlspecialchars($item['name']); ?>" 
@@ -308,7 +308,7 @@
                         <?php if(!empty($widget4_items)): ?>
                             <?php foreach($widget4_items as $item): ?>
                                 <div class="td-grid-col">
-                                    <a href="product.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
+                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
                                         <div class="td-grid-img-wrapper">
                                             <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
                                                  alt="<?php echo htmlspecialchars($item['name']); ?>" 
