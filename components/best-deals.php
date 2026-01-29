@@ -1,3 +1,29 @@
+<?php
+// Fetch Settings
+$bd_settings_result = $conn->query("SELECT category_ids FROM best_deals_settings WHERE id = 1");
+$bd_category_ids = [];
+if ($bd_settings_result && $bd_settings_result->num_rows > 0) {
+    $row = $bd_settings_result->fetch_assoc();
+    $bd_category_ids = json_decode($row['category_ids'], true) ?: [];
+}
+
+// Fetch Products if categories are selected
+$bd_products = [];
+if (!empty($bd_category_ids)) {
+    // Sanitize again just to be safe
+    $bd_ids_clean = array_map('intval', $bd_category_ids);
+    $bd_ids_str = implode(',', $bd_ids_clean);
+    
+    // Query Limit 10 for best deals
+    $sql = "SELECT * FROM products WHERE category_id IN ($bd_ids_str) ORDER BY id DESC LIMIT 10";
+    $result = $conn->query($sql);
+    if ($result) {
+        while($row = $result->fetch_assoc()) {
+            $bd_products[] = $row;
+        }
+    }
+}
+?>
 <style>
 /* --- Best Deals Component --- */
 .best-deals-section {
@@ -245,8 +271,8 @@
     <div class="best-deals-container">
         <!-- Header -->
         <div class="section-header-row">
-            <h2 class="best-deals-title">Best Deals on Leather Bags</h2>
-            <a href="#" class="view-all-btn">VIEW ALL</a>
+            <h2 class="best-deals-title">Best Deals</h2>
+            <a href="shop.php" class="view-all-btn">VIEW ALL</a>
         </div>
 
         <!-- Layout -->
@@ -257,95 +283,36 @@
                 <button class="bd-nav-btn bd-next-btn" id="bdNextBtn"><i class="fas fa-chevron-right"></i></button>
 
                 <div class="best-deals-slider" id="bestDealsSlider">
-                    <!-- Product 1 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                            <img src="assets/images/demo-data/product.jpg" alt="Galaxy S24" class="bd-product-img">
+                    <?php if (!empty($bd_products)): ?>
+                        <?php foreach($bd_products as $prod): ?>
+                            <!-- Product -->
+                            <a href="product.php?slug=<?php echo $prod['slug']; ?>" class="bd-product-card">
+                                <div class="bd-img-wrapper">
+                                    <img src="<?php echo !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
+                                         alt="<?php echo htmlspecialchars($prod['name']); ?>" 
+                                         class="bd-product-img">
+                                </div>
+                                <h3 class="bd-product-name"><?php echo htmlspecialchars($prod['name']); ?></h3>
+                                <div class="bd-price-info">
+                                    <?php if($prod['discount_percent'] > 0): ?>
+                                        <div class="bd-price-label">Min <?php echo $prod['discount_percent']; ?>% Off</div>
+                                    <?php endif; ?>
+                                    <div class="bd-price-value">₹<?php echo number_format($prod['sale_price']); ?></div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="p-4 text-center w-100 text-muted">
+                            <i class="fas fa-box-open fa-2x mb-2"></i>
+                            <p>No Best Deals currently available.</p>
                         </div>
-                        <h3 class="bd-product-name">Galaxy S24 5G</h3>
-                        <div class="bd-price-info">
-                            <div class="bd-price-label">Just ₹79,999</div>
-                            <div class="bd-price-value">From ₹79,999</div>
-                        </div>
-                    </a>
-
-                    <!-- Product 2 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                             <img src="assets/images/demo-data/product.jpg" alt="iPhone 15" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Apple iPhone 15</h3>
-                        <div class="bd-price-info">
-                            <div class="bd-price-label">Incl of offers</div>
-                            <div class="bd-price-value">From ₹65,999</div>
-                        </div>
-                    </a>
-                    
-                    <!-- Product 3 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                             <img src="assets/images/demo-data/product.jpg" alt="Vivo T2 Pro" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Vivo T2 Pro 5G</h3>
-                        <div class="bd-price-info">
-                             <div class="bd-price-label">Just ₹21,999</div>
-                             <div class="bd-price-value">From ₹21,999</div>
-                        </div>
-                    </a>
-
-                    <!-- Product 4 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                            <img src="assets/images/demo-data/product.jpg" alt="Poco X6" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Poco X6 Neo</h3>
-                        <div class="bd-price-info">
-                            <div class="bd-price-label">Just ₹13,999*</div>
-                            <div class="bd-price-value">From ₹13,999*</div>
-                        </div>
-                    </a>
-
-                    <!-- Product 5 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                             <img src="assets/images/demo-data/product.jpg" alt="Realme 12x" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Realme 12x 5G</h3>
-                        <div class="bd-price-info">
-                             <div class="bd-price-label">Min ₹1000 Off</div>
-                             <div class="bd-price-value">From ₹10,999</div>
-                        </div>
-                    </a>
-
-                    <!-- Product 6 -->
-                    <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                             <img src="assets/images/demo-data/product.jpg" alt="Redmi Note 13" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Redmi Note 13</h3>
-                        <div class="bd-price-info">
-                             <div class="bd-price-label">From ₹15,499</div>
-                             <div class="bd-price-value">From ₹15,499</div>
-                        </div>
-                    </a>
-
-                     <!-- Product 7 -->
-                     <a href="#" class="bd-product-card">
-                        <div class="bd-img-wrapper">
-                             <img src="assets/images/demo-data/product.jpg" alt="Moto G34" class="bd-product-img">
-                        </div>
-                        <h3 class="bd-product-name">Motorola G34 5G</h3>
-                        <div class="bd-price-info">
-                             <div class="bd-price-label">Just ₹10,999*</div>
-                             <div class="bd-price-value">From ₹10,999*</div>
-                        </div>
-                    </a>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <!-- Right: Banner -->
             <div class="deals-banner-area">
-                <img src="assets/images/banners/banner-1.png" alt="Flight Booking Offer" class="deals-banner-img img-fluid">
+                <img src="assets/images/banners/banner-1.png" alt="Offer Banner" class="deals-banner-img img-fluid">
             </div>
         </div>
     </div>
@@ -362,7 +329,11 @@
         // Scroll Amount
         const getScrollAmount = () => {
              // Scroll by approx 3 cards visible on desktop, or 1 on mobile
-             return slider.firstElementChild.clientWidth + 15; // Width + Gap
+             // Check if children exist
+             if(slider.firstElementChild) {
+                return slider.firstElementChild.clientWidth + 15; // Width + Gap
+             }
+             return 200;
         };
 
         // Navigation
@@ -381,6 +352,9 @@
         // Autoplay
         let autoplayInterval;
         const startAutoplay = () => {
+            // Only autoplay if content overflows
+            if (slider.scrollWidth <= slider.clientWidth) return;
+
             autoplayInterval = setInterval(() => {
                 if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
                     // Reset to start if reached end
