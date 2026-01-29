@@ -217,7 +217,7 @@ $disc = $product['discount_percent'];
                     <span class="share-text">Share this:</span>
                     <a href="https://api.whatsapp.com/send?text=<?php echo $enc_title . ' ' . $enc_url; ?>" target="_blank" class="share-btn share-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $enc_url; ?>" target="_blank" class="share-btn share-fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/intent/tweet?url=<?php echo $enc_url; ?>&text=<?php echo $enc_title; ?>" target="_blank" class="share-btn share-tw" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://twitter.com/intent/tweet?url=<?php echo $enc_url; ?>&text=<?php echo $enc_title; ?>" target="_blank" class="share-btn share-tw" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="http://pinterest.com/pin/create/button/?url=<?php echo $enc_url; ?>&description=<?php echo $enc_title; ?>" target="_blank" class="share-btn share-pi" title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
                 </div>
 
