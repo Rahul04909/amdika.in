@@ -176,43 +176,28 @@
             </div>
 
             <!-- Col 2: The Company -->
+            <!-- Col 2: The Company -->
              <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">The Company</span>
-                <div class="row">
-                    <div class="col-6">
-                        <ul class="footer-links">
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                     <div class="col-6">
-                        <ul class="footer-links">
-                             <li><a href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <ul class="footer-links">
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
            </div>
 
             <!-- Col 3: More Information -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">More Information</span>
-                 <div class="row">
-                    <div class="col-6">
-                        <ul class="footer-links">
-                            <li><a href="#">Fees and Payments</a></li>
-                            <li><a href="#">Shipping & Delivery</a></li>
-                            <li><a href="#">Terms and Conditions</a></li>
-                             <li><a href="#">Warranty, Return and Refund</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <ul class="footer-links">
-                             <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Visit Us</a></li>
-                            <li><a href="#">Buy In Bulk</a></li>
-                        </ul>
-                    </div>
-                </div>
+                 <ul class="footer-links">
+                    <li><a href="#">Fees and Payments</a></li>
+                    <li><a href="#">Shipping & Delivery</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                     <li><a href="#">Warranty, Return and Refund</a></li>
+                     <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Visit Us</a></li>
+                    <li><a href="#">Buy In Bulk</a></li>
+                </ul>
             </div>
 
             <!-- Col 4: Address -->
