@@ -401,6 +401,138 @@ $disc = $product['discount_percent'];
     </div>
 </div>
 
+<!-- Dynamic Category Products CSS -->
+<style>
+    /* Copied from category-products.php for consistency */
+    .category-products-section { background-color: #fff; padding: 16px 0; margin-top: 20px; }
+    .category-header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 16px; border-bottom: 1px solid #f0f0f0; margin-bottom: 10px; box-shadow: 0 1px 1px 0 rgba(0,0,0,.05); border-radius: 4px 4px 0 0; }
+    .category-title { font-size: 22px; font-weight: 600; color: #212121; margin: 0; }
+    
+    .cp-product-container { padding: 10px 5px; }
+    
+    /* Desktop Slider */
+    @media (min-width: 992px) {
+        .cp-product-container { display: flex; gap: 15px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .cp-product-container::-webkit-scrollbar { display: none; }
+        .cp-product-item { flex: 0 0 220px; min-width: 220px; }
+        
+        .cp-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 90px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5; box-shadow: 0 2px 4px rgba(0,0,0,0.1); opacity: 0; transition: opacity 0.3s; }
+        .category-products-section:hover .cp-nav-btn { opacity: 1; }
+        .cp-prev-btn { left: 0; border-radius: 0 4px 4px 0; }
+        .cp-next-btn { right: 0; border-radius: 4px 0 0 4px; }
+        .d-none-mobile { display: block; }
+    }
+
+    /* Mobile Grid */
+    @media (max-width: 991px) {
+        .cp-product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 10px; }
+        .cp-product-item { width: 100%; }
+        .cp-nav-btn { display: none; }
+        .d-none-mobile { display: none; }
+    }
+
+    /* Card Styling */
+    .premium-product-card { background: #fff; position: relative; display: flex; flex-direction: column; padding: 16px; height: 100%; transition: box-shadow 0.2s ease, transform 0.1s; border: 1px solid #f0f0f0; border-radius: 4px; }
+    .premium-product-card:hover { box-shadow: 0 3px 16px 0 rgba(0,0,0,.11); transform: translateY(-2px); z-index: 2; border-color: transparent; }
+    .card-wishlist-btn { position: absolute; top: 12px; right: 12px; color: #c2c2c2; font-size: 18px; cursor: pointer; z-index: 10; background: none; border: none; }
+    .card-wishlist-btn:hover { color: #ff4343; }
+    .product-img-wrapper { position: relative; width: 100%; height: 180px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+    .product-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .rating-badge { background-color: #388e3c; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 3px; display: inline-flex; align-items: center; margin-right: 8px; }
+    .rating-badge i { font-size: 10px; margin-left: 2px; }
+    .review-count { color: #878787; font-size: 13px; font-weight: 500; }
+    .product-title { font-size: 14px; font-weight: 500; color: #212121; margin-top: 8px; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; height: 40px; }
+    .price-container { display: flex; align-items: baseline; flex-wrap: wrap; margin-top: 4px; }
+    .current-price { font-size: 18px; font-weight: 600; color: #212121; margin-right: 10px; }
+    .original-price { font-size: 14px; color: #878787; text-decoration: line-through; margin-right: 10px; }
+    .discount-text { font-size: 13px; color: #388e3c; font-weight: 700; }
+
+    /* Mobile Card */
+    @media (max-width: 767px) {
+        .premium-product-card { padding: 10px; }
+        .product-img-wrapper { height: 140px; }
+        .product-title { font-size: 13px; height: 36px; }
+        .current-price { font-size: 15px; }
+        .rating-badge { padding: 1px 4px; font-size: 11px; }
+    }
+</style>
+
+<!-- Related Products Section -->
+<?php
+$cat_id = $product['category_id'];
+$curr_id = $product['id'];
+$rel_sql = "SELECT * FROM products WHERE category_id = $cat_id AND id != $curr_id AND status = 'active' ORDER BY RAND() LIMIT 10";
+$rel_res = $conn->query($rel_sql);
+
+if($rel_res && $rel_res->num_rows > 0):
+    $unique_id = "rel_prod_" . time();
+?>
+<section class="category-products-section position-relative mb-3 px-lg-4">
+    <div class="container-fluid p-0 position-relative" id="container_<?php echo $unique_id; ?>">
+        <!-- Header -->
+        <div class="category-header rounded-top">
+            <h2 class="category-title">Similar Products</h2>
+            <a href="products.php?category_id=<?php echo $cat_id; ?>" class="view-all-btn d-none d-lg-block">View All</a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <button class="cp-nav-btn cp-prev-btn" data-target="slider_<?php echo $unique_id; ?>"><i class="fas fa-chevron-left"></i></button>
+        <button class="cp-nav-btn cp-next-btn" data-target="slider_<?php echo $unique_id; ?>"><i class="fas fa-chevron-right"></i></button>
+
+        <!-- Product Container -->
+        <div class="cp-product-container" id="slider_<?php echo $unique_id; ?>">
+            <?php while($fp = $rel_res->fetch_assoc()): 
+                $fp_img = !empty($fp['featured_image']) ? $fp['featured_image'] : 'assets/images/demo-data/product.jpg';
+                $fp_rating = number_format(4.0 + (rand(0, 10) / 10), 1);
+                $fp_reviews = rand(5, 500);
+            ?>
+            <div class="cp-product-item">
+                <div class="premium-product-card">
+                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                    <div class="product-img-wrapper">
+                        <a href="product-details.php?slug=<?php echo $fp['slug']; ?>" class="d-block w-100 h-100">
+                            <img src="<?php echo $fp_img; ?>" class="product-img" alt="<?php echo htmlspecialchars($fp['name']); ?>">
+                        </a>
+                    </div>
+                    <div>
+                        <span class="rating-badge"><?php echo $fp_rating; ?> <i class="fa-solid fa-star"></i></span>
+                        <span class="review-count">(<?php echo $fp_reviews; ?>)</span>
+                    </div>
+                    <a href="product-details.php?slug=<?php echo $fp['slug']; ?>" class="text-decoration-none">
+                        <h3 class="product-title"><?php echo htmlspecialchars($fp['name']); ?></h3>
+                    </a>
+                    <div class="price-container">
+                        <span class="current-price">₹<?php echo number_format($fp['sale_price']); ?></span>
+                        <span class="original-price">₹<?php echo number_format($fp['mrp']); ?></span>
+                        <span class="discount-text"><?php echo $fp['discount_percent']; ?>% off</span>
+                    </div>
+                </div>
+            </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize this specific slider
+        const prevBtn = document.querySelector('#container_<?php echo $unique_id; ?> .cp-prev-btn');
+        const nextBtn = document.querySelector('#container_<?php echo $unique_id; ?> .cp-next-btn');
+        const slider = document.querySelector('#slider_<?php echo $unique_id; ?>');
+
+        if(prevBtn && nextBtn && slider) {
+            const scrollAmount = 300;
+            prevBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+            nextBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+        }
+    });
+</script>
+<?php endif; ?>
+
 <!-- Mobile Sticky Footer -->
 <!-- Mobile Sticky Footer -->
 <div class="mobile-footer-actions">
