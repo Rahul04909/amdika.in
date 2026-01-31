@@ -7,6 +7,8 @@ $current_script = $_SERVER['SCRIPT_NAME'];
 $assets_path = 'assets/'; // Default for root files
 if (strpos($current_script, '/user/') !== false) {
     $assets_path = '../assets/';
+} elseif (strpos($current_script, '/pages/') !== false) {
+    $assets_path = '../../assets/';
 }
 ?>
 <!DOCTYPE html>
