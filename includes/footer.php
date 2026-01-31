@@ -319,7 +319,7 @@
                         <a href="#" class="text-decoration-none footer-bottom-link">Privacy Policy</a>
                     </div>
                     <div class="mt-2 footer-bottom-text" style="font-size: 12px;">
-                        © 2012-2025 AMADIKAA
+                        © 2026 AMADIKAA | A Website Designed By <a href="https://www.mineib.com/">Mineib</a>
                     </div>
                 </div>
                 
