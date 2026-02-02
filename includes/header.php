@@ -154,7 +154,7 @@ if (strpos($current_script, '/user/') !== false) {
                                         <a href="../../index.php" class="nav-link ps-lg-0">Home</a>
                                         <a href="../../products.php" class="nav-link">Shop</a>
                                         <a href="../../pages/about-us/index.php" class="nav-link">About us</a>
-                                        <a href="#" class="nav-link">Contact</a>
+                                        <a href="../../pages/contact-us/index.php" class="nav-link">Contact</a>
                                     </div>
                                 </div>
                             </div>
