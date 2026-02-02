@@ -180,7 +180,7 @@ include '../includes/header.php';
             <div>
                 <h2>Welcome<br>Back!</h2>
                 <p>Log in to access your wishlist, track orders, and experience faster checkout.</p>
-                <img src="../assets/images/amadika-logo.png" class="info-graphic" alt="Amadika Logo" style="width: 150px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
+                <img src="../assets/images/amdika-logo.png" class="info-graphic" alt="Amadika Logo" style="width: 150px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
             </div>
             <div style="font-size: 14px; opacity: 0.8;">
                 <p class="mb-0">&copy; <?php echo date('Y'); ?> Amadika. All rights reserved.</p>
