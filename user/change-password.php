@@ -13,6 +13,12 @@ include '../includes/header.php';
 ?>
 
 <style>
+    /* Hide browser default password reveal button */
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+        display: none;
+    }
+
     body { background-color: #f8f9fa; }
     .dashboard-container { padding: 40px 0; }
     
