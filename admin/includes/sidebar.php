@@ -283,7 +283,7 @@ body.sb-collapsed #page-content-wrapper {
 <?php
 // Dynamic Path Logic
 $base_path = '../';
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/profile/') !== false) {
     $base_path = '../../';
 }
 
@@ -421,7 +421,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
              <div class="collapse" id="menuSettings">
                 <ul class="sb-submenu">
                     <li><a href="#" class="sb-link">General</a></li>
-                    <li><a href="../../admin/profile.php" class="sb-link">Profile</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/profile/index.php" class="sb-link">Profile</a></li>
                 </ul>
             </div>
         </div>
