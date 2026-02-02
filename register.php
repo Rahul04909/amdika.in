@@ -179,7 +179,7 @@ include 'includes/header.php';
                 </ul>
             </div>
             <!-- Illustration Placeholder -->
-            <img src="../../assets/images/amadika-logo.png" class="info-graphic" alt="Shopping Illustration">
+            <img src="assets/images/amadika-logo.png" class="info-graphic" alt="Shopping Illustration">
         </div>
 
         <!-- Right Form Panel -->

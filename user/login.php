@@ -5,125 +5,223 @@ require_once '../database/db_config.php';
 include '../includes/header.php';
 ?>
 
+
 <style>
-    body { background-color: #f1f3f6; }
-    .login-container {
-        max-width: 800px;
-        margin: 40px auto;
+    :root {
+        --primary-charcoal: #2F3A3F;
+        --accent-gold: #D9A11D;
+        --accent-blue: #2F6FED;
+        --text-dark: #333;
+        --text-muted: #666;
+        --border-color: #E6E6E6;
+    }
+
+    body { background-color: #fff; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    .login-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 1000px;
         background: #fff;
-        border-radius: 4px;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         display: flex;
         overflow: hidden;
-        min-height: 450px;
+        min-height: 550px;
     }
-    
-    .login-sidebar {
-        width: 35%;
-        background: #2874f0;
-        padding: 40px 33px;
+
+    /* Left Info Panel */
+    .login-info {
+        width: 40%;
+        background: linear-gradient(135deg, #2F6FED 0%, #1e5ad6 100%);
         color: #fff;
-        display: none;
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
     }
-    .login-sidebar h2 { font-size: 28px; font-weight: 500; margin-bottom: 20px; }
-    .login-sidebar p { font-size: 18px; line-height: 150%; color: #dbdbdb; }
-    .login-sidebar img { position: absolute; bottom: 40px; }
+    .login-info h2 { font-size: 32px; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
+    .login-info p { font-size: 16px; opacity: 0.9; line-height: 1.6; margin-bottom: 30px; }
+    .info-graphic { 
+        max-width: 80%; 
+        align-self: center; 
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); 
+    }
     
-    .login-form-col {
-        width: 100%;
-        padding: 40px 35px;
+    /* Right Form Panel */
+    .login-form-section {
+        width: 60%;
+        padding: 60px 50px;
+        background: #fff;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
+
+    .form-header { margin-bottom: 30px; }
+    .form-header h3 { font-size: 26px; font-weight: 700; color: var(--primary-charcoal); margin-bottom: 8px; }
+    .form-header p { color: var(--text-muted); font-size: 14px; }
+
+    /* Floating Labels & Inputs */
+    .input-group-floating {
+        position: relative;
+        margin-bottom: 24px;
+    }
     
-    @media(min-width: 768px) {
-        .login-sidebar { display: block; position: relative; }
-        .login-form-col { width: 65%; }
+    .form-icon {
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        color: #999;
+        font-size: 16px;
+        z-index: 2;
+        transition: color 0.3s;
     }
 
-    .form-group { margin-bottom: 20px; position: relative; }
-    .form-control {
-        border: none;
-        border-bottom: 1px solid #e0e0e0;
-        border-radius: 0;
-        padding: 10px 0;
+    .form-control-custom {
+        width: 100%;
+        height: 50px;
+        padding: 18px 15px 5px 45px;
+        font-size: 15px;
+        color: var(--text-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: #fff;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+    
+    .form-control-custom:focus {
+        border-color: var(--accent-gold);
+        box-shadow: 0 4px 12px rgba(217, 161, 29, 0.15);
+    }
+    .form-control-custom:focus ~ .form-icon { color: var(--accent-gold); }
+
+    .floating-label {
+        position: absolute;
+        left: 45px;
+        top: 14px;
         font-size: 14px;
-        color: #212121;
-    }
-    .form-control:focus {
-        box-shadow: none;
-        border-bottom: 1px solid #2874f0;
-    }
-    .form-label {
-        font-size: 14px; color: #878787; position: absolute; 
-        pointer-events: none; transition: 0.2s; top: 10px; left: 0;
-    }
-    
-    /* Float Label */
-    .form-control:focus ~ .form-label,
-    .form-control:not(:placeholder-shown) ~ .form-label {
-        top: -12px; font-size: 12px; color: #2874f0;
+        color: #888;
+        pointer-events: none;
+        transition: 0.2s ease all;
+        background-color: transparent;
     }
 
-    .btn-login {
-        background: #fb641b; color: #fff; font-weight: 600;
-        font-size: 15px; padding: 12px; width: 100%; border: none;
-        border-radius: 2px; box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+    .form-control-custom:focus ~ .floating-label,
+    .form-control-custom:not(:placeholder-shown) ~ .floating-label {
+        top: 6px;
+        font-size: 11px;
+        color: var(--accent-blue);
+        font-weight: 600;
+    }
+
+    /* Primary Button */
+    .btn-login-premium {
+        width: 100%;
+        height: 52px;
+        background: var(--accent-gold);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
         margin-top: 10px;
-        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.5px;
     }
-    .btn-login:hover { background: #f55b10; }
-    
-    .or-divider {
-        margin: 20px 0; text-align: center; color: #878787; font-size: 12px; position: relative;
+    .btn-login-premium:hover {
+        background: #C79218;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(217, 161, 29, 0.3);
     }
-    
-    .create-account-link {
-        color: #2874f0; font-weight: 500; text-decoration: none; display: block; text-align: center; margin-top: 25px;
-    }
+    .btn-login-premium:active { transform: translateY(0); }
 
+    /* Links */
     .forgot-link {
-        display: block; text-align: right; color: #2874f0; font-size: 12px; font-weight: 500; margin-top: 5px; text-decoration: none;
+        display: block;
+        text-align: right;
+        color: var(--accent-blue);
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-bottom: 20px;
     }
+    .forgot-link:hover { text-decoration: underline; }
 
-    .toggle-password {
-        position: absolute; right: 0; top: 10px; cursor: pointer; color: #878787;
+    .register-link-container { text-align: center; margin-top: 30px; font-size: 14px; color: var(--text-muted); }
+    .register-link-container a { color: var(--accent-blue); font-weight: 600; text-decoration: none; margin-left: 5px; }
+    .register-link-container a:hover { text-decoration: underline; }
+
+    /* Mobile Responsive */
+    @media (max-width: 991px) {
+        .login-info { display: none; }
+        .login-form-section { width: 100%; padding: 40px 20px; }
+        .login-card { max-width: 500px; min-height: auto; }
     }
 </style>
 
-<div class="container mb-5">
-    <div class="login-container">
-        <!-- Sidebar -->
-        <div class="login-sidebar">
-            <h2>Login</h2>
-            <p>Get access to your Orders, Wishlist and Recommendations</p>
-            <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png" alt="Login Graphic" style="width: 200px;">
+<div class="login-wrapper">
+    <div class="login-card">
+        <!-- Left Info Panel -->
+        <div class="login-info">
+            <div>
+                <h2>Welcome<br>Back!</h2>
+                <p>Log in to access your wishlist, track orders, and experience faster checkout.</p>
+                <img src="../assets/images/amadika-logo.png" class="info-graphic" alt="Amadika Logo" style="width: 150px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
+            </div>
+            <div style="font-size: 14px; opacity: 0.8;">
+                <p class="mb-0">&copy; <?php echo date('Y'); ?> Amadika. All rights reserved.</p>
+            </div>
         </div>
 
-        <!-- Form -->
-        <div class="login-form-col">
-            <h3 class="d-md-none mb-4">Login</h3>
-            
+        <!-- Right Form Panel -->
+        <div class="login-form-section">
+            <div class="form-header">
+                <h3>Login to Account</h3>
+                <p>Please enter your email and password to continue</p>
+            </div>
+
             <form id="loginForm">
                 <input type="hidden" name="redirect" value="<?php echo isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : ''; ?>">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="email" id="email" placeholder=" " required>
-                    <label class="form-label">Email ID</label>
-                </div>
-
-                <div class="form-group">
-                    <input type="password" class="form-control" name="password" id="password" placeholder=" " required>
-                    <label class="form-label">Password</label>
-                    <i class="fas fa-eye toggle-password" onclick="togglePass()"></i>
-                    <a href="#" class="forgot-link">Forgot?</a>
-                </div>
-
-                <p class="text-muted" style="font-size: 11px;">By continuing, you agree to Amadika's Terms of Use and Privacy Policy.</p>
-
-                <button type="submit" class="btn-login">Login</button>
                 
-                <a href="../register.php" class="create-account-link">New to Amadika? Create an account</a>
+                <!-- Email -->
+                <div class="input-group-floating">
+                    <input type="text" class="form-control-custom" name="email" id="email" placeholder=" " required>
+                    <label class="floating-label">Email Address</label>
+                    <i class="fas fa-envelope form-icon"></i>
+                </div>
+
+                <!-- Password -->
+                <div class="input-group-floating mb-1">
+                    <input type="password" class="form-control-custom" name="password" id="password" placeholder=" " required>
+                    <label class="floating-label">Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <i class="fas fa-eye toggle-pass" onclick="toggleVisibility('password', this)" style="position:absolute; right:15px; top:16px; cursor:pointer; color:#999;"></i>
+                </div>
+                
+                <a href="#" class="forgot-link">Forgot Password?</a>
+
+                <button type="submit" class="btn-login-premium">
+                    <span>Login</span>
+                    <i class="fas fa-arrow-right ms-2" style="font-size:14px;"></i>
+                </button>
+
+                <div class="register-link-container">
+                    New to Amadika? <a href="../register.php">Create an account</a>
+                </div>
             </form>
         </div>
     </div>
@@ -132,17 +230,19 @@ include '../includes/header.php';
 <?php include '../includes/footer.php'; ?>
 
 <script>
-    function togglePass() {
-        const input = document.getElementById('password');
-        const icon = document.querySelector('.toggle-password');
+    // Toggle Password Visibility
+    function toggleVisibility(inputId, icon) {
+        const input = document.getElementById(inputId);
         if (input.type === "password") {
             input.type = "text";
             icon.classList.remove("fa-eye");
             icon.classList.add("fa-eye-slash");
+            icon.style.color = "var(--accent-gold)";
         } else {
             input.type = "password";
             icon.classList.remove("fa-eye-slash");
             icon.classList.add("fa-eye");
+            icon.style.color = "#999";
         }
     }
 
@@ -152,6 +252,7 @@ include '../includes/header.php';
         const formData = new FormData(this);
         formData.append('action', 'login');
 
+        // Note: auth_actions.php is in includes/ folder, so path is ../includes/auth_actions.php
         fetch('../includes/auth_actions.php', {
             method: 'POST',
             body: formData
