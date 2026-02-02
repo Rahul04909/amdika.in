@@ -3,171 +3,281 @@ $page_title = 'Create Account';
 include 'includes/header.php';
 ?>
 
+
 <style>
-    body { background-color: #f1f3f6; }
-    .register-container {
-        max-width: 800px;
-        margin: 40px auto;
+    :root {
+        --primary-charcoal: #2F3A3F;
+        --accent-gold: #D9A11D;
+        --accent-blue: #2F6FED;
+        --text-dark: #333;
+        --text-muted: #666;
+        --border-color: #E6E6E6;
+    }
+
+    body { background-color: #fff; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    .register-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 1100px;
         background: #fff;
-        border-radius: 4px;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Soft shadow */
         display: flex;
         overflow: hidden;
+        min-height: 600px;
     }
-    
-    .register-sidebar {
-        width: 35%;
-        background: #2874f0;
-        padding: 40px 33px;
+
+    /* Left Info Panel */
+    .register-info {
+        width: 40%;
+        background: linear-gradient(135deg, #2F6FED 0%, #1e5ad6 100%); /* Royal Blue Gradient */
         color: #fff;
-        display: none; /* Hide on mobile by default */
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
     }
-    .register-sidebar h2 { font-size: 28px; font-weight: 500; margin-bottom: 20px; }
-    .register-sidebar p { font-size: 18px; line-height: 150%; color: #dbdbdb; }
-    .register-sidebar img { position: absolute; bottom: 40px; }
+    .register-info h2 { font-size: 32px; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
+    .register-info p { font-size: 16px; opacity: 0.9; line-height: 1.6; margin-bottom: 30px; }
+    .info-graphic { 
+        max-width: 80%; 
+        align-self: center; 
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); 
+    }
     
-    .register-form-col {
+    /* Right Form Panel */
+    .register-form-section {
+        width: 60%;
+        padding: 60px 50px;
+        background: #fff;
+    }
+
+    .form-header { margin-bottom: 40px; }
+    .form-header h3 { font-size: 24px; font-weight: 700; color: var(--primary-charcoal); margin-bottom: 8px; }
+    .form-header p { color: var(--text-muted); font-size: 14px; }
+
+    /* Floating Labels & Inputs */
+    .input-group-floating {
+        position: relative;
+        margin-bottom: 24px;
+    }
+    
+    .form-icon {
+        position: absolute;
+        left: 16px;
+        top: 16px; /* Center vert in 48px height */
+        color: #999;
+        font-size: 16px;
+        z-index: 2;
+        transition: color 0.3s;
+    }
+
+    .form-control-custom {
         width: 100%;
-        padding: 40px 35px;
+        height: 50px;
+        padding: 18px 15px 5px 45px; /* Top padding for label, Left for icon */
+        font-size: 15px;
+        color: var(--text-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: #fff;
+        transition: all 0.3s ease;
+        outline: none;
     }
     
-    @media(min-width: 768px) {
-        .register-sidebar { display: block; position: relative; }
-        .register-form-col { width: 65%; }
+    .form-control-custom:focus {
+        border-color: var(--accent-gold);
+        box-shadow: 0 4px 12px rgba(217, 161, 29, 0.15); /* Subtle glow */
     }
+    .form-control-custom:focus ~ .form-icon { color: var(--accent-gold); }
 
-    .form-group { margin-bottom: 20px; position: relative; }
-    .form-control {
-        border: none;
-        border-bottom: 1px solid #e0e0e0;
-        border-radius: 0;
-        padding: 10px 0;
+    .floating-label {
+        position: absolute;
+        left: 45px;
+        top: 14px;
         font-size: 14px;
-    }
-    .form-control:focus {
-        box-shadow: none;
-        border-bottom: 1px solid #2874f0;
-    }
-    .form-label {
-        font-size: 14px; color: #878787; position: absolute; 
-        pointer-events: none; transition: 0.2s; top: 10px; left: 0;
-    }
-    
-    /* Float Label Effect */
-    .form-control:focus ~ .form-label,
-    .form-control:not(:placeholder-shown) ~ .form-label {
-        top: -12px; font-size: 12px; color: #2874f0;
+        color: #888;
+        pointer-events: none;
+        transition: 0.2s ease all;
+        background-color: transparent;
     }
 
-    .btn-register {
-        background: #fb641b; color: #fff; font-weight: 600;
-        font-size: 15px; padding: 12px; width: 100%; border: none;
-        border-radius: 2px; box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
-        margin-top: 10px;
-        text-transform: uppercase;
+    /* Active State for Label */
+    .form-control-custom:focus ~ .floating-label,
+    .form-control-custom:not(:placeholder-shown) ~ .floating-label {
+        top: 6px;
+        font-size: 11px;
+        color: var(--accent-blue);
+        font-weight: 600;
     }
-    .btn-register:hover { background: #f55b10; }
-    
-    .existing-user { margin-top: 20px; text-align: center; }
-    .existing-user a { color: #2874f0; text-decoration: none; font-weight: 500; }
+
+    /* Register Button */
+    .btn-register-premium {
+        width: 100%;
+        height: 52px;
+        background: var(--accent-gold);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-register-premium:hover {
+        background: #C79218; /* Slight Darken */
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(217, 161, 29, 0.3);
+    }
+    .btn-register-premium:active { transform: translateY(0); }
+
+    /* Login Link */
+    .login-link-container { text-align: center; margin-top: 30px; font-size: 14px; color: var(--text-muted); }
+    .login-link-container a { color: var(--accent-blue); font-weight: 600; text-decoration: none; margin-left: 5px; }
+    .login-link-container a:hover { text-decoration: underline; }
 
     /* Password Strength */
-    .password-wrapper { position: relative; }
-    .toggle-password {
-        position: absolute; right: 0; top: 10px; cursor: pointer; color: #878787;
-    }
-    
-    .strength-meter { height: 4px; border-radius: 2px; background: #e0e0e0; margin-top: 5px; transition: all 0.3s; width: 0%;}
-    .strength-text { font-size: 11px; margin-top: 4px; font-weight: 500; text-align: right;}
-    
-    .weak { background: #ff3333; width: 33%; }
-    .medium { background: #ffcc00; width: 66%; }
-    .strong { background: #33cc33; width: 100%; }
+    .strength-meter { height: 3px; border-radius: 2px; background: #eee; margin-top: 8px; overflow: hidden; display: flex; }
+    .strength-fill { height: 100%; width: 0%; transition: width 0.3s, background 0.3s; }
+    .strength-text { font-size: 11px; font-weight: 500; margin-top: 4px; text-align: right; min-height: 16px; }
 
-    .text-weak { color: #ff3333; }
-    .text-medium { color: #ffcc00; }
-    .text-strong { color: #33cc33; }
+    /* Mobile Responsive */
+    @media (max-width: 991px) {
+        .register-info { display: none; }
+        .register-form-section { width: 100%; padding: 40px 20px; }
+        .register-card { max-width: 600px; }
+    }
 </style>
 
-<div class="container mb-5">
-    <div class="register-container">
-        <!-- Sidebar -->
-        <div class="register-sidebar">
-            <h2>Sign up</h2>
-            <p>Get access to your Orders, Wishlist and Recommendations</p>
-            <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png" alt="Login Graphic" style="width: 200px;">
+<div class="register-wrapper">
+    <div class="register-card">
+        <!-- Left Info Panel -->
+        <div class="register-info">
+            <div>
+                <h2>Join our<br>community</h2>
+                <p>Sign up to unlock exclusive deals, track orders, and experience seamless shopping.</p>
+                <ul class="list-unstyled mt-4" style="font-size: 14px; opacity: 0.9;">
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> Fast & Secure Checkout</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> Exclusive Member Discounts</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> 24/7 Customer Support</li>
+                </ul>
+            </div>
+            <!-- Illustration Placeholder -->
+            <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png" class="info-graphic" alt="Shopping Illustration">
         </div>
 
-        <!-- Form -->
-        <div class="register-form-col">
-            <h3 class="d-md-none mb-4">Create Account</h3>
-            
+        <!-- Right Form Panel -->
+        <div class="register-form-section">
+            <div class="form-header">
+                <h3>Create Account</h3>
+                <p>Enter your details below to create your account</p>
+            </div>
+
             <form id="registerForm">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="name" id="name" placeholder=" " required>
-                    <label class="form-label">Full Name</label>
+                <!-- Full Name -->
+                <div class="input-group-floating">
+                    <input type="text" class="form-control-custom" name="name" id="name" placeholder=" " required>
+                    <label class="floating-label">Full Name</label>
+                    <i class="fas fa-user form-icon"></i>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <div class="input-group-floating">
+                            <input type="email" class="form-control-custom" name="email" id="email" placeholder=" " required>
+                            <label class="floating-label">Email Address</label>
+                            <i class="fas fa-envelope form-icon"></i>
+                        </div>
+                    </div>
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <div class="input-group-floating">
+                            <input type="tel" class="form-control-custom" name="mobile" id="mobile" placeholder=" " pattern="[0-9]{10}" required>
+                            <label class="floating-label">Mobile Number</label>
+                            <i class="fas fa-phone-alt form-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="input-group-floating">
+                    <input type="text" class="form-control-custom" name="address" id="address" placeholder=" " required>
+                    <label class="floating-label">Full Address</label>
+                    <i class="fas fa-map-marker-alt form-icon"></i>
                 </div>
                 
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <input type="email" class="form-control" name="email" id="email" placeholder=" " required>
-                        <label class="form-label">Email Address</label>
+                <div class="row g-3">
+                    <div class="col-6">
+                         <div class="input-group-floating mb-3">
+                            <input type="text" class="form-control-custom" name="city" id="city" placeholder=" " required>
+                            <label class="floating-label">City</label>
+                            <i class="fas fa-city form-icon"></i>
+                         </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <input type="tel" class="form-control" name="mobile" id="mobile" placeholder=" " pattern="[0-9]{10}" title="10 digit mobile number" required>
-                        <label class="form-label">Mobile Number</label>
+                    <div class="col-6">
+                         <div class="input-group-floating mb-3">
+                            <input type="text" class="form-control-custom" name="pincode" id="pincode" placeholder=" " pattern="[0-9]{6}" required>
+                            <label class="floating-label">Pincode</label>
+                            <i class="fas fa-map-pin form-icon"></i>
+                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" name="address" id="address" rows="1" placeholder=" " required></textarea>
-                    <label class="form-label">Full Address</label>
-                </div>
-
-                <div class="row">
-                    <div class="col-6 form-group">
-                        <input type="text" class="form-control" name="city" id="city" placeholder=" " required>
-                        <label class="form-label">City</label>
-                    </div>
-                    <div class="col-6 form-group">
-                        <input type="text" class="form-control" name="pincode" id="pincode" placeholder=" " pattern="[0-9]{6}" required>
-                        <label class="form-label">Pincode</label>
-                    </div>
-                    <div class="col-6 form-group">
-                        <input type="text" class="form-control" name="state" id="state" placeholder=" " required>
-                        <label class="form-label">State</label>
-                    </div>
-                    <div class="col-6 form-group">
-                        <input type="text" class="form-control" name="country" id="country" placeholder=" " value="India" required>
-                        <label class="form-label">Country</label>
+                    <div class="col-6">
+                         <div class="input-group-floating mb-3">
+                            <input type="text" class="form-control-custom" name="country" id="country" value="India" placeholder=" " required>
+                            <label class="floating-label">Country</label>
+                            <i class="fas fa-globe form-icon"></i>
+                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <div class="password-wrapper">
-                            <input type="password" class="form-control" name="password" id="password" placeholder=" " minlength="8" required>
-                            <label class="form-label">Password (Min 8 chars)</label>
-                            <i class="fas fa-eye toggle-password" onclick="togglePass('password', this)"></i>
+                <div class="row g-3">
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <div class="input-group-floating mb-1">
+                            <input type="password" class="form-control-custom" name="password" id="password" placeholder=" " minlength="8" required>
+                            <label class="floating-label">Password</label>
+                            <i class="fas fa-lock form-icon"></i>
+                            <i class="fas fa-eye toggle-pass" onclick="toggleVisibility('password', this)" style="position:absolute; right:15px; top:16px; cursor:pointer; color:#999;"></i>
                         </div>
-                        <div class="strength-meter" id="strengthBar"></div>
+                        <div class="strength-meter"><div class="strength-fill" id="strengthFill"></div></div>
                         <div class="strength-text" id="strengthText"></div>
                     </div>
-                    
-                    <div class="col-md-6 form-group">
-                        <div class="password-wrapper">
-                            <input type="password" class="form-control" name="cpassword" id="cpassword" placeholder=" " required>
-                            <label class="form-label">Confirm Password</label>
-                            <i class="fas fa-eye toggle-password" onclick="togglePass('cpassword', this)"></i>
+                    <!-- Confirm Password -->
+                    <div class="col-md-6">
+                        <div class="input-group-floating mb-1">
+                            <input type="password" class="form-control-custom" name="cpassword" id="cpassword" placeholder=" " required>
+                            <label class="floating-label">Confirm Password</label>
+                            <i class="fas fa-lock form-icon"></i>
+                             <i class="fas fa-eye toggle-pass" onclick="toggleVisibility('cpassword', this)" style="position:absolute; right:15px; top:16px; cursor:pointer; color:#999;"></i>
                         </div>
                         <div class="strength-text text-danger" id="matchText"></div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-register">Continue</button>
-                
-                <div class="existing-user">
-                    <a href="user/login.php" class="btn btn-outline-light text-primary shadow-sm py-2 px-4 w-100">Existing User? Log in</a>
+                <button type="submit" class="btn-register-premium">
+                    <span>Create Account</span>
+                    <i class="fas fa-arrow-right ms-2" style="font-size:14px;"></i>
+                </button>
+
+                <div class="login-link-container">
+                    Already have an account? <a href="user/login.php">Log in</a>
                 </div>
             </form>
         </div>
@@ -177,24 +287,26 @@ include 'includes/header.php';
 <?php include 'includes/footer.php'; ?>
 
 <script>
-    // Password Visible Toggle
-    function togglePass(inputId, icon) {
+    // Toggle Password Visibility
+    function toggleVisibility(inputId, icon) {
         const input = document.getElementById(inputId);
         if (input.type === "password") {
             input.type = "text";
             icon.classList.remove("fa-eye");
             icon.classList.add("fa-eye-slash");
+            icon.style.color = "var(--accent-gold)";
         } else {
             input.type = "password";
             icon.classList.remove("fa-eye-slash");
             icon.classList.add("fa-eye");
+            icon.style.color = "#999";
         }
     }
 
-    // Password Strength Logic
+    // Password Strength & Validation
     const passInput = document.getElementById('password');
-    const stressBar = document.getElementById('strengthBar');
-    const stressText = document.getElementById('strengthText');
+    const fillBar = document.getElementById('strengthFill');
+    const strengthText = document.getElementById('strengthText');
     const confirmInput = document.getElementById('cpassword');
     const matchText = document.getElementById('matchText');
 
@@ -207,41 +319,41 @@ include 'includes/header.php';
         if (val.match(/[0-9]/)) score++;
         if (val.match(/[^a-zA-Z0-9]/)) score++;
 
-        stressBar.className = 'strength-meter';
-        stressText.className = 'strength-text';
-        
-        if (val.length === 0) {
-            stressBar.style.width = '0%';
-            stressText.innerText = '';
-        } else if (val.length < 8) {
-            stressBar.classList.add('weak');
-            stressText.classList.add('text-weak');
-            stressText.innerText = 'Too Short (Min 8)';
-        } else if (score < 3) {
-            stressBar.classList.add('weak');
-            stressText.classList.add('text-weak');
-            stressText.innerText = 'Weak';
-        } else if (score === 3) {
-            stressBar.classList.add('medium');
-            stressText.classList.add('text-medium');
-            stressText.innerText = 'Medium';
-        } else {
-            stressBar.classList.add('strong');
-            stressText.classList.add('text-strong');
-            stressText.innerText = 'Strong';
+        // Reset
+        fillBar.style.width = '0%';
+        fillBar.style.backgroundColor = '#eee';
+        strengthText.innerText = '';
+
+        if(val.length > 0) {
+            if (val.length < 8) {
+                fillBar.style.width = '30%';
+                fillBar.style.backgroundColor = '#ff4d4d'; // Red
+                strengthText.innerText = 'Too short';
+                strengthText.style.color = '#ff4d4d';
+            } else if (score < 3) {
+                fillBar.style.width = '60%';
+                fillBar.style.backgroundColor = '#ffc107'; // Yellow
+                strengthText.innerText = 'Weak';
+                strengthText.style.color = '#ffc107';
+            } else {
+                fillBar.style.width = '100%';
+                fillBar.style.backgroundColor = '#28a745'; // Green
+                strengthText.innerText = 'Strong';
+                strengthText.style.color = '#28a745';
+            }
         }
     });
 
-    // Password Match Check
     confirmInput.addEventListener('input', function() {
         if (this.value !== passInput.value) {
+            matchText.innerText = "Passwords do match"; // Wait, "do match"? Logic check.
             matchText.innerText = "Passwords do not match";
         } else {
             matchText.innerText = "";
         }
     });
 
-    // Form Submission
+    // Form Submit
     document.getElementById('registerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -253,6 +365,7 @@ include 'includes/header.php';
         const formData = new FormData(this);
         formData.append('action', 'register');
 
+        // Note: register.php is in root, auth_actions is in includes/
         fetch('includes/auth_actions.php', {
             method: 'POST',
             body: formData
@@ -260,7 +373,7 @@ include 'includes/header.php';
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
-                alert('Registration Successful! Redirecting to login...');
+                alert('Registration Successful! Redirecting...');
                 window.location.href = 'user/login.php';
             } else {
                 alert(data.message);
@@ -268,7 +381,7 @@ include 'includes/header.php';
         })
         .catch(err => {
             console.error(err);
-            alert('An error occurred. Please try again.');
+            alert('Error connecting to server.');
         });
     });
 </script>
