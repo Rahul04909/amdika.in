@@ -64,4 +64,54 @@ if ($action === 'update_info') {
     exit;
 }
 
+if ($action === 'change_password') {
+    $current_pass = $_POST['current_password'] ?? '';
+    $new_pass = $_POST['new_password'] ?? '';
+    $confirm_pass = $_POST['confirm_password'] ?? '';
+
+    if (empty($current_pass) || empty($new_pass) || empty($confirm_pass)) {
+        echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+        exit;
+    }
+
+    if ($new_pass !== $confirm_pass) {
+        echo json_encode(['status' => 'error', 'message' => 'New passwords do not match']);
+        exit;
+    }
+
+    if (strlen($new_pass) < 6) {
+        echo json_encode(['status' => 'error', 'message' => 'Password must be at least 6 characters']);
+        exit;
+    }
+
+    // Verify Old Password
+    $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    
+    if ($res->num_rows === 0) {
+        echo json_encode(['status' => 'error', 'message' => 'User not found']);
+        exit;
+    }
+
+    $row = $res->fetch_assoc();
+    if (!password_verify($current_pass, $row['password'])) {
+        echo json_encode(['status' => 'error', 'message' => 'Incorrect current password']);
+        exit;
+    }
+
+    // Update Password
+    $new_hash = password_hash($new_pass, PASSWORD_DEFAULT);
+    $update = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+    $update->bind_param("si", $new_hash, $user_id);
+    
+    if ($update->execute()) {
+        echo json_encode(['status' => 'success', 'message' => 'Password changed successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Database error']);
+    }
+    exit;
+}
+
 echo json_encode(['status' => 'error', 'message' => 'Invalid action']);
