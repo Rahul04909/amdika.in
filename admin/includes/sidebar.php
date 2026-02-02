@@ -283,7 +283,7 @@ body.sb-collapsed #page-content-wrapper {
 <?php
 // Dynamic Path Logic
 $base_path = '../';
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false) {
     $base_path = '../../';
 }
 
@@ -328,6 +328,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
                     <li><a href="../../admin/products/add-product.php" class="sb-link">Add New</a></li>
                     <li><a href="../../admin/products/manage-category.php" class="sb-link <?php echo $is_manage_cat ? 'active text-warning' : ''; ?>">Manage Categories</a></li>
                     <li><a href="../../admin/products/add-category.php" class="sb-link <?php echo $is_add_cat ? 'active text-warning' : ''; ?>">Add Category</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/frontend/manage-best-deals.php" class="sb-link">Manage Best Deals</a></li>
                 </ul>
             </div>
         </div>
@@ -374,6 +375,20 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
             <div class="collapse" id="menuUsers">
                 <ul class="sb-submenu">
                     <li><a href="<?php echo $base_path; ?>admin/users/index.php" class="sb-link">All Users</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Support Submenu -->
+        <div class="sb-item" data-tooltip="Support">
+            <a href="#menuSupport" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
+                <i class="fas fa-headset sb-icon"></i>
+                <span class="sb-text">Support</span>
+                <i class="fas fa-chevron-right sb-arrow"></i>
+            </a>
+            <div class="collapse" id="menuSupport">
+                <ul class="sb-submenu">
+                    <li><a href="<?php echo $base_path; ?>admin/support-tickets/index.php" class="sb-link">All Tickets</a></li>
                 </ul>
             </div>
         </div>
