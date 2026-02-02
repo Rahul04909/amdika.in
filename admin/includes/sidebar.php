@@ -421,8 +421,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
              <div class="collapse" id="menuSettings">
                 <ul class="sb-submenu">
                     <li><a href="#" class="sb-link">General</a></li>
-                    <li><a href="#" class="sb-link">Payment</a></li>
-                    <li><a href="#" class="sb-link">Notifications</a></li>
+                    <li><a href="../../admin/profile.php" class="sb-link">Profile</a></li>
                 </ul>
             </div>
         </div>
