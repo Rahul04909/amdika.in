@@ -151,7 +151,7 @@ if (strpos($current_script, '/user/') !== false) {
                                 <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between w-100">
                                     <!-- Menu Links -->
                                     <div class="main-nav">
-                                        <a href="https://www.amdika.in" class="nav-link ps-lg-0">Home</a>
+                                        <a href="../../index.php" class="nav-link ps-lg-0">Home</a>
                                         <a href="../../products.php" class="nav-link">Shop</a>
                                         <a href="../../pages/about-us/index.php" class="nav-link">About us</a>
                                         <a href="#" class="nav-link">Contact</a>

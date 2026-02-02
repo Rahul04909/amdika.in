@@ -367,7 +367,7 @@ $all_cats = $conn->query("SELECT * FROM product_categories ORDER BY name ASC");
                     ?>
                     <div class="col-6 col-md-4 col-lg-3 product-grid-item">
                         <div class="product-card-v2">
-                            <a href="product-details.php?id=<?php echo $prod['id']; ?>" class="text-decoration-none text-dark flex-grow-1">
+                            <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="text-decoration-none text-dark flex-grow-1">
                                 <div class="pc-img-wrapper">
                                      <!-- Placeholder if no image -->
                                      <img src="<?php echo !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
