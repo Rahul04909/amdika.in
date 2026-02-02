@@ -131,7 +131,7 @@ if (strpos($current_script, '/user/') !== false) {
                                 $h_cat_res = $conn->query($h_cat_sql);
                                 if($h_cat_res && $h_cat_res->num_rows > 0) {
                                     while($h_row = $h_cat_res->fetch_assoc()) {
-                                        echo '<li><a href="products.php?category='.urlencode($h_row['name']).'">'.htmlspecialchars($h_row['name']).' <i class="fa-solid fa-chevron-right"></i></a></li>';
+                                        echo '<li><a href="products.php?category='.urlencode($h_row['slug']).'">'.htmlspecialchars($h_row['name']).' <i class="fa-solid fa-chevron-right"></i></a></li>';
                                     }
                                     echo '<li><a href="products.php" class="text-center justify-content-center text-primary fw-bold" style="padding-left:20px;">View All Categories</a></li>';
                                 } else {
