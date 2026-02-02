@@ -286,7 +286,7 @@ if (!empty($bd_category_ids)) {
                     <?php if (!empty($bd_products)): ?>
                         <?php foreach($bd_products as $prod): ?>
                             <!-- Product -->
-                            <a href="product.php?slug=<?php echo $prod['slug']; ?>" class="bd-product-card">
+                            <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="bd-product-card">
                                 <div class="bd-img-wrapper">
                                     <img src="<?php echo !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
                                          alt="<?php echo htmlspecialchars($prod['name']); ?>" 
