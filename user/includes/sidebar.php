@@ -6,57 +6,74 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <style>
     .user-sidebar {
         background: #fff;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
-        border-radius: 2px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-radius: 8px;
         overflow: hidden;
+        border: 1px solid #f0f0f0;
     }
     
     .user-profile-brief {
-        padding: 12px;
+        padding: 20px;
         display: flex;
         align-items: center;
         gap: 15px;
-        border-bottom: 1px solid #f0f0f0;
-        background: #fff;
+        background: linear-gradient(135deg, #2F3A3F 0%, #1e2529 100%); /* Charcoal Gradient */
+        color: #fff;
     }
     .user-avatar-small {
-        width: 50px; height: 50px;
+        width: 48px; height: 48px;
         border-radius: 50%;
-        background: #f0f0f0; /* Default if no image */
+        background: #fff;
         object-fit: cover;
+        border: 2px solid #D9A11D; /* Golden Border */
+        padding: 2px;
     }
-    .hello-text { font-size: 12px; color: #878787; margin-bottom: 2px; }
-    .user-name-bold { font-size: 16px; font-weight: 600; color: #212121; }
+    .hello-text { font-size: 13px; opacity: 0.8; margin-bottom: 2px; }
+    .user-name-bold { font-size: 16px; font-weight: 600; color: #fff; }
 
-    .nav-section { border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
-    .nav-section:last-child { border-bottom: none; }
+    .nav-section { padding: 10px 0; }
     
-    .nav-header {
-        padding: 15px 20px 5px;
-        font-size: 12px; font-weight: 500; color: #878787; text-transform: uppercase;
-        display: flex; align-items: center; gap: 10px;
-    }
     .nav-link-item {
-        display: block;
-        padding: 10px 20px 10px 45px; /* Indent for items */
-        font-size: 14px;
-        color: #212121;
+        display: flex;
+        align-items: center;
+        padding: 12px 24px;
+        font-size: 15px;
+        color: #2F3A3F; /* Primary Charcoal */
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
+        border-left: 3px solid transparent;
+        font-weight: 500;
     }
-    .nav-link-item:hover { background: #f5faff; color: #2874f0; }
-    .nav-link-item.active { background: #f5faff; color: #2874f0; font-weight: 600; }
+    
+    .nav-link-item i { width: 24px; color: #999; transition: color 0.2s; }
+    
+    .nav-link-item:hover { 
+        background: #f8f9fa; 
+        color: #2F6FED; /* Royal Blue */
+    }
+    .nav-link-item:hover i { color: #2F6FED; }
+
+    .nav-link-item.active { 
+        background: #f0f7ff; 
+        color: #2F6FED; 
+        border-left-color: #D9A11D; /* Golden Accent */
+        font-weight: 600;
+    }
+    .nav-link-item.active i { color: #2F6FED; }
     
     .logout-btn {
-         padding: 15px 20px;
-         color: #878787;
+         padding: 14px 24px;
+         color: #dc3545;
          font-weight: 500;
-         display: block;
+         display: flex;
+         align-items: center;
          text-decoration: none;
          border-top: 1px solid #f0f0f0;
          transition: 0.2s;
+         margin-top: 5px;
     }
-    .logout-btn:hover { color: #2874f0; }
+    .logout-btn i { width: 24px; }
+    .logout-btn:hover { background: #fff5f5; color: #c82333; }
 </style>
 
 <div class="user-sidebar">
@@ -69,34 +86,22 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 
-    <!-- Orders -->
+    <!-- Navigation -->
     <div class="nav-section">
-        <div class="nav-header"><i class="fas fa-box text-primary"></i> MY ORDERS</div>
-        <a href="orders.php" class="nav-link-item <?php echo $current_page == 'orders.php' ? 'active' : ''; ?>">View All Orders</a>
-    </div>
-
-    <!-- Account Settings -->
-    <div class="nav-section">
-        <div class="nav-header"><i class="fas fa-user text-primary"></i> ACCOUNT SETTINGS</div>
-        <a href="index.php" class="nav-link-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>">Profile Information</a>
-        <a href="addresses.php" class="nav-link-item <?php echo $current_page == 'addresses.php' ? 'active' : ''; ?>">Manage Addresses</a>
-        <a href="#" class="nav-link-item">PAN Card Information</a>
-    </div>
-
-    <!-- Payments -->
-    <div class="nav-section">
-        <div class="nav-header"><i class="fas fa-wallet text-primary"></i> PAYMENTS</div>
-        <a href="#" class="nav-link-item">Gift Cards</a>
-        <a href="#" class="nav-link-item">Saved UPI</a>
-        <a href="#" class="nav-link-item">Saved Cards</a>
-    </div>
-
-    <!-- My Chat -->
-    <div class="nav-section">
-        <div class="nav-header"><i class="fas fa-comments text-primary"></i> MY CHAT</div>
-        <a href="#" class="nav-link-item">Support Chat</a>
+        <a href="orders.php" class="nav-link-item <?php echo $current_page == 'orders.php' ? 'active' : ''; ?>">
+            <i class="fas fa-box"></i> My Orders
+        </a>
+        <a href="index.php" class="nav-link-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>">
+            <i class="fas fa-user-circle"></i> My Profile
+        </a>
+        <a href="support.php" class="nav-link-item <?php echo $current_page == 'support.php' ? 'active' : ''; ?>">
+            <i class="fas fa-headset"></i> Support Ticket
+        </a>
+        <a href="change-password.php" class="nav-link-item <?php echo $current_page == 'change-password.php' ? 'active' : ''; ?>">
+            <i class="fas fa-key"></i> Change Password
+        </a>
     </div>
     
     <!-- Logout -->
-    <a href="logout.php" class="logout-btn"><i class="fas fa-power-off me-2"></i> Logout</a>
+    <a href="logout.php" class="logout-btn"><i class="fas fa-power-off"></i> Logout</a>
 </div>
