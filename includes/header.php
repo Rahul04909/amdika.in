@@ -115,9 +115,9 @@ if (strpos($current_script, '/user/') !== false) {
                                 <i class="fa-regular fa-user"></i>
                             </a>
                         <?php else: ?>
-                            <div class="d-none d-lg-block ms-2">
-                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-outline-primary btn-sm fw-bold px-3 py-1" style="border-radius:2px;">Login</a>
-                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-primary btn-sm fw-bold px-3 py-1 ms-1 text-white" style="border-radius:2px;">Register</a>
+                            <div class="d-none d-lg-flex align-items-center ms-3 gap-2">
+                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-sm fw-bold px-4" style="background:#fff; color:#2874f0; border:1px solid #dbdbdb; border-radius:2px;">Login</a>
+                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-sm fw-bold px-4 text-white" style="background:#2874f0; border:1px solid #2874f0; border-radius:2px;">Register</a>
                             </div>
                             <!-- Mobile Icon Fallback (User) -->
                              <a href="<?php echo $link_prefix; ?>user/login.php" class="action-icon ms-2 d-lg-none">
