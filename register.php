@@ -179,7 +179,7 @@ include 'includes/header.php';
                 </ul>
             </div>
             <!-- Illustration Placeholder -->
-            <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png" class="info-graphic" alt="Shopping Illustration">
+            <img src="../../assets/images/amadika-logo.png" class="info-graphic" alt="Shopping Illustration">
         </div>
 
         <!-- Right Form Panel -->
