@@ -50,7 +50,7 @@ if (strpos($current_script, '/user/') !== false) {
                 </div>
 
                 <!-- Search Bar -->
-                <div class="col-lg-7 col-md-12 order-lg-2 order-3 mt-2 mt-lg-0">
+                <div class="col-lg-6 col-md-12 order-lg-2 order-3 mt-2 mt-lg-0">
                     <div class="d-flex align-items-center">
                         <div class="search-bar-container flex-grow-1 me-2">
                             <form action="#" method="GET">
@@ -71,7 +71,7 @@ if (strpos($current_script, '/user/') !== false) {
                 </div>
 
                 <!-- Header Actions (Wishlist, Cart, Account) -->
-                <div class="col-lg-3 col-md-9 col-6 order-lg-3 order-2 text-end">
+                <div class="col-lg-4 col-md-9 col-6 order-lg-3 order-2 text-end">
                     <div class="header-actions">
                         <!-- Wishlist -->
                         <a href="#" class="action-icon">
