@@ -102,10 +102,28 @@ if (strpos($current_script, '/user/') !== false) {
                             <span class="icon-badge" id="headerCartCount"><?php echo $cart_count; ?></span>
                         </a>
 
-                        <!-- User Account -->
-                        <a href="#" class="action-icon ms-2">
-                            <i class="fa-regular fa-user"></i>
-                        </a>
+                        <!-- User Account / Auth -->
+                        <?php 
+                        // Calculate relative path for links based on assets_path
+                        // assets_path is either 'assets/', '../assets/', or '../../assets/'
+                        $link_prefix = ($assets_path === 'assets/') ? '' : 
+                                      (($assets_path === '../assets/') ? '../' : '../../');
+                        
+                        if(isset($_SESSION['user_id'])): 
+                        ?>
+                            <a href="<?php echo $link_prefix; ?>user/index.php" class="action-icon ms-2" title="My Account">
+                                <i class="fa-regular fa-user"></i>
+                            </a>
+                        <?php else: ?>
+                            <div class="d-none d-lg-block ms-2">
+                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-outline-primary btn-sm fw-bold px-3 py-1" style="border-radius:2px;">Login</a>
+                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-primary btn-sm fw-bold px-3 py-1 ms-1 text-white" style="border-radius:2px;">Register</a>
+                            </div>
+                            <!-- Mobile Icon Fallback (User) -->
+                             <a href="<?php echo $link_prefix; ?>user/login.php" class="action-icon ms-2 d-lg-none">
+                                <i class="fa-regular fa-user"></i>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
