@@ -33,6 +33,40 @@ if (strpos($current_script, '/user/') !== false) {
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?php echo $assets_path; ?>images/amdika-logo.png">
+    <!-- Custom Header Button Styles -->
+    <style>
+        :root {
+            --header-gold: #D4A017;
+            --header-dark: #2F3A3F;
+        }
+        .btn-header-login {
+            color: var(--header-dark);
+            background: transparent;
+            border: 1px solid var(--header-dark);
+            border-radius: 4px; /* Slightly rounded */
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-header-login:hover {
+            background: var(--header-dark);
+            color: #fff;
+        }
+        .btn-header-register {
+            background: var(--header-gold);
+            color: #fff;
+            border: 1px solid var(--header-gold);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(212, 160, 23, 0.2);
+        }
+        .btn-header-register:hover {
+            background: #b8860b;
+            border-color: #b8860b;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(212, 160, 23, 0.3);
+        }
+    </style>
 </head>
 <body>
 
@@ -116,8 +150,8 @@ if (strpos($current_script, '/user/') !== false) {
                             </a>
                         <?php else: ?>
                             <div class="d-none d-lg-flex align-items-center ms-3 gap-2">
-                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-sm fw-bold px-4" style="background:#fff; color:#2874f0; border:1px solid #dbdbdb; border-radius:2px;">Login</a>
-                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-sm fw-bold px-4 text-white" style="background:#2874f0; border:1px solid #2874f0; border-radius:2px;">Register</a>
+                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-sm btn-header-login px-4">Login</a>
+                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-sm btn-header-register px-4">Register</a>
                             </div>
                             <!-- Mobile Icon Fallback (User) -->
                              <a href="<?php echo $link_prefix; ?>user/login.php" class="action-icon ms-2 d-lg-none">
