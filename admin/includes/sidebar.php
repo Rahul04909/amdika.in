@@ -429,7 +429,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat);
 
     <div class="sb-footer">
         <div class="sb-item mb-0" data-tooltip="Logout">
-            <a href="#" class="sb-link" style="color: #ff6b6b;">
+            <a href="<?php echo $base_path; ?>admin/logout.php" class="sb-link" style="color: #ff6b6b;">
                 <i class="fas fa-sign-out-alt sb-icon"></i>
                 <span class="sb-text">Logout</span>
             </a>

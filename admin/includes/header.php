@@ -332,7 +332,7 @@ $current_title = isset($page_title) ? $page_title : 'Dashboard';
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider-custom"></div>
-                <a href="../logout.php" class="dropdown-item-custom" style="color: #ff6b6b; hover: {background: #ff6b6b; color: #fff;} ">
+                <a href="<?php echo $base_path; ?>admin/logout.php" class="dropdown-item-custom" style="color: #ff6b6b; hover: {background: #ff6b6b; color: #fff;} ">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
