@@ -39,6 +39,11 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
             'Mpdf\\PsrHttpMessageShim\\' => 24,
             'Mpdf\\' => 5,
         ),
+        'F' => 
+        array (
+            'Fyre\\Utility\\' => 13,
+            'Fyre\\Color\\' => 11,
+        ),
         'D' => 
         array (
             'DeepCopy\\' => 9,
@@ -85,6 +90,14 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         'Mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+        ),
+        'Fyre\\Utility\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fyre/macro/src',
+        ),
+        'Fyre\\Color\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fyre/color/src',
         ),
         'DeepCopy\\' => 
         array (

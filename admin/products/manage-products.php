@@ -5,21 +5,29 @@ require_once '../../database/db_config.php';
 // Handle Delete Action
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    // Fetch images to delete files
-    $del_sql = "SELECT featured_image, gallery_images FROM products WHERE id = $id";
-    $del_res = $conn->query($del_sql);
-    if($del_res->num_rows > 0){
-        $del_row = $del_res->fetch_assoc();
-        if(!empty($del_row['featured_image']) && file_exists("../../" . $del_row['featured_image'])) {
-            unlink("../../" . $del_row['featured_image']);
-        }
-        $gallery = json_decode($del_row['gallery_images'], true);
-        if(is_array($gallery)){
-            foreach($gallery as $g_img){
-                if(file_exists("../../" . $g_img)) unlink("../../" . $g_img);
+        // Fetch images to delete files
+        $del_sql = "SELECT featured_image, gallery_images FROM products WHERE id = $id";
+        $del_res = $conn->query($del_sql);
+        if($del_res->num_rows > 0){
+            $del_row = $del_res->fetch_assoc();
+            if(!empty($del_row['featured_image']) && file_exists("../../" . $del_row['featured_image'])) {
+                unlink("../../" . $del_row['featured_image']);
+            }
+            $gallery = json_decode($del_row['gallery_images'], true);
+            if(is_array($gallery)){
+                foreach($gallery as $g_img){
+                    if(file_exists("../../" . $g_img)) unlink("../../" . $g_img);
+                }
             }
         }
-    }
+        
+        // Fetch and unlink variant images
+        $var_imgs = $conn->query("SELECT image_path FROM product_color_variants WHERE product_id = $id");
+        while ($v_img = $var_imgs->fetch_assoc()) {
+            if (!empty($v_img['image_path']) && file_exists("../../" . $v_img['image_path'])) {
+                unlink("../../" . $v_img['image_path']);
+            }
+        }
     
     $sql = "DELETE FROM products WHERE id = $id";
     if ($conn->query($sql)) {

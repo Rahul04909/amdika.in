@@ -120,6 +120,7 @@ $page_title = 'Add New Product';
                         <ul class="nav nav-tabs mb-4" id="prodTabs" role="tablist">
                             <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#general" type="button">General</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#media" type="button">Images & Video</button></li>
+                            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#variants" type="button">Colors & Variants</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pricing" type="button">Pricing</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#seo" type="button">SEO & Schema</button></li>
                         </ul>
@@ -168,6 +169,32 @@ $page_title = 'Add New Product';
                                     <label class="form-label">YouTube Video URL</label>
                                     <input type="url" class="form-control" name="video_url" placeholder="https://www.youtube.com/watch?v=...">
                                 </div>
+                            </div>
+
+                            <!-- Variants -->
+                            <div class="tab-pane fade" id="variants">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Color-wise Variants</h5>
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="addVariantRow()">
+                                        <i class="fas fa-plus me-1"></i> Add Color Variant
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle" id="variantsTable">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Select Color</th>
+                                                <th width="200">Sale Price (Optional)</th>
+                                                <th>Color Image</th>
+                                                <th width="50"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic Rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <small class="text-muted">If variant price is left 0 or empty, the general sale price will be used.</small>
                             </div>
 
                             <!-- Pricing -->
@@ -294,6 +321,63 @@ $page_title = 'Add New Product';
                 preview.style.display = 'none';
             }
         }
+
+        // --- Variant Management ---
+        const colors = <?php 
+            $c_arr = [];
+            $all_colors->data_seek(0);
+            while($c = $all_colors->fetch_assoc()) $c_arr[] = $c;
+            echo json_encode($c_arr); 
+        ?>;
+
+        function addVariantRow() {
+            const tbody = document.querySelector('#variantsTable tbody');
+            const rowCount = tbody.rows.length;
+            
+            let colorOptions = '<option value="">Choose Color</option>';
+            colors.forEach(c => {
+                colorOptions += `<option value="${c.id}">${c.name}</option>`;
+            });
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <select class="form-select" name="variant_color_id[]" required>
+                        ${colorOptions}
+                    </select>
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control" name="variant_price[]" placeholder="0.00">
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
+                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                    </div>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function previewVariantImage(input, index) {
+            const preview = document.getElementById(`varPreview_${index}`);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Initialize with one row if needed
+        // addVariantRow(); 
 
         <?php if($success_msg): ?>
         Swal.fire({ icon: 'success', title: 'Success', text: '<?php echo $success_msg; ?>', confirmButtonColor: '#D32F2F' })

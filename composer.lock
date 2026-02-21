@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdce8610f1a0d785c5c3f0858499fcd0",
+    "content-hash": "f43949758ea1066c15da86df71427ada",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -53,6 +53,93 @@
                 "wiki": "https://ckeditor.com/docs/ckeditor4/latest/"
             },
             "time": "2023-06-30T13:35:30+00:00"
+        },
+        {
+            "name": "fyre/color",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elusivecodes/FyreColor.git",
+                "reference": "93a535cc36195824810b7828355b4bba2b7cf6e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elusivecodes/FyreColor/zipball/93a535cc36195824810b7828355b4bba2b7cf6e4",
+                "reference": "93a535cc36195824810b7828355b4bba2b7cf6e4",
+                "shasum": ""
+            },
+            "require": {
+                "fyre/macro": "^2.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.59",
+                "fyre/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fyre\\Color\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "elusivecodes",
+                    "email": "elusivecodes@gmail.com"
+                }
+            ],
+            "description": "A color library.",
+            "support": {
+                "issues": "https://github.com/elusivecodes/FyreColor/issues",
+                "source": "https://github.com/elusivecodes/FyreColor/tree/v3.0.3"
+            },
+            "time": "2025-11-02T10:10:09+00:00"
+        },
+        {
+            "name": "fyre/macro",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elusivecodes/FyreMacro.git",
+                "reference": "834111b61d600dfe23a695418600c73a1be3fed0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elusivecodes/FyreMacro/zipball/834111b61d600dfe23a695418600c73a1be3fed0",
+                "reference": "834111b61d600dfe23a695418600c73a1be3fed0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.59",
+                "fyre/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fyre\\Utility\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "elusivecodes",
+                    "email": "elusivecodes@gmail.com"
+                }
+            ],
+            "description": "A macro utility library.",
+            "support": {
+                "issues": "https://github.com/elusivecodes/FyreMacro/issues",
+                "source": "https://github.com/elusivecodes/FyreMacro/tree/v2.0.1"
+            },
+            "time": "2025-10-22T11:47:46+00:00"
         },
         {
             "name": "mpdf/mpdf",

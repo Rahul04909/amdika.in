@@ -15,93 +15,150 @@ if(!$prod) { header("Location: manage-products.php"); exit; }
 // Fetch Categories
 $cats = $conn->query("SELECT id, name FROM product_categories ORDER BY name ASC");
 
+// Fetch Colors
+$all_colors = $conn->query("SELECT * FROM colors ORDER BY name ASC");
+
+// Fetch Existing Variants
+$variants_res = $conn->query("SELECT * FROM product_color_variants WHERE product_id = $id");
+$existing_variants = [];
+while($v = $variants_res->fetch_assoc()) $existing_variants[] = $v;
+
 $success_msg = '';
 $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $conn->real_escape_string($_POST['name']);
-    $category_id = intval($_POST['category_id']);
-    
-    // Slug logic (only update if changed manually to avoid breaking links, or strict update)
-    $slug = !empty($_POST['slug']) ? $_POST['slug'] : $name;
-    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
-    
-    // Check unique slug (exclude self)
-    $chk = $conn->query("SELECT id FROM products WHERE slug = '$slug' AND id != $id");
-    if($chk->num_rows > 0) $slug .= '-' . time();
+    $conn->begin_transaction();
+    try {
+        $name = $conn->real_escape_string($_POST['name']);
+        $category_id = intval($_POST['category_id']);
+        
+        $slug = !empty($_POST['slug']) ? $_POST['slug'] : $name;
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
+        
+        $chk = $conn->query("SELECT id FROM products WHERE slug = '$slug' AND id != $id");
+        if($chk->num_rows > 0) $slug .= '-' . time();
 
-    $description = $conn->real_escape_string($_POST['description']);
-    $mrp = floatval($_POST['mrp']);
-    $sale_price = floatval($_POST['sale_price']);
-    $discount_percent = 0;
-    if ($mrp > 0 && $sale_price > 0 && $mrp > $sale_price) {
-        $discount_percent = round((($mrp - $sale_price) / $mrp) * 100);
-    }
-    
-    $video_url = $conn->real_escape_string($_POST['video_url']);
-    $status = $_POST['status'];
-    $seo_title = $conn->real_escape_string($_POST['seo_title']);
-    $seo_description = $conn->real_escape_string($_POST['seo_description']);
-    $seo_keywords = $conn->real_escape_string($_POST['seo_keywords']);
-    $schema_markup = $conn->real_escape_string($_POST['schema_markup']);
-
-    // 1. Featured Image Update
-    $featured_sql = "";
-    if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] == 0) {
-        $target_dir = "../../assets/images/products/";
-        if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
-        $ext = strtolower(pathinfo($_FILES["featured_image"]["name"], PATHINFO_EXTENSION));
-        $new_name = "prod_" . time() . "_feat." . $ext;
-        if(move_uploaded_file($_FILES["featured_image"]["tmp_name"], $target_dir . $new_name)){
-            // Delete old
-            if(!empty($prod['featured_image']) && file_exists("../../" . $prod['featured_image'])) unlink("../../" . $prod['featured_image']);
-            $featured_img_path = "assets/images/products/" . $new_name;
-            $featured_sql = ", featured_image = '$featured_img_path'";
+        $description = $conn->real_escape_string($_POST['description']);
+        $mrp = floatval($_POST['mrp']);
+        $sale_price = floatval($_POST['sale_price']);
+        $discount_percent = 0;
+        if ($mrp > 0 && $sale_price > 0 && $mrp > $sale_price) {
+            $discount_percent = round((($mrp - $sale_price) / $mrp) * 100);
         }
-    }
+        
+        $video_url = $conn->real_escape_string($_POST['video_url']);
+        $status = $_POST['status'];
+        $seo_title = $conn->real_escape_string($_POST['seo_title']);
+        $seo_description = $conn->real_escape_string($_POST['seo_description']);
+        $seo_keywords = $conn->real_escape_string($_POST['seo_keywords']);
+        $schema_markup = $conn->real_escape_string($_POST['schema_markup']);
 
-    // 2. Gallery Images Update (Append or Clear)
-    // If 'clear_gallery' checkbox is checked, we empty it.
-    // Then we append new ones. 
-    // Usually complex, implementing simplistic append logic + clear option.
-    $current_gallery = json_decode($prod['gallery_images'], true) ?? [];
-    
-    if(isset($_POST['clear_gallery']) && $_POST['clear_gallery'] == 1){
-        foreach($current_gallery as $g_img) { if(file_exists("../../" . $g_img)) unlink("../../" . $g_img); }
-        $current_gallery = [];
-    }
+        // 1. Featured Image Update
+        $featured_sql = "";
+        if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] == 0) {
+            $target_dir = "../../assets/images/products/";
+            if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+            $ext = strtolower(pathinfo($_FILES["featured_image"]["name"], PATHINFO_EXTENSION));
+            $new_name = "prod_" . time() . "_feat." . $ext;
+            if(move_uploaded_file($_FILES["featured_image"]["tmp_name"], $target_dir . $new_name)){
+                if(!empty($prod['featured_image']) && file_exists("../../" . $prod['featured_image'])) unlink("../../" . $prod['featured_image']);
+                $featured_img_path = "assets/images/products/" . $new_name;
+                $featured_sql = ", featured_image = '$featured_img_path'";
+            }
+        }
 
-    if(isset($_FILES['gallery_images'])){
-        $target_dir = "../../assets/images/products/gallery/";
-        if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
-        foreach($_FILES['gallery_images']['tmp_name'] as $key => $tmp_name){
-             if($_FILES['gallery_images']['error'][$key] == 0){
-                $ext = strtolower(pathinfo($_FILES["gallery_images"]["name"][$key], PATHINFO_EXTENSION));
-                $new_name = "prod_" . time() . "_gal_" . $key . "." . $ext;
-                if(move_uploaded_file($tmp_name, $target_dir . $new_name)){
-                    $current_gallery[] = "assets/images/products/gallery/" . $new_name;
+        // 2. Gallery Update
+        $current_gallery = json_decode($prod['gallery_images'], true) ?? [];
+        if(isset($_POST['clear_gallery']) && $_POST['clear_gallery'] == 1){
+            foreach($current_gallery as $g_img) { if(file_exists("../../" . $g_img)) unlink("../../" . $g_img); }
+            $current_gallery = [];
+        }
+        if(isset($_FILES['gallery_images'])){
+            $target_dir = "../../assets/images/products/gallery/";
+            if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+            foreach($_FILES['gallery_images']['tmp_name'] as $key => $tmp_name){
+                 if($_FILES['gallery_images']['error'][$key] == 0){
+                    $ext = strtolower(pathinfo($_FILES["gallery_images"]["name"][$key], PATHINFO_EXTENSION));
+                    $new_name = "prod_" . time() . "_gal_" . $key . "." . $ext;
+                    if(move_uploaded_file($tmp_name, $target_dir . $new_name)){
+                        $current_gallery[] = "assets/images/products/gallery/" . $new_name;
+                    }
+                 }
+            }
+        }
+        $gallery_json = json_encode($current_gallery);
+        $gst_percent = intval($_POST['gst_percent']);
+
+        $sql = "UPDATE products SET 
+            category_id=$category_id, name='$name', slug='$slug', description='$description', 
+            video_url='$video_url', mrp=$mrp, sale_price=$sale_price, discount_percent=$discount_percent, gst_percent=$gst_percent,
+            seo_title='$seo_title', seo_description='$seo_description', seo_keywords='$seo_keywords', 
+            schema_markup='$schema_markup', status='$status', gallery_images='$gallery_json', updated_at=NOW()
+            $featured_sql
+            WHERE id=$id";
+
+        if (!$conn->query($sql)) throw new Exception($conn->error);
+
+        // 3. Handle Color Variants
+        $submitted_variant_ids = [];
+        if (isset($_POST['variant_color_id'])) {
+            foreach ($_POST['variant_color_id'] as $index => $color_id) {
+                if (empty($color_id)) continue;
+
+                $v_id = isset($_POST['variant_id'][$index]) ? intval($_POST['variant_id'][$index]) : 0;
+                $v_price = floatval($_POST['variant_price'][$index]);
+                $v_image_path = isset($_POST['existing_variant_image'][$index]) ? $_POST['existing_variant_image'][$index] : '';
+
+                // Handle Variant Image Upload
+                if (isset($_FILES['variant_image']['tmp_name'][$index]) && $_FILES['variant_image']['error'][$index] == 0) {
+                    $v_target_dir = "../../assets/images/products/variants/";
+                    if (!file_exists($v_target_dir)) mkdir($v_target_dir, 0777, true);
+                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$index], PATHINFO_EXTENSION));
+                    $v_new_name = "var_" . $id . "_" . $index . "_" . time() . "." . $v_ext;
+                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
+                        // Delete old variant image if exists
+                        if(!empty($v_image_path) && file_exists("../../" . $v_image_path)) unlink("../../" . $v_image_path);
+                        $v_image_path = "assets/images/products/variants/" . $v_new_name;
+                    }
                 }
-             }
+
+                if ($v_id > 0) {
+                    // Update
+                    $stmt_v = $conn->prepare("UPDATE product_color_variants SET color_id=?, price=?, image_path=? WHERE id=? AND product_id=?");
+                    $stmt_v->bind_param("idsii", $color_id, $v_price, $v_image_path, $v_id, $id);
+                    $submitted_variant_ids[] = $v_id;
+                } else {
+                    // Insert
+                    $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path) VALUES (?, ?, ?, ?)");
+                    $stmt_v->bind_param("iids", $id, $color_id, $v_price, $v_image_path);
+                    if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
+                    $submitted_variant_ids[] = $conn->insert_id;
+                }
+                if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
+            }
         }
-    }
-    $gallery_json = json_encode($current_gallery);
 
-    $gst_percent = intval($_POST['gst_percent']);
+        // Delete removed variants
+        $existing_ids = array_column($existing_variants, 'id');
+        $to_delete = array_diff($existing_ids, $submitted_variant_ids);
+        foreach ($to_delete as $del_id) {
+            // Unlink image first
+            $del_row = $conn->query("SELECT image_path FROM product_color_variants WHERE id = $del_id")->fetch_assoc();
+            if(!empty($del_row['image_path']) && file_exists("../../" . $del_row['image_path'])) unlink("../../" . $del_row['image_path']);
+            $conn->query("DELETE FROM product_color_variants WHERE id = $del_id");
+        }
 
-    $sql = "UPDATE products SET 
-        category_id=$category_id, name='$name', slug='$slug', description='$description', 
-        video_url='$video_url', mrp=$mrp, sale_price=$sale_price, discount_percent=$discount_percent, gst_percent=$gst_percent,
-        seo_title='$seo_title', seo_description='$seo_description', seo_keywords='$seo_keywords', 
-        schema_markup='$schema_markup', status='$status', gallery_images='$gallery_json', updated_at=NOW()
-        $featured_sql
-        WHERE id=$id";
-
-    if ($conn->query($sql)) {
+        $conn->commit();
         $success_msg = "Product updated successfully!";
-        // Refresh
+        // Refresh data
         $prod = $conn->query("SELECT * FROM products WHERE id=$id")->fetch_assoc();
-    } else {
-        $error_msg = "Error: " . $conn->error;
+        $variants_res = $conn->query("SELECT * FROM product_color_variants WHERE product_id = $id");
+        $existing_variants = [];
+        while($v = $variants_res->fetch_assoc()) $existing_variants[] = $v;
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $error_msg = "Error: " . $e->getMessage();
     }
 }
 
@@ -146,6 +203,7 @@ $page_title = 'Edit Product';
                         <ul class="nav nav-tabs mb-4" id="prodTabs" role="tablist">
                             <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#general" type="button">General</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#media" type="button">Images & Video</button></li>
+                            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#variants" type="button">Colors & Variants</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pricing" type="button">Pricing</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#seo" type="button">SEO & Schema</button></li>
                         </ul>
@@ -218,6 +276,65 @@ $page_title = 'Edit Product';
                                 </div>
                             </div>
 
+                            <!-- Variants -->
+                            <div class="tab-pane fade" id="variants">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Color-wise Variants</h5>
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="addVariantRow()">
+                                        <i class="fas fa-plus me-1"></i> Add Color Variant
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle" id="variantsTable">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Select Color</th>
+                                                <th width="200">Sale Price (Optional)</th>
+                                                <th>Color Image</th>
+                                                <th width="50"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($existing_variants as $index => $v): ?>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="variant_id[]" value="<?php echo $v['id']; ?>">
+                                                    <select class="form-select" name="variant_color_id[]" required>
+                                                        <?php 
+                                                            $all_colors->data_seek(0);
+                                                            while($c = $all_colors->fetch_assoc()): 
+                                                        ?>
+                                                        <option value="<?php echo $c['id']; ?>" <?php echo ($v['color_id'] == $c['id']) ? 'selected' : ''; ?>><?php echo htmlspecialchars($c['name']); ?></option>
+                                                        <?php endwhile; ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="0.01" class="form-control" name="variant_price[]" value="<?php echo $v['price']; ?>">
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <input type="hidden" name="existing_variant_image[]" value="<?php echo $v['image_path']; ?>">
+                                                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, <?php echo $index; ?>)">
+                                                        <?php if(!empty($v['image_path'])): ?>
+                                                            <img id="varPreview_<?php echo $index; ?>" src="../../<?php echo $v['image_path']; ?>" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover;">
+                                                        <?php else: ?>
+                                                            <img id="varPreview_<?php echo $index; ?>" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <small class="text-muted">If variant price is left 0 or empty, the general sale price will be used.</small>
+                            </div>
+
                             <!-- Pricing -->
                             <div class="tab-pane fade" id="pricing">
                                 <div class="row">
@@ -284,6 +401,62 @@ $page_title = 'Edit Product';
                 document.getElementById('discount_display').value = disc + '%';
             } else {
                 document.getElementById('discount_display').value = '0%';
+            }
+        }
+
+        // --- Variant Management ---
+        const colors = <?php 
+            $c_arr = [];
+            $all_colors->data_seek(0);
+            while($c = $all_colors->fetch_assoc()) $c_arr[] = $c;
+            echo json_encode($c_arr); 
+        ?>;
+
+        function addVariantRow() {
+            const tbody = document.querySelector('#variantsTable tbody');
+            const rowCount = tbody.rows.length + Math.floor(Math.random() * 1000); // Unique index for new rows
+            
+            let colorOptions = '<option value="">Choose Color</option>';
+            colors.forEach(c => {
+                colorOptions += `<option value="${c.id}">${c.name}</option>`;
+            });
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <input type="hidden" name="variant_id[]" value="0">
+                    <select class="form-select" name="variant_color_id[]" required>
+                        ${colorOptions}
+                    </select>
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control" name="variant_price[]" placeholder="0.00">
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <input type="hidden" name="existing_variant_image[]" value="">
+                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
+                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                    </div>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function previewVariantImage(input, index) {
+            const preview = document.getElementById(`varPreview_${index}`);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
             }
         }
         
