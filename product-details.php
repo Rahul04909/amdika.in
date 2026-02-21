@@ -50,6 +50,15 @@ $gallery = array_unique(array_filter($gallery)); // Remove duplicates/empty
 $mrp = $product['mrp'];
 $sale = $product['sale_price'];
 $disc = $product['discount_percent'];
+
+// Fetch Color Variants
+$variants = [];
+$v_sql = "SELECT v.*, c.name as color_name, c.color_code 
+          FROM product_color_variants v 
+          JOIN colors c ON v.color_id = c.id 
+          WHERE v.product_id = " . $product['id'];
+$v_res = $conn->query($v_sql);
+while($v = $v_res->fetch_assoc()) $variants[] = $v;
 ?>
 <style>
     /* Product Page Specific Styles */
@@ -150,6 +159,17 @@ $disc = $product['discount_percent'];
     .share-fb { background: #1877F2; }
     .share-tw { background: #1DA1F2; }
     .share-pi { background: #E60023; }
+
+    /* Color Swatches */
+    .color-swatches { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+    .color-item { 
+        width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; 
+        box-shadow: 0 0 0 1px #ddd; cursor: pointer; transition: all 0.2s; position: relative;
+    }
+    .color-item.active { box-shadow: 0 0 0 2px #2874f0; }
+    .color-item:hover { transform: scale(1.1); }
+    .color-name-display { font-size: 14px; font-weight: 500; color: #212121; margin-bottom: 5px; }
+    .variant-label { font-size: 14px; color: #878787; margin-bottom: 10px; display: block; }
 </style>
 
 <div class="container-fluid mt-3 mb-5 px-lg-4">
@@ -198,14 +218,33 @@ $disc = $product['discount_percent'];
                 </div>
 
                 <div class="price-block">
-                    <span class="sale-price">₹<?php echo number_format($sale); ?></span>
+                    <span class="sale-price" id="displaySalePrice">₹<?php echo number_format($sale); ?></span>
                     <?php if($disc > 0): ?>
                         <span class="mrp-price">₹<?php echo number_format($mrp); ?></span>
-                        <span class="disc-off"><?php echo $disc; ?>% off</span>
+                        <span class="disc-off" id="displayDiscount"><?php echo $disc; ?>% off</span>
                     <?php endif; ?>
                 </div>
 
-                <!-- Offers Block Removed -->
+                <!-- Color Variants -->
+                <?php if(!empty($variants)): ?>
+                <div class="section-box mt-4 border-0 p-0">
+                    <span class="variant-label">Color</span>
+                    <div class="color-name-display" id="selectedColorName">Select a color</div>
+                    <div class="color-swatches">
+                        <?php foreach($variants as $v): ?>
+                            <div class="color-item" 
+                                 style="background-color: <?php echo $v['color_code']; ?>;" 
+                                 title="<?php echo htmlspecialchars($v['color_name']); ?>"
+                                 data-id="<?php echo $v['color_id']; ?>"
+                                 data-name="<?php echo htmlspecialchars($v['color_name']); ?>"
+                                 data-price="<?php echo $v['price']; ?>"
+                                 data-image="<?php echo $v['image_path']; ?>"
+                                 onclick="selectColor(this)">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
 
                 <!-- Social Sharing -->
                 <?php 
@@ -571,17 +610,64 @@ if($rel_res && $rel_res->num_rows > 0):
     });
 
     // Cart Functions
+    let selectedColorId = null;
+    const baseSalePrice = <?php echo $sale; ?>;
+    const baseMrp = <?php echo $mrp; ?>;
+
+    function selectColor(el) {
+        document.querySelectorAll('.color-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+        
+        selectedColorId = el.dataset.id;
+        document.getElementById('selectedColorName').innerText = el.dataset.name;
+        
+        // Update Price
+        const variantPrice = parseFloat(el.dataset.price);
+        if (variantPrice > 0) {
+            document.getElementById('displaySalePrice').innerText = '₹' + variantPrice.toLocaleString();
+            // Recalculate discount if needed - for now just highight the sale price
+            if (baseMrp > variantPrice) {
+                const newDisc = Math.round(((baseMrp - variantPrice) / baseMrp) * 100);
+                const discEl = document.getElementById('displayDiscount');
+                if (discEl) discEl.innerText = newDisc + '% off';
+            }
+        } else {
+            document.getElementById('displaySalePrice').innerText = '₹' + baseSalePrice.toLocaleString();
+            const discEl = document.getElementById('displayDiscount');
+            if (discEl) discEl.innerText = '<?php echo $disc; ?>% off';
+        }
+        
+        // Update Image
+        const varImg = el.dataset.image;
+        if (varImg) {
+            changeImage(varImg, null); // Change main image
+            // We could also prepend this to gallery thumbnails? 
+            // For now, just changing main image is standard.
+        }
+    }
+
     function addToCart(id) {
+        <?php if(!empty($variants)): ?>
+        if (!selectedColorId) {
+            Swal.fire({ icon: 'warning', title: 'Select Color', text: 'Please select a color before adding to cart.' });
+            return;
+        }
+        <?php endif; ?>
+
         fetch('includes/cart_actions.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `action=add&product_id=${id}&quantity=1`
+            body: `action=add&product_id=${id}&quantity=1&color_id=${selectedColorId || ''}`
         })
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
-                alert('Item added to cart!');
-                // Update badge if method exists
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Added to Cart!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 if(typeof updateCartCount === 'function') updateCartCount();
             } else {
                 alert(data.message);
@@ -590,10 +676,17 @@ if($rel_res && $rel_res->num_rows > 0):
     }
 
     function buyNow(id) {
+        <?php if(!empty($variants)): ?>
+        if (!selectedColorId) {
+            Swal.fire({ icon: 'warning', title: 'Select Color', text: 'Please select a color before proceeding.' });
+            return;
+        }
+        <?php endif; ?>
+
         fetch('includes/cart_actions.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `action=add&product_id=${id}&quantity=1`
+            body: `action=add&product_id=${id}&quantity=1&color_id=${selectedColorId || ''}`
         })
         .then(res => res.json())
         .then(data => {

@@ -19,11 +19,17 @@ if (empty($session_id)) {
 if ($action === 'add') {
     $product_id = intval($_POST['product_id']);
     $qty = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
+    $color_id = isset($_POST['color_id']) && !empty($_POST['color_id']) ? intval($_POST['color_id']) : NULL;
     
     if ($product_id > 0) {
-        // Check if item exists in cart
-        $stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE session_id = ? AND product_id = ?");
-        $stmt->bind_param("si", $session_id, $product_id);
+        // Check if item exists in cart (include color_id in check)
+        if ($color_id === NULL) {
+            $stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE session_id = ? AND product_id = ? AND color_id IS NULL");
+            $stmt->bind_param("si", $session_id, $product_id);
+        } else {
+            $stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE session_id = ? AND product_id = ? AND color_id = ?");
+            $stmt->bind_param("sii", $session_id, $product_id, $color_id);
+        }
         
         if (!$stmt->execute()) {
              echo json_encode(['status' => 'error', 'message' => 'DB Select Error: ' . $stmt->error]);
@@ -43,8 +49,13 @@ if ($action === 'add') {
             }
         } else {
             // Insert new item
-            $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, quantity) VALUES (?, ?, ?)");
-            $insert->bind_param("sii", $session_id, $product_id, $qty);
+            $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, color_id, quantity) VALUES (?, ?, ?, ?)");
+            $insert->bind_param("iiii", $session_id, $product_id, $color_id, $qty); // Note: session_id is string, but I missed that in previous bind_param count? Wait.
+            // Previous bind_param was: $insert->bind_param("sii", $session_id, $product_id, $qty);
+            // New one:
+            $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, color_id, quantity) VALUES (?, ?, ?, ?)");
+            $insert->bind_param("siii", $session_id, $product_id, $color_id, $qty);
+            
             if (!$insert->execute()) {
                 echo json_encode(['status' => 'error', 'message' => 'DB Insert Error: ' . $insert->error]);
                 exit;
@@ -62,22 +73,33 @@ if ($action === 'add') {
     }
 } 
 elseif ($action === 'update') {
+    $cart_id = isset($_POST['cart_id']) ? intval($_POST['cart_id']) : 0;
     $product_id = intval($_POST['product_id']);
     $qty = intval($_POST['quantity']); 
     
-    if ($product_id > 0 && $qty > 0) {
-        $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE session_id = ? AND product_id = ?");
-        $stmt->bind_param("isi", $qty, $session_id, $product_id);
+    if ($qty > 0) {
+        if ($cart_id > 0) {
+            $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND session_id = ?");
+            $stmt->bind_param("iis", $qty, $cart_id, $session_id);
+        } else {
+            $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE session_id = ? AND product_id = ?");
+            $stmt->bind_param("isi", $qty, $session_id, $product_id);
+        }
         
         if($stmt->execute()) {
              echo json_encode(['status' => 'success', 'message' => 'Cart updated']);
         } else {
-             echo json_encode(['status' => 'error', 'message' => 'Update failed']);
+             echo json_encode(['status' => 'error', 'message' => 'Update failed: ' . $stmt->error]);
         }
-    } elseif ($product_id > 0 && $qty == 0) {
+    } elseif ($qty == 0) {
         // Remove if qty is 0
-        $stmt = $conn->prepare("DELETE FROM cart WHERE session_id = ? AND product_id = ?");
-        $stmt->bind_param("si", $session_id, $product_id);
+        if ($cart_id > 0) {
+            $stmt = $conn->prepare("DELETE FROM cart WHERE id = ? AND session_id = ?");
+            $stmt->bind_param("is", $cart_id, $session_id);
+        } else {
+            $stmt = $conn->prepare("DELETE FROM cart WHERE session_id = ? AND product_id = ?");
+            $stmt->bind_param("si", $session_id, $product_id);
+        }
         $stmt->execute();
         echo json_encode(['status' => 'success', 'message' => 'Item removed']);
     } else {
@@ -85,14 +107,21 @@ elseif ($action === 'update') {
     }
 }
 elseif ($action === 'remove') {
+    $cart_id = isset($_POST['cart_id']) ? intval($_POST['cart_id']) : 0;
     $product_id = intval($_POST['product_id']);
-    $stmt = $conn->prepare("DELETE FROM cart WHERE session_id = ? AND product_id = ?");
-    $stmt->bind_param("si", $session_id, $product_id);
+    
+    if ($cart_id > 0) {
+        $stmt = $conn->prepare("DELETE FROM cart WHERE id = ? AND session_id = ?");
+        $stmt->bind_param("is", $cart_id, $session_id);
+    } else {
+        $stmt = $conn->prepare("DELETE FROM cart WHERE session_id = ? AND product_id = ?");
+        $stmt->bind_param("si", $session_id, $product_id);
+    }
     
     if($stmt->execute()) {
         echo json_encode(['status' => 'success', 'message' => 'Item removed']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Deletion failed']);
+        echo json_encode(['status' => 'error', 'message' => 'Deletion failed: ' . $stmt->error]);
     }
 }
 elseif ($action === 'count') {

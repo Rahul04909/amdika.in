@@ -17,10 +17,12 @@ $total_gst = 0;
 $final_payable = 0;
 
 if ($session_id) {
-    // Fetch items from cart table joined with products
-    $sql = "SELECT p.*, c.quantity as qty, c.id as cart_row_id 
+    // Fetch items from cart table joined with products and variants/colors
+    $sql = "SELECT p.*, c.quantity as qty, c.id as cart_row_id, cl.name as color_name, cv.price as variant_price, cv.image_path as variant_image
             FROM cart c 
             JOIN products p ON c.product_id = p.id 
+            LEFT JOIN colors cl ON c.color_id = cl.id
+            LEFT JOIN product_color_variants cv ON (c.product_id = cv.product_id AND c.color_id = cv.color_id)
             WHERE c.session_id = ?";
             
     $stmt = $conn->prepare($sql);
@@ -31,17 +33,25 @@ if ($session_id) {
     if ($result) {
         while($row = $result->fetch_assoc()) {
             $qty = $row['qty'];
+            
+            // Use variant price if available, otherwise base sale price
+            $effective_price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
+            $row['display_price'] = $effective_price;
+            
+            // Use variant image if available
+            $row['display_image'] = (!empty($row['variant_image'])) ? $row['variant_image'] : $row['featured_image'];
+
             $products[] = $row;
             
             $gst_percent = $row['gst_percent'];
-            $gst_amount = ($row['sale_price'] * $qty * $gst_percent) / 100;
+            $gst_amount = ($effective_price * $qty * $gst_percent) / 100;
             
             $total_mrp += $row['mrp'] * $qty;
-            $total_price += $row['sale_price'] * $qty;
+            $total_price += $effective_price * $qty;
             $total_gst += $gst_amount;
         }
         
-        $delivery_charge = 60;
+        $delivery_charge = ($total_price > 500) ? 0 : 60; // Free delivery over 500
         $final_payable = $total_price + $total_gst + $delivery_charge;
     }
     $total_discount = $total_mrp - $total_price;
@@ -123,31 +133,37 @@ if ($session_id) {
                     </div>
                     
                     <?php foreach($products as $p): ?>
-                        <div class="cart-item" id="item-<?php echo $p['id']; ?>">
+                        <div class="cart-item" id="item-<?php echo $p['cart_row_id']; ?>">
                             <div class="item-img-container">
                                 <a href="product-details.php?slug=<?php echo $p['slug']; ?>">
-                                    <img src="<?php echo $p['featured_image']; ?>" class="item-img">
+                                    <img src="<?php echo $p['display_image']; ?>" class="item-img">
                                 </a>
                             </div>
                             <div class="item-details">
                                 <a href="product-details.php?slug=<?php echo $p['slug']; ?>" class="item-title"><?php echo htmlspecialchars($p['name']); ?></a>
-                                <span class="seller-text">Best Seller</span>
+                                <?php if(!empty($p['color_name'])): ?>
+                                    <div class="mb-1"><span class="badge bg-light text-dark border">Color: <?php echo htmlspecialchars($p['color_name']); ?></span></div>
+                                <?php endif; ?>
+                                <span class="seller-text">Seller: Amadika Retail</span>
                                 
                                 <div class="price-row">
                                     <span class="mrp-strike">₹<?php echo number_format($p['mrp']); ?></span>
-                                    <span class="final-price">₹<?php echo number_format($p['sale_price']); ?></span>
-                                    <span class="disc-green"><?php echo $p['discount_percent']; ?>% Off</span>
+                                    <span class="final-price">₹<?php echo number_format($p['display_price']); ?></span>
+                                    <?php 
+                                        $p_disc = round((($p['mrp'] - $p['display_price']) / $p['mrp']) * 100);
+                                    ?>
+                                    <span class="disc-green"><?php echo $p_disc; ?>% Off</span>
                                 </div>
                                 <div class="small text-muted mb-2">GST <?php echo $p['gst_percent']; ?>% included</div>
                                 
                                 <div class="d-flex align-items-center flex-wrap gap-4">
                                     <div class="qty-control">
-                                        <button class="qty-btn" onclick="updateQty(<?php echo $p['id']; ?>, -1)">-</button>
+                                        <button class="qty-btn" onclick="updateQty(<?php echo $p['cart_row_id']; ?>, -1)">-</button>
                                         <input type="text" class="qty-input" value="<?php echo $p['qty']; ?>" readonly>
-                                        <button class="qty-btn" onclick="updateQty(<?php echo $p['id']; ?>, 1)">+</button>
+                                        <button class="qty-btn" onclick="updateQty(<?php echo $p['cart_row_id']; ?>, 1)">+</button>
                                     </div>
                                     <div class="d-flex">
-                                        <span class="action-links" onclick="removeFromCart(<?php echo $p['id']; ?>)">REMOVE</span>
+                                        <span class="action-links" onclick="removeFromCart(<?php echo $p['cart_row_id']; ?>)">REMOVE</span>
                                     </div>
                                 </div>
                             </div>
@@ -231,38 +247,40 @@ if ($session_id) {
 <?php include 'includes/footer.php'; ?>
 
 <script>
-    function updateQty(id, change) {
-        const input = document.querySelector(`#item-${id} .qty-input`);
+    function updateQty(cartId, change) {
+        const input = document.querySelector(`#item-${cartId} .qty-input`);
         let newQty = parseInt(input.value) + change;
-        if(newQty < 1) return; // Use remove instead for 0
+        if(newQty < 1) return; 
 
         fetch('includes/cart_actions.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `action=update&product_id=${id}&quantity=${newQty}`
+            body: `action=update&cart_id=${cartId}&quantity=${newQty}`
         })
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
-                location.reload(); // Simplest way to recalculate totals
+                location.reload(); 
             } else {
                 alert(data.message);
             }
         });
     }
 
-    function removeFromCart(id) {
+    function removeFromCart(cartId) {
         if(!confirm('Are you sure you want to remove this item?')) return;
         
         fetch('includes/cart_actions.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `action=remove&product_id=${id}`
+            body: `action=remove&cart_id=${cartId}`
         })
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
                 location.reload();
+            } else {
+                alert(data.message);
             }
         });
     }

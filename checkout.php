@@ -24,9 +24,11 @@ $total_mrp = 0;
 $total_price = 0;
 $total_gst = 0;
 
-$sql = "SELECT p.*, c.quantity as qty, c.id as cart_row_id 
+$sql = "SELECT p.*, c.quantity as qty, c.id as cart_row_id, cl.name as color_name, cv.price as variant_price, cv.image_path as variant_image
         FROM cart c 
         JOIN products p ON c.product_id = p.id 
+        LEFT JOIN colors cl ON c.color_id = cl.id
+        LEFT JOIN product_color_variants cv ON (c.product_id = cv.product_id AND c.color_id = cv.color_id)
         WHERE c.session_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $session_id);
@@ -35,16 +37,22 @@ $result = $stmt->get_result();
 
 while($row = $result->fetch_assoc()) {
     $qty = $row['qty'];
+    
+    // Use variant price if available
+    $effective_price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
+    $row['display_price'] = $effective_price;
+    $row['display_image'] = (!empty($row['variant_image'])) ? $row['variant_image'] : $row['featured_image'];
+
     $cart_items[] = $row;
     
     $gst_percent = $row['gst_percent'];
-    $gst_amount = ($row['sale_price'] * $qty * $gst_percent) / 100;
+    $gst_amount = ($effective_price * $qty * $gst_percent) / 100;
     
     $total_mrp += $row['mrp'] * $qty;
-    $total_price += $row['sale_price'] * $qty;
+    $total_price += $effective_price * $qty;
     $total_gst += $gst_amount;
 }
-$delivery_charge = 60;
+$delivery_charge = ($total_price > 500) ? 0 : 60;
 $grand_total = $total_price + $total_gst + $delivery_charge;
 
 // Fetch Razorpay Key
@@ -150,11 +158,14 @@ $u_state = $user_data['state'] ?? '';
                 </div>
                 <?php foreach($cart_items as $item): ?>
                     <div class="order-summary-item">
-                        <img src="<?php echo $item['featured_image']; ?>" class="summary-img">
+                        <img src="<?php echo $item['display_image']; ?>" class="summary-img">
                         <div>
                             <div class="fw-500"><?php echo htmlspecialchars($item['name']); ?></div>
+                            <?php if(!empty($item['color_name'])): ?>
+                                <div class="text-muted small">Color: <?php echo htmlspecialchars($item['color_name']); ?></div>
+                            <?php endif; ?>
                             <div class="text-muted small">Qty: <?php echo $item['qty']; ?></div>
-                            <div class="fw-bold">₹<?php echo number_format($item['sale_price']); ?></div>
+                            <div class="fw-bold">₹<?php echo number_format($item['display_price']); ?></div>
                         </div>
                     </div>
                 <?php endforeach; ?>

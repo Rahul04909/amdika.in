@@ -52,26 +52,32 @@ try {
 
 // 3. Calculate Totals (Redundant but safe)
 $session_id = session_id();
-$cart_res = $conn->query("SELECT p.*, c.quantity as qty FROM cart c JOIN products p ON c.product_id = p.id WHERE c.session_id = '$session_id'");
+$sql_cart = "SELECT p.*, c.quantity as qty, cl.name as color_name, cv.price as variant_price 
+             FROM cart c 
+             JOIN products p ON c.product_id = p.id 
+             LEFT JOIN colors cl ON c.color_id = cl.id
+             LEFT JOIN product_color_variants cv ON (c.product_id = cv.product_id AND c.color_id = cv.color_id)
+             WHERE c.session_id = '$session_id'";
+$cart_res = $conn->query($sql_cart);
 $items = [];
 $total_price = 0;
 $total_gst = 0;
 
 while($row = $cart_res->fetch_assoc()) {
     $qty = $row['qty'];
-    $price = $row['sale_price']; // Sales price
+    $price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
     $gst_p = $row['gst_percent'];
-    
     $gst_amt = ($price * $qty * $gst_p) / 100;
     
     $items[] = [
         'product_id' => $row['id'],
         'name' => $row['name'],
+        'color_name' => $row['color_name'],
         'qty' => $qty,
         'price' => $price,
         'gst_percent' => $gst_p,
         'gst_amount' => $gst_amt,
-        'line_total' => $price * $qty // Base total
+        'line_total' => $price * $qty
     ];
     
     $total_price += $price * $qty;
@@ -80,27 +86,22 @@ while($row = $cart_res->fetch_assoc()) {
 
 // Coupon Logic
 $discount_amount = 0;
+// Delivery Logic: Free over 500
+$delivery_charge = ($total_price > 500) ? 0 : 60;
+
 if(!empty($coupon_code)) {
     $cpn_res = $conn->query("SELECT * FROM coupons WHERE code = '$coupon_code'");
     if($cpn_res->num_rows > 0) {
         $cp = $cpn_res->fetch_assoc();
-        // Recalculate based on total_price + total_gst + delivery? 
-        // Usually discount is on Item Total (price). 
-        // Let's stick to total_price + total_gst + delivery as base or just total_price?
-        // Cart.php uses 'final_payable' logic which includes GST.
-        // Let's assume discount applies to (Price + GST + Delivery).
-        $delivery = 60;
-        $pre_total = $total_price + $total_gst + $delivery;
+        $pre_total = $total_price + $total_gst + $delivery_charge;
         $discount_amount = ($pre_total * $cp['discount_percent']) / 100;
     }
 }
 
-$delivery_charge = 60;
 $final_amount = ($total_price + $total_gst + $delivery_charge) - $discount_amount;
 
 // 4. Save Order
 $order_no = 'AMDK-' . date('ymd') . '-' . rand(100, 999);
-// Address is JSON string
 $addr_obj = json_decode($address_json, true);
 
 $stmt = $conn->prepare("INSERT INTO orders (order_no, user_id, total_sale_price, total_gst, delivery_charge, coupon_code, discount_amount, final_amount, payment_status, payment_id, address_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'paid', ?, ?)");
@@ -110,9 +111,9 @@ if($stmt->execute()) {
     $order_id = $stmt->insert_id;
     
     // Save Items
-    $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, quantity, price, gst_percent, gst_amount, total_line_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, color_name, quantity, price, gst_percent, gst_amount, total_line_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     foreach($items as $item) {
-        $stmt_item->bind_param("iisidddd", $order_id, $item['product_id'], $item['name'], $item['qty'], $item['price'], $item['gst_percent'], $item['gst_amount'], $item['line_total']);
+        $stmt_item->bind_param("iissidddd", $order_id, $item['product_id'], $item['name'], $item['color_name'], $item['qty'], $item['price'], $item['gst_percent'], $item['gst_amount'], $item['line_total']);
         $stmt_item->execute();
     }
     
@@ -165,7 +166,10 @@ if($stmt->execute()) {
     foreach($items as $item) {
         $invoice_html .= '
         <tr>
-            <td style="border: 1px solid #ddd;">'.$item['name'].'</td>
+            <td style="border: 1px solid #ddd;">
+                '.$item['name'].'
+                '.(!empty($item['color_name']) ? '<br><small>Color: '.$item['color_name'].'</small>' : '').'
+            </td>
             <td style="border: 1px solid #ddd; text-align: center;">'.$item['qty'].'</td>
             <td style="border: 1px solid #ddd; text-align: right;">'.number_format($item['price'],2).'</td>
              <td style="border: 1px solid #ddd; text-align: center;">'.$item['gst_percent'].'%</td>
