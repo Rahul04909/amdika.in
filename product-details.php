@@ -53,7 +53,7 @@ $disc = $product['discount_percent'];
 
 // Fetch Color Variants
 $variants = [];
-$v_sql = "SELECT v.*, c.name as color_name, c.color_code 
+$v_sql = "SELECT v.*, c.name as color_name, c.hex_code 
           FROM product_color_variants v 
           JOIN colors c ON v.color_id = c.id 
           WHERE v.product_id = " . $product['id'];
@@ -233,7 +233,7 @@ while($v = $v_res->fetch_assoc()) $variants[] = $v;
                     <div class="color-swatches">
                         <?php foreach($variants as $v): ?>
                             <div class="color-item" 
-                                 style="background-color: <?php echo $v['color_code']; ?>;" 
+                                 style="background-color: <?php echo $v['hex_code']; ?>;" 
                                  title="<?php echo htmlspecialchars($v['color_name']); ?>"
                                  data-id="<?php echo $v['color_id']; ?>"
                                  data-name="<?php echo htmlspecialchars($v['color_name']); ?>"
