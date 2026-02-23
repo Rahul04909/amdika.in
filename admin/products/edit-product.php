@@ -134,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
                     $submitted_variant_ids[] = $conn->insert_id;
                 }
-                if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
             }
         }
 

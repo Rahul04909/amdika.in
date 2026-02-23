@@ -5,6 +5,9 @@ require_once '../../database/db_config.php';
 // Fetch Categories for Dropdown
 $cats = $conn->query("SELECT id, name FROM product_categories ORDER BY name ASC");
 
+// Fetch Colors for Variants
+$all_colors = $conn->query("SELECT * FROM colors ORDER BY name ASC");
+
 $success_msg = '';
 $error_msg = '';
 
@@ -64,18 +67,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $gst_percent = intval($_POST['gst_percent']);
 
-    $sql = "INSERT INTO products (
-        category_id, name, slug, description, featured_image, gallery_images, video_url, 
-        mrp, sale_price, discount_percent, gst_percent, seo_title, seo_description, seo_keywords, schema_markup
-    ) VALUES (
-        $category_id, '$name', '$slug', '$description', '$featured_img_path', '$gallery_json', '$video_url',
-        $mrp, $sale_price, $discount_percent, $gst_percent, '$seo_title', '$seo_description', '$seo_keywords', '$schema_markup'
-    )";
+    $conn->begin_transaction();
+    try {
+        $sql = "INSERT INTO products (
+            category_id, name, slug, description, featured_image, gallery_images, video_url, 
+            mrp, sale_price, discount_percent, gst_percent, seo_title, seo_description, seo_keywords, schema_markup
+        ) VALUES (
+            $category_id, '$name', '$slug', '$description', '$featured_img_path', '$gallery_json', '$video_url',
+            $mrp, $sale_price, $discount_percent, $gst_percent, '$seo_title', '$seo_description', '$seo_keywords', '$schema_markup'
+        )";
 
-    if ($conn->query($sql)) {
-        $success_msg = "Product added successfully!";
-    } else {
-        $error_msg = "Error: " . $conn->error;
+        if (!$conn->query($sql)) throw new Exception($conn->error);
+        $product_id = $conn->insert_id;
+
+        // 3. Handle Color Variants
+        if (isset($_POST['variant_color_id'])) {
+            foreach ($_POST['variant_color_id'] as $index => $color_id) {
+                if (empty($color_id)) continue;
+
+                $v_price = floatval($_POST['variant_price'][$index]);
+                $v_image_path = '';
+
+                // Handle Variant Image Upload
+                if (isset($_FILES['variant_image']['tmp_name'][$index]) && $_FILES['variant_image']['error'][$index] == 0) {
+                    $v_target_dir = "../../assets/images/products/variants/";
+                    if (!file_exists($v_target_dir)) mkdir($v_target_dir, 0777, true);
+                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$index], PATHINFO_EXTENSION));
+                    $v_new_name = "var_" . $product_id . "_" . $index . "_" . time() . "." . $v_ext;
+                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
+                        $v_image_path = "assets/images/products/variants/" . $v_new_name;
+                    }
+                }
+
+                $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path) VALUES (?, ?, ?, ?)");
+                $stmt_v->bind_param("iids", $product_id, $color_id, $v_price, $v_image_path);
+                if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
+            }
+        }
+
+        $conn->commit();
+        $success_msg = "Product and variants added successfully!";
+    } catch (Exception $e) {
+        $conn->rollback();
+        $error_msg = "Error: " . $e->getMessage();
     }
 }
 
