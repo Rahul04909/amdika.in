@@ -181,8 +181,8 @@
                 <span class="footer-heading">The Company</span>
                 <ul class="footer-links">
                     <li><a href="#">Help</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="../../pages/privacy-policy/index.php">Privacy Policy</a></li>
+                    <!-- <li><a href="#">Blog</a></li> -->
                 </ul>
            </div>
 
@@ -191,10 +191,10 @@
                 <span class="footer-heading">More Information</span>
                  <ul class="footer-links">
                     <li><a href="#">Fees and Payments</a></li>
-                    <li><a href="#">Shipping & Delivery</a></li>
-                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="../../pages/shipping-policy/index.php">Shipping & Delivery</a></li>
+                    <li><a href="../../pages/terms-and-conditions/index.php">Terms and Conditions</a></li>
                      <li><a href="#">Warranty, Return and Refund</a></li>
-                     <li><a href="#">Contact Us</a></li>
+                     <li><a href="../../pages/contact-us/index.php">Contact Us</a></li>
                     <li><a href="#">Visit Us</a></li>
                     <li><a href="#">Buy In Bulk</a></li>
                 </ul>
@@ -315,8 +315,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-4 mb-3 mb-lg-0">
                     <div class="d-flex gap-3 text-small footer-bottom-text" style="font-size: 12px;">
-                        <a href="#" class="text-decoration-none footer-bottom-link">Terms of use</a>
-                        <a href="#" class="text-decoration-none footer-bottom-link">Privacy Policy</a>
+                        <a href="../../pages/terms-and-conditions/index.php" class="text-decoration-none footer-bottom-link">Terms of use</a>
+                        <a href="../../pages/privacy-policy/index.php" class="text-decoration-none footer-bottom-link">Privacy Policy</a>
                     </div>
                     <div class="mt-2 footer-bottom-text" style="font-size: 12px;">
                         © 2026 AMADIKAA | A Website Designed By <a href="https://www.mineib.com/">Mineib</a>
