@@ -180,7 +180,7 @@
              <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">The Company</span>
                 <ul class="footer-links">
-                    <li><a href="#">Help</a></li>
+                    <li><a href="../../pages/help/index.php">Help</a></li>
                     <li><a href="../../pages/privacy-policy/index.php">Privacy Policy</a></li>
                     <!-- <li><a href="#">Blog</a></li> -->
                 </ul>
@@ -190,13 +190,13 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">More Information</span>
                  <ul class="footer-links">
-                    <li><a href="#">Fees and Payments</a></li>
+                    <li><a href="../../pages/fees-and-payments/index.php">Fees and Payments</a></li>
                     <li><a href="../../pages/shipping-policy/index.php">Shipping & Delivery</a></li>
                     <li><a href="../../pages/terms-and-conditions/index.php">Terms and Conditions</a></li>
-                     <li><a href="#">Warranty, Return and Refund</a></li>
+                     <li><a href="../../pages/warrnty-retrun-refund-policy/index.php">Warranty, Return and Refund</a></li>
                      <li><a href="../../pages/contact-us/index.php">Contact Us</a></li>
-                    <li><a href="#">Visit Us</a></li>
-                    <li><a href="#">Buy In Bulk</a></li>
+                    <li><a href="../../pages/visit-us/index.php">Visit Us</a></li>
+                    <li><a href="../../pages/buy-in-bulk/index.php">Buy In Bulk</a></li>
                 </ul>
             </div>
 
