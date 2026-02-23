@@ -50,10 +50,6 @@ if ($action === 'add') {
         } else {
             // Insert new item
             $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, color_id, quantity) VALUES (?, ?, ?, ?)");
-            $insert->bind_param("iiii", $session_id, $product_id, $color_id, $qty); // Note: session_id is string, but I missed that in previous bind_param count? Wait.
-            // Previous bind_param was: $insert->bind_param("sii", $session_id, $product_id, $qty);
-            // New one:
-            $insert = $conn->prepare("INSERT INTO cart (session_id, product_id, color_id, quantity) VALUES (?, ?, ?, ?)");
             $insert->bind_param("siii", $session_id, $product_id, $color_id, $qty);
             
             if (!$insert->execute()) {

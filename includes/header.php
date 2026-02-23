@@ -67,6 +67,8 @@ if (strpos($current_script, '/user/') !== false) {
             box-shadow: 0 6px 12px rgba(212, 160, 23, 0.3);
         }
     </style>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
