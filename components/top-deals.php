@@ -1,8 +1,8 @@
 <style>
-/* --- Ultra-Premium Interactive Top Deals --- */
+/* --- Premium Interactive Top Deals --- */
 .top-deals-section-wrapper {
-    background: linear-gradient(180deg, #ffffff 0%, #fcfaf7 100%);
-    padding: 20px 0 60px 0;
+    background: #ffffff;
+    padding: 10px 0 40px 0;
     overflow: hidden;
 }
 
@@ -13,12 +13,12 @@
 
 .td-main-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 35px;
 }
 
 .td-main-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
     font-style: italic;
     color: #1a1a1a;
@@ -29,96 +29,91 @@
 .td-main-header h2::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
+    width: 60px;
+    height: 2px;
     background: var(--accent-gold, #d4a017);
     border-radius: 2px;
 }
 
-/* Interactive Glass Widget */
+/* Compact Interactive Widget */
 .td-interactive-widget {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
     height: 100%;
-    border: 1px solid rgba(212, 160, 23, 0.1);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease-out;
     display: flex;
     flex-direction: column;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
 
 .td-interactive-widget:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(212, 160, 23, 0.1);
+    transform: translateY(-5px); /* More subtle lift */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     border-color: var(--accent-gold, #d4a017);
-    background: #fff;
 }
 
 .td-widget-tag {
     position: absolute;
-    top: -12px;
-    left: 30px;
+    top: -10px;
+    left: 20px;
     background: var(--accent-gold, #d4a017);
     color: #fff;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
-    padding: 4px 15px;
-    border-radius: 30px;
+    padding: 3px 12px;
+    border-radius: 4px;
     letter-spacing: 1px;
-    box-shadow: 0 4px 10px rgba(212, 160, 23, 0.3);
 }
 
 .td-widget-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .td-widget-title i {
     color: var(--accent-gold, #d4a017);
-    font-size: 18px;
+    font-size: 16px;
 }
 
-/* Hero Display (Interactive) */
+/* Hero Display (Compact) */
 .td-interactive-hero {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 .td-hero-main-img-box {
     width: 100%;
-    height: 240px;
+    height: 180px; /* Reduced height */
     background: #fff;
-    border-radius: 15px;
+    border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
 }
 
 .td-hero-main-img-box img {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.4s;
 }
 
 .td-interactive-widget:hover .td-hero-main-img-box img {
-    transform: scale(1.1);
+    transform: scale(1.05); /* Subtle scale */
 }
 
 .td-hero-info {
@@ -126,29 +121,33 @@
 }
 
 .td-hero-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 5px;
+    color: #444;
+    margin-bottom: 4px;
+    height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .td-hero-price {
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--accent-gold, #d4a017);
 }
 
-/* Thumbnail Switcher */
+/* Thumbnail Switcher (Compact) */
 .td-hero-thumbs-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 6px;
 }
 
 .td-interactive-thumb {
-    border: 2px solid #f0f0f0;
-    border-radius: 10px;
-    height: 55px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    height: 40px; /* Reduced height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,72 +158,59 @@
 
 .td-interactive-thumb:hover, .td-interactive-thumb.active {
     border-color: var(--accent-gold, #d4a017);
-    background: rgba(212, 160, 23, 0.05);
 }
 
-.td-interactive-thumb img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
-}
-
-/* Dynamic Grid (2x2) */
+/* Dynamic Grid (Compact 2x2) */
 .td-interactive-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 25px;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
 .td-grid-item-wrap {
     text-decoration: none !important;
     display: flex;
     flex-direction: column;
-    group: hover;
 }
 
 .td-grid-img-wrap {
     width: 100%;
-    height: 130px;
+    height: 100px; /* Reduced height */
     background: #fff;
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px solid #f5f5f5;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
     overflow: hidden;
-    transition: all 0.3s;
-}
-
-.td-grid-item-wrap:hover .td-grid-img-wrap {
-    border-color: var(--accent-gold, #d4a017);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 .td-grid-img-wrap img {
-    max-width: 85%;
-    max-height: 85%;
+    max-width: 80%;
+    max-height: 80%;
     object-fit: contain;
-    transition: transform 0.4s;
+    transition: transform 0.3s;
 }
 
 .td-grid-item-wrap:hover .td-grid-img-wrap img {
-    transform: scale(1.15);
+    transform: scale(1.08); /* Subtle scale */
 }
 
 .td-grid-title-text {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    color: #555;
+    color: #666;
     text-align: center;
-    height: 36px;
+    height: 16px;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .td-grid-price-text {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     color: #1a1a1a;
     text-align: center;
