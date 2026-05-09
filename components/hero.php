@@ -13,18 +13,15 @@
         position: relative;
         overflow: hidden;
         height: auto;
-        /* Allow image to define height */
-        max-height: 450px;
-        /* Cap desktop height */
+        max-height: 520px; /* Increased for better visibility */
     }
 
     .hero-banner-item img {
         width: 100%;
         height: auto;
-        max-height: 450px;
+        max-height: 520px;
         display: block;
         object-fit: cover;
-        /* Cover ensures no gaps, but works with auto-height to minimize cropping */
         object-position: center;
     }
 
@@ -32,11 +29,11 @@
     @media (max-width: 768px) {
         .hero-banner-item {
             height: auto;
-            max-height: 350px;
+            max-height: 400px;
         }
 
         .hero-banner-item img {
-            max-height: 350px;
+            max-height: 400px;
         }
 
         .hero-section {
@@ -49,8 +46,8 @@
     <div class="hero-banner-item">
         <?php
         $heroSrc = 'assets/images/hero/new-hero.png';
-        $desktopHero = get_resized_image($heroSrc, 1920, 500); // 1920x500 for better wide coverage
-        $mobileHero = get_resized_image($heroSrc, 800, 600);   // 800x600 for mobile
+        $desktopHero = get_resized_image($heroSrc, 1920, 550); // Increased height for resizing
+        $mobileHero = get_resized_image($heroSrc, 800, 600);   
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">
