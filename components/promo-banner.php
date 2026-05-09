@@ -1,42 +1,35 @@
 <style>
-/* --- Professional Promo Banner (Flipkart Style) --- */
+/* --- Edge-to-Edge Promo Banner --- */
 .promo-banner-wrapper {
-    background-color: #f1f3f6; /* Subtle grey background like Flipkart */
-    padding: 10px 0;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
 .promo-banner-container {
     width: 100%;
-    padding: 0 40px;
+    padding: 0;
+    margin: 0;
 }
 
 .promo-banner-box {
     display: block;
     width: 100%;
-    border-radius: 4px;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
-    transition: box-shadow 0.3s;
-}
-
-.promo-banner-box:hover {
-    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.12);
 }
 
 .promo-banner-img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.5s;
-}
-
-.promo-banner-box:hover .promo-banner-img {
-    transform: scale(1.01);
 }
 
 @media (max-width: 991px) {
     .promo-banner-container {
-        padding: 0 10px;
+        padding: 0;
     }
 }
 </style>
