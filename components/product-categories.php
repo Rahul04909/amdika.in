@@ -1,33 +1,55 @@
+<!-- Import Elegant Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+
 <style>
 /* --- Modern Product Categories (Nykaa Style) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 30px 0;
+    padding: 40px 0;
     overflow: hidden;
 }
 
 .category-header {
     padding: 0 20px;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    margin-bottom: 35px;
+    text-align: center; /* Center the title */
 }
 
 .category-header h2 {
-    font-size: 22px;
+    font-family: 'Playfair Display', serif; /* Elegant Serif Font */
+    font-size: 28px;
     font-weight: 700;
+    font-style: italic; /* Italic format as requested */
     color: #232f3e;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.category-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent-gold, #d4a017); /* Match brand gold */
 }
 
 .category-header .view-all {
+    display: block;
+    margin-top: 15px;
     font-size: 14px;
-    color: #2874f0;
+    color: var(--accent-gold, #d4a017);
     font-weight: 600;
     text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.category-header .view-all:hover {
+    opacity: 0.8;
 }
 
 .category-slider {
@@ -161,8 +183,8 @@
 
 <section class="category-section-wrapper">
     <div class="category-header">
-        <h2>Shop By <span style="color: #2874f0;">Category</span></h2>
-        <a href="products.php" class="view-all">View All</a>
+        <h2>Shop By <span style="color: var(--accent-gold, #d4a017);">Category</span></h2>
+        <a href="products.php" class="view-all">Explore All Categories</a>
     </div>
 
     <!-- Navigation Arrows -->
