@@ -71,10 +71,22 @@
     position: relative;
 }
 
+/* Floating Hero Widget (No Box) */
+.td-hero-widget-special {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-top: 10px;
+}
+
 .td-interactive-widget:hover {
     transform: translateY(-5px); /* More subtle lift */
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     border-color: var(--accent-gold, #d4a017);
+}
+
+.td-hero-widget-special:hover {
+    transform: none !important;
 }
 
 .td-widget-tag {
@@ -115,21 +127,24 @@
 
 .td-hero-main-img-box {
     width: 100%;
-    height: 180px; /* Reduced height */
-    background: #fff;
-    border-radius: 8px;
+    /* Removed fixed height and background box for a cleaner look */
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent;
 }
 
 .td-hero-main-img-box img {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 100%;
+    height: auto;
+    max-height: 220px;
     object-fit: contain;
     transition: transform 0.4s;
+    /* Remove any potential box shadow or border from the image itself */
+    border: none;
+    outline: none;
 }
 
 .td-interactive-widget:hover .td-hero-main-img-box img {
@@ -297,7 +312,7 @@
 
             <!-- Interactive Hero Widget -->
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="td-interactive-widget">
+                <div class="td-interactive-widget td-hero-widget-special">
                     <span class="td-widget-tag">New Arrival</span>
                     <h3 class="td-widget-title"><i class="fa-solid fa-bolt"></i> Newly Added</h3>
                     
