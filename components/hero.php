@@ -28,14 +28,15 @@
     /* Mobile Optimizations */
     @media (max-width: 768px) {
         .hero-banner-item {
-            height: 300px; /* Fixed professional height for mobile */
-            max-height: none;
+            height: auto;
+            min-height: 200px;
+            background-color: #f7f3f0; /* Matching the banner background color */
         }
 
         .hero-banner-item img {
-            height: 100%;
-            object-fit: cover; /* Cover for a clean, non-distorted look */
-            object-position: center top;
+            width: 100%;
+            height: auto;
+            object-fit: contain; /* Shows full width without cutting sides */
         }
 
         .hero-section {
@@ -49,7 +50,7 @@
         <?php
         $heroSrc = 'assets/images/hero/new-hero.png';
         $desktopHero = get_resized_image($heroSrc, 1920, 700); 
-        $mobileHero = get_resized_image($heroSrc, 800, 400, 'cover');   
+        $mobileHero = get_resized_image($heroSrc, 800, 450, 'contain');   
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">
