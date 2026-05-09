@@ -1,6 +1,6 @@
 <?php
 // Database configuration
-$host = 'shareddb-w.hosting.stackcp.net'; // Standard 20i/StackCP database host
+$host = 'localhost'; // Standard 20i/StackCP database host
 $dbname = 'mineib_i1_amadika';
 $username = 'mineib_i1_mineib';
 $password = 'Rd14072003@./';
