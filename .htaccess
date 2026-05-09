@@ -1,0 +1,19 @@
+# Standard .htaccess for Amadika
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# Redirect to index.php if file/directory doesn't exist (Optional SEO)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.php [L,QSA]
+
+# Prevent directory listing
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Handle PHP errors if needed
+# php_value error_reporting 32767
+# php_flag display_errors On

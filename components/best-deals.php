@@ -95,7 +95,8 @@ if (!empty($bd_category_ids)) {
 
 .deals-banner-img {
     width: 100%;
-    height: 100%;
+    height: 0; 
+    min-height: 100%;
     object-fit: cover;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -240,6 +241,7 @@ if (!empty($bd_category_ids)) {
     .deals-banner-img {
         width: 100%;
         height: auto; /* Allow natural height */
+        min-height: auto;
         object-fit: cover;
         display: block; /* Remove inline-block spacing */
     }
@@ -272,7 +274,7 @@ if (!empty($bd_category_ids)) {
         <!-- Header -->
         <div class="section-header-row">
             <h2 class="best-deals-title">Best Deals</h2>
-            <a href="shop.php" class="view-all-btn">VIEW ALL</a>
+            <a href="products.php" class="view-all-btn">VIEW ALL</a>
         </div>
 
         <!-- Layout -->

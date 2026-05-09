@@ -82,14 +82,15 @@ include '../../includes/header.php';
                 <div class="contact-card">
                     <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <h5>Our Head Office</h5>
-                    <p class="text-muted mb-0">123 Commerce St, Market City,<br>New Delhi, India 110001</p>
+                    <p class="text-muted mb-0">  A-14 Dlf-I nhpc faridabad Haryana 121003</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="contact-card">
                     <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                     <h5>Call Us</h5>
-                    <p class="text-muted mb-1">+91 98765 43210</p>
+                    <p class="text-muted mb-1">+91 98716 26089</p>
+                    <p class="text-muted mb-1">+91 84476 16924</p>
                     <p class="text-muted mb-0">Mon - Sat, 9am - 7pm</p>
                 </div>
             </div>
@@ -146,7 +147,7 @@ include '../../includes/header.php';
             <div class="col-lg-6">
                 <div class="map-container">
                     <!-- Google Map Embed Placeholder -->
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.0688975472412!3d28.52728034389636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=28.460806,77.309394&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

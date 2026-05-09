@@ -1,0 +1,223 @@
+[26-Jan-2026 09:42:42 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_b3a5f599637111c817e2bc22f5be379d, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:42:42 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:42:45 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_b3a5f599637111c817e2bc22f5be379d, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:42:45 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:42:52 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_b3a5f599637111c817e2bc22f5be379d, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:42:52 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:43:03 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_b3a5f599637111c817e2bc22f5be379d, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:43:03 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:43:05 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_b3a5f599637111c817e2bc22f5be379d, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[26-Jan-2026 09:43:05 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[27-Jan-2026 05:48:52 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_d7b114049e2f3d531c4f1e4b1d474a28, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[27-Jan-2026 05:48:52 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[27-Jan-2026 05:48:58 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_d7b114049e2f3d531c4f1e4b1d474a28, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[27-Jan-2026 05:48:58 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 2
+[27-Jan-2026 07:13:17 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:17 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:19 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:19 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:28 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:28 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:30 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:30 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:38 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:38 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:42 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:13:42 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:14:33 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:14:33 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:14:35 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:14:35 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:16:54 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:16:54 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:16:57 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:16:57 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:17:15 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:17:15 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:17:18 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:17:18 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:18:26 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_0dab72b970509e4fe40b1bf0c11050a0, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:18:26 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:18:30 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_0dab72b970509e4fe40b1bf0c11050a0, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:18:30 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:23:54 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:23:54 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:07 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:07 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:07 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:07 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:21 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:29:21 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:32:08 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_0dab72b970509e4fe40b1bf0c11050a0, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:32:08 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:33:50 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:33:50 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 07:46:14 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 07:46:14 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:02:12 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:02:12 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:15:51 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:15:51 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:04 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:04 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:08 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:08 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:11 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:16:11 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 3
+[27-Jan-2026 08:21:41 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:21:41 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:21:44 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:21:44 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:07 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:07 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:10 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:10 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:12 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:12 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:27 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:27 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:33 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:22:33 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:34:52 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:34:52 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:34:55 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 08:34:55 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/auth_actions.php on line 4
+[27-Jan-2026 10:16:59 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 10:16:59 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 10:18:25 UTC] PHP Warning:  session_start(): open(/var/cpanel/php/sessions/ea-php83/sess_6c9d2889f94debc31f89ffe4f9897dac, O_RDWR) failed: No such file or directory (2) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[27-Jan-2026 10:18:25 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /var/cpanel/php/sessions/ea-php83) in /home4/amadik/public_html/includes/cart_actions.php on line 3
+[23-Feb-2026 03:39:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:52 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:55 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:55 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:56 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:56 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:39:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 03:40:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 14:13:00 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 14:13:16 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27
+[23-Feb-2026 14:16:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'color_id' in 'where clause' in /home4/amadik/public_html/includes/cart_actions.php:27
+Stack trace:
+#0 /home4/amadik/public_html/includes/cart_actions.php(27): mysqli->prepare('SELECT id, quan...')
+#1 {main}
+  thrown in /home4/amadik/public_html/includes/cart_actions.php on line 27

@@ -173,6 +173,7 @@
                         <?php 
                             $feat_img = !empty($latest_prod['featured_image']) ? $latest_prod['featured_image'] : 'assets/images/demo-data/product.jpg';
                             $gallery = !empty($latest_prod['gallery_images']) ? json_decode($latest_prod['gallery_images'], true) : [];
+                            if (!is_array($gallery)) { $gallery = []; }
                             // Ensure we have at least 4 thumbs for layout, fill with placeholders or main img if needed
                             $thumbs = array_slice($gallery, 0, 4);
                         ?>
@@ -190,9 +191,9 @@
                         
                         <div class="td-price-block">
                             <span class="td-price-symbol">₹</span>
-                            <span class="td-price-whole"><?php echo number_format($latest_prod['sale_price']); ?></span>
-                            <?php if($latest_prod['mrp'] > $latest_prod['sale_price']): ?>
-                                <span class="td-mrp">M.R.P: ₹<?php echo number_format($latest_prod['mrp']); ?></span>
+                            <span class="td-price-whole"><?php echo number_format((float)$latest_prod['sale_price']); ?></span>
+                            <?php if((float)$latest_prod['mrp'] > (float)$latest_prod['sale_price']): ?>
+                                <span class="td-mrp">M.R.P: ₹<?php echo number_format((float)$latest_prod['mrp']); ?></span>
                             <?php endif; ?>
                         </div>
 
@@ -224,16 +225,18 @@
 
             <?php
             // Helper function to fetch products with offset
-            function fetch_products_offset($conn, $limit, $offset) {
-                $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset";
-                $result = $conn->query($sql);
-                $items = [];
-                if ($result) {
-                    while($row = $result->fetch_assoc()) {
-                        $items[] = $row;
+            if(!function_exists('fetch_products_offset')){
+                function fetch_products_offset($conn, $limit, $offset) {
+                    $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset";
+                    $result = $conn->query($sql);
+                    $items = [];
+                    if ($result) {
+                        while($row = $result->fetch_assoc()) {
+                            $items[] = $row;
+                        }
                     }
+                    return $items;
                 }
-                return $items;
             }
 
             // Fetch batches
@@ -258,7 +261,7 @@
                                                  class="td-grid-img">
                                         </div>
                                         <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
-                                        <div class="td-grid-price">₹<?php echo number_format($item['sale_price']); ?></div>
+                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
                                     </a>
                                 </div>
                             <?php endforeach; ?>
@@ -287,6 +290,7 @@
                                                  class="td-grid-img">
                                         </div>
                                         <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
+                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
                                     </a>
                                 </div>
                             <?php endforeach; ?>
@@ -315,6 +319,7 @@
                                                  class="td-grid-img">
                                         </div>
                                         <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
+                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
                                     </a>
                                 </div>
                             <?php endforeach; ?>

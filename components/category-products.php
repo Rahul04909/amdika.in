@@ -155,18 +155,7 @@
     border-color: transparent;
 }
 
-.card-wishlist-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    color: #c2c2c2;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 10;
-    background: none;
-    border: none;
-}
-.card-wishlist-btn:hover { color: #ff4343; }
+
 
 .product-img-wrapper {
     position: relative;
@@ -179,8 +168,8 @@
 }
 
 .product-img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
@@ -290,7 +279,6 @@ if ($cat_res && $cat_res->num_rows > 0):
             ?>
             <div class="cp-product-item">
                 <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     <div class="product-img-wrapper">
                         <a href="product-details.php?slug=<?php echo $p_slug; ?>" class="d-block w-100 h-100">
                             <img src="<?php echo $p_img; ?>" class="product-img" alt="<?php echo $p_name; ?>">
@@ -304,8 +292,8 @@ if ($cat_res && $cat_res->num_rows > 0):
                         <h3 class="product-title"><?php echo $p_name; ?></h3>
                     </a>
                     <div class="price-container">
-                        <span class="current-price">₹<?php echo number_format($p_sale); ?></span>
-                        <span class="original-price">₹<?php echo number_format($p_mrp); ?></span>
+                        <span class="current-price">₹<?php echo number_format((float)$p_sale); ?></span>
+                        <span class="original-price">₹<?php echo number_format((float)$p_mrp); ?></span>
                         <span class="discount-text"><?php echo $p_disc; ?>% off</span>
                     </div>
                 </div>

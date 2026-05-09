@@ -12,15 +12,20 @@ $success_msg = '';
 $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitization & Input
-    $name = $conn->real_escape_string($_POST['name']);
+    // Sanitization & Input (No real_escape_string needed for prepared statements)
+    $name = $_POST['name'];
     $category_id = intval($_POST['category_id']);
     
-    // Slug Logic
     $slug = !empty($_POST['slug']) ? $_POST['slug'] : $name;
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
     
-    $description = $conn->real_escape_string($_POST['description']);
+    // Check for Duplicate Slug and append unique suffix if needed
+    $chk = $conn->query("SELECT id FROM products WHERE slug = '$slug'");
+    if($chk && $chk->num_rows > 0) {
+        $slug .= '-' . time();
+    }
+    
+    $description = $_POST['description'];
     $mrp = floatval($_POST['mrp']);
     $sale_price = floatval($_POST['sale_price']);
     // Auto Calc Discount if not provided (or re-calc to be safe)
@@ -29,11 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $discount_percent = round((($mrp - $sale_price) / $mrp) * 100);
     }
     
-    $video_url = $conn->real_escape_string($_POST['video_url']);
-    $seo_title = $conn->real_escape_string($_POST['seo_title']);
-    $seo_description = $conn->real_escape_string($_POST['seo_description']);
-    $seo_keywords = $conn->real_escape_string($_POST['seo_keywords']);
-    $schema_markup = $conn->real_escape_string($_POST['schema_markup']); // JSON string
+    $video_url = $_POST['video_url'];
+    $seo_title = $_POST['seo_title'];
+    $seo_description = $_POST['seo_description'];
+    $seo_keywords = $_POST['seo_keywords'];
+
+    // Handle JSON field correctly: Empty string is not valid JSON, use NULL
+    $schema_markup = !empty(trim($_POST['schema_markup'])) ? $_POST['schema_markup'] : null;
     
     // 1. Featured Image Upload
     $featured_img_path = '';
@@ -67,17 +74,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $gst_percent = intval($_POST['gst_percent']);
 
+    $status = 'active';
+
     $conn->begin_transaction();
     try {
         $sql = "INSERT INTO products (
             category_id, name, slug, description, featured_image, gallery_images, video_url, 
-            mrp, sale_price, discount_percent, gst_percent, seo_title, seo_description, seo_keywords, schema_markup
-        ) VALUES (
-            $category_id, '$name', '$slug', '$description', '$featured_img_path', '$gallery_json', '$video_url',
-            $mrp, $sale_price, $discount_percent, $gst_percent, '$seo_title', '$seo_description', '$seo_keywords', '$schema_markup'
-        )";
+            mrp, sale_price, discount_percent, gst_percent, seo_title, seo_description, seo_keywords, schema_markup, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if (!$conn->query($sql)) throw new Exception($conn->error);
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) throw new Exception($conn->error);
+
+        $stmt->bind_param("issssssddiiissss", 
+            $category_id, $name, $slug, $description, $featured_img_path, $gallery_json, $video_url,
+            $mrp, $sale_price, $discount_percent, $gst_percent, $seo_title, $seo_description, $seo_keywords, $schema_markup, $status
+        );
+
+        if (!$stmt->execute()) throw new Exception($stmt->error);
         $product_id = $conn->insert_id;
 
         // 3. Handle Color Variants
@@ -121,7 +135,7 @@ $page_title = 'Add New Product';
     <meta charset="UTF-8">
     <title>Add Product - Amadika Admin</title>
     <!-- Assets -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cke4.ckeditor.com;">
     <link href="../../assets/vendor/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../assets/vendor/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">

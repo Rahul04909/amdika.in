@@ -5,15 +5,35 @@ require_once '../../database/db_config.php';
 // Handle Delete Action
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    // Optional: Delete image file from server if needed
-    // $sql_img = "SELECT image, seo_featured_image FROM product_categories WHERE id = $id";
-    // ... unlink logic ...
     
-    $sql = "DELETE FROM product_categories WHERE id = $id";
-    if ($conn->query($sql)) {
-        header("Location: manage-category.php?success=deleted");
-    } else {
-        header("Location: manage-category.php?error=delete_failed");
+    try {
+        // 1. Check if category has products
+        $check_stmt = $conn->prepare("SELECT COUNT(*) as prod_count FROM products WHERE category_id = ?");
+        $check_stmt->bind_param("i", $id);
+        $check_stmt->execute();
+        $count_res = $check_stmt->get_result()->fetch_assoc();
+        
+        if ($count_res['prod_count'] > 0) {
+            // Cannot delete if products exist
+            header("Location: manage-category.php?error=has_products&count=" . $count_res['prod_count']);
+            exit;
+        }
+
+        // 2. Perform Deletion
+        $stmt = $conn->prepare("DELETE FROM product_categories WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        
+        if ($stmt->execute()) {
+            if ($stmt->affected_rows > 0) {
+                header("Location: manage-category.php?success=deleted");
+            } else {
+                header("Location: manage-category.php?error=not_found");
+            }
+        } else {
+            throw new Exception($stmt->error);
+        }
+    } catch (Exception $e) {
+        header("Location: manage-category.php?error=delete_failed&msg=" . urlencode($e->getMessage()));
     }
     exit;
 }
@@ -32,7 +52,7 @@ $page_title = 'Product Categories';
     <title>Manage Categories - Amadika Admin</title>
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
 
     <!-- Bootstrap 5 CSS (Local) -->
     <link href="../../assets/vendor/css/bootstrap.min.css" rel="stylesheet" />
@@ -94,7 +114,23 @@ $page_title = 'Product Categories';
                 <!-- Alert Messages -->
                 <?php if(isset($_GET['success']) && $_GET['success'] == 'deleted'): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Category deleted successfully!
+                        <i class="fas fa-check-circle me-2"></i> Category deleted successfully!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(isset($_GET['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <?php 
+                            if($_GET['error'] == 'has_products') {
+                                echo "Cannot delete category! There are <strong>" . ($_GET['count'] ?? 'some') . "</strong> products assigned to it. Please move or delete the products first.";
+                            } elseif($_GET['error'] == 'not_found') {
+                                echo "Category not found or already deleted.";
+                            } else {
+                                echo "Error: " . ($_GET['msg'] ?? 'Deletion failed.');
+                            }
+                        ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>

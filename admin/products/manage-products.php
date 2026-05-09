@@ -29,6 +29,23 @@ if (isset($_GET['delete'])) {
             }
         }
     
+    // 1. Log the product details before deletion
+    $log_stmt = $conn->prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN product_categories c ON p.category_id = c.id WHERE p.id = ?");
+    $log_stmt->bind_param("i", $id);
+    $log_stmt->execute();
+    $prod_to_log = $log_stmt->get_result()->fetch_assoc();
+
+    if ($prod_to_log) {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN';
+        $snapshot = json_encode($prod_to_log);
+        $prod_name = $prod_to_log['name'];
+        $cat_name = $prod_to_log['category_name'] ?? 'Uncategorized';
+        
+        $insert_log = $conn->prepare("INSERT INTO product_deletion_log (product_id, product_name, category_name, deleted_by_ip, full_snapshot) VALUES (?, ?, ?, ?, ?)");
+        $insert_log->bind_param("issss", $id, $prod_name, $cat_name, $ip, $snapshot);
+        $insert_log->execute();
+    }
+
     $sql = "DELETE FROM products WHERE id = $id";
     if ($conn->query($sql)) {
         header("Location: manage-products.php?success=deleted");

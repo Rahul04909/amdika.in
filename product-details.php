@@ -218,9 +218,9 @@ while($v = $v_res->fetch_assoc()) $variants[] = $v;
                 </div>
 
                 <div class="price-block">
-                    <span class="sale-price" id="displaySalePrice">₹<?php echo number_format($sale); ?></span>
+                    <span class="sale-price" id="displaySalePrice">₹<?php echo number_format((float)$sale); ?></span>
                     <?php if($disc > 0): ?>
-                        <span class="mrp-price">₹<?php echo number_format($mrp); ?></span>
+                        <span class="mrp-price">₹<?php echo number_format((float)$mrp); ?></span>
                         <span class="disc-off" id="displayDiscount"><?php echo $disc; ?>% off</span>
                     <?php endif; ?>
                 </div>
@@ -473,10 +473,8 @@ while($v = $v_res->fetch_assoc()) $variants[] = $v;
     /* Card Styling */
     .premium-product-card { background: #fff; position: relative; display: flex; flex-direction: column; padding: 16px; height: 100%; transition: box-shadow 0.2s ease, transform 0.1s; border: 1px solid #f0f0f0; border-radius: 4px; }
     .premium-product-card:hover { box-shadow: 0 3px 16px 0 rgba(0,0,0,.11); transform: translateY(-2px); z-index: 2; border-color: transparent; }
-    .card-wishlist-btn { position: absolute; top: 12px; right: 12px; color: #c2c2c2; font-size: 18px; cursor: pointer; z-index: 10; background: none; border: none; }
-    .card-wishlist-btn:hover { color: #ff4343; }
     .product-img-wrapper { position: relative; width: 100%; height: 180px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
-    .product-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .product-img { width: 100%; height: 100%; object-fit: contain; }
     .rating-badge { background-color: #388e3c; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 3px; display: inline-flex; align-items: center; margin-right: 8px; }
     .rating-badge i { font-size: 10px; margin-left: 2px; }
     .review-count { color: #878787; font-size: 13px; font-weight: 500; }
@@ -527,7 +525,6 @@ if($rel_res && $rel_res->num_rows > 0):
             ?>
             <div class="cp-product-item">
                 <div class="premium-product-card">
-                    <button class="card-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     <div class="product-img-wrapper">
                         <a href="product-details.php?slug=<?php echo $fp['slug']; ?>" class="d-block w-100 h-100">
                             <img src="<?php echo $fp_img; ?>" class="product-img" alt="<?php echo htmlspecialchars($fp['name']); ?>">
@@ -541,8 +538,8 @@ if($rel_res && $rel_res->num_rows > 0):
                         <h3 class="product-title"><?php echo htmlspecialchars($fp['name']); ?></h3>
                     </a>
                     <div class="price-container">
-                        <span class="current-price">₹<?php echo number_format($fp['sale_price']); ?></span>
-                        <span class="original-price">₹<?php echo number_format($fp['mrp']); ?></span>
+                        <span class="current-price">₹<?php echo number_format((float)$fp['sale_price']); ?></span>
+                        <span class="original-price">₹<?php echo number_format((float)$fp['mrp']); ?></span>
                         <span class="discount-text"><?php echo $fp['discount_percent']; ?>% off</span>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 <?php
 // Database configuration
-$host = 'localhost';
-$dbname = 'amadik_ecom';
-$username = 'amadik_ecom';
+$host = 'shareddb-w.hosting.stackcp.net'; // Standard 20i/StackCP database host
+$dbname = 'amadik_ecom-313439a91d';
+$username = 'amadik_ecom-313439a91d';
 $password = 'Rd14072003@./';
 
 // Create connection
@@ -10,6 +10,8 @@ $conn = new mysqli($host, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Detailed error reporting for debugging
+    error_log("Connection failed (" . $conn->connect_errno . "): " . $conn->connect_error);
+    die("❌ Connection failed: " . $conn->connect_error . " (Error No: " . $conn->connect_errno . "). Please verify if the database exists in 20i panel.");
 }
 ?>

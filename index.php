@@ -9,8 +9,8 @@
 <!-- Best Deals (Smartphones) -->
 <?php include 'components/best-deals.php'; ?>
 
-<!-- frontned top deals product showcase -->
 <?php include 'components/top-deals.php'; ?>
+
 
 <!-- Garden Category Products -->
 <?php include 'components/category-products.php'; ?>

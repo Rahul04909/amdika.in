@@ -9,19 +9,15 @@ if (!file_exists($save_path)) {
     mkdir($save_path, 0755, true);
 }
 
-// Set the session save path
-session_save_path($save_path);
-
-// Enable error reporting to catch any startup errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Set cookie params to root path explicitly
-session_set_cookie_params(0, '/');
-
-// Start the session
+// Set session parameters only if no session is active
 if (session_status() === PHP_SESSION_NONE) {
+    // Set the session save path
+    session_save_path($save_path);
+    
+    // Set cookie params to root path explicitly
+    session_set_cookie_params(0, '/');
+    
+    // Start the session
     session_start();
 }
 ?>

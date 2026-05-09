@@ -59,8 +59,8 @@ $invoice_html = '
                 <td width="50%" style="text-align: right;">
                     <strong>Sold By:</strong><br>
                     Amadika Store<br>
-                    123, Tech Plaza<br>
-                    New Delhi, India
+                    A-14 Dlf-I nhpc faridabad, Haryana<br>
+                    Haryana, India, 121003
                 </td>
             </tr>
         </table>

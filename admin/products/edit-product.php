@@ -26,35 +26,34 @@ while($v = $variants_res->fetch_assoc()) $existing_variants[] = $v;
 $success_msg = '';
 $error_msg = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn->begin_transaction();
-    try {
-        $name = $conn->real_escape_string($_POST['name']);
-        $category_id = intval($_POST['category_id']);
-        
-        $slug = !empty($_POST['slug']) ? $_POST['slug'] : $name;
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
-        
-        $chk = $conn->query("SELECT id FROM products WHERE slug = '$slug' AND id != $id");
-        if($chk->num_rows > 0) $slug .= '-' . time();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $conn->begin_transaction();
+        try {
+            $name = $_POST['name'];
+            $category_id = intval($_POST['category_id']);
+            
+            $slug = !empty($_POST['slug']) ? $_POST['slug'] : $name;
+            $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
+            
+            $chk = $conn->query("SELECT id FROM products WHERE slug = '$slug' AND id != $id");
+            if($chk->num_rows > 0) $slug .= '-' . time();
+    
+            $description = $_POST['description'];
+            $mrp = floatval($_POST['mrp']);
+            $sale_price = floatval($_POST['sale_price']);
+            $discount_percent = 0;
+            if ($mrp > 0 && $sale_price > 0 && $mrp > $sale_price) {
+                $discount_percent = round((($mrp - $sale_price) / $mrp) * 100);
+            }
+            
+            $video_url = $_POST['video_url'];
+            $status = $_POST['status'];
+            $seo_title = $_POST['seo_title'];
+            $seo_description = $_POST['seo_description'];
+            $seo_keywords = $_POST['seo_keywords'];
+            $schema_markup = !empty(trim($_POST['schema_markup'])) ? $_POST['schema_markup'] : null;
 
-        $description = $conn->real_escape_string($_POST['description']);
-        $mrp = floatval($_POST['mrp']);
-        $sale_price = floatval($_POST['sale_price']);
-        $discount_percent = 0;
-        if ($mrp > 0 && $sale_price > 0 && $mrp > $sale_price) {
-            $discount_percent = round((($mrp - $sale_price) / $mrp) * 100);
-        }
-        
-        $video_url = $conn->real_escape_string($_POST['video_url']);
-        $status = $_POST['status'];
-        $seo_title = $conn->real_escape_string($_POST['seo_title']);
-        $seo_description = $conn->real_escape_string($_POST['seo_description']);
-        $seo_keywords = $conn->real_escape_string($_POST['seo_keywords']);
-        $schema_markup = $conn->real_escape_string($_POST['schema_markup']);
-
-        // 1. Featured Image Update
-        $featured_sql = "";
+        // Featured Image Update
         if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] == 0) {
             $target_dir = "../../assets/images/products/";
             if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
@@ -62,42 +61,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $new_name = "prod_" . time() . "_feat." . $ext;
             if(move_uploaded_file($_FILES["featured_image"]["tmp_name"], $target_dir . $new_name)){
                 if(!empty($prod['featured_image']) && file_exists("../../" . $prod['featured_image'])) unlink("../../" . $prod['featured_image']);
-                $featured_img_path = "assets/images/products/" . $new_name;
-                $featured_sql = ", featured_image = '$featured_img_path'";
+                $prod['featured_image'] = "assets/images/products/" . $new_name;
             }
         }
-
-        // 2. Gallery Update
-        $current_gallery = json_decode($prod['gallery_images'], true) ?? [];
-        if(isset($_POST['clear_gallery']) && $_POST['clear_gallery'] == 1){
-            foreach($current_gallery as $g_img) { if(file_exists("../../" . $g_img)) unlink("../../" . $g_img); }
-            $current_gallery = [];
-        }
-        if(isset($_FILES['gallery_images'])){
-            $target_dir = "../../assets/images/products/gallery/";
-            if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
-            foreach($_FILES['gallery_images']['tmp_name'] as $key => $tmp_name){
-                 if($_FILES['gallery_images']['error'][$key] == 0){
-                    $ext = strtolower(pathinfo($_FILES["gallery_images"]["name"][$key], PATHINFO_EXTENSION));
-                    $new_name = "prod_" . time() . "_gal_" . $key . "." . $ext;
-                    if(move_uploaded_file($tmp_name, $target_dir . $new_name)){
-                        $current_gallery[] = "assets/images/products/gallery/" . $new_name;
-                    }
-                 }
-            }
-        }
+        
         $gallery_json = json_encode($current_gallery);
         $gst_percent = intval($_POST['gst_percent']);
 
         $sql = "UPDATE products SET 
-            category_id=$category_id, name='$name', slug='$slug', description='$description', 
-            video_url='$video_url', mrp=$mrp, sale_price=$sale_price, discount_percent=$discount_percent, gst_percent=$gst_percent,
-            seo_title='$seo_title', seo_description='$seo_description', seo_keywords='$seo_keywords', 
-            schema_markup='$schema_markup', status='$status', gallery_images='$gallery_json', updated_at=NOW()
-            $featured_sql
-            WHERE id=$id";
+            category_id=?, name=?, slug=?, description=?, 
+            video_url=?, mrp=?, sale_price=?, discount_percent=?, gst_percent=?,
+            seo_title=?, seo_description=?, seo_keywords=?, 
+            schema_markup=?, status=?, gallery_images=?, updated_at=NOW(), featured_image=?
+            WHERE id=?";
 
-        if (!$conn->query($sql)) throw new Exception($conn->error);
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) throw new Exception($conn->error);
+
+        $stmt->bind_param("issssssddiiissssi", 
+            $category_id, $name, $slug, $description, $video_url, 
+            $mrp, $sale_price, $discount_percent, $gst_percent,
+            $seo_title, $seo_description, $seo_keywords, 
+            $schema_markup, $status, $gallery_json, $prod['featured_image'], $id
+        );
+
+        if (!$stmt->execute()) throw new Exception($stmt->error);
 
         // 3. Handle Color Variants
         $submitted_variant_ids = [];
@@ -169,7 +157,7 @@ $page_title = 'Edit Product';
     <meta charset="UTF-8">
     <title>Edit Product - Amadika Admin</title>
     <!-- Assets -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cke4.ckeditor.com;">
     <link href="../../assets/vendor/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../assets/vendor/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">

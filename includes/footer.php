@@ -204,8 +204,8 @@
             <div class="col-lg-3 col-md-6 mb-4">
                  <span class="footer-heading">Address</span>
                  <div class="footer-address">
-                    Ground Floor, Nirvana courtyard, C-27, Nirvana Country, Sector 50, Gurugram, Haryana, India - 122018
-                    <br><br>
+                  A-14 Dlf-I nhpc faridabad Haryana 121003
+                  <br><br>
                     CIN: U01100MH1999PLC120563
                  </div>
             </div>

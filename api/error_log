@@ -1,0 +1,45 @@
+[27-Jan-2026 12:25:32 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:25:36 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:26 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:27 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:34 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:34 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:26:35 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15
+[27-Jan-2026 12:27:38 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.coupon_codes' doesn't exist in /home4/amadik/public_html/api/check_coupon.php:15
+Stack trace:
+#0 /home4/amadik/public_html/api/check_coupon.php(15): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/api/check_coupon.php on line 15

@@ -1,9 +1,5 @@
 <?php
 require_once 'database/db_config.php';
-// Session start is usually in header or auth check, but let's ensure it here as well
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 $page_title = 'My Cart';
 include 'includes/header.php';

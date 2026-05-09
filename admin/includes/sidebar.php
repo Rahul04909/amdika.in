@@ -331,6 +331,7 @@ $is_products_group = ($is_manage_cat || $is_add_cat || $is_manage_attr || strpos
                     <li><a href="../../admin/attributes/manage-colors.php" class="sb-link <?php echo $is_manage_attr ? 'active text-warning' : ''; ?>">Manage Attributes</a></li>
                     <li><a href="../../admin/products/add-category.php" class="sb-link <?php echo $is_add_cat ? 'active text-warning' : ''; ?>">Add Category</a></li>
                     <li><a href="<?php echo $base_path; ?>admin/frontend/manage-best-deals.php" class="sb-link">Manage Best Deals</a></li>
+                    <!--<li><a href="../../admin/products/deletion-logs.php" class="sb-link">Deletion Logs</a></li>-->
                 </ul>
             </div>
         </div>
