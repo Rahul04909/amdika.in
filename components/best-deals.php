@@ -1,7 +1,7 @@
 <style>
 /* --- Premium Best Deals Section --- */
 .best-deals-section-wrapper {
-    background-color: #fafafa;
+    background-color: #ffffff; /* Pure white background as requested */
     padding: 60px 0;
     overflow: hidden;
 }
@@ -57,7 +57,7 @@
     padding: 15px;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
-    border: 1px solid #eee;
+    border: 1px solid #f0f0f0; /* Subtle border */
     text-decoration: none !important;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@
 
 .deal-product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
     border-color: var(--accent-gold, #d4a017);
 }
 
@@ -73,7 +73,7 @@
     width: 100%;
     height: 250px;
     border-radius: 8px;
-    background: #f9f9f9;
+    background: #ffffff; /* White background for image box */
     margin-bottom: 15px;
     overflow: hidden;
     position: relative;
@@ -85,7 +85,8 @@
 .deal-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Changed to contain for perfect fit */
+    padding: 10px;
     transition: transform 0.6s ease;
 }
 
@@ -242,7 +243,7 @@ if (!isset($bd_products)) {
                 <?php if (!empty($bd_products)): ?>
                     <?php foreach($bd_products as $prod): 
                         $img = !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg';
-                        $resized_img = get_resized_image($img, 400, 500, 'cover'); // High quality crop
+                        $resized_img = get_resized_image($img, 400, 500, 'contain'); // Preserves full product aspect ratio
                     ?>
                         <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="deal-product-card">
                             <?php if($prod['discount_percent'] > 0): ?>
