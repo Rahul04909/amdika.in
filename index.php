@@ -9,6 +9,9 @@
 <!-- Best Deals (Smartphones) -->
 <?php include 'components/best-deals.php'; ?>
 
+<!-- Promotional Banner -->
+<?php include 'components/promo-banner.php'; ?>
+
 <?php include 'components/top-deals.php'; ?>
 
 
