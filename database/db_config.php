@@ -1,8 +1,8 @@
 <?php
 // Database configuration
 $host = 'shareddb-w.hosting.stackcp.net'; // Standard 20i/StackCP database host
-$dbname = 'amadik_ecom-313439a91d';
-$username = 'amadik_ecom-313439a91d';
+$dbname = 'mineib_i1_amadika';
+$username = 'mineib_i1_mineib';
 $password = 'Rd14072003@./';
 
 // Create connection
