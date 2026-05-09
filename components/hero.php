@@ -47,8 +47,10 @@
     <div class="hero-banner-item">
         <?php
         $heroSrc = 'assets/images/hero/new-hero.png';
-        $desktopHero = get_resized_image($heroSrc, 1920, 700); // Higher resolution for desktop
-        $mobileHero = get_resized_image($heroSrc, 800, 600);   
+        $desktopHero = get_resized_image($heroSrc, 1920, 700); 
+        // For mobile, we resize to 800px width and keep the aspect ratio (null height)
+        // This ensures the complete image is shown without any cropping.
+        $mobileHero = get_resized_image($heroSrc, 800, null, 'resize');   
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">

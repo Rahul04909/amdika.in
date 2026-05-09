@@ -13,9 +13,10 @@ use Intervention\Image\Drivers\Gd\Driver;
  * @param string $method 'cover' or 'resize'
  * @return string Path to the resized image
  */
-function get_resized_image($sourcePath, $width, $height, $method = 'cover') {
+function get_resized_image($sourcePath, $width, $height, $method = 'cover')
+{
     $absSourcePath = __DIR__ . '/../' . $sourcePath;
-    
+
     if (!file_exists($absSourcePath)) {
         return $sourcePath;
     }
@@ -23,7 +24,7 @@ function get_resized_image($sourcePath, $width, $height, $method = 'cover') {
     $extension = pathinfo($sourcePath, PATHINFO_EXTENSION);
     $filename = pathinfo($sourcePath, PATHINFO_FILENAME);
     $cacheDir = __DIR__ . '/../assets/images/cache/';
-    
+
     if (!is_dir($cacheDir)) {
         mkdir($cacheDir, 0755, true);
     }
@@ -43,6 +44,8 @@ function get_resized_image($sourcePath, $width, $height, $method = 'cover') {
 
         if ($method === 'cover') {
             $image->cover($width, $height);
+        } elseif ($method === 'contain') {
+            $image->contain($width, $height);
         } else {
             $image->resize($width, $height);
         }
