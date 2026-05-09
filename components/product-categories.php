@@ -5,7 +5,7 @@
 /* --- Modern Product Categories (Nykaa Style) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 40px 0;
+    padding: 40px 0 10px 0; /* Reduced bottom padding to tighten gap */
     overflow: hidden;
 }
 

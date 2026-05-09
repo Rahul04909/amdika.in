@@ -2,7 +2,7 @@
 /* --- Premium Best Deals Section --- */
 .best-deals-section-wrapper {
     background-color: #ffffff; /* Pure white background as requested */
-    padding: 60px 0;
+    padding: 40px 0; /* Reduced padding to tighten spacing */
     overflow: hidden;
 }
 
@@ -270,12 +270,6 @@ if (!isset($bd_products)) {
                     <p class="text-center w-100 text-muted">No deals found today. Check back soon!</p>
                 <?php endif; ?>
             </div>
-        </div>
-        
-        <div class="text-center mt-5">
-            <a href="products.php" class="btn" style="border: 2px solid var(--accent-gold, #d4a017); color: var(--accent-gold, #d4a017); font-weight: 700; padding: 12px 30px; border-radius: 30px; transition: all 0.3s;">
-                VIEW ALL DEALS
-            </a>
         </div>
     </div>
 </section>

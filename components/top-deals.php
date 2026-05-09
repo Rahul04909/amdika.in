@@ -2,7 +2,7 @@
 /* --- Premium Top Deals Section --- */
 .top-deals-section-wrapper {
     background-color: #ffffff;
-    padding: 40px 0;
+    padding: 10px 0 40px 0; /* Reduced top padding to move component up */
     overflow: hidden;
 }
 
