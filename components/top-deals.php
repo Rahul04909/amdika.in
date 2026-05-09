@@ -1,336 +1,299 @@
 <style>
-/* --- Top Deals Widgets (Amazon Style) --- */
-.top-deals-container {
-    background-color: transparent; /* Container background transparent to let cards show */
+/* --- Premium Top Deals Section --- */
+.top-deals-section-wrapper {
+    background-color: #ffffff;
+    padding: 40px 0;
+    overflow: hidden;
 }
 
-/* Widget Card */
-.td-widget-card {
-    background-color: #fff;
-    padding: 20px 20px 15px; /* Added 15px bottom padding */
+.td-container-fluid {
+    width: 100%;
+    padding: 0 40px;
+}
+
+.td-main-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.td-main-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+/* Widget Card Styling */
+.td-premium-widget {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
     height: 100%;
-    border: 1px solid #ddd;   /* Light gray border like screenshot */
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
 }
 
+.td-premium-widget:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    border-color: var(--accent-gold, #d4a017);
+}
+
 .td-widget-title {
-    font-size: 21px;          /* Larger title like "Best Sellers..." */
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
     font-weight: 700;
-    color: #0F1111;           /* Amazon dark text */
-    margin-bottom: 10px;
-    line-height: 1.3;
+    color: #232f3e;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--accent-gold, #d4a017);
+    padding-left: 15px;
 }
 
-/* "See more" link */
-.td-see-more {
-    margin-top: auto;
-    padding-top: 10px;
-    font-size: 13px;
-    color: #007185;
-    text-decoration: none;
-    font-weight: 500;
-}
-.td-see-more:hover {
-    color: #c7511f;
-    text-decoration: underline;
-}
-
-/* --- Widget Type 1: Single Hero + Thumbnails (Best Sellers) --- */
-.td-hero-img-wrapper {
-    width: 100%;
-    margin-bottom: 1px;
+/* Hero Widget (Newly Added) */
+.td-hero-box {
     text-align: center;
+    margin-bottom: 20px;
 }
-.td-hero-img {
-    max-width: 100%;
-    max-height: 240px;
-    object-fit: contain;
-}
-.td-product-desc {
-    font-size: 13px;
-    color: #0F1111;
-    margin-bottom: 4px;
-    line-height: 1.4;
-}
-.td-price-block {
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
-    margin-bottom: 10px;
-}
-.td-price-symbol {
-    font-size: 12px;
-    position: relative;
-    top: -5px;
-}
-.td-price-whole {
-    font-size: 21px; /* Emphasized price */
-    font-weight: 500;
-}
-.td-price-fraction {
-    font-size: 12px;
-    position: relative;
-    top: -5px;
-}
-.td-mrp {
-    font-size: 12px;
-    color: #565959;
-    text-decoration: line-through;
-}
-.td-thumbnails-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 5px;
-}
-.td-thumb-box {
-    border: 1px solid #a8a8a8;
-    border-radius: 4px;
-    padding: 2px;
-    cursor: pointer;
-    width: 45px;
-    height: 45px;
+
+.td-hero-img-container {
+    width: 100%;
+    height: 220px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.td-thumb-img {
+
+.td-hero-img-container img {
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s;
 }
 
-/* --- Widget Type 2: 2x2 Grid (Keep Shopping / Discounts) --- */
-.td-grid-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -5px; /* Negative margin for gaps */
+.td-hero-box:hover img {
+    transform: scale(1.05);
 }
-.td-grid-col {
-    width: 50%;
-    padding: 0 5px 25px 5px; /* Bottom padding for spacing */
-    box-sizing: border-box;
+
+.td-hero-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
-.td-grid-item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    cursor: pointer;
+
+.td-hero-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-gold, #d4a017);
 }
-.td-grid-img-wrapper {
-    height: 120px; /* Uniform height for grid images */
+
+.td-hero-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.td-thumb-item {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 2px;
+    height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center horizontally */
-    margin-bottom: 4px;
-    overflow: hidden;
-}
-.td-grid-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Ensure full image is seen */
-    align-self: center; /* Vertical center */
-}
-.td-grid-label {
-    font-size: 12px;
-    color: #0F1111;
-    line-height: 1.3;
-}
-.td-grid-price {
-    font-size: 15px; /* Price below image */
-    font-weight: 500;
-    color: #0F1111;
+    justify-content: center;
+    background: #fff;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 767px) {
-    .td-widget-card {
-        margin-bottom: 15px; /* Spacing between stacked cards */
-        height: auto;
-    }
-    .td-hero-img {
-        max-height: 200px;
-    }
+/* Grid Widget (2x2) */
+.td-grid-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.td-grid-card {
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.td-grid-img-container {
+    width: 100%;
+    height: 120px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #f5f5f5;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.td-grid-img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.td-grid-card:hover img {
+    transform: scale(1.1);
+}
+
+.td-grid-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    height: 32px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.td-grid-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Footer Link */
+.td-footer-link {
+    margin-top: auto;
+    font-size: 14px;
+    color: var(--accent-gold, #d4a017);
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.td-footer-link:hover {
+    gap: 12px;
+    color: #000;
+}
+
+@media (max-width: 991px) {
+    .td-container-fluid { padding: 0 20px; }
+    .td-premium-widget { padding: 15px; margin-bottom: 20px; }
+    .td-hero-img-container { height: 180px; }
+}
+
+@media (max-width: 576px) {
+    .td-main-header h2 { font-size: 24px; }
+    .td-widget-title { font-size: 18px; }
+    .td-hero-thumbs { grid-template-columns: repeat(4, 1fr); }
+    .td-thumb-item { height: 40px; }
 }
 </style>
 
-<section class="top-deals-section mb-4">
-    <div class="container top-deals-container p-0">
-        <div class="row g-3"> <!-- Bootstrap gutter -->
-            
+<section class="top-deals-section-wrapper">
+    <div class="td-container-fluid">
+        <div class="td-main-header">
+            <h2>Trending <span style="color: var(--accent-gold, #d4a017);">Now</span></h2>
+        </div>
 
-            <!-- Widget 1: Newly Added (Dynamic) -->
+        <div class="row g-4">
             <?php
-            // Fetch Latest Product
-            $latest_prod_sql = "SELECT * FROM products ORDER BY id DESC LIMIT 1";
-            $latest_prod_res = $conn->query($latest_prod_sql);
-            $latest_prod = ($latest_prod_res && $latest_prod_res->num_rows > 0) ? $latest_prod_res->fetch_assoc() : null;
-            ?>
-            <div class="col-lg-3 col-md-6 col-12">
-                <div class="td-widget-card">
-                    <h3 class="td-widget-title">Newly Added</h3>
-                    
-                    <?php if($latest_prod): ?>
-                        <?php 
-                            $feat_img = !empty($latest_prod['featured_image']) ? $latest_prod['featured_image'] : 'assets/images/demo-data/product.jpg';
-                            $gallery = !empty($latest_prod['gallery_images']) ? json_decode($latest_prod['gallery_images'], true) : [];
-                            if (!is_array($gallery)) { $gallery = []; }
-                            // Ensure we have at least 4 thumbs for layout, fill with placeholders or main img if needed
-                            $thumbs = array_slice($gallery, 0, 4);
-                        ?>
-                        <div class="td-hero-img-wrapper">
-                            <a href="product-details.php?slug=<?php echo $latest_prod['slug']; ?>">
-                                <img src="<?php echo $feat_img; ?>" alt="<?php echo htmlspecialchars($latest_prod['name']); ?>" class="td-hero-img">
-                            </a>
-                        </div>
-                        
-                        <div class="td-product-desc">
-                            <a href="product-details.php?slug=<?php echo $latest_prod['slug']; ?>" class="text-dark text-decoration-none">
-                                <?php echo htmlspecialchars($latest_prod['name']); ?>
-                            </a>
-                        </div>
-                        
-                        <div class="td-price-block">
-                            <span class="td-price-symbol">₹</span>
-                            <span class="td-price-whole"><?php echo number_format((float)$latest_prod['sale_price']); ?></span>
-                            <?php if((float)$latest_prod['mrp'] > (float)$latest_prod['sale_price']): ?>
-                                <span class="td-mrp">M.R.P: ₹<?php echo number_format((float)$latest_prod['mrp']); ?></span>
-                            <?php endif; ?>
-                        </div>
+            require_once __DIR__ . '/../database/db_config.php';
+            require_once __DIR__ . '/../includes/image_helper.php';
 
-                        <!-- Thumbnails Row -->
-                        <div class="td-thumbnails-row">
-                            <?php foreach($thumbs as $img): ?>
-                                <div class="td-thumb-box">
-                                    <img src="<?php echo $img; ?>" class="td-thumb-img">
-                                </div>
-                            <?php endforeach; ?>
-                            <?php 
-                                // Fill remaining slots if any
-                                for($i = count($thumbs); $i < 4; $i++): 
-                            ?>
-                                <div class="td-thumb-box"><img src="<?php echo $feat_img; ?>" class="td-thumb-img"></div>
-                            <?php endfor; ?>
-                        </div>
-                        
-                        <a href="products.php" class="td-see-more">See more</a>
-                    <?php else: ?>
-                        <div class="text-center py-4">
-                            <p class="text-muted">No products found.</p>
-                            <a href="products.php" class="td-see-more">See more</a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-
-            <?php
-            // Helper function to fetch products with offset
-            if(!function_exists('fetch_products_offset')){
-                function fetch_products_offset($conn, $limit, $offset) {
+            // Helper to fetch products
+            if(!function_exists('get_td_products')){
+                function get_td_products($conn, $limit, $offset = 0) {
                     $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset";
                     $result = $conn->query($sql);
-                    $items = [];
-                    if ($result) {
-                        while($row = $result->fetch_assoc()) {
-                            $items[] = $row;
-                        }
-                    }
-                    return $items;
+                    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                 }
             }
 
-            // Fetch batches
-            $widget2_items = fetch_products_offset($conn, 4, 1);
-            $widget3_items = fetch_products_offset($conn, 4, 5);
-            $widget4_items = fetch_products_offset($conn, 4, 9);
+            $latest_batch = get_td_products($conn, 1);
+            $trending_batch = get_td_products($conn, 4, 1);
+            $explore_batch = get_td_products($conn, 4, 5);
+            $recommended_batch = get_td_products($conn, 4, 9);
             ?>
 
-            <!-- Widget 2: Trending Products (2x2 Grid) -->
+            <!-- Newly Added Widget -->
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="td-widget-card">
-                    <h3 class="td-widget-title">Trending Products</h3>
-                    
-                    <div class="td-grid-row">
-                        <?php if(!empty($widget2_items)): ?>
-                            <?php foreach($widget2_items as $item): ?>
-                                <div class="td-grid-col">
-                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
-                                        <div class="td-grid-img-wrapper">
-                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
-                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
-                                                 class="td-grid-img">
-                                        </div>
-                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
-                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
-                                    </a>
+                <div class="td-premium-widget">
+                    <h3 class="td-widget-title">Newly Added</h3>
+                    <?php if(!empty($latest_batch)): 
+                        $lp = $latest_batch[0];
+                        $feat_img = get_resized_image($lp['featured_image'], 400, 400, 'contain');
+                        $gallery = !empty($lp['gallery_images']) ? json_decode($lp['gallery_images'], true) : [];
+                        $thumbs = array_slice($gallery ?: [], 0, 4);
+                    ?>
+                        <div class="td-hero-box">
+                            <a href="product-details.php?slug=<?php echo $lp['slug']; ?>" class="text-decoration-none">
+                                <div class="td-hero-img-container">
+                                    <img src="<?php echo $feat_img; ?>" alt="<?php echo htmlspecialchars($lp['name']); ?>">
+                                </div>
+                                <h4 class="td-hero-name"><?php echo htmlspecialchars($lp['name']); ?></h4>
+                                <div class="td-hero-price">₹<?php echo number_format($lp['sale_price']); ?></div>
+                            </a>
+                        </div>
+                        <div class="td-hero-thumbs">
+                            <?php foreach($thumbs as $timg): ?>
+                                <div class="td-thumb-item">
+                                    <img src="<?php echo get_resized_image($timg, 100, 100, 'contain'); ?>" class="img-fluid">
                                 </div>
                             <?php endforeach; ?>
-                        <?php else: ?>
-                            <div class="col-12 text-center text-muted">No products found.</div>
-                        <?php endif; ?>
-                    </div>
-
-                    <a href="products.php" class="td-see-more">See more</a>
+                            <?php for($i = count($thumbs); $i < 4; $i++): ?>
+                                <div class="td-thumb-item">
+                                    <img src="<?php echo $feat_img; ?>" class="img-fluid" style="opacity: 0.3;">
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                    <?php endif; ?>
+                    <a href="products.php" class="td-footer-link mt-4">View Collection <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Widget 3: More to Explore (2x2 Grid) -->
-            <div class="col-lg-3 col-md-6 col-12">
-                <div class="td-widget-card">
-                    <h3 class="td-widget-title">More to Explore</h3>
-                    
-                    <div class="td-grid-row">
-                        <?php if(!empty($widget3_items)): ?>
-                            <?php foreach($widget3_items as $item): ?>
-                                <div class="td-grid-col">
-                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
-                                        <div class="td-grid-img-wrapper">
-                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
-                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
-                                                 class="td-grid-img">
-                                        </div>
-                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
-                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
-                                    </a>
-                                </div>
+            <!-- Grid Widgets Generator -->
+            <?php 
+            $grid_configs = [
+                ['title' => 'Trending Style', 'data' => $trending_batch],
+                ['title' => 'More to Explore', 'data' => $explore_batch],
+                ['title' => 'For You', 'data' => $recommended_batch]
+            ];
+
+            foreach($grid_configs as $config): ?>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="td-premium-widget">
+                        <h3 class="td-widget-title"><?php echo $config['title']; ?></h3>
+                        <div class="td-grid-box">
+                            <?php foreach($config['data'] as $item): 
+                                $gimg = get_resized_image($item['featured_image'], 200, 200, 'contain');
+                            ?>
+                                <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-card">
+                                    <div class="td-grid-img-container">
+                                        <img src="<?php echo $gimg; ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                                    </div>
+                                    <span class="td-grid-title"><?php echo htmlspecialchars($item['name']); ?></span>
+                                    <span class="td-grid-price">₹<?php echo number_format($item['sale_price']); ?></span>
+                                </a>
                             <?php endforeach; ?>
-                        <?php else: ?>
-                            <div class="col-12 text-center text-muted">No products found.</div>
-                        <?php endif; ?>
+                        </div>
+                        <a href="products.php" class="td-footer-link">See All <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-
-                    <a href="products.php" class="td-see-more">See more</a>
                 </div>
-            </div>
-
-            <!-- Widget 4: Recommended for You (2x2 Grid) -->
-            <div class="col-lg-3 col-md-6 col-12">
-                <div class="td-widget-card">
-                    <h3 class="td-widget-title">Recommended for You</h3>
-                    
-                    <div class="td-grid-row">
-                        <?php if(!empty($widget4_items)): ?>
-                            <?php foreach($widget4_items as $item): ?>
-                                <div class="td-grid-col">
-                                    <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item text-decoration-none">
-                                        <div class="td-grid-img-wrapper">
-                                            <img src="<?php echo !empty($item['featured_image']) ? $item['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
-                                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
-                                                 class="td-grid-img">
-                                        </div>
-                                        <div class="td-grid-label"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 20, "..."); ?></div>
-                                        <div class="td-grid-price">₹<?php echo number_format((float)$item['sale_price']); ?></div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <div class="col-12 text-center text-muted">No products found.</div>
-                        <?php endif; ?>
-                    </div>
-
-                    <a href="products.php" class="td-see-more">See more</a>
-                </div>
-            </div>
+            <?php endforeach; ?>
 
         </div>
     </div>
