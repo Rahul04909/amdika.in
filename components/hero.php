@@ -48,7 +48,7 @@
 <section class="hero-section mb-3">
     <div class="hero-banner-item">
         <?php
-        $heroSrc = 'assets/images/hero/hero-new.png';
+        $heroSrc = 'assets/images/hero/new-hero.png';
         $desktopHero = get_resized_image($heroSrc, 1920, 500); // 1920x500 for better wide coverage
         $mobileHero = get_resized_image($heroSrc, 800, 600);   // 800x600 for mobile
         ?>
