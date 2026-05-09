@@ -1,381 +1,304 @@
-<?php
-// Fetch Settings
-$bd_settings_result = $conn->query("SELECT category_ids FROM best_deals_settings WHERE id = 1");
-$bd_category_ids = [];
-if ($bd_settings_result && $bd_settings_result->num_rows > 0) {
-    $row = $bd_settings_result->fetch_assoc();
-    $bd_category_ids = json_decode($row['category_ids'], true) ?: [];
+<style>
+/* --- Premium Best Deals Section --- */
+.best-deals-section-wrapper {
+    background-color: #fafafa;
+    padding: 60px 0;
+    overflow: hidden;
 }
 
-// Fetch Products if categories are selected
-$bd_products = [];
-if (!empty($bd_category_ids)) {
-    // Sanitize again just to be safe
-    $bd_ids_clean = array_map('intval', $bd_category_ids);
-    $bd_ids_str = implode(',', $bd_ids_clean);
-    
-    // Query Limit 10 for best deals
-    $sql = "SELECT * FROM products WHERE category_id IN ($bd_ids_str) ORDER BY id DESC LIMIT 10";
-    $result = $conn->query($sql);
-    if ($result) {
-        while($row = $result->fetch_assoc()) {
-            $bd_products[] = $row;
+.deals-container-fluid {
+    width: 100%;
+    padding: 0 40px;
+}
+
+.deals-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.deals-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.deals-header .subtitle {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+}
+
+/* Slider Layout */
+.best-deals-slider-container {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px 5px;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.best-deals-slider-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Premium Product Card */
+.deal-product-card {
+    flex: 0 0 280px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    border: 1px solid #eee;
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.deal-product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border-color: var(--accent-gold, #d4a017);
+}
+
+.deal-img-box {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.deal-product-card:hover .deal-img {
+    transform: scale(1.1);
+}
+
+.deal-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e31e24;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+.deal-content {
+    padding: 5px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.deal-category {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.deal-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    height: 44px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.deal-price-row {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deal-sale-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-gold, #d4a017);
+}
+
+.deal-reg-price {
+    font-size: 14px;
+    color: #bbb;
+    text-decoration: line-through;
+}
+
+/* Interactive Navigation */
+.deal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.deal-nav-btn:hover {
+    background: var(--accent-gold, #d4a017);
+    color: #fff;
+}
+
+.deal-prev { left: 10px; }
+.deal-next { right: 10px; }
+
+@media (max-width: 991px) {
+    .deals-container-fluid { padding: 0 20px; }
+    .deal-product-card { flex: 0 0 240px; }
+    .deal-img-box { height: 200px; }
+    .deals-header h2 { font-size: 26px; }
+}
+
+@media (max-width: 576px) {
+    .best-deals-section-wrapper { padding: 40px 0; }
+    .deal-product-card { flex: 0 0 200px; padding: 10px; }
+    .deal-img-box { height: 180px; }
+    .deal-name { font-size: 14px; height: 38px; }
+    .deal-sale-price { font-size: 16px; }
+    .deal-nav-btn { display: none; } /* Better to scroll by touch on mobile */
+}
+</style>
+
+<?php
+// Re-fetch data if not already defined (in case of standalone testing)
+if (!isset($bd_products)) {
+    $bd_settings_result = $conn->query("SELECT category_ids FROM best_deals_settings WHERE id = 1");
+    $bd_category_ids = [];
+    if ($bd_settings_result && $bd_settings_result->num_rows > 0) {
+        $row = $bd_settings_result->fetch_assoc();
+        $bd_category_ids = json_decode($row['category_ids'], true) ?: [];
+    }
+
+    $bd_products = [];
+    if (!empty($bd_category_ids)) {
+        $bd_ids_str = implode(',', array_map('intval', $bd_category_ids));
+        $sql = "SELECT p.*, c.name as category_name 
+                FROM products p 
+                LEFT JOIN product_categories c ON p.category_id = c.id 
+                WHERE p.category_id IN ($bd_ids_str) 
+                ORDER BY p.id DESC LIMIT 10";
+        $result = $conn->query($sql);
+        if ($result) {
+            while($row = $result->fetch_assoc()) {
+                $bd_products[] = $row;
+            }
         }
     }
 }
 ?>
-<style>
-/* --- Best Deals Component --- */
-.best-deals-section {
-    font-family: 'Poppins', sans-serif;
-    background-color: #fff;
-    margin-top: 20px;
-}
 
-.best-deals-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.section-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 15px;
-}
-
-.best-deals-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #212121;
-    margin: 0;
-}
-
-.view-all-btn {
-    background-color: #2874f0;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 2px;
-    font-weight: 500;
-    font-size: 13px;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: box-shadow 0.2s;
-}
-
-.view-all-btn:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Layout Grid */
-.best-deals-layout {
-    display: flex;
-    gap: 15px;
-}
-
-.deals-slider-area {
-    flex: 1;
-    min-width: 0; /* Fix flex overflow */
-    position: relative;
-    padding: 10px 0;
-}
-
-.deals-banner-area {
-    width: 230px; /* Fixed width for banner */
-    flex-shrink: 0;
-    display: flex;
-    align-items: stretch;
-}
-
-.deals-banner-img {
-    width: 100%;
-    height: 0; 
-    min-height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.deals-banner-img:hover {
-    opacity: 0.9;
-}
-
-/* Scroll Container */
-.best-deals-slider {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding-bottom: 10px;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-}
-
-.best-deals-slider::-webkit-scrollbar {
-    display: none;
-}
-
-/* Product Card */
-.bd-product-card {
-    flex: 0 0 180px; /* Fixed width */
-    text-align: center;
-    padding: 15px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.bd-product-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #f0f0f0;
-    color: inherit; 
-}
-
-.bd-img-wrapper {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.bd-product-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s;
-}
-
-.bd-product-card:hover .bd-product-img {
-    transform: scale(1.05);
-}
-
-.bd-product-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #212121;
-    margin-bottom: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-}
-
-.bd-price-info {
-    margin-top: auto;
-}
-
-.bd-price-label {
-    color: #388e3c; /* Green color for offer */
-    font-size: 13px;
-    margin-bottom: 2px;
-}
-
-.bd-price-value {
-    font-size: 16px;
-    font-weight: 600;
-    color: #212121;
-}
-
-/* Navigation Buttons */
-.bd-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 80px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 5;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.deals-slider-area:hover .bd-nav-btn {
-    opacity: 1;
-}
-
-.bd-prev-btn {
-    left: 0;
-    border-radius: 0 4px 4px 0;
-}
-
-.bd-next-btn {
-    right: 0;
-    border-radius: 4px 0 0 4px;
-}
-
-/* Responsive */
-@media (max-width: 991px) {
-    .best-deals-layout {
-        flex-direction: column;
-    }
-    
-    .deals-banner-area {
-        width: 100%;
-        height: auto;
-        /* Removed max-height to allow full banner visibility without overlap */
-        margin-top: 15px; /* Add spacing between slider and banner */
-        border-radius: 4px;
-        overflow: hidden;
-    }
-
-    .deals-banner-img {
-        width: 100%;
-        height: auto; /* Allow natural height */
-        min-height: auto;
-        object-fit: cover;
-        display: block; /* Remove inline-block spacing */
-    }
-}
-
-@media (max-width: 576px) {
-    .bd-product-card {
-        flex: 0 0 150px;
-        padding: 10px;
-    }
-
-    .bd-img-wrapper {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .best-deals-title {
-        font-size: 1.2rem;
-    }
-
-    .view-all-btn {
-        padding: 8px 15px;
-        font-size: 12px;
-    }
-}
-</style>
-
-<section class="best-deals-section container mb-5">
-    <div class="best-deals-container">
-        <!-- Header -->
-        <div class="section-header-row">
-            <h2 class="best-deals-title">Best Deals</h2>
-            <a href="products.php" class="view-all-btn">VIEW ALL</a>
+<section class="best-deals-section-wrapper">
+    <div class="deals-container-fluid">
+        <div class="deals-header">
+            <span class="subtitle">Handpicked For You</span>
+            <h2>Best <span style="color: var(--accent-gold, #d4a017);">Deals</span></h2>
         </div>
 
-        <!-- Layout -->
-        <div class="best-deals-layout">
-            <!-- Left: Slider -->
-            <div class="deals-slider-area">
-                <button class="bd-nav-btn bd-prev-btn" id="bdPrevBtn"><i class="fas fa-chevron-left"></i></button>
-                <button class="bd-nav-btn bd-next-btn" id="bdNextBtn"><i class="fas fa-chevron-right"></i></button>
+        <div style="position: relative;">
+            <!-- Navigation -->
+            <button id="dealPrev" class="deal-nav-btn deal-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="dealNext" class="deal-nav-btn deal-next"><i class="fa-solid fa-chevron-right"></i></button>
 
-                <div class="best-deals-slider" id="bestDealsSlider">
-                    <?php if (!empty($bd_products)): ?>
-                        <?php foreach($bd_products as $prod): ?>
-                            <!-- Product -->
-                            <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="bd-product-card">
-                                <div class="bd-img-wrapper">
-                                    <img src="<?php echo !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg'; ?>" 
-                                         alt="<?php echo htmlspecialchars($prod['name']); ?>" 
-                                         class="bd-product-img">
-                                </div>
-                                <h3 class="bd-product-name"><?php echo htmlspecialchars($prod['name']); ?></h3>
-                                <div class="bd-price-info">
-                                    <?php if($prod['discount_percent'] > 0): ?>
-                                        <div class="bd-price-label">Min <?php echo $prod['discount_percent']; ?>% Off</div>
+            <div id="dealSlider" class="best-deals-slider-container">
+                <?php if (!empty($bd_products)): ?>
+                    <?php foreach($bd_products as $prod): 
+                        $img = !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg';
+                        $resized_img = get_resized_image($img, 400, 500, 'cover'); // High quality crop
+                    ?>
+                        <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="deal-product-card">
+                            <?php if($prod['discount_percent'] > 0): ?>
+                                <div class="deal-badge"><?php echo $prod['discount_percent']; ?>% OFF</div>
+                            <?php endif; ?>
+                            
+                            <div class="deal-img-box">
+                                <img src="<?php echo $resized_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="deal-img">
+                            </div>
+
+                            <div class="deal-content">
+                                <span class="deal-category"><?php echo htmlspecialchars($prod['category_name'] ?? 'Collection'); ?></span>
+                                <h3 class="deal-name"><?php echo htmlspecialchars($prod['name']); ?></h3>
+                                <div class="deal-price-row">
+                                    <span class="deal-sale-price">₹<?php echo number_format($prod['sale_price']); ?></span>
+                                    <?php if($prod['regular_price'] > $prod['sale_price']): ?>
+                                        <span class="deal-reg-price">₹<?php echo number_format($prod['regular_price']); ?></span>
                                     <?php endif; ?>
-                                    <div class="bd-price-value">₹<?php echo number_format($prod['sale_price']); ?></div>
                                 </div>
-                            </a>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="p-4 text-center w-100 text-muted">
-                            <i class="fas fa-box-open fa-2x mb-2"></i>
-                            <p>No Best Deals currently available.</p>
-                        </div>
-                    <?php endif; ?>
-                </div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-center w-100 text-muted">No deals found today. Check back soon!</p>
+                <?php endif; ?>
             </div>
-
-            <!-- Right: Banner -->
-            <div class="deals-banner-area">
-                <img src="assets/images/banners/banner-1.png" alt="Offer Banner" class="deals-banner-img img-fluid">
-            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="products.php" class="btn" style="border: 2px solid var(--accent-gold, #d4a017); color: var(--accent-gold, #d4a017); font-weight: 700; padding: 12px 30px; border-radius: 30px; transition: all 0.3s;">
+                VIEW ALL DEALS
+            </a>
         </div>
     </div>
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const slider = document.getElementById('bestDealsSlider');
-        const prevBtn = document.getElementById('bdPrevBtn');
-        const nextBtn = document.getElementById('bdNextBtn');
-        
+        const slider = document.getElementById('dealSlider');
+        const prev = document.getElementById('dealPrev');
+        const next = document.getElementById('dealNext');
+
         if (!slider) return;
 
-        // Scroll Amount
-        const getScrollAmount = () => {
-             // Scroll by approx 3 cards visible on desktop, or 1 on mobile
-             // Check if children exist
-             if(slider.firstElementChild) {
-                return slider.firstElementChild.clientWidth + 15; // Width + Gap
-             }
-             return 200;
-        };
+        const scrollAmount = 350;
 
-        // Navigation
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                slider.scrollBy({ left: -(getScrollAmount() * 2), behavior: 'smooth' });
+        if (prev) {
+            prev.addEventListener('click', () => {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
             });
         }
 
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                slider.scrollBy({ left: (getScrollAmount() * 2), behavior: 'smooth' });
+        if (next) {
+            next.addEventListener('click', () => {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
             });
         }
-
-        // Autoplay
-        let autoplayInterval;
-        const startAutoplay = () => {
-            // Only autoplay if content overflows
-            if (slider.scrollWidth <= slider.clientWidth) return;
-
-            autoplayInterval = setInterval(() => {
-                if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-                    // Reset to start if reached end
-                    slider.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-                }
-            }, 3000); // 3 seconds
-        };
-
-        const stopAutoplay = () => {
-            clearInterval(autoplayInterval);
-        };
-
-        // Start autoplay
-        startAutoplay();
-
-        // Pause on hover
-        slider.addEventListener('mouseenter', stopAutoplay);
-        slider.addEventListener('mouseleave', startAutoplay);
     });
 </script>
