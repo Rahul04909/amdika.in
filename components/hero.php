@@ -12,8 +12,10 @@
         background-color: #f8f9fa;
         position: relative;
         overflow: hidden;
-        height: auto; /* Allow image to define height */
-        max-height: 450px; /* Cap desktop height */
+        height: auto;
+        /* Allow image to define height */
+        max-height: 450px;
+        /* Cap desktop height */
     }
 
     .hero-banner-item img {
@@ -21,7 +23,8 @@
         height: auto;
         max-height: 450px;
         display: block;
-        object-fit: cover; /* Cover ensures no gaps, but works with auto-height to minimize cropping */
+        object-fit: cover;
+        /* Cover ensures no gaps, but works with auto-height to minimize cropping */
         object-position: center;
     }
 
@@ -44,10 +47,10 @@
 
 <section class="hero-section mb-3">
     <div class="hero-banner-item">
-        <?php 
-            $heroSrc = 'assets/images/hero/hero-amadika.png';
-            $desktopHero = get_resized_image($heroSrc, 1920, 500); // 1920x500 for better wide coverage
-            $mobileHero = get_resized_image($heroSrc, 800, 600);   // 800x600 for mobile
+        <?php
+        $heroSrc = 'assets/images/hero/hero-new.png';
+        $desktopHero = get_resized_image($heroSrc, 1920, 500); // 1920x500 for better wide coverage
+        $mobileHero = get_resized_image($heroSrc, 800, 600);   // 800x600 for mobile
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">
