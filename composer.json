@@ -4,6 +4,7 @@
         "razorpay/razorpay": "^2.9",
         "mpdf/mpdf": "^8.2",
         "ckeditor/ckeditor": "~4.22.1",
-        "fyre/color": "^3.0"
+        "fyre/color": "^3.0",
+        "intervention/image": "^3.11"
     }
 }
