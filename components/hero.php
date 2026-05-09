@@ -7,30 +7,23 @@
     }
 
     .hero-banner-item {
-        height: 400px;
-        /* Default Desktop Height */
+        width: 100%;
         background-color: #f0f0f0;
         position: relative;
-        width: 100%;
+        overflow: hidden;
     }
 
     .hero-banner-item img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
+        height: auto;
+        display: block;
+        object-fit: contain; /* Ensure full image is visible */
     }
 
-    /* Mobile Optimizations */
+    /* Mobile Optimizations - Adjusting spacing if needed */
     @media (max-width: 991px) {
-        .hero-banner-item {
-            height: 300px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .hero-banner-item {
-            height: 180px;
+        .hero-section {
+            margin-bottom: 1rem;
         }
     }
 </style>
