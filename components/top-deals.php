@@ -4,11 +4,31 @@
     background: #ffffff;
     padding: 10px 0 40px 0;
     overflow: hidden;
+    position: relative; /* For background pseudo-element */
+}
+
+/* Lifestyle Background Image */
+.top-deals-section-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://img.magnific.com/free-photo/amazed-young-woman-shopaholic-holding-colorful-shopping-bags-look-amused-shop-buying-thi_1258-119761.jpg?semt=ais_hybrid&w=740&q=80');
+    background-size: cover;
+    background-position: center bottom;
+    background-attachment: fixed;
+    opacity: 0.05; /* Low transparency as requested */
+    pointer-events: none;
+    z-index: 0;
 }
 
 .td-container-fluid {
     width: 100%;
     padding: 0 40px;
+    position: relative;
+    z-index: 1; /* Stay above background */
 }
 
 .td-main-header {
