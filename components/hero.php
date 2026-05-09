@@ -12,7 +12,8 @@
         background-color: #f0f0f0;
         position: relative;
         overflow: hidden;
-        height: 420px; /* Consistent height for desktop */
+        height: 420px;
+        /* Consistent height for desktop */
     }
 
     .hero-banner-item img {
@@ -25,7 +26,8 @@
     /* Mobile Optimizations */
     @media (max-width: 768px) {
         .hero-banner-item {
-            height: 350px; /* Slightly taller for mobile to show more vertical content */
+            height: 350px;
+            /* Slightly taller for mobile to show more vertical content */
         }
 
         .hero-banner-item img {
@@ -40,10 +42,10 @@
 
 <section class="hero-section mb-3">
     <div class="hero-banner-item">
-        <?php 
-            $heroSrc = 'assets/images/hero/hero-amadika.png';
-            $desktopHero = get_resized_image($heroSrc, 1920, 420);
-            $mobileHero = get_resized_image($heroSrc, 800, 500);
+        <?php
+        $heroSrc = 'assets/images/hero/hero-1.png';
+        $desktopHero = get_resized_image($heroSrc, 1920, 420);
+        $mobileHero = get_resized_image($heroSrc, 800, 500);
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">
