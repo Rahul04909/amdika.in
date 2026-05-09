@@ -85,19 +85,27 @@ body { background-color: #f8f9fb; }
     padding: 20px;
     border: 1px solid #eee;
     position: sticky;
-    top: 90px;
-    max-height: calc(100vh - 120px);
+    top: 10px; /* Reduced gap */
+    max-height: calc(100vh - 40px); /* Allow sidebar to be scrollable if too tall */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    scrollbar-width: none; /* Hide scrollbar for clean look */
 }
+
+.shop-sidebar::-webkit-scrollbar { display: none; }
 
 .filter-group {
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f8f8f8;
 }
 
-.filter-group:last-child { border-bottom: none; }
+.filter-group:last-child { 
+    border-bottom: none;
+    padding-bottom: 10px; /* Extra space for last items */
+}
 
 .filter-title {
     font-family: 'Poppins', sans-serif;
@@ -114,12 +122,7 @@ body { background-color: #f8f9fb; }
     list-style: none; 
     padding: 0; 
     margin: 0; 
-    max-height: 250px; 
-    overflow-y: auto;
-    scrollbar-width: thin;
 }
-.filter-list::-webkit-scrollbar { width: 4px; }
-.filter-list::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
 
 .filter-link {
     color: #666;
