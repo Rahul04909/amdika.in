@@ -180,19 +180,19 @@
 }
 
 .td-interactive-thumb {
-    border: 1px solid #eee;
+    border: none; /* Removed border */
     border-radius: 6px;
-    height: 40px; /* Reduced height */
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
 }
 
-.td-interactive-thumb:hover, .td-interactive-thumb.active {
-    border-color: var(--accent-gold, #d4a017);
+.td-interactive-thumb.active {
+    box-shadow: 0 0 0 2px var(--accent-gold, #d4a017); /* Use focus ring instead of border */
 }
 
 /* Dynamic Grid (Compact 2x2) */
@@ -335,19 +335,18 @@
                             </a>
                         </div>
                         
-                        <div class="td-hero-thumbs-row">
-                            <?php foreach($thumbs as $index => $timg): 
-                                $t_resized = get_resized_image($timg, 150, 150, 'contain');
-                            ?>
-                                <div class="td-interactive-thumb <?php echo $index === 0 ? 'active' : ''; ?>" 
-                                     onmouseover="updateHeroImg('<?php echo $unique_hero_id; ?>', '<?php echo $t_resized; ?>', this)">
-                                    <img src="<?php echo $t_resized; ?>">
-                                </div>
-                            <?php endforeach; ?>
-                            <?php for($i = count($thumbs); $i < 4; $i++): ?>
-                                <div class="td-interactive-thumb"><img src="<?php echo $feat_img; ?>" style="opacity: 0.1;"></div>
-                            <?php endfor; ?>
-                        </div>
+                        <?php if(!empty($thumbs)): ?>
+                            <div class="td-hero-thumbs-row">
+                                <?php foreach($thumbs as $index => $timg): 
+                                    $t_resized = get_resized_image($timg, 150, 150, 'contain');
+                                ?>
+                                    <div class="td-interactive-thumb <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                         onmouseover="updateHeroImg('<?php echo $unique_hero_id; ?>', '<?php echo $t_resized; ?>', this)">
+                                        <img src="<?php echo $t_resized; ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                     
                     <a href="products.php" class="td-action-link mt-4">
