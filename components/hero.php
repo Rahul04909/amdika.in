@@ -42,7 +42,7 @@
     <div class="hero-banner-item">
         <?php 
             $heroSrc = 'assets/images/hero/hero-amadika.png';
-            $desktopHero = get_resized_image($heroSrc, 1600, 420);
+            $desktopHero = get_resized_image($heroSrc, 1920, 420);
             $mobileHero = get_resized_image($heroSrc, 800, 500);
         ?>
         <picture>
