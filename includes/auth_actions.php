@@ -56,6 +56,51 @@ if ($action === 'send_otp') {
     
     echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully to ' . $mobile]);
 } 
+elseif ($action === 'send_register_otp') {
+    $mobile = $conn->real_escape_string(trim($_POST['mobile']));
+    $email = $conn->real_escape_string(trim($_POST['email']));
+    
+    // Check if mobile or email exists
+    $check = $conn->prepare("SELECT id FROM users WHERE mobile = ? OR email = ? LIMIT 1");
+    $check->bind_param("ss", $mobile, $email);
+    $check->execute();
+    if ($check->get_result()->num_rows > 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Mobile or Email already registered. Please login.']);
+        exit;
+    }
+
+    $otp = rand(100000, 999999);
+    $_SESSION['reg_otp'] = $otp;
+    $_SESSION['reg_mobile'] = $mobile;
+    $_SESSION['reg_time'] = time();
+
+    sendOTP($mobile, $otp);
+    echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully']);
+}
+elseif ($action === 'verify_and_register') {
+    $mobile = $conn->real_escape_string(trim($_POST['mobile']));
+    $otp = trim($_POST['otp']);
+    $name = $conn->real_escape_string(trim($_POST['name']));
+    $email = $conn->real_escape_string(trim($_POST['email']));
+    $password = $_POST['password'];
+
+    if (empty($otp) || $otp != $_SESSION['reg_otp'] || $mobile != $_SESSION['reg_mobile']) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid or expired OTP']);
+        exit;
+    }
+
+    $hashed_pass = password_hash($password, PASSWORD_BCRYPT);
+    $ins = $conn->prepare("INSERT INTO users (name, mobile, email, password) VALUES (?, ?, ?, ?)");
+    $ins->bind_param("ssss", $name, $mobile, $email, $hashed_pass);
+    
+    if ($ins->execute()) {
+        unset($_SESSION['reg_otp']);
+        unset($_SESSION['reg_mobile']);
+        echo json_encode(['status' => 'success', 'message' => 'Registration successful! You can now login.']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Registration failed: ' . $conn->error]);
+    }
+}
 elseif ($action === 'verify_otp') {
     $mobile = $conn->real_escape_string(trim($_POST['mobile']));
     $otp = trim($_POST['otp']);

@@ -354,7 +354,118 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                         </div>
 
                         <div class="text-center mt-4">
-                            <p class="small text-muted mb-0" style="font-size: 12px;">New to Amadika? <a href="<?php echo $link_prefix; ?>register.php" class="text-primary fw-bold text-decoration-none">Create an Account</a></p>
+                            <p class="small text-muted mb-0" style="font-size: 12px;">New to Amadika? <a href="javascript:void(0)" class="text-primary fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#registerModal">Create an Account</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 overflow-hidden" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <!-- Left Panel -->
+                    <div class="col-lg-5 d-none d-lg-flex flex-column p-4 p-xl-5" style="background: linear-gradient(135deg, #2F6FED 0%, #1e5ad6 100%); color: #fff;">
+                        <div class="mb-4">
+                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 35px; filter: brightness(0) invert(1);">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="fw-bold mb-2" style="color: #fff; font-size: 24px;">Register</h3>
+                            <p class="text-white-50 small lh-sm mb-0">Join our community to unlock exclusive deals and faster checkout.</p>
+                        </div>
+                        <div class="mt-auto pt-4">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <span>Exclusive Member Discounts</span>
+                                </li>
+                                <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <span>Fast & Secure Checkout</span>
+                                </li>
+                                <li class="d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <span>24/7 Customer Support</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel -->
+                    <div class="col-lg-7 col-12 p-4 p-md-5 bg-white position-relative d-flex flex-column justify-content-center">
+                        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                        
+                        <div id="registerStep1">
+                            <div class="mb-4 text-center">
+                                <h4 class="fw-bold text-dark mb-1">Create Account</h4>
+                                <p class="small text-muted">Fill in your details to get started</p>
+                            </div>
+                            <form id="mainRegisterForm">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Full Name</label>
+                                    <div class="input-group premium-input-group">
+                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-user"></i></span>
+                                        <input type="text" name="name" class="form-control border-start-0" placeholder="John Doe" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Email Address</label>
+                                    <div class="input-group premium-input-group">
+                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
+                                        <input type="email" name="email" class="form-control border-start-0" placeholder="john@example.com" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Mobile Number</label>
+                                    <div class="input-group premium-input-group">
+                                        <span class="input-group-text bg-transparent border-end-0">
+                                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" style="width: 20px;">
+                                            <span class="ms-2 fw-bold text-dark small">+91</span>
+                                        </span>
+                                        <input type="tel" name="mobile" id="regMobile" class="form-control border-start-0 fs-6 fw-bold" placeholder="98765 43210" maxlength="10" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Set Password</label>
+                                    <div class="input-group premium-input-group">
+                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                                        <input type="password" name="password" id="regPassInput" class="form-control border-start-0 border-end-0" placeholder="••••••••" required>
+                                        <span class="input-group-text bg-transparent border-start-0 cursor-pointer" onclick="toggleRegPass()">
+                                            <i class="fa-solid fa-eye-slash text-muted" id="regPassIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="regError" class="text-danger small mb-3 fw-medium" style="display: none; font-size: 11px;"></div>
+                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" style="background: #2F6FED; border: none; font-size: 13px; letter-spacing: 1px;">CREATE ACCOUNT</button>
+                            </form>
+                        </div>
+
+                        <div id="registerStep2" style="display: none;">
+                            <div class="mb-4 text-center">
+                                <h4 class="fw-bold text-dark mb-1">Verify Mobile</h4>
+                                <p class="small text-muted">Enter the code sent to <span class="fw-bold text-dark" id="displayRegMobile"></span></p>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2 mb-4" id="regOtpInputContainer">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="0">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="1">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="2">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="3">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="4">
+                                <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="5">
+                            </div>
+                            <input type="hidden" id="regOTPValue">
+                            <div id="regOtpError" class="text-danger small mt-n2 mb-4 text-center fw-medium" style="display: none; font-size: 11px;"></div>
+                            <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyRegOTP()" style="background: #2F6FED; border: none; font-size: 13px; letter-spacing: 1px;">VERIFY & REGISTER</button>
+                            <button class="btn btn-link btn-sm w-100 mt-3 text-muted text-decoration-none small" onclick="backToRegStep1()">Edit Details</button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <p class="small text-muted mb-0" style="font-size: 12px;">Already have an account? <a href="javascript:void(0)" class="text-primary fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal">Login instead</a></p>
                         </div>
                     </div>
                 </div>
@@ -381,6 +492,9 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
 
     .premium-input-group { border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; transition: 0.3s; }
     .premium-input-group:focus-within { border-color: #2F3A3F; box-shadow: 0 0 0 4px rgba(47, 58, 63, 0.1); }
+    /* Blue focus for register modal */
+    #registerModal .premium-input-group:focus-within { border-color: #2F6FED; box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.1); }
+    
     .premium-input-group .form-control { border: none; padding: 12px 15px; background: transparent; }
     .premium-input-group .input-group-text { border: none; padding-left: 15px; }
 
@@ -395,6 +509,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         transition: 0.3s;
     }
     .otp-input:focus { border-color: #2F3A3F; box-shadow: 0 0 0 4px rgba(47, 58, 63, 0.1); outline: none; }
+    #registerModal .otp-input:focus { border-color: #2F6FED; box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.1); }
 
     .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important; transition: 0.3s; }
 </style>
@@ -561,6 +676,114 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             }
         });
     });
+
+    function toggleRegPass() {
+        const input = document.getElementById('regPassInput');
+        const icon = document.getElementById('regPassIcon');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    document.getElementById('mainRegisterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const errorDiv = document.getElementById('regError');
+        errorDiv.style.display = 'none';
+
+        const btn = this.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>SENDING OTP...';
+
+        const formData = new FormData(this);
+        formData.append('action', 'send_register_otp');
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            if(data.status === 'success') {
+                document.getElementById('registerStep1').style.display = 'none';
+                document.getElementById('registerStep2').style.display = 'block';
+                document.getElementById('displayRegMobile').textContent = '+91 ' + document.getElementById('regMobile').value;
+                setTimeout(() => document.querySelector('.reg-otp-input').focus(), 100);
+            } else {
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+    });
+
+    const regOtpInputs = document.querySelectorAll('.reg-otp-input');
+    regOtpInputs.forEach((input, index) => {
+        input.addEventListener('keyup', (e) => {
+            if (e.key >= 0 && e.key <= 9) {
+                if (index < regOtpInputs.length - 1) regOtpInputs[index + 1].focus();
+            } else if (e.key === 'Backspace') {
+                if (index > 0) regOtpInputs[index - 1].focus();
+            }
+            let fullOtp = "";
+            regOtpInputs.forEach(inp => fullOtp += inp.value);
+            document.getElementById('regOTPValue').value = fullOtp;
+        });
+    });
+
+    function verifyRegOTP() {
+        const otp = document.getElementById('regOTPValue').value;
+        const errorDiv = document.getElementById('regOtpError');
+        errorDiv.style.display = 'none';
+
+        if(otp.length !== 6) {
+            errorDiv.textContent = 'Enter 6-digit code';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>VERIFYING...';
+
+        const formData = new FormData(document.getElementById('mainRegisterForm'));
+        formData.append('action', 'verify_and_register');
+        formData.append('otp', otp);
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
+                setTimeout(() => {
+                    // Close register modal and open login
+                    const regModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    regModal.hide();
+                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    loginModal.show();
+                    // Reset steps
+                    backToRegStep1();
+                }, 1000);
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+    }
+
+    function backToRegStep1() {
+        document.getElementById('registerStep2').style.display = 'none';
+        document.getElementById('registerStep1').style.display = 'block';
+        regOtpInputs.forEach(inp => inp.value = "");
+        document.getElementById('regOTPValue').value = "";
+    }
 
     function updateCartCount() {
         const badge = document.getElementById('headerCartCount');
