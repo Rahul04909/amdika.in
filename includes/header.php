@@ -241,39 +241,42 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
 <<!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0 overflow-hidden" style="border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
+        <div class="modal-content border-0 overflow-hidden" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
             <div class="modal-body p-0">
                 <div class="row g-0">
-                    <!-- Left Panel: Brand / Benefits (Hidden on mobile) -->
-                    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-between p-5" style="background: linear-gradient(135deg, #2F3A3F 0%, #1a1f22 100%); color: #fff;">
-                        <div>
-                            <h2 class="fw-bold mb-3" style="color: var(--header-gold);">Login</h2>
-                            <p class="text-white-50 lh-base">Get access to your Orders, Wishlist and Recommendations</p>
+                    <!-- Left Panel: Brand / Benefits -->
+                    <div class="col-lg-5 d-none d-lg-flex flex-column p-4 p-xl-5" style="background: linear-gradient(135deg, #2F3A3F 0%, #1a1f22 100%); color: #fff;">
+                        <div class="mb-4">
+                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 35px; filter: brightness(0) invert(1);">
                         </div>
-                        <div class="mt-auto">
+                        <div class="mt-2">
+                            <h3 class="fw-bold mb-2" style="color: var(--header-gold); font-size: 24px;">Login</h3>
+                            <p class="text-white-50 small lh-sm mb-0">Get access to your Orders, Wishlist and Recommendations</p>
+                        </div>
+                        <div class="mt-auto pt-4">
                             <ul class="list-unstyled mb-0">
-                                <li class="mb-3 d-flex align-items-center small">
-                                    <i class="fa-solid fa-truck-fast me-3" style="color: var(--header-gold);"></i>
-                                    Manage your orders & track status
+                                <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-truck-fast me-3" style="color: var(--header-gold); width: 20px;"></i>
+                                    <span>Manage your orders & track status</span>
                                 </li>
-                                <li class="mb-3 d-flex align-items-center small">
-                                    <i class="fa-solid fa-heart me-3" style="color: var(--header-gold);"></i>
-                                    Sync your wishlist across devices
+                                <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-heart me-3" style="color: var(--header-gold); width: 20px;"></i>
+                                    <span>Sync your wishlist across devices</span>
                                 </li>
-                                <li class="d-flex align-items-center small">
-                                    <i class="fa-solid fa-bell me-3" style="color: var(--header-gold);"></i>
-                                    Get notified on best deals & price drops
+                                <li class="d-flex align-items-center" style="font-size: 13px;">
+                                    <i class="fa-solid fa-bell me-3" style="color: var(--header-gold); width: 20px;"></i>
+                                    <span>Get notified on best deals & price drops</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Right Panel: Login Form -->
-                    <div class="col-lg-7 col-12 p-4 p-md-5 bg-white position-relative">
-                        <button type="button" class="btn-close position-absolute top-0 end-0 m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="col-lg-7 col-12 p-4 p-md-5 bg-white position-relative d-flex flex-column justify-content-center">
+                        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                         
                         <!-- Login Type Tabs -->
-                        <div class="d-flex justify-content-center mb-5">
+                        <div class="d-flex justify-content-center mb-4">
                             <ul class="nav nav-pills custom-login-tabs" id="loginTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="mobile-tab" data-bs-toggle="pill" data-bs-target="#pills-mobile" type="button" role="tab">Mobile & OTP</button>
@@ -284,27 +287,27 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             </ul>
                         </div>
 
-                        <div class="tab-content mt-2">
+                        <div class="tab-content">
                             <!-- Mobile Login Tab -->
                             <div class="tab-pane fade show active" id="pills-mobile">
                                 <div id="mobileStep1">
-                                    <div class="mb-4">
-                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 11px;">Enter Mobile Number</label>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 10px;">Enter Mobile Number</label>
                                         <div class="input-group premium-input-group">
                                             <span class="input-group-text bg-transparent border-end-0">
-                                                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" style="width: 22px;">
+                                                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" style="width: 20px;">
                                                 <span class="ms-2 fw-bold text-dark small">+91</span>
                                             </span>
                                             <input type="tel" class="form-control border-start-0 fs-6 fw-bold" id="loginMobile" placeholder="98765 43210" maxlength="10">
                                         </div>
-                                        <div id="mobileError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 12px;"></div>
+                                        <div id="mobileError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 11px;"></div>
                                     </div>
-                                    <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="sendOTPRequest()" style="background: #2F3A3F;">CONTINUE</button>
+                                    <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="sendOTPRequest()" style="background: #2F3A3F; font-size: 13px; letter-spacing: 1px;">CONTINUE</button>
                                 </div>
                                 
                                 <div id="mobileStep2" style="display: none;">
-                                    <div class="mb-4 text-center">
-                                        <p class="small text-muted mb-3">Verification code sent to <span class="fw-bold text-dark" id="displayMobileNum"></span></p>
+                                    <div class="mb-3 text-center">
+                                        <p class="small text-muted mb-3">Code sent to <span class="fw-bold text-dark" id="displayMobileNum"></span></p>
                                         <div class="d-flex justify-content-center gap-2 mb-2" id="otpInputContainer">
                                             <input type="text" class="form-control otp-input" maxlength="1" data-index="0">
                                             <input type="text" class="form-control otp-input" maxlength="1" data-index="1">
@@ -314,28 +317,28 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                             <input type="text" class="form-control otp-input" maxlength="1" data-index="5">
                                         </div>
                                         <input type="hidden" id="loginOTP">
-                                        <div id="otpError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 12px;"></div>
+                                        <div id="otpError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 11px;"></div>
                                         <div class="mt-3">
                                             <p class="small text-muted">Didn't receive the code? <a href="javascript:void(0)" class="text-primary text-decoration-none fw-bold" onclick="sendOTPRequest()">Resend</a></p>
                                         </div>
                                     </div>
-                                    <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyOTPRequest()" style="background: #2F3A3F;">VERIFY & LOGIN</button>
-                                    <button class="btn btn-link btn-sm w-100 mt-3 text-muted text-decoration-none small" onclick="backToMobileStep1()">Not your number? <span class="text-primary fw-bold">Change</span></button>
+                                    <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyOTPRequest()" style="background: #2F3A3F; font-size: 13px; letter-spacing: 1px;">VERIFY & LOGIN</button>
+                                    <button class="btn btn-link btn-sm w-100 mt-2 text-muted text-decoration-none small" onclick="backToMobileStep1()">Not your number? <span class="text-primary fw-bold">Change</span></button>
                                 </div>
                             </div>
 
                             <!-- Email Login Tab -->
                             <div class="tab-pane fade" id="pills-email">
                                 <form id="headerLoginForm">
-                                    <div class="mb-4">
-                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 11px;">Email Address</label>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 10px;">Email Address</label>
                                         <div class="input-group premium-input-group">
                                             <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
                                             <input type="email" name="email" class="form-control border-start-0" placeholder="name@example.com" required>
                                         </div>
                                     </div>
-                                    <div class="mb-4">
-                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 11px;">Password</label>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-2" style="font-size: 10px;">Password</label>
                                         <div class="input-group premium-input-group">
                                             <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
                                             <input type="password" name="password" id="headerPassInput" class="form-control border-start-0 border-end-0" placeholder="••••••••" required>
@@ -344,14 +347,14 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                             </span>
                                         </div>
                                     </div>
-                                    <div id="emailError" class="text-danger small mb-4 fw-medium" style="display: none; font-size: 12px;"></div>
-                                    <button type="submit" class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" style="background: #2F3A3F;">LOGIN</button>
+                                    <div id="emailError" class="text-danger small mb-3 fw-medium" style="display: none; font-size: 11px;"></div>
+                                    <button type="submit" class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" style="background: #2F3A3F; font-size: 13px; letter-spacing: 1px;">LOGIN</button>
                                 </form>
                             </div>
                         </div>
 
-                        <div class="text-center mt-5 pt-3">
-                            <p class="small text-muted mb-0">New to Amadika? <a href="<?php echo $link_prefix; ?>register.php" class="text-primary fw-bold text-decoration-none">Create an Account</a></p>
+                        <div class="text-center mt-4">
+                            <p class="small text-muted mb-0" style="font-size: 12px;">New to Amadika? <a href="<?php echo $link_prefix; ?>register.php" class="text-primary fw-bold text-decoration-none">Create an Account</a></p>
                         </div>
                     </div>
                 </div>
