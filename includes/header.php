@@ -262,29 +262,35 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             </li>
                         </ul>
 
-                        <div class="tab-content">
+                        <div class="tab-content mt-2">
                             <!-- Mobile Login Tab -->
                             <div class="tab-pane fade show active" id="pills-mobile">
                                 <div id="mobileStep1">
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold">Mobile Number</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light border-end-0 text-muted">+91</span>
-                                            <input type="tel" class="form-control bg-light border-start-0" id="loginMobile" placeholder="Enter 10 digit number" maxlength="10">
+                                        <label class="form-label small fw-bold mb-1">Mobile Number</label>
+                                        <div class="input-group login-input-group">
+                                            <span class="input-group-text bg-white border-end-0 pe-1">
+                                                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" style="width: 20px; margin-right: 5px;">
+                                                <small class="fw-bold text-muted">+91</small>
+                                            </span>
+                                            <input type="tel" class="form-control border-start-0 ps-1" id="loginMobile" placeholder="98765 43210" maxlength="10" style="font-weight: 500;">
                                         </div>
+                                        <!-- Inline Error Message -->
+                                        <div id="mobileError" class="text-danger small mt-1 fw-medium" style="display: none;"></div>
                                     </div>
-                                    <button class="btn btn-header-register w-100 py-2 mt-2" onclick="sendOTPRequest()">Send OTP</button>
+                                    <button class="btn btn-header-register w-100 py-2 mt-2 shadow-sm" onclick="sendOTPRequest()">Send OTP</button>
                                 </div>
                                 <div id="mobileStep2" style="display: none;">
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold">Enter 6-Digit OTP</label>
-                                        <input type="text" class="form-control bg-light text-center fw-bold fs-4" id="loginOTP" placeholder="0 0 0 0 0 0" maxlength="6">
+                                        <input type="text" class="form-control text-center fw-bold fs-4 border-2" id="loginOTP" placeholder="0 0 0 0 0 0" maxlength="6" style="letter-spacing: 5px;">
+                                        <div id="otpError" class="text-danger small mt-1 text-center fw-medium" style="display: none;"></div>
                                         <div class="text-center mt-2">
-                                            <a href="javascript:void(0)" class="small text-primary" onclick="sendOTPRequest()">Resend OTP</a>
+                                            <a href="javascript:void(0)" class="small text-primary text-decoration-none fw-bold" onclick="sendOTPRequest()">Resend OTP</a>
                                         </div>
                                     </div>
-                                    <button class="btn btn-header-register w-100 py-2 mt-2" onclick="verifyOTPRequest()">Verify & Login</button>
-                                    <button class="btn btn-link btn-sm w-100 mt-2 text-muted" onclick="backToMobileStep1()">Change Number</button>
+                                    <button class="btn btn-header-register w-100 py-2 mt-2 shadow-sm" onclick="verifyOTPRequest()">Verify & Login</button>
+                                    <button class="btn btn-link btn-sm w-100 mt-2 text-muted text-decoration-none" onclick="backToMobileStep1()"><i class="fa-solid fa-arrow-left small me-1"></i> Change Number</button>
                                 </div>
                             </div>
 
@@ -292,14 +298,24 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             <div class="tab-pane fade" id="pills-email">
                                 <form id="headerLoginForm">
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold">Email Address</label>
-                                        <input type="email" name="email" class="form-control bg-light" required>
+                                        <label class="form-label small fw-bold mb-1">Email Address</label>
+                                        <div class="input-group login-input-group">
+                                            <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-envelope small"></i></span>
+                                            <input type="email" name="email" class="form-control border-start-0 ps-1" placeholder="example@mail.com" required>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold">Password</label>
-                                        <input type="password" name="password" class="form-control bg-light" required>
+                                        <label class="form-label small fw-bold mb-1">Password</label>
+                                        <div class="input-group login-input-group">
+                                            <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-lock small"></i></span>
+                                            <input type="password" name="password" id="headerPassInput" class="form-control border-start-0 border-end-0 ps-1" placeholder="Enter password" required>
+                                            <span class="input-group-text bg-white border-start-0 cursor-pointer" onclick="toggleHeaderPass()">
+                                                <i class="fa-solid fa-eye text-muted" id="headerPassIcon"></i>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-header-register w-100 py-2 mt-2">Login Now</button>
+                                    <div id="emailError" class="text-danger small mb-3 fw-medium" style="display: none;"></div>
+                                    <button type="submit" class="btn btn-header-register w-100 py-2 mt-2 shadow-sm">Login Now</button>
                                 </form>
                             </div>
                         </div>
@@ -326,15 +342,34 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
 <script>
     const AUTH_URL = '<?php echo $link_prefix; ?>includes/auth_actions.php';
 
+    function toggleHeaderPass() {
+        const input = document.getElementById('headerPassInput');
+        const icon = document.getElementById('headerPassIcon');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
     function sendOTPRequest() {
         const mobile = document.getElementById('loginMobile').value;
+        const errorDiv = document.getElementById('mobileError');
+        errorDiv.style.display = 'none';
+
         if(mobile.length !== 10) {
-            Swal.fire('Error', 'Please enter a valid 10-digit number', 'error');
+            errorDiv.textContent = 'Please enter a valid 10-digit number';
+            errorDiv.style.display = 'block';
             return;
         }
 
         const btn = event.target;
         btn.disabled = true;
+        const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
 
         const formData = new FormData();
@@ -345,13 +380,13 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(res => res.json())
         .then(data => {
             btn.disabled = false;
-            btn.innerHTML = 'Send OTP';
+            btn.innerHTML = originalText;
             if(data.status === 'success') {
                 document.getElementById('mobileStep1').style.display = 'none';
                 document.getElementById('mobileStep2').style.display = 'block';
-                Swal.fire('Success', data.message, 'success');
             } else {
-                Swal.fire('Error', data.message, 'error');
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = 'block';
             }
         });
     }
@@ -359,8 +394,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     function verifyOTPRequest() {
         const mobile = document.getElementById('loginMobile').value;
         const otp = document.getElementById('loginOTP').value;
+        const errorDiv = document.getElementById('otpError');
+        errorDiv.style.display = 'none';
+
         if(otp.length !== 6) {
-            Swal.fire('Error', 'Please enter 6-digit OTP', 'error');
+            errorDiv.textContent = 'Please enter 6-digit OTP';
+            errorDiv.style.display = 'block';
             return;
         }
 
@@ -375,7 +414,8 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             if(data.status === 'success') {
                 location.reload();
             } else {
-                Swal.fire('Error', data.message, 'error');
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = 'block';
             }
         });
     }
@@ -388,6 +428,9 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     // Traditional Login
     document.getElementById('headerLoginForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        const errorDiv = document.getElementById('emailError');
+        errorDiv.style.display = 'none';
+
         const formData = new FormData(this);
         formData.append('action', 'login');
 
@@ -397,7 +440,8 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             if(data.status === 'success') {
                 location.reload();
             } else {
-                Swal.fire('Error', data.message, 'error');
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = 'block';
             }
         });
     });
