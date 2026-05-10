@@ -36,6 +36,17 @@ if ($action === 'send_otp') {
         exit;
     }
 
+    // Check if user exists before sending OTP
+    $check_stmt = $conn->prepare("SELECT id FROM users WHERE mobile = ? LIMIT 1");
+    $check_stmt->bind_param("s", $mobile);
+    $check_stmt->execute();
+    $check_res = $check_stmt->get_result();
+
+    if ($check_res->num_rows === 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Mobile number not registered. Please register yourself before login.']);
+        exit;
+    }
+
     $otp = rand(100000, 999999);
     $_SESSION['temp_otp'] = $otp;
     $_SESSION['temp_mobile'] = $mobile;
@@ -43,7 +54,6 @@ if ($action === 'send_otp') {
 
     $api_res = sendOTP($mobile, $otp);
     
-    // For local debugging if API fails, you can echo the OTP, but in production we just send it.
     echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully to ' . $mobile]);
 } 
 elseif ($action === 'verify_otp') {
