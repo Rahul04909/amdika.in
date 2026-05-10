@@ -185,6 +185,38 @@
 .cp-prev { left: -10px; }
 .cp-next { right: -10px; }
 
+/* Category Promo Styles */
+.cp-promo-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.cp-promo-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.cp-promo-banner:hover img {
+    transform: scale(1.01);
+}
+
+.cp-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.cp-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 @media (max-width: 991px) {
     .cp-container-fluid { padding: 0 20px; }
     .cp-card { flex: 0 0 200px; }
@@ -264,6 +296,26 @@ if ($cat_res && $cat_res->num_rows > 0):
                     <?php endwhile; ?>
                 </div>
             </div>
+
+            <!-- Category Promo (Banner or Video) -->
+            <?php 
+                $promo_sql = "SELECT * FROM category_promos WHERE category_id = $cid AND status = 'active' LIMIT 1";
+                $promo_res = $conn->query($promo_sql);
+                if($promo_res && $promo_res->num_rows > 0):
+                    $promo = $promo_res->fetch_assoc();
+            ?>
+                <div class="cp-promo-container mb-5">
+                    <?php if($promo['type'] == 'image'): ?>
+                        <a href="<?php echo $promo['link_url'] ?: 'products.php?category='.$cslug; ?>" class="cp-promo-banner">
+                            <img src="<?php echo $promo['media_path']; ?>" alt="Promo" class="img-fluid rounded-3 shadow-sm">
+                        </a>
+                    <?php else: ?>
+                        <div class="cp-video-wrapper rounded-3 overflow-hidden shadow-sm">
+                            <iframe width="100%" height="450" src="<?php echo $promo['media_path']; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         <?php endwhile; ?>
     </div>
 </section>
