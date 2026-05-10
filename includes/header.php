@@ -170,7 +170,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                         <?php else: ?>
                             <div class="d-none d-lg-flex align-items-center ms-3 gap-2">
                                 <a href="javascript:void(0)" class="btn btn-sm btn-header-login px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                                <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-sm btn-header-register px-4">Register</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-header-register px-4" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
                             </div>
                             <!-- Mobile Icon Fallback (User) -->
                              <a href="javascript:void(0)" class="action-icon ms-2 d-lg-none" data-bs-toggle="modal" data-bs-target="#loginModal">
