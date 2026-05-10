@@ -317,10 +317,13 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                             <input type="text" class="form-control otp-input" maxlength="1" data-index="5">
                                         </div>
                                         <input type="hidden" id="loginOTP">
-                                        <div id="otpError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 11px;"></div>
-                                        <div class="mt-3">
-                                            <p class="small text-muted">Didn't receive the code? <a href="javascript:void(0)" class="text-primary text-decoration-none fw-bold" onclick="sendOTPRequest()">Resend</a></p>
+                                        
+                                        <div class="text-center mb-3 mt-3">
+                                            <p class="small text-muted mb-0" id="loginTimerContainer">Resend OTP in <span class="fw-bold text-dark" id="loginTimer">00:59</span></p>
+                                            <a href="javascript:void(0)" id="resendLoginBtn" class="text-primary fw-bold small text-decoration-none" style="display: none;" onclick="resendLoginOTP()">Resend OTP</a>
                                         </div>
+
+                                        <div id="otpError" class="text-danger small mt-2 fw-medium" style="display: none; font-size: 11px;"></div>
                                     </div>
                                     <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyOTPRequest()" style="background: #2F3A3F; font-size: 13px; letter-spacing: 1px;">VERIFY & LOGIN</button>
                                     <button class="btn btn-link btn-sm w-100 mt-2 text-muted text-decoration-none small" onclick="backToMobileStep1()">Not your number? <span class="text-primary fw-bold">Change</span></button>
@@ -489,6 +492,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                 <input type="text" class="form-control otp-input reg-otp-input" maxlength="1" data-index="5">
                             </div>
                             <input type="hidden" id="regOTPValue">
+                            
+                            <div class="text-center mb-4">
+                                <p class="small text-muted mb-0" id="regTimerContainer">Resend OTP in <span class="fw-bold text-dark" id="regTimer">00:59</span></p>
+                                <a href="javascript:void(0)" id="resendRegBtn" class="text-primary fw-bold small text-decoration-none" style="display: none;" onclick="resendRegOTP()">Resend OTP</a>
+                            </div>
+
                             <div id="regOtpError" class="text-danger small mt-n2 mb-4 text-center fw-medium" style="display: none; font-size: 11px;"></div>
                             <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyRegOTP()" style="background: #2F3A3F; border: none; font-size: 13px; letter-spacing: 1px;">VERIFY & REGISTER</button>
                             <button class="btn btn-link btn-sm w-100 mt-3 text-muted text-decoration-none small" onclick="backToRegStep1()">Edit Details</button>
@@ -570,7 +579,37 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         }
     }
 
-    function sendOTPRequest() {
+    let loginTimerInterval;
+    function startLoginTimer(duration) {
+        clearInterval(loginTimerInterval);
+        let timer = duration, minutes, seconds;
+        const timerDisplay = document.getElementById('loginTimer');
+        const timerContainer = document.getElementById('loginTimerContainer');
+        const resendBtn = document.getElementById('resendLoginBtn');
+        
+        timerContainer.style.display = 'block';
+        resendBtn.style.display = 'none';
+
+        loginTimerInterval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            timerDisplay.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                clearInterval(loginTimerInterval);
+                timerContainer.style.display = 'none';
+                resendBtn.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+    function resendLoginOTP() {
+        sendOTPRequest(true); // Special flag for resend
+    }
+
+    function sendOTPRequest(isResend = false) {
         const mobile = document.getElementById('loginMobile').value;
         const errorDiv = document.getElementById('mobileError');
         errorDiv.style.display = 'none';
@@ -581,10 +620,14 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             return;
         }
 
-        const btn = event.target;
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>SENDING...';
+        let btn = document.querySelector('button[onclick="sendOTPRequest()"]');
+        if(isResend) {
+            btn = document.getElementById('resendLoginBtn');
+            btn.innerHTML = 'Sending...';
+        } else {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>SENDING...';
+        }
 
         const formData = new FormData();
         formData.append('action', 'send_otp');
@@ -593,17 +636,23 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         fetch(AUTH_URL, { method: 'POST', body: formData })
         .then(res => res.json())
         .then(data => {
-            btn.disabled = false;
-            btn.innerHTML = originalText;
+            if(!isResend) {
+                btn.disabled = false;
+                btn.innerHTML = 'CONTINUE';
+            } else {
+                btn.innerHTML = 'Resend OTP';
+            }
+
             if(data.status === 'success') {
                 document.getElementById('mobileStep1').style.display = 'none';
                 document.getElementById('mobileStep2').style.display = 'block';
                 document.getElementById('displayMobileNum').textContent = '+91 ' + mobile;
-                // Focus first OTP input
+                startLoginTimer(60);
                 setTimeout(() => document.querySelector('.otp-input').focus(), 100);
             } else {
                 errorDiv.textContent = data.message;
                 errorDiv.style.display = 'block';
+                if(isResend) alert(data.message);
             }
         });
     }
@@ -642,7 +691,6 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         }
 
         const btn = event.target;
-        const originalText = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>VERIFYING...';
 
@@ -656,12 +704,13 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(data => {
             if(data.status === 'success') {
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
+                clearInterval(loginTimerInterval);
                 setTimeout(() => {
                     window.location.href = '<?php echo $link_prefix; ?>user/index.php';
-                }, 800);
+                }, 1000);
             } else {
                 btn.disabled = false;
-                btn.innerHTML = originalText;
+                btn.innerHTML = 'VERIFY & LOGIN';
                 errorDiv.textContent = data.message;
                 errorDiv.style.display = 'block';
             }
@@ -674,6 +723,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         // Clear OTP inputs
         otpInputs.forEach(inp => inp.value = "");
         document.getElementById('loginOTP').value = "";
+        clearInterval(loginTimerInterval);
     }
 
     // Traditional Login
@@ -707,17 +757,67 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         });
     });
 
+    let regTimerInterval;
+    function startRegTimer(duration) {
+        clearInterval(regTimerInterval);
+        let timer = duration, minutes, seconds;
+        const timerDisplay = document.getElementById('regTimer');
+        const timerContainer = document.getElementById('regTimerContainer');
+        const resendBtn = document.getElementById('resendRegBtn');
+        
+        timerContainer.style.display = 'block';
+        resendBtn.style.display = 'none';
+
+        regTimerInterval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                clearInterval(regTimerInterval);
+                timerContainer.style.display = 'none';
+                resendBtn.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+    function resendRegOTP() {
+        const formData = new FormData(document.getElementById('mainRegisterForm'));
+        formData.append('action', 'send_register_otp');
+        
+        const resendBtn = document.getElementById('resendRegBtn');
+        const originalText = resendBtn.innerHTML;
+        resendBtn.innerHTML = 'Sending...';
+        resendBtn.style.pointerEvents = 'none';
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            resendBtn.innerHTML = originalText;
+            resendBtn.style.pointerEvents = 'auto';
+            if(data.status === 'success') {
+                startRegTimer(60);
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
     function toggleRegPass() {
         const input = document.getElementById('regPassInput');
         const icon = document.getElementById('regPassIcon');
         if (input.type === "password") {
             input.type = "text";
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            input.type = "password";
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
         }
     }
 
@@ -743,6 +843,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 document.getElementById('registerStep1').style.display = 'none';
                 document.getElementById('registerStep2').style.display = 'block';
                 document.getElementById('displayRegMobile').textContent = '+91 ' + document.getElementById('regMobile').value;
+                startRegTimer(60);
                 setTimeout(() => document.querySelector('.reg-otp-input').focus(), 100);
             } else {
                 errorDiv.textContent = data.message;
@@ -790,13 +891,14 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(data => {
             if(data.status === 'success') {
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
+                clearInterval(regTimerInterval);
                 setTimeout(() => {
-                    // Close register modal and open login
-                    const regModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    const regModalEl = document.getElementById('registerModal');
+                    const regModal = bootstrap.Modal.getInstance(regModalEl);
                     regModal.hide();
+                    
                     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                     loginModal.show();
-                    // Reset steps
                     backToRegStep1();
                 }, 1000);
             } else {
@@ -813,6 +915,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         document.getElementById('registerStep1').style.display = 'block';
         regOtpInputs.forEach(inp => inp.value = "");
         document.getElementById('regOTPValue').value = "";
+        clearInterval(regTimerInterval);
     }
 
     function updateCartCount() {
