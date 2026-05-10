@@ -169,11 +169,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             </a>
                         <?php else: ?>
                             <div class="d-none d-lg-flex align-items-center ms-3 gap-2">
-                                <a href="<?php echo $link_prefix; ?>user/login.php" class="btn btn-sm btn-header-login px-4">Login</a>
+                            <div class="d-none d-lg-flex align-items-center ms-3 gap-2">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-header-login px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                                 <a href="<?php echo $link_prefix; ?>register.php" class="btn btn-sm btn-header-register px-4">Register</a>
                             </div>
                             <!-- Mobile Icon Fallback (User) -->
-                             <a href="<?php echo $link_prefix; ?>user/login.php" class="action-icon ms-2 d-lg-none">
+                             <a href="javascript:void(0)" class="action-icon ms-2 d-lg-none" data-bs-toggle="modal" data-bs-target="#loginModal">
                                 <i class="fa-regular fa-user"></i>
                             </a>
                         <?php endif; ?>
@@ -222,10 +223,10 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                 <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between w-100">
                                     <!-- Menu Links -->
                                     <div class="main-nav">
-                                        <a href="../../index.php" class="nav-link ps-lg-0">Home</a>
-                                        <a href="../../products.php" class="nav-link">Shop</a>
-                                        <a href="../../pages/about-us/index.php" class="nav-link">About us</a>
-                                        <a href="../../pages/contact-us/index.php" class="nav-link">Contact</a>
+                                        <a href="<?php echo $link_prefix; ?>index.php" class="nav-link ps-lg-0">Home</a>
+                                        <a href="<?php echo $link_prefix; ?>products.php" class="nav-link">Shop</a>
+                                        <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link">About us</a>
+                                        <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link">Contact</a>
                                     </div>
                                 </div>
                             </div>
@@ -237,14 +238,176 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         </div>
     </div>
 </header>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 overflow-hidden" style="border-radius: 15px;">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 p-4 p-md-5">
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                        
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold mb-1" style="color: var(--header-dark);">Welcome to Amadika</h3>
+                            <p class="text-muted small">Login to your account for a better experience</p>
+                        </div>
+
+                        <!-- Login Type Tabs -->
+                        <ul class="nav nav-pills nav-justified mb-4" id="loginTabs" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="mobile-tab" data-bs-toggle="pill" data-bs-target="#pills-mobile" type="button" role="tab" style="font-size: 14px; font-weight: 600;">Mobile & OTP</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="email-tab" data-bs-toggle="pill" data-bs-target="#pills-email" type="button" role="tab" style="font-size: 14px; font-weight: 600;">Email & Pass</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Mobile Login Tab -->
+                            <div class="tab-pane fade show active" id="pills-mobile">
+                                <div id="mobileStep1">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Mobile Number</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0 text-muted">+91</span>
+                                            <input type="tel" class="form-control bg-light border-start-0" id="loginMobile" placeholder="Enter 10 digit number" maxlength="10">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-header-register w-100 py-2 mt-2" onclick="sendOTPRequest()">Send OTP</button>
+                                </div>
+                                <div id="mobileStep2" style="display: none;">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Enter 6-Digit OTP</label>
+                                        <input type="text" class="form-control bg-light text-center fw-bold fs-4" id="loginOTP" placeholder="0 0 0 0 0 0" maxlength="6">
+                                        <div class="text-center mt-2">
+                                            <a href="javascript:void(0)" class="small text-primary" onclick="sendOTPRequest()">Resend OTP</a>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-header-register w-100 py-2 mt-2" onclick="verifyOTPRequest()">Verify & Login</button>
+                                    <button class="btn btn-link btn-sm w-100 mt-2 text-muted" onclick="backToMobileStep1()">Change Number</button>
+                                </div>
+                            </div>
+
+                            <!-- Email Login Tab -->
+                            <div class="tab-pane fade" id="pills-email">
+                                <form id="headerLoginForm">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Email Address</label>
+                                        <input type="email" name="email" class="form-control bg-light" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Password</label>
+                                        <input type="password" name="password" class="form-control bg-light" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-header-register w-100 py-2 mt-2">Login Now</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="small text-muted mb-0">New to Amadika? <a href="<?php echo $link_prefix; ?>register.php" class="text-primary fw-bold">Create Account</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #loginModal .nav-pills .nav-link { color: #666; border-radius: 8px; padding: 10px; }
+    #loginModal .nav-pills .nav-link.active { background-color: var(--header-dark); color: #fff; }
+    #loginModal .form-control:focus { box-shadow: none; border-color: var(--header-gold); }
+    #loginModal .input-group-text { border-color: #dee2e6; }
+</style>
+
 <!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    const AUTH_URL = '<?php echo $link_prefix; ?>includes/auth_actions.php';
+
+    function sendOTPRequest() {
+        const mobile = document.getElementById('loginMobile').value;
+        if(mobile.length !== 10) {
+            Swal.fire('Error', 'Please enter a valid 10-digit number', 'error');
+            return;
+        }
+
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+        const formData = new FormData();
+        formData.append('action', 'send_otp');
+        formData.append('mobile', mobile);
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            btn.disabled = false;
+            btn.innerHTML = 'Send OTP';
+            if(data.status === 'success') {
+                document.getElementById('mobileStep1').style.display = 'none';
+                document.getElementById('mobileStep2').style.display = 'block';
+                Swal.fire('Success', data.message, 'success');
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        });
+    }
+
+    function verifyOTPRequest() {
+        const mobile = document.getElementById('loginMobile').value;
+        const otp = document.getElementById('loginOTP').value;
+        if(otp.length !== 6) {
+            Swal.fire('Error', 'Please enter 6-digit OTP', 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('action', 'verify_otp');
+        formData.append('mobile', mobile);
+        formData.append('otp', otp);
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                location.reload();
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        });
+    }
+
+    function backToMobileStep1() {
+        document.getElementById('mobileStep2').style.display = 'none';
+        document.getElementById('mobileStep1').style.display = 'block';
+    }
+
+    // Traditional Login
+    document.getElementById('headerLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('action', 'login');
+
+        fetch(AUTH_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                location.reload();
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        });
+    });
+
     function updateCartCount() {
         const badge = document.getElementById('headerCartCount');
         if(!badge) return;
         
-        fetch('includes/cart_actions.php', {
+        fetch('<?php echo $link_prefix; ?>includes/cart_actions.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: 'action=count'

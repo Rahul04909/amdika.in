@@ -9,7 +9,91 @@ header('Content-Type: application/json');
 
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-if ($action === 'register') {
+// --- SMS API Helper ---
+function sendOTP($mobile, $otp) {
+    $user = "MINEIB";
+    $authkey = "925eZtQUZpM";
+    $sender = "DIAWOR";
+    $entityid = "1401455390000019913";
+    $templateid = "1707177832194767263";
+    $text = urlencode("Dear User, Your OTP for login to your $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait");
+    
+    $url = "https://amazesms.in/api/pushsms?user=$user&authkey=$authkey&sender=$sender&mobile=$mobile&text=$text&entityid=$entityid&templateid=$templateid";
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return $response;
+}
+
+if ($action === 'send_otp') {
+    $mobile = $conn->real_escape_string(trim($_POST['mobile']));
+    
+    if (empty($mobile) || strlen($mobile) != 10) {
+        echo json_encode(['status' => 'error', 'message' => 'Please enter a valid 10-digit mobile number']);
+        exit;
+    }
+
+    $otp = rand(100000, 999999);
+    $_SESSION['temp_otp'] = $otp;
+    $_SESSION['temp_mobile'] = $mobile;
+    $_SESSION['otp_time'] = time();
+
+    $api_res = sendOTP($mobile, $otp);
+    
+    // For local debugging if API fails, you can echo the OTP, but in production we just send it.
+    echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully to ' . $mobile]);
+} 
+elseif ($action === 'verify_otp') {
+    $mobile = $conn->real_escape_string(trim($_POST['mobile']));
+    $otp = trim($_POST['otp']);
+
+    if (empty($otp) || $otp != $_SESSION['temp_otp'] || $mobile != $_SESSION['temp_mobile']) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid or expired OTP']);
+        exit;
+    }
+
+    // Check if OTP is older than 10 mins
+    if (time() - $_SESSION['otp_time'] > 600) {
+        echo json_encode(['status' => 'error', 'message' => 'OTP has expired. Please resend.']);
+        exit;
+    }
+
+    // Check if user exists
+    $stmt = $conn->prepare("SELECT id, name FROM users WHERE mobile = ? LIMIT 1");
+    $stmt->bind_param("s", $mobile);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+    } else {
+        // Auto-Register new mobile user
+        $name = "User " . substr($mobile, -4);
+        $dummy_pass = password_hash(rand(1000, 9999), PASSWORD_BCRYPT);
+        $ins = $conn->prepare("INSERT INTO users (name, mobile, password, email) VALUES (?, ?, ?, ?)");
+        $email = $mobile . "@amadika.in";
+        $ins->bind_param("ssss", $name, $mobile, $dummy_pass, $email);
+        $ins->execute();
+        
+        $_SESSION['user_id'] = $conn->insert_id;
+        $_SESSION['user_name'] = $name;
+    }
+
+    // Success logic
+    $session_id = session_id();
+    $update_cart = $conn->prepare("UPDATE cart SET user_id = ? WHERE session_id = ?");
+    $update_cart->bind_param("is", $_SESSION['user_id'], $session_id);
+    $update_cart->execute();
+    
+    session_write_close();
+    echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'user/index.php']);
+}
+elseif ($action === 'register') {
     // Sanitize Inputs
     $name = $conn->real_escape_string(trim($_POST['name']));
     $email = $conn->real_escape_string(trim($_POST['email']));
