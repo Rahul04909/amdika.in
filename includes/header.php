@@ -83,12 +83,6 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             transform: translateY(-1px);
             box-shadow: 0 6px 12px rgba(212, 160, 23, 0.3);
         }
-        .main-header { padding: 20px 0; }
-        .bottom-header { 
-            padding: 10px 0; 
-            background: #fff;
-            border-top: 1px solid #f0f0f0;
-        }
     </style>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -190,7 +184,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     </div>
 
     <!-- Bottom Header (Navigation) -->
-    <div class="bottom-header border-top">
+    <div class="bottom-header">
         <div class="container">
             <div class="row align-items-center g-0">
                 <!-- Categories Button -->
