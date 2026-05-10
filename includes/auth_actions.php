@@ -83,6 +83,11 @@ elseif ($action === 'verify_and_register') {
     $name = $conn->real_escape_string(trim($_POST['name']));
     $email = $conn->real_escape_string(trim($_POST['email']));
     $password = $_POST['password'];
+    $address = $conn->real_escape_string(trim($_POST['address']));
+    $city = $conn->real_escape_string(trim($_POST['city']));
+    $state = $conn->real_escape_string(trim($_POST['state']));
+    $pincode = $conn->real_escape_string(trim($_POST['pincode']));
+    $country = "India";
 
     if (empty($otp) || $otp != $_SESSION['reg_otp'] || $mobile != $_SESSION['reg_mobile']) {
         echo json_encode(['status' => 'error', 'message' => 'Invalid or expired OTP']);
@@ -90,8 +95,8 @@ elseif ($action === 'verify_and_register') {
     }
 
     $hashed_pass = password_hash($password, PASSWORD_BCRYPT);
-    $ins = $conn->prepare("INSERT INTO users (name, mobile, email, password) VALUES (?, ?, ?, ?)");
-    $ins->bind_param("ssss", $name, $mobile, $email, $hashed_pass);
+    $ins = $conn->prepare("INSERT INTO users (name, mobile, email, password, address, city, state, pincode, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $ins->bind_param("sssssssss", $name, $mobile, $email, $hashed_pass, $address, $city, $state, $pincode, $country);
     
     if ($ins->execute()) {
         unset($_SESSION['reg_otp']);

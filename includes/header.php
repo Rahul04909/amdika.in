@@ -370,26 +370,25 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             <div class="modal-body p-0">
                 <div class="row g-0">
                     <!-- Left Panel -->
-                    <div class="col-lg-5 d-none d-lg-flex flex-column p-4 p-xl-5" style="background: linear-gradient(135deg, #2F6FED 0%, #1e5ad6 100%); color: #fff;">
+                    <div class="col-lg-5 d-none d-lg-flex flex-column p-4 p-xl-5" style="background: linear-gradient(135deg, #2F3A3F 0%, #1a1f22 100%); color: #fff;">
                         <div class="mb-4">
                             <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 35px; filter: brightness(0) invert(1);">
                         </div>
                         <div class="mt-2">
-                            <h3 class="fw-bold mb-2" style="color: #fff; font-size: 24px;">Register</h3>
-                            <p class="text-white-50 small lh-sm mb-0">Join our community to unlock exclusive deals and faster checkout.</p>
-                        </div>
-                        <div class="mt-auto pt-4">
+                            <h3 class="fw-bold mb-2" style="color: var(--header-gold); font-size: 24px;">Register</h3>
+                            <p class="text-white-50 small lh-sm mb-4">Join our community to unlock exclusive deals and faster checkout.</p>
+                            
                             <ul class="list-unstyled mb-0">
                                 <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
-                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <i class="fa-solid fa-circle-check me-3" style="color: var(--header-gold); width: 20px;"></i>
                                     <span>Exclusive Member Discounts</span>
                                 </li>
                                 <li class="mb-3 d-flex align-items-center" style="font-size: 13px;">
-                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <i class="fa-solid fa-circle-check me-3" style="color: var(--header-gold); width: 20px;"></i>
                                     <span>Fast & Secure Checkout</span>
                                 </li>
                                 <li class="d-flex align-items-center" style="font-size: 13px;">
-                                    <i class="fa-solid fa-circle-check me-3" style="color: #fff; width: 20px;"></i>
+                                    <i class="fa-solid fa-circle-check me-3" style="color: var(--header-gold); width: 20px;"></i>
                                     <span>24/7 Customer Support</span>
                                 </li>
                             </ul>
@@ -397,51 +396,82 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                     </div>
 
                     <!-- Right Panel -->
-                    <div class="col-lg-7 col-12 p-4 p-md-5 bg-white position-relative d-flex flex-column justify-content-center">
+                    <div class="col-lg-7 col-12 p-4 p-md-5 bg-white position-relative d-flex flex-column justify-content-center" style="max-height: 90vh; overflow-y: auto;">
                         <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                         
                         <div id="registerStep1">
-                            <div class="mb-4 text-center">
+                            <div class="mb-3 text-center">
                                 <h4 class="fw-bold text-dark mb-1">Create Account</h4>
-                                <p class="small text-muted">Fill in your details to get started</p>
+                                <p class="small text-muted" style="font-size: 12px;">Complete all details to register</p>
                             </div>
                             <form id="mainRegisterForm">
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Full Name</label>
-                                    <div class="input-group premium-input-group">
-                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-user"></i></span>
-                                        <input type="text" name="name" class="form-control border-start-0" placeholder="John Doe" required>
+                                <div class="row g-2">
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Full Name</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="text" name="name" class="form-control" placeholder="John Doe" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Email Address</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="email" name="email" class="form-control" placeholder="john@example.com" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Email Address</label>
-                                    <div class="input-group premium-input-group">
-                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control border-start-0" placeholder="john@example.com" required>
+                                <div class="row g-2">
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Mobile Number</label>
+                                        <div class="input-group premium-input-group">
+                                            <span class="input-group-text bg-transparent border-end-0 px-2">
+                                                <span class="fw-bold text-dark small" style="font-size: 11px;">+91</span>
+                                            </span>
+                                            <input type="tel" name="mobile" id="regMobile" class="form-control border-start-0 fw-bold" placeholder="9876543210" maxlength="10" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Password</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="password" name="password" id="regPassInput" class="form-control border-end-0" placeholder="••••••••" required>
+                                            <span class="input-group-text bg-transparent border-start-0 cursor-pointer px-2" onclick="toggleRegPass()">
+                                                <i class="fa-solid fa-eye-slash text-muted small" id="regPassIcon"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Mobile Number</label>
+                                
+                                <div class="mb-2">
+                                    <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Full Address</label>
                                     <div class="input-group premium-input-group">
-                                        <span class="input-group-text bg-transparent border-end-0">
-                                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" style="width: 20px;">
-                                            <span class="ms-2 fw-bold text-dark small">+91</span>
-                                        </span>
-                                        <input type="tel" name="mobile" id="regMobile" class="form-control border-start-0 fs-6 fw-bold" placeholder="98765 43210" maxlength="10" required>
+                                        <input type="text" name="address" class="form-control" placeholder="Flat, Street, Area" required>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-uppercase tracking-wider text-muted mb-1" style="font-size: 10px;">Set Password</label>
-                                    <div class="input-group premium-input-group">
-                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
-                                        <input type="password" name="password" id="regPassInput" class="form-control border-start-0 border-end-0" placeholder="••••••••" required>
-                                        <span class="input-group-text bg-transparent border-start-0 cursor-pointer" onclick="toggleRegPass()">
-                                            <i class="fa-solid fa-eye-slash text-muted" id="regPassIcon"></i>
-                                        </span>
+
+                                <div class="row g-2">
+                                    <div class="col-md-4 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">City</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="text" name="city" class="form-control px-2" placeholder="City" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">State</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="text" name="state" class="form-control px-2" placeholder="State" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="form-label small fw-bold text-uppercase text-muted mb-1" style="font-size: 9px;">Pincode</label>
+                                        <div class="input-group premium-input-group">
+                                            <input type="text" name="pincode" class="form-control px-2" placeholder="123456" maxlength="6" required>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <input type="hidden" name="country" value="India">
+
                                 <div id="regError" class="text-danger small mb-3 fw-medium" style="display: none; font-size: 11px;"></div>
-                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" style="background: #2F6FED; border: none; font-size: 13px; letter-spacing: 1px;">CREATE ACCOUNT</button>
+                                <button type="submit" class="btn btn-dark w-100 py-2 fw-bold rounded-3 shadow-sm hover-lift" style="background: #2F3A3F; border: none; font-size: 13px; letter-spacing: 1px;">SEND OTP</button>
                             </form>
                         </div>
 
@@ -460,12 +490,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             </div>
                             <input type="hidden" id="regOTPValue">
                             <div id="regOtpError" class="text-danger small mt-n2 mb-4 text-center fw-medium" style="display: none; font-size: 11px;"></div>
-                            <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyRegOTP()" style="background: #2F6FED; border: none; font-size: 13px; letter-spacing: 1px;">VERIFY & REGISTER</button>
+                            <button class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow-sm hover-lift" onclick="verifyRegOTP()" style="background: #2F3A3F; border: none; font-size: 13px; letter-spacing: 1px;">VERIFY & REGISTER</button>
                             <button class="btn btn-link btn-sm w-100 mt-3 text-muted text-decoration-none small" onclick="backToRegStep1()">Edit Details</button>
                         </div>
 
-                        <div class="text-center mt-4">
-                            <p class="small text-muted mb-0" style="font-size: 12px;">Already have an account? <a href="javascript:void(0)" class="text-primary fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal">Login instead</a></p>
+                        <div class="text-center mt-3">
+                            <p class="small text-muted mb-0" style="font-size: 11px;">Already have an account? <a href="javascript:void(0)" class="text-primary fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></p>
                         </div>
                     </div>
                 </div>
