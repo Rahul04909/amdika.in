@@ -238,7 +238,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     </div>
 </header>
 
-<<!-- Login Modal -->
+<!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 overflow-hidden" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
@@ -511,7 +511,9 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(data => {
             if(data.status === 'success') {
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
-                setTimeout(() => location.reload(), 800);
+                setTimeout(() => {
+                    window.location.href = '<?php echo $link_prefix; ?>user/index.php';
+                }, 800);
             } else {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
@@ -548,7 +550,9 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(data => {
             if(data.status === 'success') {
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
-                setTimeout(() => location.reload(), 800);
+                setTimeout(() => {
+                    window.location.href = '<?php echo $link_prefix; ?>user/index.php';
+                }, 800);
             } else {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
