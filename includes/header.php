@@ -706,7 +706,8 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
                 clearInterval(loginTimerInterval);
                 setTimeout(() => {
-                    window.location.href = '<?php echo $link_prefix; ?>user/index.php';
+                    const redirectUrl = data.redirect ? '<?php echo $link_prefix; ?>' + data.redirect : '<?php echo $link_prefix; ?>user/index.php';
+                    window.location.href = redirectUrl;
                 }, 1000);
             } else {
                 btn.disabled = false;
@@ -746,7 +747,8 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             if(data.status === 'success') {
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
                 setTimeout(() => {
-                    window.location.href = '<?php echo $link_prefix; ?>user/index.php';
+                    const redirectUrl = data.redirect ? '<?php echo $link_prefix; ?>' + data.redirect : '<?php echo $link_prefix; ?>user/index.php';
+                    window.location.href = redirectUrl;
                 }, 800);
             } else {
                 btn.disabled = false;
@@ -893,13 +895,8 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 btn.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>SUCCESS';
                 clearInterval(regTimerInterval);
                 setTimeout(() => {
-                    const regModalEl = document.getElementById('registerModal');
-                    const regModal = bootstrap.Modal.getInstance(regModalEl);
-                    regModal.hide();
-                    
-                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                    loginModal.show();
-                    backToRegStep1();
+                    const redirectUrl = data.redirect ? '<?php echo $link_prefix; ?>' + data.redirect : '<?php echo $link_prefix; ?>user/index.php';
+                    window.location.href = redirectUrl;
                 }, 1000);
             } else {
                 btn.disabled = false;

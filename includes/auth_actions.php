@@ -36,17 +36,6 @@ if ($action === 'send_otp') {
         exit;
     }
 
-    // Check if user exists before sending OTP
-    $check_stmt = $conn->prepare("SELECT id FROM users WHERE mobile = ? LIMIT 1");
-    $check_stmt->bind_param("s", $mobile);
-    $check_stmt->execute();
-    $check_res = $check_stmt->get_result();
-
-    if ($check_res->num_rows === 0) {
-        echo json_encode(['status' => 'error', 'message' => 'Mobile number not registered. Please register yourself before login.']);
-        exit;
-    }
-
     $otp = rand(100000, 999999);
     $_SESSION['temp_otp'] = $otp;
     $_SESSION['temp_mobile'] = $mobile;
@@ -99,9 +88,23 @@ elseif ($action === 'verify_and_register') {
     $ins->bind_param("sssssssss", $name, $mobile, $email, $hashed_pass, $address, $city, $state, $pincode, $country);
     
     if ($ins->execute()) {
+        $new_user_id = $conn->insert_id;
         unset($_SESSION['reg_otp']);
         unset($_SESSION['reg_mobile']);
-        echo json_encode(['status' => 'success', 'message' => 'Registration successful! You can now login.']);
+        
+        // Auto-login after registration
+        $_SESSION['user_id'] = $new_user_id;
+        $_SESSION['user_name'] = $name;
+        
+        // Merge cart
+        $session_id = session_id();
+        if ($session_id) {
+            $update_cart = $conn->prepare("UPDATE cart SET user_id = ? WHERE session_id = ?");
+            $update_cart->bind_param("is", $new_user_id, $session_id);
+            $update_cart->execute();
+        }
+
+        echo json_encode(['status' => 'success', 'message' => 'Registration successful!', 'redirect' => 'user/index.php']);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Registration failed: ' . $conn->error]);
     }
@@ -133,22 +136,29 @@ elseif ($action === 'verify_otp') {
         $_SESSION['user_name'] = $user['name'];
     } else {
         // Auto-Register new mobile user
-        $name = "User " . substr($mobile, -4);
-        $dummy_pass = password_hash(rand(1000, 9999), PASSWORD_BCRYPT);
-        $ins = $conn->prepare("INSERT INTO users (name, mobile, password, email) VALUES (?, ?, ?, ?)");
+        $name = "Amadika User";
         $email = $mobile . "@amadika.in";
-        $ins->bind_param("ssss", $name, $mobile, $dummy_pass, $email);
-        $ins->execute();
+        $dummy_pass = password_hash(bin2hex(random_bytes(8)), PASSWORD_BCRYPT);
         
-        $_SESSION['user_id'] = $conn->insert_id;
-        $_SESSION['user_name'] = $name;
+        $ins = $conn->prepare("INSERT INTO users (name, mobile, email, password) VALUES (?, ?, ?, ?)");
+        $ins->bind_param("ssss", $name, $mobile, $email, $dummy_pass);
+        
+        if ($ins->execute()) {
+            $_SESSION['user_id'] = $conn->insert_id;
+            $_SESSION['user_name'] = $name;
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Auto-registration failed: ' . $conn->error]);
+            exit;
+        }
     }
 
-    // Success logic
+    // Merge cart
     $session_id = session_id();
-    $update_cart = $conn->prepare("UPDATE cart SET user_id = ? WHERE session_id = ?");
-    $update_cart->bind_param("is", $_SESSION['user_id'], $session_id);
-    $update_cart->execute();
+    if ($session_id) {
+        $update_cart = $conn->prepare("UPDATE cart SET user_id = ? WHERE session_id = ?");
+        $update_cart->bind_param("is", $_SESSION['user_id'], $session_id);
+        $update_cart->execute();
+    }
     
     session_write_close();
     echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => 'user/index.php']);
