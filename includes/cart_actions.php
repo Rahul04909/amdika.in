@@ -128,6 +128,44 @@ elseif ($action === 'count') {
     
     echo json_encode(['status' => 'success', 'count' => ($result['total'] ?? 0)]);
 }
+elseif ($action === 'fetch') {
+    $sql = "SELECT c.id as cart_row_id, c.quantity, p.name, p.sale_price, p.featured_image, p.slug, cl.name as color_name, cv.price as variant_price, cv.image_path as variant_image
+            FROM cart c 
+            JOIN products p ON c.product_id = p.id 
+            LEFT JOIN colors cl ON c.color_id = cl.id
+            LEFT JOIN product_color_variants cv ON (c.product_id = cv.product_id AND c.color_id = cv.color_id)
+            WHERE c.session_id = ?";
+            
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $session_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $items = [];
+    $total_price = 0;
+    while($row = $result->fetch_assoc()) {
+        $price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
+        $image = (!empty($row['variant_image'])) ? $row['variant_image'] : $row['featured_image'];
+        
+        $items[] = [
+            'cart_row_id' => $row['cart_row_id'],
+            'name' => $row['name'],
+            'quantity' => $row['quantity'],
+            'price' => $price,
+            'image' => $image,
+            'slug' => $row['slug'],
+            'color' => $row['color_name']
+        ];
+        $total_price += ($price * $row['quantity']);
+    }
+    
+    echo json_encode([
+        'status' => 'success',
+        'items' => $items,
+        'total' => $total_price,
+        'count' => count($items)
+    ]);
+}
 else {
     echo json_encode(['status' => 'error', 'message' => 'Invalid Action']);
 }

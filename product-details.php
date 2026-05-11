@@ -659,12 +659,7 @@ if($rel_res && $rel_res->num_rows > 0):
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Added to Cart!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                openCartSidebar();
                 if(typeof updateCartCount === 'function') updateCartCount();
             } else {
                 alert(data.message);

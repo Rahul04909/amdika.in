@@ -150,7 +150,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                             $cart_count = $res['count'] ?? 0;
                         }
                         ?>
-                        <a href="cart.php" class="action-icon">
+                        <a href="javascript:void(0)" onclick="openCartSidebar()" class="action-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="icon-badge" id="headerCartCount"><?php echo $cart_count; ?></span>
                         </a>
@@ -932,3 +932,5 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         });
     }
 </script>
+
+<?php include 'cart_sidebar.php'; ?>
