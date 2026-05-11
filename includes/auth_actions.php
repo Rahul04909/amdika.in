@@ -25,13 +25,16 @@ function sendOTP($mobile, $otp) {
         'entityid' => $entityid,
         'templateid' => $templateid
     ];
-    $url = "https://amazesms.in/api/pushsms?" . http_build_query($params);
+    // Attempting HTTP if HTTPS is failing/waited, and adding timeouts
+    $url = "http://amazesms.in/api/pushsms?" . http_build_query($params);
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     $response = curl_exec($ch);
     $err = curl_error($ch);
     curl_close($ch);
