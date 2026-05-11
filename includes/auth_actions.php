@@ -16,9 +16,16 @@ function sendOTP($mobile, $otp) {
     $sender = "DIAWOR";
     $entityid = "1401455390000019913";
     $templateid = "1707177832194767263";
-    $text = urlencode("Dear User, Your OTP for login to your $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait");
-    
-    $url = "https://amazesms.in/api/pushsms?user=$user&authkey=$authkey&sender=$sender&mobile=$mobile&text=$text&entityid=$entityid&templateid=$templateid";
+    $params = [
+        'user' => $user,
+        'authkey' => $authkey,
+        'sender' => $sender,
+        'mobile' => $mobile,
+        'text' => "Dear User, Your OTP for login to your $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait",
+        'entityid' => $entityid,
+        'templateid' => $templateid
+    ];
+    $url = "https://amazesms.in/api/pushsms?" . http_build_query($params);
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -26,10 +33,14 @@ function sendOTP($mobile, $otp) {
     $response = curl_exec($ch);
     $err = curl_error($ch);
     curl_close($ch);
+
+    if ($response === false) {
+        $response = "CURL Error: " . $err;
+    }
     
     // Debug log
-    $log = date('Y-m-d H:i:s') . " | Mobile: $mobile | URL: $url | Response: $response | Error: $err\n";
-    file_put_contents('sms_debug.log', $log, FILE_APPEND);
+    $log = date('Y-m-d H:i:s') . " | Mobile: $mobile | Response: $response\n";
+    file_put_contents(__DIR__ . '/sms_debug.log', $log, FILE_APPEND);
     
     return $response;
 }
@@ -47,7 +58,9 @@ if ($action === 'send_otp') {
     $_SESSION['temp_mobile'] = $mobile;
     $_SESSION['otp_time'] = time();
 
+    error_log("Amadika Auth: send_otp action for $mobile");
     $api_res = sendOTP($mobile, $otp);
+    error_log("Amadika Auth: sendOTP result: " . $api_res);
     
     // Check for common success indicators or just non-empty response if not explicitly 'error'
     if ($api_res && stripos($api_res, 'error') === false && stripos($api_res, 'fail') === false) {
@@ -59,12 +72,14 @@ if ($action === 'send_otp') {
 elseif ($action === 'send_register_otp') {
     $mobile = $conn->real_escape_string(trim($_POST['mobile']));
     $email = $conn->real_escape_string(trim($_POST['email']));
+    error_log("Amadika Auth: send_register_otp for $mobile, $email");
     
     // Check if mobile or email exists
     $check = $conn->prepare("SELECT id FROM users WHERE mobile = ? OR email = ? LIMIT 1");
     $check->bind_param("ss", $mobile, $email);
     $check->execute();
     if ($check->get_result()->num_rows > 0) {
+        error_log("Amadika Auth: User already exists");
         echo json_encode(['status' => 'error', 'message' => 'Mobile or Email already registered. Please login.']);
         exit;
     }
@@ -74,7 +89,9 @@ elseif ($action === 'send_register_otp') {
     $_SESSION['reg_mobile'] = $mobile;
     $_SESSION['reg_time'] = time();
 
+    error_log("Amadika Auth: Calling sendOTP for registration");
     $api_res = sendOTP($mobile, $otp);
+    error_log("Amadika Auth: sendOTP registration result: " . $api_res);
     
     if ($api_res && stripos($api_res, 'error') === false && stripos($api_res, 'fail') === false) {
         echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully']);
