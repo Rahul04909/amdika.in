@@ -16,7 +16,7 @@ function sendOTP($mobile, $otp) {
     $sender = "DIAWOR";
     $entityid = "1401455390000019913";
     $templateid = "1707177832194767263";
-    $text = urlencode("Dear User, Your OTP for login to your $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait");
+    $text = urlencode("Dear User, Your OTP for login to your account is $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait");
     
     $url = "https://amazesms.in/api/pushsms?user=$user&authkey=$authkey&sender=$sender&mobile=$mobile&text=$text&entityid=$entityid&templateid=$templateid";
     
@@ -24,7 +24,13 @@ function sendOTP($mobile, $otp) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
+    $err = curl_error($ch);
     curl_close($ch);
+    
+    // Debug log
+    $log = date('Y-m-d H:i:s') . " | Mobile: $mobile | URL: $url | Response: $response | Error: $err\n";
+    file_put_contents('sms_debug.log', $log, FILE_APPEND);
+    
     return $response;
 }
 
@@ -63,8 +69,13 @@ elseif ($action === 'send_register_otp') {
     $_SESSION['reg_mobile'] = $mobile;
     $_SESSION['reg_time'] = time();
 
-    sendOTP($mobile, $otp);
-    echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully']);
+    $api_res = sendOTP($mobile, $otp);
+    
+    if ($api_res && (strpos($api_res, 'success') !== false || strpos($api_res, 'SUBMIT_SUCCESS') !== false || strpos($api_res, '100') !== false)) {
+        echo json_encode(['status' => 'success', 'message' => 'OTP sent successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to send OTP. Please try again later.']);
+    }
 }
 elseif ($action === 'verify_and_register') {
     $mobile = $conn->real_escape_string(trim($_POST['mobile']));
