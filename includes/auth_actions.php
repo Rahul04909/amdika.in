@@ -76,19 +76,11 @@ if ($action === 'send_otp') {
 } 
 elseif ($action === 'send_register_otp') {
     $mobile = $conn->real_escape_string(trim($_POST['mobile']));
-    $email = $conn->real_escape_string(trim($_POST['email']));
-    error_log("Amadika Auth: send_register_otp for $mobile, $email");
+    $email = $conn->real_escape_string(trim($_POST['email'] ?? ''));
+    error_log("Amadika Auth: send_register_otp for $mobile");
     
-    // Check if mobile or email exists
-    $check = $conn->prepare("SELECT id FROM users WHERE mobile = ? OR email = ? LIMIT 1");
-    $check->bind_param("ss", $mobile, $email);
-    $check->execute();
-    if ($check->get_result()->num_rows > 0) {
-        error_log("Amadika Auth: User already exists");
-        echo json_encode(['status' => 'error', 'message' => 'Mobile or Email already registered. Please login.']);
-        exit;
-    }
-
+    // Check removed as per user request: "we don't need ki user registred h ya nahi bs wo login kr ske"
+    
     $otp = rand(100000, 999999);
     $_SESSION['reg_otp'] = $otp;
     $_SESSION['reg_mobile'] = $mobile;
