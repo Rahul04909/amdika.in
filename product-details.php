@@ -183,12 +183,13 @@ $disc = $product['discount_percent'];
     /* Color Swatches */
     .color-swatches { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
     .color-item { 
-        width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; 
-        box-shadow: 0 0 0 1px #ddd; cursor: pointer; transition: all 0.2s; position: relative;
+        width: 54px; height: 54px; border-radius: 8px; border: 1px solid #ddd; 
+        cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+        padding: 2px; background: #fff;
     }
-    .color-item.active { box-shadow: 0 0 0 2px #2874f0; }
-    .color-item:hover { transform: scale(1.1); }
-    .color-item img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .color-item.active { border: 2px solid #2874f0; }
+    .color-item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .color-item img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
     .color-name-display { font-size: 14px; font-weight: 500; color: #212121; margin-bottom: 5px; }
     .variant-label { font-size: 14px; color: #878787; margin-bottom: 10px; display: block; }
 </style>
