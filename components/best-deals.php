@@ -216,6 +216,8 @@ if (!isset($bd_products)) {
                 FROM products p 
                 LEFT JOIN product_categories c ON p.category_id = c.id 
                 WHERE p.category_id IN ($bd_ids_str) 
+                AND p.featured_image IS NOT NULL 
+                AND p.featured_image != ''
                 ORDER BY p.id DESC LIMIT 10";
         $result = $conn->query($sql);
         if ($result) {

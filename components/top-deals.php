@@ -298,7 +298,7 @@
 
             if(!function_exists('get_premium_deals')){
                 function get_premium_deals($conn, $limit, $offset = 0) {
-                    $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset";
+                    $sql = "SELECT * FROM products WHERE featured_image IS NOT NULL AND featured_image != '' AND status = 'active' ORDER BY id DESC LIMIT $limit OFFSET $offset";
                     $result = $conn->query($sql);
                     return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                 }

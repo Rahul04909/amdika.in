@@ -13,7 +13,8 @@
         position: relative;
         overflow: hidden;
         height: auto;
-        max-height: 650px; /* Increased for desktop */
+        max-height: 650px;
+        /* Increased for desktop */
     }
 
     .hero-banner-item img {
@@ -30,13 +31,15 @@
         .hero-banner-item {
             height: auto;
             min-height: 200px;
-            background-color: #f7f3f0; /* Matching the banner background color */
+            background-color: #f7f3f0;
+            /* Matching the banner background color */
         }
 
         .hero-banner-item img {
             width: 100%;
             height: auto;
-            object-fit: contain; /* Shows full width without cutting sides */
+            object-fit: contain;
+            /* Shows full width without cutting sides */
         }
 
         .hero-section {
@@ -48,9 +51,9 @@
 <section class="hero-section mb-3">
     <div class="hero-banner-item">
         <?php
-        $heroSrc = 'assets/images/hero/new-hero.png';
-        $desktopHero = get_resized_image($heroSrc, 1920, 700); 
-        $mobileHero = get_resized_image($heroSrc, 800, 450, 'contain');   
+        $heroSrc = 'assets/images/hero/amadika-hero.png';
+        $desktopHero = get_resized_image($heroSrc, 1920, 700);
+        $mobileHero = get_resized_image($heroSrc, 800, 450, 'contain');
         ?>
         <picture>
             <source media="(max-width: 768px)" srcset="<?php echo $mobileHero; ?>">

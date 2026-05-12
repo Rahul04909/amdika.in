@@ -233,7 +233,9 @@ require_once __DIR__ . '/../includes/image_helper.php';
 $cat_sql = "SELECT c.*, COUNT(p.id) as product_count 
             FROM product_categories c
             JOIN products p ON c.id = p.category_id
-            WHERE p.status = 'active'
+            WHERE p.status = 'active' 
+            AND p.featured_image IS NOT NULL 
+            AND p.featured_image != ''
             GROUP BY c.id
             HAVING product_count >= 5
             ORDER BY c.created_at DESC";
@@ -251,7 +253,7 @@ if ($cat_res && $cat_res->num_rows > 0):
             $cslug = htmlspecialchars($category['slug']);
             
             // Fetch items
-            $psql = "SELECT * FROM products WHERE category_id = $cid AND status = 'active' ORDER BY id DESC LIMIT 10";
+            $psql = "SELECT * FROM products WHERE category_id = $cid AND status = 'active' AND featured_image IS NOT NULL AND featured_image != '' ORDER BY id DESC LIMIT 10";
             $pres = $conn->query($psql);
             $unique_cat_id = "slider_" . $cid . "_" . rand(100, 999);
         ?>
