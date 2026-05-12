@@ -41,16 +41,6 @@ $page_title = $product['seo_title'] ?: $product['name']; // Fallback to name
 
 include 'includes/header.php';
 
-// Data Prep
-$gallery = json_decode($product['gallery_images'], true) ?? [];
-// Add featured image to start of gallery if not there
-array_unshift($gallery, $product['featured_image']);
-$gallery = array_unique(array_filter($gallery)); // Remove duplicates/empty
-
-$mrp = $product['mrp'];
-$sale = $product['sale_price'];
-$disc = $product['discount_percent'];
-
 // Fetch Color Variants
 $variants = [];
 $v_sql = "SELECT v.*, c.name as color_name, c.hex_code 
@@ -59,6 +49,36 @@ $v_sql = "SELECT v.*, c.name as color_name, c.hex_code
           WHERE v.product_id = " . $product['id'];
 $v_res = $conn->query($v_sql);
 while($v = $v_res->fetch_assoc()) $variants[] = $v;
+
+// Data Prep - Refined Gallery Parsing
+$raw_gallery = $product['gallery_images'];
+$gallery = [];
+if (!empty($raw_gallery)) {
+    // Check if it's JSON or Comma Separated
+    if (strpos($raw_gallery, '[') !== false || strpos($raw_gallery, '{') !== false) {
+        $gallery = json_decode($raw_gallery, true) ?? [];
+    } else {
+        $gallery = array_map('trim', explode(',', $raw_gallery));
+    }
+}
+
+// Add featured image to start
+if (!empty($product['featured_image'])) {
+    array_unshift($gallery, $product['featured_image']);
+}
+
+// Add variant images to gallery for better visibility
+foreach ($variants as $v) {
+    if (!empty($v['image_path'])) {
+        $gallery[] = $v['image_path'];
+    }
+}
+
+$gallery = array_unique(array_filter($gallery)); // Clean up duplicates/empty
+
+$mrp = $product['mrp'];
+$sale = $product['sale_price'];
+$disc = $product['discount_percent'];
 ?>
 <style>
     /* Product Page Specific Styles */
@@ -168,6 +188,7 @@ while($v = $v_res->fetch_assoc()) $variants[] = $v;
     }
     .color-item.active { box-shadow: 0 0 0 2px #2874f0; }
     .color-item:hover { transform: scale(1.1); }
+    .color-item img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
     .color-name-display { font-size: 14px; font-weight: 500; color: #212121; margin-bottom: 5px; }
     .variant-label { font-size: 14px; color: #878787; margin-bottom: 10px; display: block; }
 </style>
@@ -240,6 +261,9 @@ while($v = $v_res->fetch_assoc()) $variants[] = $v;
                                  data-price="<?php echo $v['price']; ?>"
                                  data-image="<?php echo $v['image_path']; ?>"
                                  onclick="selectColor(this)">
+                                 <?php if(!empty($v['image_path'])): ?>
+                                    <img src="<?php echo $v['image_path']; ?>" alt="<?php echo htmlspecialchars($v['color_name']); ?>">
+                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
