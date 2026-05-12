@@ -15,13 +15,13 @@ function sendOTP($mobile, $otp) {
     $authkey = "925eZtQUZpM";
     $sender = "DIAWOR";
     $entityid = "1401455390000019913";
-    $templateid = "1707177832194767263";
+    $templateid = "1407177850601631587";
     $params = [
         'user' => $user,
         'authkey' => $authkey,
         'sender' => $sender,
         'mobile' => $mobile,
-        'text' => "Dear User, Your OTP for login to your $otp. Do not share this OTP with anyone for security reasons. OTP valid for 10 minutes. Metait",
+        'text' => " Your verification code is $otp . Enter this OTP to continue account authentication. Meta It",
         'entityid' => $entityid,
         'templateid' => $templateid
     ];
