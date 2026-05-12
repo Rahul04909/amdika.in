@@ -144,6 +144,117 @@
     color: var(--white);
 }
 
+/* WhatsApp Chat Box */
+.whatsapp-chat-box {
+    position: fixed;
+    bottom: 95px;
+    right: 30px;
+    width: 320px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 10000;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid #eee;
+}
+
+.chat-header {
+    background-color: #25D366;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.chat-header-info {
+    flex: 1;
+}
+
+.chat-header-info h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.chat-header-info p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.chat-body {
+    padding: 20px;
+    background: #f0f2f5;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    min-height: 100px;
+}
+
+.chat-msg {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 0 12px 12px 12px;
+    font-size: 13px;
+    color: #333;
+    max-width: 90%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.chat-footer {
+    padding: 15px;
+    background: #fff;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-input {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+}
+
+.chat-send-btn {
+    width: 40px;
+    height: 40px;
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.chat-send-btn:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-chat-box.show {
+    display: flex;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 .footer-bottom-text {
     color: #b0b0b0;
 }
@@ -354,8 +465,53 @@
 
     </div>
     
-    <!-- Chat Widget -->
-    <button class="chat-widget">
-        <i class="fa-regular fa-comment-dots"></i>
+    <!-- WhatsApp Chat Widget -->
+    <div class="whatsapp-chat-box" id="whatsappChat">
+        <div class="chat-header">
+            <img src="assets/images/amdika-logo.png" alt="Amadika Support" onerror="this.src='https://ui-avatars.com/api/?name=Amadika+Support&background=fff&color=25D366'">
+            <div class="chat-header-info">
+                <h4>Amadika Support</h4>
+                <p>Online | Typically replies in minutes</p>
+            </div>
+            <button onclick="toggleChat()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">&times;</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-msg">
+                Hi there! 👋 How can we help you today?
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendToWhatsApp()">
+            <button class="chat-send-btn" onclick="sendToWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+
+    <button class="chat-widget" onclick="toggleChat()">
+        <i class="fa-brands fa-whatsapp"></i>
     </button>
+
+    <script>
+        function toggleChat() {
+            const chat = document.getElementById('whatsappChat');
+            chat.classList.toggle('show');
+            if(chat.classList.contains('show')) {
+                document.getElementById('chatInput').focus();
+            }
+        }
+
+        function sendToWhatsApp() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if(message === '') return;
+
+            const phone = "918057522818"; // Using number from user's OTP request earlier
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            
+            window.open(url, '_blank');
+            input.value = '';
+            toggleChat();
+        }
+    </script>
 </footer>
