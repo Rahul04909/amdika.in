@@ -54,11 +54,20 @@ while ($v = $v_res->fetch_assoc())
 // Data Prep - Refined Gallery Parsing
 $raw_gallery = $product['gallery_images'];
 $gallery = [];
+
 if (!empty($raw_gallery)) {
-    // Check if it's JSON or Comma Separated
-    if (strpos($raw_gallery, '[') !== false || strpos($raw_gallery, '{') !== false) {
-        $gallery = json_decode($raw_gallery, true) ?? [];
+    // Robust parsing: strip potential outer quotes if stored double-encoded
+    $raw_gallery = trim($raw_gallery);
+    if ($raw_gallery[0] === '"' && $raw_gallery[strlen($raw_gallery)-1] === '"') {
+        $raw_gallery = json_decode($raw_gallery);
+    }
+    
+    // Attempt JSON decode
+    $decoded = json_decode($raw_gallery, true);
+    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+        $gallery = $decoded;
     } else {
+        // Fallback: split by comma if not JSON
         $gallery = array_map('trim', explode(',', $raw_gallery));
     }
 }
@@ -68,14 +77,32 @@ if (!empty($product['featured_image'])) {
     array_unshift($gallery, $product['featured_image']);
 }
 
-// Add variant images to gallery for better visibility
+// Add variant images to gallery
 foreach ($variants as $v) {
     if (!empty($v['image_path'])) {
         $gallery[] = $v['image_path'];
     }
 }
 
-$gallery = array_unique(array_filter($gallery)); // Clean up duplicates/empty
+$gallery = array_unique(array_filter($gallery));
+
+// --- Razorpay EMI Plans Implementation ---
+require_once 'vendor/autoload.php';
+use Razorpay\Api\Api;
+
+$emi_methods = [];
+try {
+    $rzp_settings = $conn->query("SELECT * FROM razorpay_settings WHERE status='active' LIMIT 1")->fetch_assoc();
+    if ($rzp_settings) {
+        $api = new Api($rzp_settings['key_id'], $rzp_settings['key_secret']);
+        $methods = $api->payment->fetchPaymentMethods();
+        if (isset($methods['emi'])) {
+            $emi_methods = $methods['emi'];
+        }
+    }
+} catch (Exception $e) {
+    error_log("EMI Fetch Error: " . $e->getMessage());
+}
 
 $mrp = $product['mrp'];
 $sale = $product['sale_price'];
@@ -636,9 +663,54 @@ $disc = $product['discount_percent'];
                                 <span class="plus-more">+14</span>
                             </div>
                         </div>
-                        <a href="javascript:void(0)" class="btn-view-plans" onclick="Swal.fire({title:'EMI Plans', text:'Select Razorpay at checkout to see full EMI options from 20+ banks.', icon:'info'})">
+                        <a href="javascript:void(0)" class="btn-view-plans" data-bs-toggle="modal" data-bs-target="#emiModal">
                             View plans <i class="fas fa-chevron-right" style="font-size:10px;"></i>
                         </a>
+                    </div>
+                </div>
+
+                <!-- EMI Plans Modal -->
+                <div class="modal fade" id="emiModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0">
+                            <div class="modal-header bg-dark text-white">
+                                <h5 class="modal-title">EMI Plans on Amadika</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0" style="font-size: 14px;">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th class="ps-3">Bank Name</th>
+                                                <th>Starting EMI</th>
+                                                <th class="pe-3">Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if(!empty($emi_methods)): ?>
+                                                <?php foreach($emi_methods as $bank_code => $bank_name): ?>
+                                                    <tr>
+                                                        <td class="ps-3 fw-bold"><?php echo htmlspecialchars($bank_name); ?></td>
+                                                        <td class="text-success">₹<?php echo number_format(ceil($sale / 24)); ?></td>
+                                                        <td class="pe-3">Up to 24 Months</td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="3" class="text-center py-4 text-muted">
+                                                        EMI options will be available at Razorpay checkout.
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="p-3 bg-light border-top text-center" style="font-size: 12px; color: #666;">
+                                    * Final EMI amount and interest rates depend on the bank selected during payment.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

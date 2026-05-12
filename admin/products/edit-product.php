@@ -64,6 +64,29 @@ $error_msg = '';
                 $prod['featured_image'] = "assets/images/products/" . $new_name;
             }
         }
+
+        // Gallery Images Update
+        $current_gallery = json_decode($prod['gallery_images'], true) ?: [];
+        if (isset($_POST['clear_gallery']) && $_POST['clear_gallery'] == 1) {
+            foreach ($current_gallery as $g) {
+                if (file_exists("../../" . $g)) unlink("../../" . $g);
+            }
+            $current_gallery = [];
+        }
+
+        if (isset($_FILES['gallery_images'])) {
+            $target_dir = "../../assets/images/products/gallery/";
+            if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+            foreach ($_FILES['gallery_images']['tmp_name'] as $key => $tmp_name) {
+                if ($_FILES['gallery_images']['error'][$key] == 0) {
+                    $ext = strtolower(pathinfo($_FILES["gallery_images"]["name"][$key], PATHINFO_EXTENSION));
+                    $new_name = "prod_" . time() . "_gal_" . $key . "." . $ext;
+                    if (move_uploaded_file($tmp_name, $target_dir . $new_name)) {
+                        $current_gallery[] = "assets/images/products/gallery/" . $new_name;
+                    }
+                }
+            }
+        }
         
         $gallery_json = json_encode($current_gallery);
         $gst_percent = intval($_POST['gst_percent']);
