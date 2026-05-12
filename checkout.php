@@ -2,11 +2,6 @@
 require_once 'includes/session_config.php';
 require_once 'database/db_config.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: user/login.php?redirect=checkout.php");
-    exit();
-}
-
 $page_title = 'Checkout';
 include 'includes/header.php';
 
@@ -59,10 +54,13 @@ $grand_total = $total_price + $total_gst + $delivery_charge;
 $rzp_settings = $conn->query("SELECT key_id FROM razorpay_settings WHERE status='active' LIMIT 1")->fetch_assoc();
 $rzp_key = $rzp_settings['key_id'] ?? '';
 
-// Fetch User Details
-$user_id = $_SESSION['user_id'];
-$user_res = $conn->query("SELECT * FROM users WHERE id = $user_id");
-$user_data = $user_res->fetch_assoc();
+// Fetch User Details if Logged In
+$user_id = $_SESSION['user_id'] ?? 0;
+$user_data = [];
+if ($user_id > 0) {
+    $user_res = $conn->query("SELECT * FROM users WHERE id = $user_id");
+    $user_data = $user_res->fetch_assoc();
+}
 
 // Default values if not set
 $u_name = $user_data['name'] ?? '';
@@ -102,23 +100,60 @@ $u_state = $user_data['state'] ?? '';
     <div class="row">
         <!-- Left Column: Forms -->
         <div class="col-lg-8">
-            <!-- 1. Login Check (Done via PHP) -->
+            <!-- 1. Login / Mobile Verification -->
             <div class="section-card">
                 <div class="section-title">
                     <span class="step-number">1</span>
-                    <span>Login</span>
-                    <i class="fas fa-check-circle text-success ms-auto"></i>
+                    <span>Verification</span>
+                    <?php if($user_id > 0): ?>
+                        <i class="fas fa-check-circle text-success ms-auto"></i>
+                    <?php endif; ?>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <span class="fw-bold"><?php echo htmlspecialchars($u_name); ?></span>
-                        <span class="text-muted ms-2">+91 <?php echo htmlspecialchars($u_mobile); ?></span>
+                
+                <?php if($user_id > 0): ?>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="fw-bold"><?php echo htmlspecialchars($u_name); ?></span>
+                            <span class="text-muted ms-2">+91 <?php echo htmlspecialchars($u_mobile); ?></span>
+                        </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div id="otpSection">
+                        <div class="row align-items-end" id="mobileInputRow">
+                            <div class="col-md-8 mb-2">
+                                <label class="small fw-bold text-muted mb-1">Enter Mobile Number</label>
+                                <input type="tel" id="guestMobile" class="form-control" placeholder="10-digit mobile number" maxlength="10">
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button type="button" class="btn btn-primary w-100 py-2" onclick="sendGuestOTP()" id="sendOtpBtn">Send OTP</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row align-items-end d-none" id="otpInputRow">
+                            <div class="col-md-8 mb-2">
+                                <label class="small fw-bold text-muted mb-1">Enter 6-digit OTP</label>
+                                <input type="text" id="guestOTP" class="form-control" placeholder="Enter OTP" maxlength="6">
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button type="button" class="btn btn-success w-100 py-2" onclick="verifyGuestOTP()" id="verifyOtpBtn">Verify OTP</button>
+                            </div>
+                            <div class="col-12 mt-1">
+                                <a href="javascript:void(0)" class="small text-primary" onclick="resetOTPForm()">Change Number?</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="verifiedStatus" class="d-none">
+                        <div class="alert alert-success d-flex align-items-center py-2 px-3 mb-0">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <div>Mobile Verified: <strong id="verifiedMobileDisplay"></strong></div>
+                            <input type="hidden" name="verified_mobile" id="verifiedMobileInput">
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             
             <!-- 2. Delivery Address -->
-            <div class="section-card">
+            <div class="section-card <?php echo ($user_id == 0) ? 'opacity-50' : ''; ?>" id="addressSection">
                 <div class="section-title">
                     <span class="step-number">2</span>
                     <span>Delivery Address</span>
@@ -126,25 +161,25 @@ $u_state = $user_data['state'] ?? '';
                 <form id="addressForm">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Name" required value="<?php echo htmlspecialchars($u_name); ?>">
+                            <input type="text" class="form-control" name="name" placeholder="Name" required value="<?php echo htmlspecialchars($u_name); ?>" <?php echo ($user_id == 0) ? 'disabled' : ''; ?>>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input type="tel" class="form-control" name="phone" placeholder="10-digit Mobile Number" pattern="[0-9]{10}" required value="<?php echo htmlspecialchars($u_mobile); ?>">
+                            <input type="tel" class="form-control" name="phone" id="addressPhone" placeholder="10-digit Mobile Number" pattern="[0-9]{10}" required value="<?php echo htmlspecialchars($u_mobile); ?>" <?php echo ($user_id == 0) ? 'disabled' : 'readonly'; ?>>
                         </div>
                         <div class="col-md-6 mb-3">
-                             <input type="text" class="form-control" name="pincode" placeholder="Pincode" required value="<?php echo htmlspecialchars($u_pincode); ?>">
+                             <input type="text" class="form-control" name="pincode" placeholder="Pincode" required value="<?php echo htmlspecialchars($u_pincode); ?>" <?php echo ($user_id == 0) ? 'disabled' : ''; ?>>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" name="city" placeholder="City/District/Town" required value="<?php echo htmlspecialchars($u_city); ?>">
+                            <input type="text" class="form-control" name="city" placeholder="City/District/Town" required value="<?php echo htmlspecialchars($u_city); ?>" <?php echo ($user_id == 0) ? 'disabled' : ''; ?>>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <textarea class="form-control" name="address" rows="3" placeholder="Address (Area and Street)" required><?php echo htmlspecialchars($u_address); ?></textarea>
+                            <textarea class="form-control" name="address" rows="3" placeholder="Address (Area and Street)" required <?php echo ($user_id == 0) ? 'disabled' : ''; ?>><?php echo htmlspecialchars($u_address); ?></textarea>
                         </div>
                         <div class="col-md-6 mb-3">
-                             <input type="text" class="form-control" name="state" placeholder="State" required value="<?php echo htmlspecialchars($u_state); ?>">
+                             <input type="text" class="form-control" name="state" placeholder="State" required value="<?php echo htmlspecialchars($u_state); ?>" <?php echo ($user_id == 0) ? 'disabled' : ''; ?>>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" name="landmark" placeholder="Landmark (Optional)">
+                            <input type="text" class="form-control" name="landmark" placeholder="Landmark (Optional)" <?php echo ($user_id == 0) ? 'disabled' : ''; ?>>
                         </div>
                     </div>
                 </form>
@@ -219,6 +254,86 @@ $u_state = $user_data['state'] ?? '';
 <script>
 let currentTotal = <?php echo $grand_total; ?>;
 let discountDetails = { code: '', amount: 0 };
+let isGuestVerified = <?php echo ($user_id > 0) ? 'true' : 'false'; ?>;
+
+function sendGuestOTP() {
+    const mobile = document.getElementById('guestMobile').value;
+    if(mobile.length !== 10) {
+        Swal.fire('Error', 'Please enter a valid 10-digit mobile number', 'error');
+        return;
+    }
+    
+    const btn = document.getElementById('sendOtpBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+    
+    fetch('includes/auth_actions.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `action=send_otp&mobile=${mobile}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === 'success') {
+            document.getElementById('mobileInputRow').classList.add('d-none');
+            document.getElementById('otpInputRow').classList.remove('d-none');
+            Swal.fire('Success', 'OTP sent to ' + mobile, 'success');
+        } else {
+            Swal.fire('Error', data.message, 'error');
+            btn.disabled = false;
+            btn.innerText = 'Send OTP';
+        }
+    });
+}
+
+function verifyGuestOTP() {
+    const mobile = document.getElementById('guestMobile').value;
+    const otp = document.getElementById('guestOTP').value;
+    
+    if(otp.length !== 6) {
+        Swal.fire('Error', 'Please enter 6-digit OTP', 'error');
+        return;
+    }
+    
+    const btn = document.getElementById('verifyOtpBtn');
+    btn.disabled = true;
+    
+    fetch('includes/auth_actions.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `action=verify_otp&mobile=${mobile}&otp=${otp}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === 'success') {
+            // Success!
+            isGuestVerified = true;
+            document.getElementById('otpSection').classList.add('d-none');
+            document.getElementById('verifiedStatus').classList.remove('d-none');
+            document.getElementById('verifiedMobileDisplay').innerText = '+91 ' + mobile;
+            document.getElementById('verifiedMobileInput').value = mobile;
+            document.getElementById('addressPhone').value = mobile;
+            
+            // Enable Address Form
+            const addrSection = document.getElementById('addressSection');
+            addrSection.classList.remove('opacity-50');
+            const inputs = addrSection.querySelectorAll('input, textarea');
+            inputs.forEach(input => input.disabled = false);
+            
+            Swal.fire('Verified', 'Mobile number verified successfully!', 'success');
+        } else {
+            Swal.fire('Error', data.message, 'error');
+            btn.disabled = false;
+        }
+    });
+}
+
+function resetOTPForm() {
+    document.getElementById('otpInputRow').classList.add('d-none');
+    document.getElementById('mobileInputRow').classList.remove('d-none');
+    document.getElementById('sendOtpBtn').disabled = false;
+    document.getElementById('sendOtpBtn').innerText = 'Send OTP';
+}
 
 function applyCoupon() {
     const code = document.getElementById('couponCode').value.trim();
@@ -256,6 +371,12 @@ function applyCoupon() {
 document.getElementById('rzp-button1').onclick = function(e){
     e.preventDefault();
     
+    if(!isGuestVerified) {
+        Swal.fire('Action Required', 'Please verify your mobile number with OTP first.', 'warning');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        return;
+    }
+
     // Validate Address
     const form = document.getElementById('addressForm');
     if(!form.checkValidity()) {

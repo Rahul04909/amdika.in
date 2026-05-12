@@ -15,13 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $user_id = $_SESSION['user_id'] ?? 0;
 if ($user_id == 0) {
-    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+    // Check if we can find user by mobile from address if session is somehow lost
+    // But usually verify_otp should have set this.
+    echo json_encode(['status' => 'error', 'message' => 'User verification required. Please verify your mobile number.']);
     exit;
 }
 
+// 0. Update User Profile with checkout details if it's a guest account
+$address_json = $_POST['address'] ?? '{}';
+$addr_obj = json_decode($address_json, true);
+$u_name = $addr_obj['name'] ?? '';
+$u_mobile = $addr_obj['phone'] ?? '';
+$u_pincode = $addr_obj['pincode'] ?? '';
+$u_city = $addr_obj['city'] ?? '';
+$u_address = $addr_obj['address'] ?? '';
+$u_state = $addr_obj['state'] ?? '';
+
+// Update user details if they are currently default or empty
+$conn->query("UPDATE users SET name = '$u_name', address = '$u_address', city = '$u_city', state = '$u_state', pincode = '$u_pincode' WHERE id = $user_id AND (name = 'Amadika User' OR name = '' OR address = '')");
+
 // 1. Fetch Inputs
 $payment_id = $_POST['payment_id'] ?? '';
-$address_json = $_POST['address'] ?? '{}';
 $coupon_code = $_POST['coupon_code'] ?? '';
 // Re-calculate totals on backend for security
 // ...
@@ -102,7 +116,6 @@ $final_amount = ($total_price + $total_gst + $delivery_charge) - $discount_amoun
 
 // 4. Save Order
 $order_no = 'AMDK-' . date('ymd') . '-' . rand(100, 999);
-$addr_obj = json_decode($address_json, true);
 
 $stmt = $conn->prepare("INSERT INTO orders (order_no, user_id, total_sale_price, total_gst, delivery_charge, coupon_code, discount_amount, final_amount, payment_status, payment_id, address_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'paid', ?, ?)");
 $stmt->bind_param("siddddssds", $order_no, $user_id, $total_price, $total_gst, $delivery_charge, $coupon_code, $discount_amount, $final_amount, $payment_id, $address_json);
