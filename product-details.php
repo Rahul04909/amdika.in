@@ -1383,10 +1383,11 @@ if ($rel_res && $rel_res->num_rows > 0):
 
         // Update Price
         const variantPrice = parseFloat(el.dataset.price);
+        const emiEl = document.getElementById('emiDisplay');
         if (variantPrice > 0) {
             document.getElementById('displaySalePrice').innerText = '₹' + variantPrice.toLocaleString();
-            document.getElementById('emiDisplay').innerText = 'EMI from ₹' + Math.ceil(variantPrice / 24).toLocaleString() + '/month';
-            // Recalculate discount if needed - for now just highight the sale price
+            if (emiEl) emiEl.innerText = 'EMI from ₹' + Math.ceil(variantPrice / 24).toLocaleString() + '/month';
+            // Recalculate discount if needed
             if (baseMrp > variantPrice) {
                 const newDisc = Math.round(((baseMrp - variantPrice) / baseMrp) * 100);
                 const discEl = document.getElementById('displayDiscount');
@@ -1394,7 +1395,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             }
         } else {
             document.getElementById('displaySalePrice').innerText = '₹' + baseSalePrice.toLocaleString();
-            document.getElementById('emiDisplay').innerText = 'EMI from ₹' + Math.ceil(baseSalePrice / 24).toLocaleString() + '/month';
+            if (emiEl) emiEl.innerText = 'EMI from ₹' + Math.ceil(baseSalePrice / 24).toLocaleString() + '/month';
             const discEl = document.getElementById('displayDiscount');
             if (discEl) discEl.innerText = '<?php echo $disc; ?>% off';
         }
