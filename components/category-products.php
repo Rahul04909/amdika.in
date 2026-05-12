@@ -268,7 +268,11 @@ if ($cat_res && $cat_res->num_rows > 0):
                 
                 <div id="<?php echo $unique_cat_id; ?>" class="cp-slider-inner">
                     <?php while($prod = $pres->fetch_assoc()): 
-                        $pimg = !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg';
+                        $pimg = $prod['featured_image'];
+                        
+                        // Strict check: skip if image path is empty or file doesn't exist
+                        if (empty($pimg) || !file_exists(__DIR__ . '/../' . $pimg)) continue;
+                        
                         $presized = get_resized_image($pimg, 300, 300, 'contain');
                         $rating_val = 4 + (rand(0, 10)/10);
                     ?>

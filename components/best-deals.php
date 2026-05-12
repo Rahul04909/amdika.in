@@ -244,7 +244,11 @@ if (!isset($bd_products)) {
             <div id="dealSlider" class="best-deals-slider-container">
                 <?php if (!empty($bd_products)): ?>
                     <?php foreach($bd_products as $prod): 
-                        $img = !empty($prod['featured_image']) ? $prod['featured_image'] : 'assets/images/demo-data/product.jpg';
+                        $img = $prod['featured_image'];
+                        
+                        // Strict check: skip if image is missing on disk
+                        if (empty($img) || !file_exists(__DIR__ . '/../' . $img)) continue;
+                        
                         $resized_img = get_resized_image($img, 400, 500, 'contain'); // Preserves full product aspect ratio
                     ?>
                         <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="deal-product-card">

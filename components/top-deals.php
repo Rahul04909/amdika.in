@@ -371,7 +371,10 @@
                         
                         <div class="td-interactive-grid">
                             <?php foreach($sec['data'] as $item): 
-                                $img_url = get_resized_image($item['featured_image'], 200, 200, 'contain');
+                                $f_img = $item['featured_image'];
+                                if (empty($f_img) || !file_exists(__DIR__ . '/../' . $f_img)) continue;
+                                
+                                $img_url = get_resized_image($f_img, 200, 200, 'contain');
                             ?>
                                 <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item-wrap">
                                     <div class="td-grid-img-wrap">
