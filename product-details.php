@@ -86,6 +86,7 @@ foreach ($variants as $v) {
 
 $gallery = array_unique(array_filter($gallery));
 
+/* 
 // --- Razorpay EMI Plans Implementation ---
 require_once 'vendor/autoload.php';
 use Razorpay\Api\Api;
@@ -103,6 +104,7 @@ try {
 } catch (Exception $e) {
     error_log("EMI Fetch Error: " . $e->getMessage());
 }
+*/
 
 $mrp = $product['mrp'];
 $sale = $product['sale_price'];
@@ -718,6 +720,7 @@ $disc = $product['discount_percent'];
                     <?php endif; ?>
                 </div>
 
+                <?php /* ?>
                 <!-- EMI Widget -->
                 <div class="emi-card shadow-sm">
                     <div class="emi-header">
@@ -740,98 +743,14 @@ $disc = $product['discount_percent'];
                         </a>
                     </div>
                 </div>
+                <?php */ ?>
 
+                <?php /* ?>
                 <!-- EMI Options Sidebar -->
                 <div class="offcanvas offcanvas-end emi-offcanvas" tabindex="-1" id="emiSidebar" aria-labelledby="emiSidebarLabel">
-                    <div class="offcanvas-header">
-                        <div>
-                            <h5 class="offcanvas-title fw-bold" id="emiSidebarLabel">EMI Options</h5>
-                            <p class="mb-0 text-muted" style="font-size: 12px;">Available on payments made via Razorpay</p>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body p-0">
-                        <ul class="nav nav-tabs emi-tabs" id="emiTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="cc-emi-tab" data-bs-toggle="tab" data-bs-target="#cc-emi" type="button" role="tab">Credit Card EMI</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="other-emi-tab" data-bs-toggle="tab" data-bs-target="#other-emi" type="button" role="tab">Other EMIs</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="emiTabContent">
-                            <div class="tab-pane fade show active" id="cc-emi" role="tabpanel">
-                                <?php if(!empty($emi_methods)): ?>
-                                    <?php 
-                                    $bank_logos = [
-                                        'HDFC' => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/HDFC_Bank_logo.svg',
-                                        'ICIC' => 'https://upload.wikimedia.org/wikipedia/commons/1/12/ICICI_Bank_Logo.svg',
-                                        'SBIN' => 'https://upload.wikimedia.org/wikipedia/commons/c/cc/SBI-logo.svg',
-                                        'AXIS' => 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Axis_Bank_logo.svg',
-                                        'KKBK' => 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Kotak_Mahindra_Bank_logo.svg',
-                                        'BARB' => 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Bank_of_Baroda_Logo.svg',
-                                        'CITI' => 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Citibank.svg',
-                                        'HSBC' => 'https://upload.wikimedia.org/wikipedia/commons/a/aa/HSBC_logo_%282018%29.svg',
-                                        'FDRL' => 'https://upload.wikimedia.org/wikipedia/commons/6/6c/Federal_Bank_Logo.svg',
-                                        'INDB' => 'https://upload.wikimedia.org/wikipedia/commons/1/1b/IndusInd_Bank_Logo.svg'
-                                    ];
-                                    ?>
-                                    <?php foreach($emi_methods as $bank_code => $bank_name): ?>
-                                        <div class="bank-item-wrapper" data-bs-toggle="collapse" data-bs-target="#details_<?php echo $bank_code; ?>">
-                                            <div class="bank-item">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="<?php echo $bank_logos[$bank_code] ?? 'https://cdn-icons-png.flaticon.com/512/2830/2830284.png'; ?>" class="bank-logo" alt="<?php echo $bank_code; ?>">
-                                                    <div class="bank-info">
-                                                        <h6><?php echo htmlspecialchars($bank_name); ?></h6>
-                                                        <p>from ₹<?php echo number_format(ceil($sale / 24)); ?>/month</p>
-                                                    </div>
-                                                </div>
-                                                <i class="fas fa-chevron-down text-muted" style="font-size: 12px;"></i>
-                                            </div>
-                                            <div class="collapse p-3 bg-light" id="details_<?php echo $bank_code; ?>">
-                                                <table class="table table-sm table-borderless mb-0" style="font-size: 12px;">
-                                                    <thead class="text-muted border-bottom">
-                                                        <tr>
-                                                            <th>Plan</th>
-                                                            <th>Interest (pa)</th>
-                                                            <th class="text-end">Total</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php 
-                                                        $durations = [3, 6, 9, 12, 18, 24];
-                                                        $rate = 14; // Average interest rate
-                                                        foreach($durations as $m):
-                                                            $monthly = ceil(($sale * (1 + ($rate/100) * ($m/12))) / $m);
-                                                        ?>
-                                                        <tr>
-                                                            <td>₹<?php echo number_format($monthly); ?> x <?php echo $m; ?>m</td>
-                                                            <td><?php echo $rate; ?>%</td>
-                                                            <td class="text-end fw-bold">₹<?php echo number_format($monthly * $m); ?></td>
-                                                        </tr>
-                                                        <?php endforeach; ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <div class="p-5 text-center text-muted">
-                                        <i class="fas fa-credit-card fa-3x mb-3 opacity-25"></i>
-                                        <p>EMI plans will be available during checkout.</p>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="tab-pane fade" id="other-emi" role="tabpanel">
-                                <div class="p-5 text-center text-muted">
-                                    <i class="fas fa-wallet fa-3x mb-3 opacity-25"></i>
-                                    <h6>Debit Card & Cardless EMI</h6>
-                                    <p style="font-size: 13px;">Please check eligibility by entering your mobile number at Razorpay checkout.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ...
                 </div>
+                <?php */ ?>
 
                 <!-- Color Variants -->
                 <?php if (!empty($variants)): ?>
