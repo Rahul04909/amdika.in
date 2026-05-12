@@ -122,7 +122,7 @@
 .chat-widget {
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    left: 30px;
     width: 50px;
     height: 50px;
     background-color: var(--accent-gold);
@@ -148,7 +148,7 @@
 .whatsapp-chat-box {
     position: fixed;
     bottom: 95px;
-    right: 30px;
+    left: 30px;
     width: 320px;
     background: #fff;
     border-radius: 12px;
