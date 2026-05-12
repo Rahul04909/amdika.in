@@ -560,6 +560,30 @@ $disc = $product['discount_percent'];
                     <div class="desc-content">
                         <?php echo $product['description']; // CKEditor content (HTML) ?>
                     </div>
+                    
+                    <?php if(!empty($product['video_url'])): ?>
+                        <?php 
+                            // Convert standard youtube link to embed link
+                            $video_url = $product['video_url'];
+                            $embed_url = $video_url;
+                            if (strpos($video_url, 'watch?v=') !== false) {
+                                $parts = parse_url($video_url);
+                                parse_str($parts['query'], $query);
+                                if (isset($query['v'])) {
+                                    $embed_url = "https://www.youtube.com/embed/" . $query['v'];
+                                }
+                            } elseif (strpos($video_url, 'youtu.be/') !== false) {
+                                $parts = explode('youtu.be/', $video_url);
+                                $embed_url = "https://www.youtube.com/embed/" . end($parts);
+                            }
+                        ?>
+                        <div class="mt-4 pt-3 border-top">
+                            <h5 class="fw-bold mb-3"><i class="fab fa-youtube text-danger me-2"></i>Product Video</h5>
+                            <div class="ratio ratio-16x9 shadow-sm rounded overflow-hidden">
+                                <iframe src="<?php echo $embed_url; ?>" title="Product Video" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Ratings & Reviews -->
