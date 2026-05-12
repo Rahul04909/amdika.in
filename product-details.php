@@ -77,12 +77,12 @@ if (!empty($product['featured_image'])) {
     array_unshift($gallery, $product['featured_image']);
 }
 
-// Add variant images to gallery
-foreach ($variants as $v) {
-    if (!empty($v['image_path'])) {
-        $gallery[] = $v['image_path'];
-    }
-}
+// Remove variant images from gallery as per user request
+// foreach ($variants as $v) {
+//     if (!empty($v['image_path'])) {
+//         $gallery[] = $v['image_path'];
+//     }
+// }
 
 $gallery = array_unique(array_filter($gallery));
 
