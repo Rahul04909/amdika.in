@@ -81,10 +81,10 @@
 .bubble-img-container {
     width: 90px;
     height: 90px;
-    border-radius: 50%;
+    border-radius: 12px;
     margin: 0 auto 12px;
     padding: 3px;
-    border: 1px solid #eee;
+    border: 1px solid #f0f0f0;
     background: #fff;
     transition: all 0.3s ease;
     display: flex;
@@ -101,7 +101,7 @@
 .bubble-img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 10px;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
