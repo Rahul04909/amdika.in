@@ -3,6 +3,9 @@
 <!-- Hero Slider -->
 <?php include 'components/hero.php'; ?>
 
+<!-- News Ticker -->
+<?php include 'components/news-ticker.php'; ?>
+
 <!-- Product Categories -->
 <?php include 'components/product-categories.php'; ?>
 
