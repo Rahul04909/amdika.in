@@ -449,6 +449,98 @@ $disc = $product['discount_percent'];
         margin-bottom: 10px;
         display: block;
     }
+
+    /* Trust Badges */
+    .trust-badges {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 25px;
+        padding: 15px 0;
+        border-top: 1px solid #f0f0f0;
+    }
+    .trust-badge-item {
+        text-align: center;
+    }
+    .trust-badge-item i {
+        font-size: 20px;
+        color: #388e3c;
+        margin-bottom: 8px;
+    }
+    .trust-badge-item p {
+        font-size: 11px;
+        font-weight: 600;
+        color: #212121;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    /* EMI Section */
+    .emi-card {
+        background: #000;
+        border-radius: 12px;
+        padding: 2px;
+        margin: 20px 0;
+        color: #fff;
+        overflow: hidden;
+    }
+    .emi-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+    .emi-body {
+        background: #fff;
+        color: #000;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .emi-info h6 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        color: #0d2366;
+    }
+    .bank-icons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+    .bank-icons img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+    .plus-more {
+        font-size: 11px;
+        color: #666;
+        background: #f0f0f0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: 600;
+    }
+    .btn-view-plans {
+        background: #000;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none !important;
+    }
 </style>
 
 <div class="container-fluid mt-3 mb-5 px-lg-4">
@@ -475,6 +567,22 @@ $disc = $product['discount_percent'];
                             class="fas fa-shopping-cart me-2"></i> Add to Cart</button>
                     <button class="btn-buy" onclick="buyNow(<?php echo $product['id']; ?>)"><i
                             class="fas fa-bolt me-2"></i> Buy Now</button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <div class="trust-badge-item">
+                        <i class="fas fa-shipping-fast"></i>
+                        <p>Free Delivery</p>
+                    </div>
+                    <div class="trust-badge-item">
+                        <i class="fas fa-undo-alt"></i>
+                        <p>7 Days Returns</p>
+                    </div>
+                    <div class="trust-badge-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Secure Payment</p>
+                    </div>
                 </div>
             </div>
 
@@ -509,6 +617,29 @@ $disc = $product['discount_percent'];
                         <span class="mrp-price">₹<?php echo number_format((float) $mrp); ?></span>
                         <span class="disc-off" id="displayDiscount"><?php echo $disc; ?>% off</span>
                     <?php endif; ?>
+                </div>
+
+                <!-- EMI Widget -->
+                <div class="emi-card shadow-sm">
+                    <div class="emi-header">
+                        <span class="fw-bold">EMI Plans</span>
+                        <span class="opacity-75">powered by <img src="https://razorpay.com/assets/razorpay-logo-white.svg" height="12" style="margin-top:-2px;"></span>
+                    </div>
+                    <div class="emi-body">
+                        <div class="emi-info">
+                            <h6 id="emiDisplay">EMI from ₹<?php echo number_format(ceil($sale / 24)); ?>/month</h6>
+                            <div class="bank-icons">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/SBI-logo.svg" alt="SBI">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/ICICI_Bank_Logo.svg" alt="ICICI">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/HDFC_Bank_logo.svg" alt="HDFC">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Axis_Bank_logo.svg" alt="AXIS">
+                                <span class="plus-more">+14</span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" class="btn-view-plans" onclick="Swal.fire({title:'EMI Plans', text:'Select Razorpay at checkout to see full EMI options from 20+ banks.', icon:'info'})">
+                            View plans <i class="fas fa-chevron-right" style="font-size:10px;"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Color Variants -->
@@ -1144,6 +1275,7 @@ if ($rel_res && $rel_res->num_rows > 0):
         const variantPrice = parseFloat(el.dataset.price);
         if (variantPrice > 0) {
             document.getElementById('displaySalePrice').innerText = '₹' + variantPrice.toLocaleString();
+            document.getElementById('emiDisplay').innerText = 'EMI from ₹' + Math.ceil(variantPrice / 24).toLocaleString() + '/month';
             // Recalculate discount if needed - for now just highight the sale price
             if (baseMrp > variantPrice) {
                 const newDisc = Math.round(((baseMrp - variantPrice) / baseMrp) * 100);
@@ -1152,6 +1284,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             }
         } else {
             document.getElementById('displaySalePrice').innerText = '₹' + baseSalePrice.toLocaleString();
+            document.getElementById('emiDisplay').innerText = 'EMI from ₹' + Math.ceil(baseSalePrice / 24).toLocaleString() + '/month';
             const discEl = document.getElementById('displayDiscount');
             if (discEl) discEl.innerText = '<?php echo $disc; ?>% off';
         }
