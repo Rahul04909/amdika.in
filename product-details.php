@@ -470,6 +470,78 @@ $disc = $product['discount_percent'];
         margin-bottom: 5px;
     }
 
+    /* EMI Sidebar Styles */
+    .emi-offcanvas {
+        width: 450px !important;
+        border-left: none;
+    }
+    .emi-offcanvas .offcanvas-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #eee;
+    }
+    .emi-tabs {
+        border-bottom: 1px solid #eee;
+    }
+    .emi-tabs .nav-link {
+        color: #666;
+        border: none;
+        padding: 15px 25px;
+        font-weight: 500;
+        position: relative;
+    }
+    .emi-tabs .nav-link.active {
+        color: #2874f0;
+        background: transparent;
+    }
+    .emi-tabs .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #2874f0;
+    }
+    .bank-item {
+        padding: 20px 15px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .bank-item:hover {
+        background: #fcfcfc;
+    }
+    .bank-logo {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+        margin-right: 15px;
+    }
+    .bank-info h6 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .bank-info p {
+        margin: 0;
+        font-size: 13px;
+        color: #878787;
+    }
+    .emi-details-table {
+        font-size: 13px;
+        background: #f9f9f9;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+    @media (max-width: 576px) {
+        .emi-offcanvas {
+            width: 100% !important;
+        }
+    }
+
     .variant-label {
         font-size: 14px;
         color: #878787;
@@ -663,51 +735,98 @@ $disc = $product['discount_percent'];
                                 <span class="plus-more">+14</span>
                             </div>
                         </div>
-                        <a href="javascript:void(0)" class="btn-view-plans" data-bs-toggle="modal" data-bs-target="#emiModal">
+                        <a href="javascript:void(0)" class="btn-view-plans" data-bs-toggle="offcanvas" data-bs-target="#emiSidebar">
                             View plans <i class="fas fa-chevron-right" style="font-size:10px;"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- EMI Plans Modal -->
-                <div class="modal fade" id="emiModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0">
-                            <div class="modal-header bg-dark text-white">
-                                <h5 class="modal-title">EMI Plans on Amadika</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <!-- EMI Options Sidebar -->
+                <div class="offcanvas offcanvas-end emi-offcanvas" tabindex="-1" id="emiSidebar" aria-labelledby="emiSidebarLabel">
+                    <div class="offcanvas-header">
+                        <div>
+                            <h5 class="offcanvas-title fw-bold" id="emiSidebarLabel">EMI Options</h5>
+                            <p class="mb-0 text-muted" style="font-size: 12px;">Available on payments made via Razorpay</p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body p-0">
+                        <ul class="nav nav-tabs emi-tabs" id="emiTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="cc-emi-tab" data-bs-toggle="tab" data-bs-target="#cc-emi" type="button" role="tab">Credit Card EMI</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="other-emi-tab" data-bs-toggle="tab" data-bs-target="#other-emi" type="button" role="tab">Other EMIs</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="emiTabContent">
+                            <div class="tab-pane fade show active" id="cc-emi" role="tabpanel">
+                                <?php if(!empty($emi_methods)): ?>
+                                    <?php 
+                                    $bank_logos = [
+                                        'HDFC' => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/HDFC_Bank_logo.svg',
+                                        'ICIC' => 'https://upload.wikimedia.org/wikipedia/commons/1/12/ICICI_Bank_Logo.svg',
+                                        'SBIN' => 'https://upload.wikimedia.org/wikipedia/commons/c/cc/SBI-logo.svg',
+                                        'AXIS' => 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Axis_Bank_logo.svg',
+                                        'KKBK' => 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Kotak_Mahindra_Bank_logo.svg',
+                                        'BARB' => 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Bank_of_Baroda_Logo.svg',
+                                        'CITI' => 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Citibank.svg',
+                                        'HSBC' => 'https://upload.wikimedia.org/wikipedia/commons/a/aa/HSBC_logo_%282018%29.svg',
+                                        'FDRL' => 'https://upload.wikimedia.org/wikipedia/commons/6/6c/Federal_Bank_Logo.svg',
+                                        'INDB' => 'https://upload.wikimedia.org/wikipedia/commons/1/1b/IndusInd_Bank_Logo.svg'
+                                    ];
+                                    ?>
+                                    <?php foreach($emi_methods as $bank_code => $bank_name): ?>
+                                        <div class="bank-item-wrapper" data-bs-toggle="collapse" data-bs-target="#details_<?php echo $bank_code; ?>">
+                                            <div class="bank-item">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="<?php echo $bank_logos[$bank_code] ?? 'https://cdn-icons-png.flaticon.com/512/2830/2830284.png'; ?>" class="bank-logo" alt="<?php echo $bank_code; ?>">
+                                                    <div class="bank-info">
+                                                        <h6><?php echo htmlspecialchars($bank_name); ?></h6>
+                                                        <p>from ₹<?php echo number_format(ceil($sale / 24)); ?>/month</p>
+                                                    </div>
+                                                </div>
+                                                <i class="fas fa-chevron-down text-muted" style="font-size: 12px;"></i>
+                                            </div>
+                                            <div class="collapse p-3 bg-light" id="details_<?php echo $bank_code; ?>">
+                                                <table class="table table-sm table-borderless mb-0" style="font-size: 12px;">
+                                                    <thead class="text-muted border-bottom">
+                                                        <tr>
+                                                            <th>Plan</th>
+                                                            <th>Interest (pa)</th>
+                                                            <th class="text-end">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php 
+                                                        $durations = [3, 6, 9, 12, 18, 24];
+                                                        $rate = 14; // Average interest rate
+                                                        foreach($durations as $m):
+                                                            $monthly = ceil(($sale * (1 + ($rate/100) * ($m/12))) / $m);
+                                                        ?>
+                                                        <tr>
+                                                            <td>₹<?php echo number_format($monthly); ?> x <?php echo $m; ?>m</td>
+                                                            <td><?php echo $rate; ?>%</td>
+                                                            <td class="text-end fw-bold">₹<?php echo number_format($monthly * $m); ?></td>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="p-5 text-center text-muted">
+                                        <i class="fas fa-credit-card fa-3x mb-3 opacity-25"></i>
+                                        <p>EMI plans will be available during checkout.</p>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <div class="modal-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0" style="font-size: 14px;">
-                                        <thead class="bg-light">
-                                            <tr>
-                                                <th class="ps-3">Bank Name</th>
-                                                <th>Starting EMI</th>
-                                                <th class="pe-3">Duration</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php if(!empty($emi_methods)): ?>
-                                                <?php foreach($emi_methods as $bank_code => $bank_name): ?>
-                                                    <tr>
-                                                        <td class="ps-3 fw-bold"><?php echo htmlspecialchars($bank_name); ?></td>
-                                                        <td class="text-success">₹<?php echo number_format(ceil($sale / 24)); ?></td>
-                                                        <td class="pe-3">Up to 24 Months</td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <tr>
-                                                    <td colspan="3" class="text-center py-4 text-muted">
-                                                        EMI options will be available at Razorpay checkout.
-                                                    </td>
-                                                </tr>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="p-3 bg-light border-top text-center" style="font-size: 12px; color: #666;">
-                                    * Final EMI amount and interest rates depend on the bank selected during payment.
+                            <div class="tab-pane fade" id="other-emi" role="tabpanel">
+                                <div class="p-5 text-center text-muted">
+                                    <i class="fas fa-wallet fa-3x mb-3 opacity-25"></i>
+                                    <h6>Debit Card & Cardless EMI</h6>
+                                    <p style="font-size: 13px;">Please check eligibility by entering your mobile number at Razorpay checkout.</p>
                                 </div>
                             </div>
                         </div>
