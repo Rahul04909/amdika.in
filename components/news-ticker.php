@@ -1,12 +1,13 @@
 <style>
     /* --- Modern Infinite News Ticker --- */
     .news-ticker-container {
-        background-color: #FFC107; /* Brand Yellow */
+        background-color: #FFC107;
+        /* Brand Yellow */
         color: #000;
         overflow: hidden;
         padding: 10px 0;
-        border-top: 1px solid rgba(0,0,0,0.05);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         position: relative;
         display: flex;
         user-select: none;
@@ -44,8 +45,13 @@
     }
 
     @keyframes scroll-left {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
     }
 
     /* Pause on hover */
@@ -58,35 +64,49 @@
         .news-ticker-container {
             padding: 8px 0;
         }
+
         .ticker-item {
             font-size: 12px;
             padding: 0 20px;
         }
+
         .ticker-dot {
             margin-left: 20px;
         }
+
         .ticker-scroll {
-            animation-duration: 25s; /* Slightly faster for shorter distance */
+            animation-duration: 25s;
+            /* Slightly faster for shorter distance */
         }
     }
 </style>
 
 <div class="news-ticker-container">
     <div class="ticker-scroll">
-        <?php for($i=0; $i<6; $i++): ?>
-        <div class="ticker-item">
-            SUNNY SIDE SALE - UP TO 60% OFF
-            <div class="ticker-dot"></div>
-        </div>
+        <?php for ($i = 0; $i < 6; $i++): ?>
+            <div class="ticker-item">
+                Welcome To Amadika Online Store
+                <div class="ticker-dot"></div>
+            </div>
         <?php endfor; ?>
     </div>
     <!-- Duplicate for seamless loop -->
     <div class="ticker-scroll" aria-hidden="true">
-        <?php for($i=0; $i<6; $i++): ?>
-        <div class="ticker-item">
-            SUNNY SIDE SALE - UP TO 60% OFF
-            <div class="ticker-dot"></div>
-        </div>
+        <?php for ($i = 0; $i < 6; $i++): ?>
+            <div class="ticker-item">
+                Grab The Best Deals on Leather Waste Bin Collection
+                <div class="ticker-dot"></div>
+            </div>
+        <?php endfor; ?>
+    </div>
+
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-scroll" aria-hidden="true">
+        <?php for ($i = 0; $i < 6; $i++): ?>
+            <div class="ticker-item">
+                Explore the top quality & premium portable mini bar's
+                <div class="ticker-dot"></div>
+            </div>
         <?php endfor; ?>
     </div>
 </div>
