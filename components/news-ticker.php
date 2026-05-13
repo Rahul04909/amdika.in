@@ -1,112 +1,89 @@
 <style>
-    /* --- Modern Infinite News Ticker --- */
+    /* --- Professional Seamless News Ticker --- */
     .news-ticker-container {
-        background-color: #FFC107;
-        /* Brand Yellow */
+        background-color: #FFC107; /* Brand Yellow */
         color: #000;
         overflow: hidden;
-        padding: 10px 0;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 12px 0;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
         position: relative;
         display: flex;
+        align-items: center;
         user-select: none;
     }
 
-    .ticker-scroll {
+    .ticker-scroll-wrapper {
         display: flex;
-        flex-shrink: 0;
-        min-width: 100%;
-        align-items: center;
-        justify-content: space-around;
-        animation: scroll-left 40s linear infinite;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        animation: ticker-animation 40s linear infinite;
+    }
+
+    /* Pause on hover */
+    .news-ticker-container:hover .ticker-scroll-wrapper {
+        animation-play-state: paused;
     }
 
     .ticker-item {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        flex-shrink: 0;
         padding: 0 40px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
         font-size: 14px;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
     .ticker-dot {
-        width: 5px;
-        height: 5px;
-        background-color: #000;
+        width: 6px;
+        height: 6px;
+        background: #000;
         border-radius: 50%;
         margin-left: 40px;
-        flex-shrink: 0;
-        opacity: 0.6;
+        opacity: 0.3;
     }
 
-    @keyframes scroll-left {
-        from {
-            transform: translateX(0);
-        }
-
-        to {
-            transform: translateX(-100%);
-        }
-    }
-
-    /* Pause on hover */
-    .news-ticker-container:hover .ticker-scroll {
-        animation-play-state: paused;
+    @keyframes ticker-animation {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Scroll exactly half to loop seamlessly */
     }
 
     /* Mobile adjustments */
     @media (max-width: 768px) {
         .news-ticker-container {
-            padding: 8px 0;
+            padding: 10px 0;
         }
-
         .ticker-item {
-            font-size: 12px;
-            padding: 0 20px;
+            font-size: 11px;
+            padding: 0 25px;
         }
-
         .ticker-dot {
-            margin-left: 20px;
-        }
-
-        .ticker-scroll {
-            animation-duration: 25s;
-            /* Slightly faster for shorter distance */
+            margin-left: 25px;
         }
     }
 </style>
 
 <div class="news-ticker-container">
-    <div class="ticker-scroll">
-        <?php for ($i = 0; $i < 6; $i++): ?>
-            <div class="ticker-item">
-                Welcome To Amadika Online Store
-                <div class="ticker-dot"></div>
-            </div>
-        <?php endfor; ?>
-    </div>
-    <!-- Duplicate for seamless loop -->
-    <div class="ticker-scroll" aria-hidden="true">
-        <?php for ($i = 0; $i < 6; $i++): ?>
-            <div class="ticker-item">
-                Grab The Best Deals on Leather Waste Bin Collection
-                <div class="ticker-dot"></div>
-            </div>
-        <?php endfor; ?>
-    </div>
-
-    <!-- Duplicate for seamless loop -->
-    <div class="ticker-scroll" aria-hidden="true">
-        <?php for ($i = 0; $i < 6; $i++): ?>
-            <div class="ticker-item">
-                Explore the top quality & premium portable mini bar's
-                <div class="ticker-dot"></div>
-            </div>
-        <?php endfor; ?>
+    <div class="ticker-scroll-wrapper">
+        <?php 
+        // Define messages once
+        $ticker_messages = [
+            "Welcome To Amadika Online Store",
+            "Grab The Best Deals on Leather Waste Bin Collection",
+            "Explore the top quality & premium portable mini bar's",
+            "Free Shipping on orders above ₹1999",
+            "New Arrivals: Check out our Summer Collection"
+        ];
+        
+        // Loop twice for a seamless infinite effect
+        for ($j = 0; $j < 2; $j++): 
+            foreach ($ticker_messages as $message): ?>
+                <div class="ticker-item">
+                    <?php echo htmlspecialchars($message); ?>
+                    <div class="ticker-dot"></div>
+                </div>
+            <?php endforeach;
+        endfor; ?>
     </div>
 </div>
