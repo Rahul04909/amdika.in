@@ -1345,8 +1345,12 @@ if ($rel_res && $rel_res->num_rows > 0):
 
 <script>
     function changeImage(src, btn) {
+        if (!src) return;
+        // Ensure path starts with link_prefix if not already absolute
+        const fullSrc = (src.startsWith('http') || src.startsWith('/')) ? src : '<?php echo $link_prefix; ?>' + src;
+        
         // Change Main Image
-        document.getElementById('mainImage').src = src;
+        document.getElementById('mainImage').src = fullSrc;
 
         // Active Class Handling
         document.querySelectorAll('.thumb-btn').forEach(el => el.classList.remove('active'));
@@ -1442,12 +1446,16 @@ if ($rel_res && $rel_res->num_rows > 0):
 
     function updateThumbnailTrack(images) {
         const track = document.querySelector('.thumbnail-track');
+        if (!track) return;
         track.innerHTML = '';
         images.forEach((img, idx) => {
+            if (!img) return;
+            const fullSrc = (img.startsWith('http') || img.startsWith('/')) ? img : '<?php echo $link_prefix; ?>' + img;
+            
             const btn = document.createElement('div');
             btn.className = `thumb-btn ${idx === 0 ? 'active' : ''}`;
             btn.onclick = function() { changeImage(img, this); };
-            btn.innerHTML = `<img src="${img}">`;
+            btn.innerHTML = `<img src="${fullSrc}">`;
             track.appendChild(btn);
         });
     }

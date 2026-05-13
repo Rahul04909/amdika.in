@@ -10,6 +10,7 @@ if (strpos($current_script, '/user/') !== false) {
 } elseif (strpos($current_script, '/pages/') !== false) {
     $assets_path = '../../assets/';
 }
+$link_prefix = str_replace('assets/', '', $assets_path);
 ?>
 <!DOCTYPE html>
 <html lang="en">
