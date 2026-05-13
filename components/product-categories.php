@@ -5,33 +5,26 @@
 /* --- Trending Categories (Sample Match) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 40px 0 80px 0;
+    padding: 40px 0;
     position: relative;
-    overflow: hidden;
 }
 
-.trending-bg-shape {
-    position: absolute;
-    top: 20px;
-    left: 2.5%;
-    width: 95%;
-    height: 300px; /* Exact height to cover title and half-card */
+.trending-box {
+    margin: 0 20px;
     background: #dbf8f1;
-    border-radius: 20px;
-    z-index: 1;
+    border-radius: 25px;
+    padding: 40px 0 0 0;
+    position: relative;
 }
 
 .category-header {
-    position: relative;
-    z-index: 2;
     text-align: center;
-    padding-top: 40px;
     margin-bottom: 30px;
 }
 
 .category-header h2 {
     font-family: 'Rubik', sans-serif;
-    font-size: 38px;
+    font-size: 36px;
     font-weight: 800;
     color: #1a2b4e;
     margin-bottom: 5px;
@@ -40,19 +33,17 @@
 .category-header p {
     font-size: 15px;
     color: #666;
-    font-weight: 400;
     margin-bottom: 0;
 }
 
 .category-slider {
-    position: relative;
-    z-index: 2;
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 0 5%;
+    padding: 0 20px 40px 20px;
     scrollbar-width: none;
     scroll-behavior: smooth;
+    margin-bottom: -60px; /* Pulls cards down to hang off the edge */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -144,62 +135,62 @@
 }
 
 @media (max-width: 768px) {
-    .category-header h2 { font-size: 26px; }
-    .category-header p { font-size: 13px; padding: 0 20px; }
-    .trending-bg-shape { height: 220px; top: 0; width: 100%; left: 0; border-radius: 0; }
-    .category-slider { padding: 0 15px; }
-    .trending-cat-card { width: 160px; border-radius: 12px; }
-    .trending-cat-img-box { height: 120px; }
-    .trending-cat-info { padding: 12px 10px; }
-    .trending-cat-info h3 { font-size: 15px; }
+    .category-section-wrapper { padding: 20px 0; }
+    .trending-box { margin: 0; border-radius: 0; padding: 30px 0 0 0; }
+    .category-header h2 { font-size: 24px; }
+    .category-header p { font-size: 13px; padding: 0 15px; }
+    .category-slider { padding: 0 15px 30px 15px; margin-bottom: -40px; gap: 12px; }
+    .trending-cat-card { width: 155px; border-radius: 12px; }
+    .trending-cat-img-box { height: 115px; }
+    .trending-cat-info { padding: 10px; }
+    .trending-cat-info h3 { font-size: 14px; }
     .trending-cat-info p { font-size: 10px; }
 }
 </style>
 
 <section class="category-section-wrapper">
-    <div class="trending-bg-shape"></div>
-    
-    <div class="category-header">
-        <h2>Trending Categories</h2>
-        <p>Explore popular and premium collections at Amadika.in</p>
-    </div>
+    <div class="trending-box">
+        <div class="category-header">
+            <h2>Trending Categories</h2>
+            <p>Explore popular and premium collections at Amadika.in</p>
+        </div>
 
-    <!-- Navigation Arrows -->
-    <button id="catPrev" class="cat-nav-btn cat-prev" style="left: 20px;"><i class="fa-solid fa-chevron-left"></i></button>
-    <button id="catNext" class="cat-nav-btn cat-next" style="right: 20px;"><i class="fa-solid fa-chevron-right"></i></button>
-
-    <div id="catSlider" class="category-slider">
-        <?php
-        require_once __DIR__ . '/../database/db_config.php';
-        require_once __DIR__ . '/../includes/image_helper.php';
-        
-        $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
-        $cat_result = $conn->query($cat_sql);
-        
-        if ($cat_result && $cat_result->num_rows > 0) {
-            while($cat = $cat_result->fetch_assoc()) {
-                $cat_name = htmlspecialchars($cat['name']);
-                $cat_slug = htmlspecialchars($cat['slug']);
-                $cat_desc = !empty($cat['description']) ? strip_tags($cat['description']) : 'Explore Collection';
-                // Limit description length
-                if(strlen($cat_desc) > 25) $cat_desc = substr($cat_desc, 0, 22) . '...';
-                
-                $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
-                $bubble_img = get_resized_image($img_path, 400, 300, 'cover');
-                ?>
-                <a href="products.php?category=<?php echo $cat_slug; ?>" class="trending-cat-card">
-                    <div class="trending-cat-img-box">
-                        <img src="<?php echo $bubble_img; ?>" alt="<?php echo $cat_name; ?>">
-                    </div>
-                    <div class="trending-cat-info">
-                        <h3><?php echo $cat_name; ?></h3>
-                        <p><?php echo $cat_desc; ?></p>
-                    </div>
-                </a>
-                <?php
+        <div id="catSlider" class="category-slider">
+            <?php
+            require_once __DIR__ . '/../database/db_config.php';
+            require_once __DIR__ . '/../includes/image_helper.php';
+            
+            $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
+            $cat_result = $conn->query($cat_sql);
+            
+            if ($cat_result && $cat_result->num_rows > 0) {
+                while($cat = $cat_result->fetch_assoc()) {
+                    $cat_name = htmlspecialchars($cat['name']);
+                    $cat_slug = htmlspecialchars($cat['slug']);
+                    $cat_desc = !empty($cat['description']) ? strip_tags($cat['description']) : 'Explore Collection';
+                    if(strlen($cat_desc) > 25) $cat_desc = substr($cat_desc, 0, 22) . '...';
+                    
+                    $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
+                    $bubble_img = get_resized_image($img_path, 400, 300, 'cover');
+                    ?>
+                    <a href="products.php?category=<?php echo $cat_slug; ?>" class="trending-cat-card">
+                        <div class="trending-cat-img-box">
+                            <img src="<?php echo $bubble_img; ?>" alt="<?php echo $cat_name; ?>">
+                        </div>
+                        <div class="trending-cat-info">
+                            <h3><?php echo $cat_name; ?></h3>
+                            <p><?php echo $cat_desc; ?></p>
+                        </div>
+                    </a>
+                    <?php
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
+
+        <!-- Navigation Arrows (Moved inside trending-box for perfect alignment) -->
+        <button id="catPrev" class="cat-nav-btn" style="left: -22px;"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="catNext" class="cat-nav-btn" style="right: -22px;"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 </section>
 
