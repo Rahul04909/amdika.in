@@ -12,8 +12,11 @@ $stmt->execute();
 $prod = $stmt->get_result()->fetch_assoc();
 if(!$prod) { header("Location: manage-products.php"); exit; }
 
-// Ensure variant gallery column exists
-$conn->query("ALTER TABLE product_color_variants ADD COLUMN IF NOT EXISTS gallery_images TEXT NULL AFTER image_path");
+// Ensure variant gallery column exists (Safe check for older MySQL)
+$checkColumn = $conn->query("SHOW COLUMNS FROM product_color_variants LIKE 'gallery_images'");
+if ($checkColumn->num_rows == 0) {
+    $conn->query("ALTER TABLE product_color_variants ADD COLUMN gallery_images TEXT NULL AFTER image_path");
+}
 
 // Fetch Categories
 $cats = $conn->query("SELECT id, name FROM product_categories ORDER BY name ASC");
@@ -180,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Update
                     $stmt_v = $conn->prepare("UPDATE product_color_variants SET color_id=?, price=?, image_path=?, gallery_images=? WHERE id=? AND product_id=?");
                     $stmt_v->bind_param("idssii", $color_id, $v_price, $v_image_path, $v_gallery_json, $v_id, $id);
+                    if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
                     $submitted_variant_ids[] = $v_id;
                 } else {
                     // Insert

@@ -11,6 +11,12 @@ $all_colors = $conn->query("SELECT * FROM colors ORDER BY name ASC");
 $success_msg = '';
 $error_msg = '';
 
+// Ensure variant gallery column exists
+$checkColumn = $conn->query("SHOW COLUMNS FROM product_color_variants LIKE 'gallery_images'");
+if ($checkColumn->num_rows == 0) {
+    $conn->query("ALTER TABLE product_color_variants ADD COLUMN gallery_images TEXT NULL AFTER image_path");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitization & Input (No real_escape_string needed for prepared statements)
     $name = $_POST['name'];
