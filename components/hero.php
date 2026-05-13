@@ -51,7 +51,7 @@
 <section class="hero-section mb-3">
     <div class="hero-banner-item">
         <?php
-        $heroSrc = 'assets/images/hero/amadika-hero.png';
+        $heroSrc = 'assets/images/hero/new-hero.png';
         $desktopHero = get_resized_image($heroSrc, 1920, 700);
         $mobileHero = get_resized_image($heroSrc, 800, 450, 'contain');
         ?>

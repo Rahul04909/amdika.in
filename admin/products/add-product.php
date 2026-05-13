@@ -113,8 +113,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path) VALUES (?, ?, ?, ?)");
-                $stmt_v->bind_param("iids", $product_id, $color_id, $v_price, $v_image_path);
+                // Handle Variant Gallery Uploads
+                $v_gallery = [];
+                if (isset($_FILES['variant_gallery']['tmp_name'][$index])) {
+                    $v_gal_dir = "../../assets/images/products/variants/gallery/";
+                    if (!file_exists($v_gal_dir)) mkdir($v_gal_dir, 0777, true);
+                    
+                    foreach ($_FILES['variant_gallery']['tmp_name'][$index] as $k => $tmp_name) {
+                        if ($_FILES['variant_gallery']['error'][$index][$k] == 0) {
+                            $ext = strtolower(pathinfo($_FILES["variant_gallery"]["name"][$index][$k], PATHINFO_EXTENSION));
+                            $new_name = "var_gal_" . $product_id . "_" . $index . "_" . $k . "_" . time() . "." . $ext;
+                            if (move_uploaded_file($tmp_name, $v_gal_dir . $new_name)) {
+                                $v_gallery[] = "assets/images/products/variants/gallery/" . $new_name;
+                            }
+                        }
+                    }
+                }
+                $v_gallery_json = json_encode($v_gallery);
+
+                $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path, gallery_images) VALUES (?, ?, ?, ?, ?)");
+                $stmt_v->bind_param("iidss", $product_id, $color_id, $v_price, $v_image_path, $v_gallery_json);
                 if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
             }
         }
@@ -232,8 +250,9 @@ $page_title = 'Add New Product';
                                         <thead class="bg-light">
                                             <tr>
                                                 <th>Select Color</th>
-                                                <th width="200">Sale Price (Optional)</th>
-                                                <th>Color Image</th>
+                                                <th width="150">Price</th>
+                                                <th>Main Image</th>
+                                                <th>Gallery Images</th>
                                                 <th width="50"></th>
                                             </tr>
                                         </thead>
@@ -400,8 +419,11 @@ $page_title = 'Add New Product';
                 <td>
                     <div class="d-flex align-items-center">
                         <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
-                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover; display:none;">
                     </div>
+                </td>
+                <td>
+                    <input type="file" class="form-control form-control-sm" name="variant_gallery[${rowCount}][]" multiple accept="image/*">
                 </td>
                 <td class="text-center">
                     <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">

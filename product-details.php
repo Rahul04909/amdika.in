@@ -763,7 +763,9 @@ $disc = $product['discount_percent'];
                                     title="<?php echo htmlspecialchars($v['color_name']); ?>"
                                     data-id="<?php echo $v['color_id']; ?>"
                                     data-name="<?php echo htmlspecialchars($v['color_name']); ?>"
-                                    data-price="<?php echo $v['price']; ?>" data-image="<?php echo $v['image_path']; ?>"
+                                    data-price="<?php echo $v['price']; ?>" 
+                                    data-image="<?php echo $v['image_path']; ?>"
+                                    data-gallery='<?php echo $v['gallery_images']; ?>'
                                     onclick="selectColor(this)">
                                     <?php if (!empty($v['image_path'])): ?>
                                         <img src="<?php echo $v['image_path']; ?>"
@@ -1373,6 +1375,7 @@ if ($rel_res && $rel_res->num_rows > 0):
     let selectedColorId = null;
     const baseSalePrice = <?php echo $sale; ?>;
     const baseMrp = <?php echo $mrp; ?>;
+    const initialGallery = <?php echo json_encode($gallery); ?>;
 
     function selectColor(el) {
         document.querySelectorAll('.color-item').forEach(item => item.classList.remove('active'));
@@ -1400,13 +1403,41 @@ if ($rel_res && $rel_res->num_rows > 0):
             if (discEl) discEl.innerText = '<?php echo $disc; ?>% off';
         }
 
-        // Update Image
-        const varImg = el.dataset.image;
-        if (varImg) {
-            changeImage(varImg, null); // Change main image
-            // We could also prepend this to gallery thumbnails? 
-            // For now, just changing main image is standard.
+        // Update Gallery
+        let variantGallery = [];
+        try {
+            variantGallery = JSON.parse(el.dataset.gallery) || [];
+        } catch (e) {
+            variantGallery = [];
         }
+
+        const mainVarImg = el.dataset.image;
+        if (mainVarImg) {
+            variantGallery.unshift(mainVarImg);
+        }
+
+        // If variant has no specific gallery, we might want to keep the main gallery or show variant image + main gallery
+        // The user said: "uski image k sath upload gallery images bhi show honi chaiye"
+        // Let's assume they want the variant-specific images only.
+        if (variantGallery.length > 0) {
+            updateThumbnailTrack(variantGallery);
+            changeImage(variantGallery[0], document.querySelector('.thumb-btn'));
+        } else {
+            updateThumbnailTrack(initialGallery);
+            changeImage(initialGallery[0], document.querySelector('.thumb-btn'));
+        }
+    }
+
+    function updateThumbnailTrack(images) {
+        const track = document.querySelector('.thumbnail-track');
+        track.innerHTML = '';
+        images.forEach((img, idx) => {
+            const btn = document.createElement('div');
+            btn.className = `thumb-btn ${idx === 0 ? 'active' : ''}`;
+            btn.onclick = function() { changeImage(img, this); };
+            btn.innerHTML = `<img src="${img}">`;
+            track.appendChild(btn);
+        });
     }
 
     function addToCart(id) {

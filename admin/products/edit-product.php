@@ -12,6 +12,9 @@ $stmt->execute();
 $prod = $stmt->get_result()->fetch_assoc();
 if(!$prod) { header("Location: manage-products.php"); exit; }
 
+// Ensure variant gallery column exists
+$conn->query("ALTER TABLE product_color_variants ADD COLUMN IF NOT EXISTS gallery_images TEXT NULL AFTER image_path");
+
 // Fetch Categories
 $cats = $conn->query("SELECT id, name FROM product_categories ORDER BY name ASC");
 
@@ -127,21 +130,44 @@ $error_msg = '';
                     $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$index], PATHINFO_EXTENSION));
                     $v_new_name = "var_" . $id . "_" . $index . "_" . time() . "." . $v_ext;
                     if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
-                        // Delete old variant image if exists
                         if(!empty($v_image_path) && file_exists("../../" . $v_image_path)) unlink("../../" . $v_image_path);
-                        $v_image_path = "assets/images/products/variants/" . $v_new_name;
+                        $v_image_path = "assets/images/products/variants/" . $new_name;
                     }
                 }
 
+                // Handle Variant Gallery Uploads
+                $v_gallery = [];
+                if ($v_id > 0) {
+                    $old_v = $conn->query("SELECT gallery_images FROM product_color_variants WHERE id = $v_id")->fetch_assoc();
+                    $v_gallery = json_decode($old_v['gallery_images'], true) ?: [];
+                }
+
+                // New gallery uploads for this variant
+                if (isset($_FILES['variant_gallery']['tmp_name'][$index])) {
+                    $v_gal_dir = "../../assets/images/products/variants/gallery/";
+                    if (!file_exists($v_gal_dir)) mkdir($v_gal_dir, 0777, true);
+                    
+                    foreach ($_FILES['variant_gallery']['tmp_name'][$index] as $k => $tmp_name) {
+                        if ($_FILES['variant_gallery']['error'][$index][$k] == 0) {
+                            $ext = strtolower(pathinfo($_FILES["variant_gallery"]["name"][$index][$k], PATHINFO_EXTENSION));
+                            $new_name = "var_gal_" . $id . "_" . $index . "_" . $k . "_" . time() . "." . $ext;
+                            if (move_uploaded_file($tmp_name, $v_gal_dir . $new_name)) {
+                                $v_gallery[] = "assets/images/products/variants/gallery/" . $new_name;
+                            }
+                        }
+                    }
+                }
+                $v_gallery_json = json_encode($v_gallery);
+
                 if ($v_id > 0) {
                     // Update
-                    $stmt_v = $conn->prepare("UPDATE product_color_variants SET color_id=?, price=?, image_path=? WHERE id=? AND product_id=?");
-                    $stmt_v->bind_param("idsii", $color_id, $v_price, $v_image_path, $v_id, $id);
+                    $stmt_v = $conn->prepare("UPDATE product_color_variants SET color_id=?, price=?, image_path=?, gallery_images=? WHERE id=? AND product_id=?");
+                    $stmt_v->bind_param("idssii", $color_id, $v_price, $v_image_path, $v_gallery_json, $v_id, $id);
                     $submitted_variant_ids[] = $v_id;
                 } else {
                     // Insert
-                    $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path) VALUES (?, ?, ?, ?)");
-                    $stmt_v->bind_param("iids", $id, $color_id, $v_price, $v_image_path);
+                    $stmt_v = $conn->prepare("INSERT INTO product_color_variants (product_id, color_id, price, image_path, gallery_images) VALUES (?, ?, ?, ?, ?)");
+                    $stmt_v->bind_param("iidss", $id, $color_id, $v_price, $v_image_path, $v_gallery_json);
                     if (!$stmt_v->execute()) throw new Exception($stmt_v->error);
                     $submitted_variant_ids[] = $conn->insert_id;
                 }
@@ -299,8 +325,9 @@ $page_title = 'Edit Product';
                                         <thead class="bg-light">
                                             <tr>
                                                 <th>Select Color</th>
-                                                <th width="200">Sale Price (Optional)</th>
-                                                <th>Color Image</th>
+                                                <th width="150">Price</th>
+                                                <th>Main Image</th>
+                                                <th>Gallery Images</th>
                                                 <th width="50"></th>
                                             </tr>
                                         </thead>
@@ -319,19 +346,30 @@ $page_title = 'Edit Product';
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" step="0.01" class="form-control" name="variant_price[]" value="<?php echo $v['price']; ?>">
-                                                </td>
-                                                <td>
                                                     <div class="d-flex align-items-center">
                                                         <input type="hidden" name="existing_variant_image[]" value="<?php echo $v['image_path']; ?>">
                                                         <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, <?php echo $index; ?>)">
                                                         <?php if(!empty($v['image_path'])): ?>
-                                                            <img id="varPreview_<?php echo $index; ?>" src="../../<?php echo $v['image_path']; ?>" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover;">
+                                                            <img id="varPreview_<?php echo $index; ?>" src="../../<?php echo $v['image_path']; ?>" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover;">
                                                         <?php else: ?>
-                                                            <img id="varPreview_<?php echo $index; ?>" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                                                            <img id="varPreview_<?php echo $index; ?>" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover; display:none;">
                                                         <?php endif; ?>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <input type="file" class="form-control form-control-sm" name="variant_gallery[<?php echo $index; ?>][]" multiple accept="image/*">
+                                                    <?php 
+                                                        $v_gal = json_decode($v['gallery_images'], true) ?: [];
+                                                        if(!empty($v_gal)):
+                                                    ?>
+                                                        <div class="d-flex gap-1 mt-1 flex-wrap">
+                                                            <?php foreach($v_gal as $gimg): ?>
+                                                                <img src="../../<?php echo $gimg; ?>" class="rounded border" style="width:25px; height:25px; object-fit:cover;">
+                                                            <?php endforeach; ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td class="text-center">
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
                                                         <i class="fas fa-trash"></i>
@@ -446,8 +484,11 @@ $page_title = 'Edit Product';
                     <div class="d-flex align-items-center">
                         <input type="hidden" name="existing_variant_image[]" value="">
                         <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
-                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:40px; height:40px; object-fit:cover; display:none;">
+                        <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover; display:none;">
                     </div>
+                </td>
+                <td>
+                    <input type="file" class="form-control form-control-sm" name="variant_gallery[${rowCount}][]" multiple accept="image/*">
                 </td>
                 <td class="text-center">
                     <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
