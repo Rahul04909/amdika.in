@@ -83,6 +83,70 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             transform: translateY(-1px);
             box-shadow: 0 6px 12px rgba(212, 160, 23, 0.3);
         }
+
+        /* --- Search Suggestions CSS --- */
+        .search-bar-container { position: relative; }
+        .search-suggestions-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+            margin-top: 5px;
+            display: none;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            text-decoration: none !important;
+            color: #333;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background 0.2s;
+        }
+        .suggestion-item:last-child { border-bottom: none; }
+        .suggestion-item:hover { background: #f8f9fb; }
+        .suggestion-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 4px;
+            object-fit: cover;
+            margin-right: 12px;
+            background: #f5f5f5;
+        }
+        .suggestion-info { flex: 1; min-width: 0; }
+        .suggestion-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #222;
+        }
+        .suggestion-price {
+            font-size: 13px;
+            color: var(--header-gold);
+            font-weight: 700;
+            margin: 2px 0 0 0;
+        }
+        .view-all-results {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            background: #f8f9fb;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a2b4e;
+            text-decoration: none !important;
+        }
+        .view-all-results:hover { background: #eee; }
+        .no-results { padding: 20px; text-align: center; color: #888; font-size: 14px; }
     </style>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -106,14 +170,15 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 <div class="col-lg-6 col-md-12 order-lg-2 order-3 mt-2 mt-lg-0">
                     <div class="d-flex align-items-center">
                         <div class="search-bar-container flex-grow-1 me-2">
-                            <form action="#" method="GET">
+                            <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm">
                                 <div class="search-input-group">
-                                    <input type="text" class="search-input" placeholder="Search..." name="search">
-                                    <button class="search-btn" type="button">
+                                    <input type="text" class="search-input" placeholder="Search products..." name="search" id="headerSearchInput" autocomplete="off">
+                                    <button class="search-btn" type="submit">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
                                 </div>
                             </form>
+                            <div id="searchSuggestions" class="search-suggestions-box"></div>
                         </div>
                         
                         <!-- Mobile Menu Toggle -->
@@ -928,6 +993,57 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
         .then(data => {
             if(data.status === 'success') {
                 badge.textContent = data.count;
+            }
+        });
+    }
+
+    // --- Search Suggestions Logic ---
+    const searchInput = document.getElementById('headerSearchInput');
+    const suggestionsBox = document.getElementById('searchSuggestions');
+    let searchTimeout = null;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            clearTimeout(searchTimeout);
+
+            if (query.length < 2) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                fetch('<?php echo $link_prefix; ?>api/search-suggestions.php?q=' + encodeURIComponent(query))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        let html = '';
+                        data.forEach(item => {
+                            html += `
+                                <a href="<?php echo $link_prefix; ?>product-details.php?slug=${item.slug}" class="suggestion-item">
+                                    <img src="<?php echo $link_prefix; ?>${item.image}" class="suggestion-img">
+                                    <div class="suggestion-info">
+                                        <p class="suggestion-name">${item.name}</p>
+                                        <p class="suggestion-price">${item.price}</p>
+                                    </div>
+                                </a>
+                            `;
+                        });
+                        html += `<a href="<?php echo $link_prefix; ?>products.php?search=${encodeURIComponent(query)}" class="view-all-results">View All Results</a>`;
+                        suggestionsBox.innerHTML = html;
+                        suggestionsBox.style.display = 'block';
+                    } else {
+                        suggestionsBox.innerHTML = '<div class="no-results">No products found</div>';
+                        suggestionsBox.style.display = 'block';
+                    }
+                });
+            }, 300);
+        });
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                suggestionsBox.style.display = 'none';
             }
         });
     }
