@@ -26,7 +26,7 @@
     .hero-carousel .carousel-control-next {
         width: 50px;
         height: 50px;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
         border-radius: 50%;
         top: 50%;
         transform: translateY(-50%);
@@ -78,7 +78,8 @@
     <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
         <!-- Indicators -->
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"
+                aria-current="true"></button>
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
         </div>
 
@@ -99,7 +100,7 @@
             <!-- Slide 2 -->
             <div class="carousel-item" data-bs-interval="5000">
                 <?php
-                $heroSrc2 = 'assets/images/hero/A_high-end,_professional_website_hero_202605131457.jpeg';
+                $heroSrc2 = 'assets/images/hero/banner-2.png';
                 $desktopHero2 = get_resized_image($heroSrc2, 1920, 700);
                 $mobileHero2 = get_resized_image($heroSrc2, 800, 450, 'contain');
                 ?>
