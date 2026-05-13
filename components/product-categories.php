@@ -5,20 +5,19 @@
 /* --- Trending Categories (Sample Match) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 60px 0;
+    padding: 40px 0 80px 0;
     position: relative;
     overflow: hidden;
 }
 
 .trending-bg-shape {
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 20px;
+    left: 2.5%;
     width: 95%;
-    height: 320px;
-    background: #e0f9f1;
-    border-radius: 25px;
+    height: 300px; /* Exact height to cover title and half-card */
+    background: #dbf8f1;
+    border-radius: 20px;
     z-index: 1;
 }
 
@@ -26,21 +25,23 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    margin-bottom: 40px;
+    padding-top: 40px;
+    margin-bottom: 30px;
 }
 
 .category-header h2 {
     font-family: 'Rubik', sans-serif;
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 800;
     color: #1a2b4e;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .category-header p {
-    font-size: 16px;
+    font-size: 15px;
     color: #666;
     font-weight: 400;
+    margin-bottom: 0;
 }
 
 .category-slider {
@@ -49,7 +50,7 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 10px 2.5% 30px 2.5%;
+    padding: 0 5%;
     scrollbar-width: none;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -115,7 +116,7 @@
 /* Navigation */
 .cat-nav-btn {
     position: absolute;
-    top: 65%;
+    top: 70%;
     transform: translateY(-50%);
     width: 45px;
     height: 45px;
@@ -143,14 +144,15 @@
 }
 
 @media (max-width: 768px) {
-    .category-header h2 { font-size: 28px; }
-    .category-header p { font-size: 14px; padding: 0 20px; }
-    .trending-bg-shape { height: 260px; width: 100%; border-radius: 0; }
-    .trending-cat-card { width: 165px; border-radius: 15px; }
-    .trending-cat-img-box { height: 130px; }
+    .category-header h2 { font-size: 26px; }
+    .category-header p { font-size: 13px; padding: 0 20px; }
+    .trending-bg-shape { height: 220px; top: 0; width: 100%; left: 0; border-radius: 0; }
+    .category-slider { padding: 0 15px; }
+    .trending-cat-card { width: 160px; border-radius: 12px; }
+    .trending-cat-img-box { height: 120px; }
     .trending-cat-info { padding: 12px 10px; }
-    .trending-cat-info h3 { font-size: 16px; }
-    .trending-cat-info p { font-size: 11px; }
+    .trending-cat-info h3 { font-size: 15px; }
+    .trending-cat-info p { font-size: 10px; }
 }
 </style>
 
