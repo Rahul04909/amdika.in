@@ -55,8 +55,8 @@
 .category-slider {
     display: flex;
     overflow-x: auto;
-    gap: 15px;
-    padding: 10px 20px 20px 20px;
+    gap: 20px;
+    padding: 10px 20px 30px 20px;
     scrollbar-width: none; /* Firefox */
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -159,16 +159,22 @@
     }
     
     .category-bubble-item {
-        width: 140px;
+        width: 190px; /* Increased from 140px to show 5-6 items per view */
     }
     
     .bubble-img-container {
-        width: 120px;
-        height: 120px;
+        width: 170px; /* Increased from 120px */
+        height: 170px; /* Increased from 120px */
+        border-radius: 20px;
+    }
+    
+    .bubble-img {
+        border-radius: 18px;
     }
     
     .bubble-name {
-        font-size: 15px;
+        font-size: 16px;
+        margin-top: 8px;
     }
 }
 
