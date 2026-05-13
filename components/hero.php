@@ -109,6 +109,18 @@
                     <img src="<?php echo $desktopHero2; ?>" alt="Luxury Storefront">
                 </picture>
             </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item" data-bs-interval="5000">
+                <?php
+                $heroSrc3 = 'assets/images/hero/banner-3.png';
+                $desktopHero3 = get_resized_image($heroSrc3, 1920, 700);
+                $mobileHero3 = get_resized_image($heroSrc3, 800, 450, 'contain');
+                ?>
+                <picture>
+                    <source media="(max-width: 768px)" srcset="<?php echo $mobileHero3; ?>">
+                    <img src="<?php echo $desktopHero3; ?>" alt="Luxury Storefront">
+                </picture>
+            </div>
         </div>
 
         <!-- Controls -->
