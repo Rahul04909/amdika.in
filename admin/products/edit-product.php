@@ -348,6 +348,9 @@ $page_title = 'Edit Product';
                                                     </select>
                                                 </td>
                                                 <td>
+                                                    <input type="number" step="0.01" class="form-control" name="variant_price[]" value="<?php echo $v['price']; ?>" placeholder="0.00">
+                                                </td>
+                                                <td>
                                                     <div class="d-flex align-items-center">
                                                         <input type="hidden" name="existing_variant_image[]" value="<?php echo $v['image_path']; ?>">
                                                         <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, <?php echo $index; ?>)">
@@ -371,7 +374,6 @@ $page_title = 'Edit Product';
                                                         </div>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td class="text-center">
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="this.closest('tr').remove()">
                                                         <i class="fas fa-trash"></i>
