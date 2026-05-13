@@ -131,7 +131,7 @@ $error_msg = '';
                     $v_new_name = "var_" . $id . "_" . $index . "_" . time() . "." . $v_ext;
                     if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
                         if(!empty($v_image_path) && file_exists("../../" . $v_image_path)) unlink("../../" . $v_image_path);
-                        $v_image_path = "assets/images/products/variants/" . $new_name;
+                        $v_image_path = "assets/images/products/variants/" . $v_new_name;
                     }
                 }
 

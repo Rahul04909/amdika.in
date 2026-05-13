@@ -765,7 +765,7 @@ $disc = $product['discount_percent'];
                                     data-name="<?php echo htmlspecialchars($v['color_name']); ?>"
                                     data-price="<?php echo $v['price']; ?>" 
                                     data-image="<?php echo $v['image_path']; ?>"
-                                    data-gallery='<?php echo $v['gallery_images']; ?>'
+                                    data-gallery='<?php echo htmlspecialchars($v['gallery_images'], ENT_QUOTES, 'UTF-8'); ?>'
                                     onclick="selectColor(this)">
                                     <?php if (!empty($v['image_path'])): ?>
                                         <img src="<?php echo $v['image_path']; ?>"
