@@ -29,7 +29,12 @@ while($v = $variants_res->fetch_assoc()) $existing_variants[] = $v;
 $success_msg = '';
 $error_msg = '';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Debug Logging
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $log = "--- POST DATA ---\n" . print_r($_POST, true) . "\n";
+    $log .= "--- FILES DATA ---\n" . print_r($_FILES, true) . "\n";
+    file_put_contents(__DIR__ . '/debug_post.log', $log);
+}
         $conn->begin_transaction();
         try {
             $name = $_POST['name'];
@@ -124,12 +129,13 @@ $error_msg = '';
                 $v_image_path = isset($_POST['existing_variant_image'][$index]) ? $_POST['existing_variant_image'][$index] : '';
 
                 // Handle Variant Image Upload
-                if (isset($_FILES['variant_image']['tmp_name'][$index]) && $_FILES['variant_image']['error'][$index] == 0) {
+                $upload_index = isset($_POST['variant_upload_index'][$index]) ? $_POST['variant_upload_index'][$index] : $index;
+                if (isset($_FILES['variant_image']['tmp_name'][$upload_index]) && $_FILES['variant_image']['error'][$upload_index] == 0) {
                     $v_target_dir = "../../assets/images/products/variants/";
                     if (!file_exists($v_target_dir)) mkdir($v_target_dir, 0777, true);
-                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$index], PATHINFO_EXTENSION));
+                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$upload_index], PATHINFO_EXTENSION));
                     $v_new_name = "var_" . $id . "_" . $index . "_" . time() . "." . $v_ext;
-                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
+                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$upload_index], $v_target_dir . $v_new_name)){
                         if(!empty($v_image_path) && file_exists("../../" . $v_image_path)) unlink("../../" . $v_image_path);
                         $v_image_path = "assets/images/products/variants/" . $v_new_name;
                     }
@@ -197,7 +203,7 @@ $error_msg = '';
         $conn->rollback();
         $error_msg = "Error: " . $e->getMessage();
     }
-}
+
 
 $page_title = 'Edit Product';
 ?>
@@ -353,7 +359,7 @@ $page_title = 'Edit Product';
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <input type="hidden" name="existing_variant_image[]" value="<?php echo $v['image_path']; ?>">
-                                                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, <?php echo $index; ?>)">
+                                                        <input type="file" class="form-control form-control-sm" name="variant_image[<?php echo $index; ?>]" accept="image/*" onchange="previewVariantImage(this, <?php echo $index; ?>)">
                                                         <?php if(!empty($v['image_path'])): ?>
                                                             <img id="varPreview_<?php echo $index; ?>" src="../../<?php echo $v['image_path']; ?>" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover;">
                                                         <?php else: ?>
@@ -488,7 +494,7 @@ $page_title = 'Edit Product';
                 <td>
                     <div class="d-flex align-items-center">
                         <input type="hidden" name="existing_variant_image[]" value="">
-                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
+                        <input type="file" class="form-control form-control-sm" name="variant_image[${rowCount}]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
                         <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover; display:none;">
                     </div>
                 </td>

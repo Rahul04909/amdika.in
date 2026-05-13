@@ -103,12 +103,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $v_image_path = '';
 
                 // Handle Variant Image Upload
-                if (isset($_FILES['variant_image']['tmp_name'][$index]) && $_FILES['variant_image']['error'][$index] == 0) {
+                $upload_index = isset($_POST['variant_upload_index'][$index]) ? $_POST['variant_upload_index'][$index] : $index;
+                if (isset($_FILES['variant_image']['tmp_name'][$upload_index]) && $_FILES['variant_image']['error'][$upload_index] == 0) {
                     $v_target_dir = "../../assets/images/products/variants/";
                     if (!file_exists($v_target_dir)) mkdir($v_target_dir, 0777, true);
-                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$index], PATHINFO_EXTENSION));
+                    $v_ext = strtolower(pathinfo($_FILES["variant_image"]["name"][$upload_index], PATHINFO_EXTENSION));
                     $v_new_name = "var_" . $product_id . "_" . $index . "_" . time() . "." . $v_ext;
-                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$index], $v_target_dir . $v_new_name)){
+                    if(move_uploaded_file($_FILES["variant_image"]["tmp_name"][$upload_index], $v_target_dir . $v_new_name)){
                         $v_image_path = "assets/images/products/variants/" . $v_new_name;
                     }
                 }
@@ -420,7 +421,7 @@ $page_title = 'Add New Product';
                 </td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <input type="file" class="form-control form-control-sm" name="variant_image[]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
+                        <input type="file" class="form-control form-control-sm" name="variant_image[${rowCount}]" accept="image/*" onchange="previewVariantImage(this, ${rowCount})">
                         <img id="varPreview_${rowCount}" class="ms-2 rounded border" style="width:35px; height:35px; object-fit:cover; display:none;">
                     </div>
                 </td>
