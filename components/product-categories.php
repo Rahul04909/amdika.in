@@ -5,34 +5,34 @@
 /* --- Trending Categories (Sample Match) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 40px 0;
+    padding: 60px 0;
     position: relative;
 }
 
 .trending-box {
     margin: 0 20px;
-    background: #dbf8f1;
-    border-radius: 25px;
-    padding: 40px 0 0 0;
+    background: #1a2b4e; /* Match professional dark ticker theme */
+    border-radius: 30px;
+    padding: 50px 0 50px 0;
     position: relative;
 }
 
 .category-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .category-header h2 {
     font-family: 'Rubik', sans-serif;
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 800;
-    color: #1a2b4e;
-    margin-bottom: 5px;
+    color: #fff; /* White text for dark theme */
+    margin-bottom: 10px;
 }
 
 .category-header p {
-    font-size: 15px;
-    color: #666;
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
     margin-bottom: 0;
 }
 
@@ -40,10 +40,10 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 0 20px 40px 20px;
+    padding: 0 30px;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    margin-bottom: -60px; /* Pulls cards down to hang off the edge */
+    margin-bottom: 0; /* Fully contained now */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -87,44 +87,46 @@
 .trending-cat-info {
     padding: 20px 15px;
     text-align: center;
-    background: linear-gradient(180deg, #62ecd3 0%, #30d5c8 100%);
+    background: #fff;
     color: #1a2b4e;
 }
 
 .trending-cat-info h3 {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 700;
     margin: 0 0 5px 0;
 }
 
 .trending-cat-info p {
-    font-size: 13px;
+    font-size: 12px;
     margin: 0;
     font-weight: 500;
-    opacity: 0.8;
+    color: #666;
 }
 
 /* Navigation */
 .cat-nav-btn {
     position: absolute;
-    top: 70%;
+    top: 50%;
     transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border: none;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 50%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     z-index: 10;
     display: none;
     align-items: center;
     justify-content: center;
-    color: #1a2b4e;
-    transition: all 0.2s;
+    color: #fff;
+    transition: all 0.3s;
 }
 
 .cat-nav-btn:hover {
-    background: #1a2b4e;
+    background: var(--accent-gold, #d4a017);
+    border-color: var(--accent-gold, #d4a017);
     color: #fff;
 }
 
@@ -135,16 +137,16 @@
 }
 
 @media (max-width: 768px) {
-    .category-section-wrapper { padding: 20px 0; }
-    .trending-box { margin: 0; border-radius: 0; padding: 30px 0 0 0; }
-    .category-header h2 { font-size: 24px; }
-    .category-header p { font-size: 13px; padding: 0 15px; }
-    .category-slider { padding: 0 15px 30px 15px; margin-bottom: -40px; gap: 12px; }
-    .trending-cat-card { width: 155px; border-radius: 12px; }
-    .trending-cat-img-box { height: 115px; }
-    .trending-cat-info { padding: 10px; }
-    .trending-cat-info h3 { font-size: 14px; }
-    .trending-cat-info p { font-size: 10px; }
+    .category-section-wrapper { padding: 30px 0; }
+    .trending-box { margin: 0; border-radius: 0; padding: 40px 0 40px 0; }
+    .category-header h2 { font-size: 28px; }
+    .category-header p { font-size: 14px; padding: 0 20px; }
+    .category-slider { padding: 0 15px; margin-bottom: 0; gap: 15px; }
+    .trending-cat-card { width: 170px; border-radius: 15px; }
+    .trending-cat-img-box { height: 130px; }
+    .trending-cat-info { padding: 12px 10px; }
+    .trending-cat-info h3 { font-size: 15px; }
+    .trending-cat-info p { font-size: 11px; }
 }
 </style>
 
