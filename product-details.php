@@ -1405,26 +1405,38 @@ if ($rel_res && $rel_res->num_rows > 0):
 
         // Update Gallery
         let variantGallery = [];
-        try {
-            variantGallery = JSON.parse(el.dataset.gallery) || [];
-        } catch (e) {
-            variantGallery = [];
+        const rawGallery = el.dataset.gallery;
+        
+        if (rawGallery && rawGallery.trim() !== '') {
+            try {
+                variantGallery = JSON.parse(rawGallery);
+            } catch (e) {
+                console.error("Gallery parse error:", e);
+                variantGallery = [];
+            }
         }
 
         const mainVarImg = el.dataset.image;
-        if (mainVarImg) {
-            variantGallery.unshift(mainVarImg);
+        if (mainVarImg && mainVarImg.trim() !== '') {
+            // Check if image already in gallery to avoid duplicates
+            if (!variantGallery.includes(mainVarImg)) {
+                variantGallery.unshift(mainVarImg);
+            }
         }
 
-        // If variant has no specific gallery, we might want to keep the main gallery or show variant image + main gallery
-        // The user said: "uski image k sath upload gallery images bhi show honi chaiye"
-        // Let's assume they want the variant-specific images only.
         if (variantGallery.length > 0) {
             updateThumbnailTrack(variantGallery);
-            changeImage(variantGallery[0], document.querySelector('.thumb-btn'));
+            // Select the newly created first thumbnail
+            const firstThumb = document.querySelector('.thumbnail-track .thumb-btn');
+            if (firstThumb) {
+                changeImage(variantGallery[0], firstThumb);
+            }
         } else {
             updateThumbnailTrack(initialGallery);
-            changeImage(initialGallery[0], document.querySelector('.thumb-btn'));
+            const firstThumb = document.querySelector('.thumbnail-track .thumb-btn');
+            if (firstThumb) {
+                changeImage(initialGallery[0], firstThumb);
+            }
         }
     }
 
