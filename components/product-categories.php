@@ -2,48 +2,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
 
 <style>
-/* --- Trending Categories (Sample Match) --- */
+/* --- Modern Product Categories (Professional Bubbles) --- */
 .category-section-wrapper {
     background-color: #fff;
-    padding: 60px 0;
-    position: relative;
-}
-
-.trending-box {
-    margin: 0 20px;
-    background: #1a2b4e; /* Match professional dark ticker theme */
-    border-radius: 30px;
-    padding: 50px 0 50px 0;
-    position: relative;
+    padding: 50px 0;
+    overflow: hidden;
 }
 
 .category-header {
-    text-align: center;
+    padding: 0 20px;
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .category-header h2 {
-    font-family: 'Rubik', sans-serif;
-    font-size: 38px;
-    font-weight: 800;
-    color: #fff; /* White text for dark theme */
-    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: #232f3e;
+    letter-spacing: 1px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
 }
 
-.category-header p {
-    font-size: 16px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 0;
+.category-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent-gold, #d4a017);
 }
 
 .category-slider {
     display: flex;
     overflow-x: auto;
-    gap: 20px;
-    padding: 0 30px;
+    gap: 25px;
+    padding: 10px 20px 30px 20px;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    margin-bottom: 0; /* Fully contained now */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -51,148 +52,162 @@
     display: none;
 }
 
-.trending-cat-card {
+.category-bubble-item {
     flex: 0 0 auto;
-    width: 240px;
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
+    width: 130px;
+    text-align: center;
     text-decoration: none !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.category-bubble-item:hover {
+    transform: translateY(-8px);
+}
+
+.bubble-img-container {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%; /* Back to circular bubbles */
+    margin: 0 auto 15px;
+    padding: 4px;
+    border: 1px solid #eee;
+    background: #fff;
     transition: all 0.3s ease;
-}
-
-.trending-cat-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-}
-
-.trending-cat-img-box {
-    width: 100%;
-    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.trending-cat-img-box img {
+.category-bubble-item:hover .bubble-img-container {
+    border-color: var(--accent-gold, #d4a017);
+    box-shadow: 0 8px 20px rgba(212, 160, 23, 0.2);
+}
+
+.bubble-img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.trending-cat-card:hover .trending-cat-img-box img {
-    transform: scale(1.1);
+.category-bubble-item:hover .bubble-img {
+    transform: scale(1.15);
 }
 
-.trending-cat-info {
-    padding: 20px 15px;
-    text-align: center;
-    background: #fff;
-    color: #1a2b4e;
+.bubble-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 40px;
+    transition: color 0.3s;
 }
 
-.trending-cat-info h3 {
-    font-size: 19px;
-    font-weight: 700;
-    margin: 0 0 5px 0;
+.category-bubble-item:hover .bubble-name {
+    color: var(--accent-gold, #d4a017);
 }
 
-.trending-cat-info p {
-    font-size: 12px;
-    margin: 0;
-    font-weight: 500;
-    color: #666;
+/* Navigation Buttons */
+.category-section-wrapper {
+    position: relative;
 }
 
-/* Navigation */
 .cat-nav-btn {
     position: absolute;
-    top: 50%;
+    top: 55%;
     transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.2);
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    border: none;
     border-radius: 50%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     z-index: 10;
     display: none;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    transition: all 0.3s;
+    color: #333;
+    transition: all 0.2s;
 }
 
 .cat-nav-btn:hover {
-    background: var(--accent-gold, #d4a017);
-    border-color: var(--accent-gold, #d4a017);
+    background: #232f3e;
     color: #fff;
 }
+
+.cat-prev { left: 15px; }
+.cat-next { right: 15px; }
 
 @media (min-width: 992px) {
     .category-section-wrapper:hover .cat-nav-btn {
         display: flex;
     }
+    
+    .category-bubble-item {
+        width: 180px; /* 5-6 items logic */
+    }
+    
+    .bubble-img-container {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .bubble-name {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 768px) {
-    .category-section-wrapper { padding: 30px 0; }
-    .trending-box { margin: 0; border-radius: 0; padding: 40px 0 40px 0; }
-    .category-header h2 { font-size: 28px; }
-    .category-header p { font-size: 14px; padding: 0 20px; }
-    .category-slider { padding: 0 15px; margin-bottom: 0; gap: 15px; }
-    .trending-cat-card { width: 170px; border-radius: 15px; }
-    .trending-cat-img-box { height: 130px; }
-    .trending-cat-info { padding: 12px 10px; }
-    .trending-cat-info h3 { font-size: 15px; }
-    .trending-cat-info p { font-size: 11px; }
+    .category-header h2 { font-size: 22px; }
+    .category-slider { gap: 15px; padding: 10px 15px 20px 15px; }
+    .category-bubble-item { width: 100px; }
+    .bubble-img-container { width: 90px; height: 90px; }
+    .bubble-name { font-size: 12px; height: 34px; }
 }
 </style>
 
 <section class="category-section-wrapper">
-    <div class="trending-box">
-        <div class="category-header">
-            <h2>Trending Categories</h2>
-            <p>Explore popular and premium collections at Amadika.in</p>
-        </div>
+    <div class="category-header">
+        <h2>Shop By <span style="color: var(--accent-gold, #d4a017);">Category</span></h2>
+    </div>
 
-        <div id="catSlider" class="category-slider">
-            <?php
-            require_once __DIR__ . '/../database/db_config.php';
-            require_once __DIR__ . '/../includes/image_helper.php';
-            
-            $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
-            $cat_result = $conn->query($cat_sql);
-            
-            if ($cat_result && $cat_result->num_rows > 0) {
-                while($cat = $cat_result->fetch_assoc()) {
-                    $cat_name = htmlspecialchars($cat['name']);
-                    $cat_slug = htmlspecialchars($cat['slug']);
-                    $cat_desc = !empty($cat['description']) ? strip_tags($cat['description']) : 'Explore Collection';
-                    if(strlen($cat_desc) > 25) $cat_desc = substr($cat_desc, 0, 22) . '...';
-                    
-                    $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
-                    $bubble_img = get_resized_image($img_path, 400, 300, 'cover');
-                    ?>
-                    <a href="products.php?category=<?php echo $cat_slug; ?>" class="trending-cat-card">
-                        <div class="trending-cat-img-box">
-                            <img src="<?php echo $bubble_img; ?>" alt="<?php echo $cat_name; ?>">
-                        </div>
-                        <div class="trending-cat-info">
-                            <h3><?php echo $cat_name; ?></h3>
-                            <p><?php echo $cat_desc; ?></p>
-                        </div>
-                    </a>
-                    <?php
-                }
+    <!-- Navigation Arrows -->
+    <button id="catPrev" class="cat-nav-btn cat-prev"><i class="fa-solid fa-chevron-left"></i></button>
+    <button id="catNext" class="cat-nav-btn cat-next"><i class="fa-solid fa-chevron-right"></i></button>
+
+    <div id="catSlider" class="category-slider">
+        <?php
+        require_once __DIR__ . '/../database/db_config.php';
+        require_once __DIR__ . '/../includes/image_helper.php';
+        
+        $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
+        $cat_result = $conn->query($cat_sql);
+        
+        if ($cat_result && $cat_result->num_rows > 0) {
+            while($cat = $cat_result->fetch_assoc()) {
+                $cat_name = htmlspecialchars($cat['name']);
+                $cat_slug = htmlspecialchars($cat['slug']);
+                $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
+                
+                $bubble_img = get_resized_image($img_path, 300, 300, 'cover');
+                ?>
+                <a href="products.php?category=<?php echo $cat_slug; ?>" class="category-bubble-item">
+                    <div class="bubble-img-container">
+                        <img src="<?php echo $bubble_img; ?>" alt="<?php echo $cat_name; ?>" class="bubble-img">
+                    </div>
+                    <span class="bubble-name"><?php echo $cat_name; ?></span>
+                </a>
+                <?php
             }
-            ?>
-        </div>
-
-        <!-- Navigation Arrows (Moved inside trending-box for perfect alignment) -->
-        <button id="catPrev" class="cat-nav-btn" style="left: -22px;"><i class="fa-solid fa-chevron-left"></i></button>
-        <button id="catNext" class="cat-nav-btn" style="right: -22px;"><i class="fa-solid fa-chevron-right"></i></button>
+        }
+        ?>
     </div>
 </section>
 
@@ -204,7 +219,7 @@
 
         if (!slider) return;
 
-        const scrollAmount = 300;
+        const scrollAmount = 400;
 
         if (prev) {
             prev.addEventListener('click', () => {
