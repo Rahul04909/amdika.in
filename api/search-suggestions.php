@@ -11,7 +11,7 @@ if (strlen($query) < 2) {
 }
 
 $search = "%$query%";
-$sql = "SELECT id, name, slug, main_image, sale_price FROM products 
+$sql = "SELECT id, name, slug, featured_image, sale_price FROM products 
         WHERE status = 'active' AND (name LIKE ? OR description LIKE ?) 
         ORDER BY name ASC LIMIT 6";
 
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 
 $suggestions = [];
 while ($row = $result->fetch_assoc()) {
-    $img = !empty($row['main_image']) ? $row['main_image'] : 'assets/images/placeholder.jpg';
+    $img = !empty($row['featured_image']) ? $row['featured_image'] : 'assets/images/placeholder.jpg';
     $resized_img = get_resized_image($img, 100, 100, 'cover');
     
     $suggestions[] = [
