@@ -148,8 +148,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $v_gallery = json_decode($old_v['gallery_images'], true) ?: [];
                 }
 
+                // Handle Variant Gallery Deletions
+                if (isset($_POST['remove_variant_gallery'][$upload_index])) {
+                    foreach ($_POST['remove_variant_gallery'][$upload_index] as $img_to_remove) {
+                        if (($key = array_search($img_to_remove, $v_gallery)) !== false) {
+                            unset($v_gallery[$key]);
+                        }
+                    }
+                    $v_gallery = array_values($v_gallery);
+                }
+
                 // New gallery uploads for this variant
-                $upload_index = isset($_POST['variant_upload_index'][$index]) ? $_POST['variant_upload_index'][$index] : $index;
                 if (isset($_FILES['variant_gallery']['tmp_name'][$upload_index])) {
                     $v_gal_dir = "../../assets/images/products/variants/gallery/";
                     if (!file_exists($v_gal_dir)) mkdir($v_gal_dir, 0777, true);
@@ -164,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
                 }
+
                 $v_gallery_json = json_encode($v_gallery);
 
                 if ($v_id > 0) {
@@ -373,9 +383,17 @@ $page_title = 'Edit Product';
                                                         $v_gal = json_decode($v['gallery_images'], true) ?: [];
                                                         if(!empty($v_gal)):
                                                     ?>
-                                                        <div class="d-flex gap-1 mt-1 flex-wrap">
-                                                            <?php foreach($v_gal as $gimg): ?>
-                                                                <img src="../../<?php echo $gimg; ?>" class="rounded border" style="width:25px; height:25px; object-fit:cover;">
+                                                        <div class="d-flex gap-2 mt-2 flex-wrap">
+                                                            <?php foreach($v_gal as $g_idx => $gimg): ?>
+                                                                <div class="position-relative border rounded p-1 bg-light">
+                                                                    <img src="../../<?php echo $gimg; ?>" style="width:40px; height:40px; object-fit:cover;">
+                                                                    <div class="form-check position-absolute top-0 end-0" style="margin-right: -5px; margin-top: -8px;">
+                                                                        <input class="form-check-input d-none" type="checkbox" name="remove_variant_gallery[<?php echo $index; ?>][]" value="<?php echo $gimg; ?>" id="vgal_<?php echo $index; ?>_<?php echo $g_idx; ?>">
+                                                                        <label class="badge bg-danger rounded-circle p-1 cursor-pointer" onclick="this.closest('.position-relative').style.display='none'; document.getElementById('vgal_<?php echo $index; ?>_<?php echo $g_idx; ?>').checked=true;" style="cursor:pointer;">
+                                                                            <i class="fas fa-times" style="font-size: 8px;"></i>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
                                                             <?php endforeach; ?>
                                                         </div>
                                                     <?php endif; ?>
