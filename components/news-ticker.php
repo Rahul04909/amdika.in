@@ -1,12 +1,13 @@
 <style>
     /* --- Professional Seamless News Ticker --- */
     .news-ticker-container {
-        background-color: #FFC107; /* Brand Yellow */
+        background-color: #FFC107;
+        /* Brand Yellow */
         color: #000;
         overflow: hidden;
         padding: 12px 0;
-        border-top: 1px solid rgba(0,0,0,0.1);
-        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         position: relative;
         display: flex;
         align-items: center;
@@ -45,8 +46,15 @@
     }
 
     @keyframes ticker-animation {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); } /* Scroll exactly half to loop seamlessly */
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+
+        /* Scroll exactly half to loop seamlessly */
     }
 
     /* Mobile adjustments */
@@ -54,10 +62,12 @@
         .news-ticker-container {
             padding: 10px 0;
         }
+
         .ticker-item {
             font-size: 11px;
             padding: 0 25px;
         }
+
         .ticker-dot {
             margin-left: 25px;
         }
@@ -66,18 +76,18 @@
 
 <div class="news-ticker-container">
     <div class="ticker-scroll-wrapper">
-        <?php 
+        <?php
         // Define messages once
         $ticker_messages = [
             "Welcome To Amadika Online Store",
             "Grab The Best Deals on Leather Waste Bin Collection",
             "Explore the top quality & premium portable mini bar's",
-            "Free Shipping on orders above ₹1999",
+            "Get the premium top quality products at best prices",
             "New Arrivals: Check out our Summer Collection"
         ];
-        
+
         // Loop twice for a seamless infinite effect
-        for ($j = 0; $j < 2; $j++): 
+        for ($j = 0; $j < 2; $j++):
             foreach ($ticker_messages as $message): ?>
                 <div class="ticker-item">
                     <?php echo htmlspecialchars($message); ?>
