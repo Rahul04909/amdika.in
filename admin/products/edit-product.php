@@ -143,16 +143,17 @@ $error_msg = '';
                 }
 
                 // New gallery uploads for this variant
-                if (isset($_FILES['variant_gallery']['tmp_name'][$index])) {
+                $upload_index = isset($_POST['variant_upload_index'][$index]) ? $_POST['variant_upload_index'][$index] : $index;
+                if (isset($_FILES['variant_gallery']['tmp_name'][$upload_index])) {
                     $v_gal_dir = "../../assets/images/products/variants/gallery/";
                     if (!file_exists($v_gal_dir)) mkdir($v_gal_dir, 0777, true);
                     
-                    foreach ($_FILES['variant_gallery']['tmp_name'][$index] as $k => $tmp_name) {
-                        if ($_FILES['variant_gallery']['error'][$index][$k] == 0) {
-                            $ext = strtolower(pathinfo($_FILES["variant_gallery"]["name"][$index][$k], PATHINFO_EXTENSION));
-                            $new_name = "var_gal_" . $id . "_" . $index . "_" . $k . "_" . time() . "." . $ext;
-                            if (move_uploaded_file($tmp_name, $v_gal_dir . $new_name)) {
-                                $v_gallery[] = "assets/images/products/variants/gallery/" . $new_name;
+                    foreach ($_FILES['variant_gallery']['tmp_name'][$upload_index] as $k => $tmp_name) {
+                        if ($_FILES['variant_gallery']['error'][$upload_index][$k] == 0) {
+                            $ext = strtolower(pathinfo($_FILES["variant_gallery"]["name"][$upload_index][$k], PATHINFO_EXTENSION));
+                            $new_gal_name = "var_gal_" . $id . "_" . $index . "_" . $k . "_" . time() . "." . $ext;
+                            if (move_uploaded_file($tmp_name, $v_gal_dir . $new_gal_name)) {
+                                $v_gallery[] = "assets/images/products/variants/gallery/" . $new_gal_name;
                             }
                         }
                     }
@@ -336,6 +337,7 @@ $page_title = 'Edit Product';
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="variant_id[]" value="<?php echo $v['id']; ?>">
+                                                    <input type="hidden" name="variant_upload_index[]" value="<?php echo $index; ?>">
                                                     <select class="form-select" name="variant_color_id[]" required>
                                                         <?php 
                                                             $all_colors->data_seek(0);
@@ -462,17 +464,18 @@ $page_title = 'Edit Product';
 
         function addVariantRow() {
             const tbody = document.querySelector('#variantsTable tbody');
-            const rowCount = tbody.rows.length + Math.floor(Math.random() * 1000); // Unique index for new rows
+            const rowCount = Date.now(); // Guaranteed unique index for this session
             
             let colorOptions = '<option value="">Choose Color</option>';
             colors.forEach(c => {
                 colorOptions += `<option value="${c.id}">${c.name}</option>`;
             });
-
+            
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
                     <input type="hidden" name="variant_id[]" value="0">
+                    <input type="hidden" name="variant_upload_index[]" value="${rowCount}">
                     <select class="form-select" name="variant_color_id[]" required>
                         ${colorOptions}
                     </select>
