@@ -67,7 +67,7 @@
 .bubble-img-container {
     width: 110px;
     height: 110px;
-    border-radius: 50%; /* Back to circular bubbles */
+    border-radius: 20px; /* Modern Rounded Square */
     margin: 0 auto 15px;
     padding: 4px;
     border: 1px solid #eee;
@@ -88,7 +88,7 @@
 .bubble-img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 18px;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
