@@ -18,7 +18,76 @@ $link_prefix = str_replace('assets/', '', $assets_path);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amadika - Online Shopping</title>
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : "Amadika | Premium Home Decor Store in Faridabad Online"; ?></title>
+    <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : "Shop Luxury Leather Accessories Online at Amadika. Explore Premium Home Accessories, Leather Home Decor Products & stylish luxury décor in Faridabad."; ?>">
+    <meta name="keywords" content="<?php echo isset($page_keywords) ? htmlspecialchars($page_keywords) : "premium home decor faridabad, luxury leather accessories online, premium home accessories, leather home decor products, stylish luxury decor faridabad, luxury leather accessories, amadika, amadika faridabad, amadika home decor"; ?>">
+
+    <!-- JSON-LD SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "FurnitureStore",
+          "@id": "https://amadika.in/#store",
+          "name": "Amadika",
+          "url": "https://amadika.in/",
+          "logo": "https://amadika.in/assets/images/amdika-logo.png",
+          "image": "https://amadika.in/assets/images/amdika-logo.png",
+          "description": "Shop Luxury Leather Accessories Online at Amadika. Explore Premium Home Accessories, Leather Home Decor Products & stylish luxury décor in Faridabad.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Faridabad",
+            "addressLocality": "Faridabad",
+            "addressRegion": "Haryana",
+            "postalCode": "121001",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 28.4089,
+            "longitude": 77.3178
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "10:00",
+            "closes": "20:00"
+          },
+          "sameAs": [
+            "https://www.facebook.com/amadika",
+            "https://www.instagram.com/amadika"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://amadika.in/#website",
+          "url": "https://amadika.in/",
+          "name": "Amadika",
+          "description": "Shop Luxury Leather Accessories Online at Amadika. Explore Premium Home Accessories, Leather Home Decor Products & stylish luxury décor in Faridabad.",
+          "publisher": {
+            "@id": "https://amadika.in/#store"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://amadika.in/products.php?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
     <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
