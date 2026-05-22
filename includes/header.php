@@ -1086,7 +1086,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 fetch('<?php echo $link_prefix; ?>api/search-suggestions.php?q=' + encodeURIComponent(query))
                 .then(res => res.json())
                 .then(data => {
-                    if (data.length > 0) {
+                    if (data.error) {
+                        console.error("Search API Error:", data.error);
+                        suggestionsBox.style.display = 'none';
+                        return;
+                    }
+                    if (data && data.length > 0) {
                         let html = '';
                         data.forEach(item => {
                             html += `
@@ -1106,6 +1111,10 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                         suggestionsBox.innerHTML = '<div class="no-results">No products found</div>';
                         suggestionsBox.style.display = 'block';
                     }
+                })
+                .catch(err => {
+                    console.error("Fetch Error:", err);
+                    suggestionsBox.style.display = 'none';
                 });
             }, 300);
         });
