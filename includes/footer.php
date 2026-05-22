@@ -484,8 +484,8 @@
                     <div class="fw-bold mb-2 text-secondary" style="font-size: 13px;">Like what you're seeing? Follow us
                         for more.</div>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="fb"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="insta"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/amadikaofficial/" target="_blank" rel="noopener noreferrer" class="fb"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/amadika.shopping/" target="_blank" rel="noopener noreferrer" class="insta"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="x">
                             <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512"
                                 style="fill: currentColor;">
