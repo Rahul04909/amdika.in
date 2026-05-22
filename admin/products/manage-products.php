@@ -55,12 +55,32 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$where_clause = "";
+$params = [];
+$types = "";
+
+if (!empty($search)) {
+    $where_clause = " WHERE p.name LIKE ? OR p.slug LIKE ? ";
+    $s_param = "%$search%";
+    $params[] = $s_param;
+    $params[] = $s_param;
+    $types .= "ss";
+}
+
 // Fetch Products with Category Name
 $sql = "SELECT p.*, c.name as category_name 
         FROM products p 
         LEFT JOIN product_categories c ON p.category_id = c.id 
+        $where_clause
         ORDER BY p.created_at DESC";
-$result = $conn->query($sql);
+
+$stmt = $conn->prepare($sql);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
 
 $page_title = 'Manage Products';
 ?>
@@ -100,8 +120,13 @@ $page_title = 'Manage Products';
 
             <div class="container-fluid px-4 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h3 fw-bold text-secondary mb-0">Products</h2>
-                    <a href="add-product.php" class="btn btn-danger"><i class="fas fa-plus me-2"></i>Add New Product</a>
+                    <h2 class="h3 fw-bold text-secondary mb-0">Products <?php if (!empty($search)) echo "- Search: " . htmlspecialchars($search); ?></h2>
+                    <div>
+                        <?php if (!empty($search)): ?>
+                            <a href="manage-products.php" class="btn btn-outline-secondary me-2"><i class="fas fa-times me-2"></i>Clear Search</a>
+                        <?php endif; ?>
+                        <a href="add-product.php" class="btn btn-danger"><i class="fas fa-plus me-2"></i>Add New Product</a>
+                    </div>
                 </div>
 
                 <?php if(isset($_GET['success']) && $_GET['success'] == 'deleted'): ?>

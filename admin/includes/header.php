@@ -118,6 +118,38 @@
         color: var(--sb-accent, var(--header-accent));
     }
 
+    .admin-search-suggestions-box {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--sb-bg, #2D3436);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        z-index: 1050;
+        margin-top: 5px;
+        display: none;
+        overflow: hidden;
+    }
+    .admin-suggestion-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--sb-text, #ecf0f1);
+        transition: background 0.2s;
+    }
+    .admin-suggestion-item:last-child { border-bottom: none; }
+    .admin-suggestion-item:hover, .admin-active-suggestion { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .admin-suggestion-img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 12px; }
+    .admin-suggestion-info { flex-grow: 1; overflow: hidden; }
+    .admin-suggestion-name { margin: 0; font-size: 0.9rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ecf0f1; }
+    .admin-suggestion-price { margin: 0; font-size: 0.8rem; color: var(--sb-accent, #D4A017); }
+    .admin-view-all { display: block; padding: 10px; text-align: center; background: rgba(0,0,0,0.2); color: var(--sb-text, #ecf0f1); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+    .admin-view-all:hover { background: rgba(0,0,0,0.4); color: #fff; }
+
     /* Action Icons (Notifications) */
     .header-action-btn {
         position: relative;
@@ -302,8 +334,11 @@ $current_title = isset($page_title) ? $page_title : 'Dashboard';
     <div class="header-right">
         <!-- Search Bar -->
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search anything...">
-            <i class="fas fa-search search-icon"></i>
+            <form action="<?php echo $base_path; ?>admin/products/manage-products.php" method="GET" id="adminSearchForm">
+                <input type="text" class="search-input" name="search" id="adminSearchInput" placeholder="Search products..." autocomplete="off">
+                <button type="submit" style="background:none;border:none;padding:0;position:absolute;left:15px;top:50%;transform:translateY(-50%);z-index:2;"><i class="fas fa-search search-icon" style="position:static;transform:none;pointer-events:auto;"></i></button>
+            </form>
+            <div id="adminSearchSuggestions" class="admin-search-suggestions-box"></div>
         </div>
 
         <!-- Notifications -->
@@ -342,11 +377,84 @@ $current_title = isset($page_title) ? $page_title : 'Dashboard';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Search Focus Effects (Optional, CSS handles most)
-        const searchInput = document.querySelector('.search-input');
-        if(searchInput) {
-            searchInput.addEventListener('focus', () => {
-                // Could add logic to expand search bar or dim other elements
+        const adminSearchForm = document.getElementById('adminSearchForm');
+        const adminSearchInput = document.getElementById('adminSearchInput');
+        const adminSuggestionsBox = document.getElementById('adminSearchSuggestions');
+        let adminSearchTimeout = null;
+        let adminCurrentFocus = -1;
+
+        if (adminSearchInput) {
+            adminSearchInput.addEventListener('input', function(e) {
+                const query = this.value.trim();
+                clearTimeout(adminSearchTimeout);
+                adminCurrentFocus = -1;
+
+                if (query.length < 2) {
+                    adminSuggestionsBox.style.display = 'none';
+                    return;
+                }
+
+                adminSuggestionsBox.innerHTML = '<div style="padding:10px;text-align:center;color:#ccc;"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+                adminSuggestionsBox.style.display = 'block';
+
+                adminSearchTimeout = setTimeout(() => {
+                    fetch('<?php echo $base_path; ?>api/search-suggestions.php?q=' + encodeURIComponent(query))
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) {
+                            adminSuggestionsBox.innerHTML = '<div style="padding:10px;text-align:center;color:#ff6b6b;">Error loading suggestions</div>';
+                            return;
+                        }
+                        if (data && data.length > 0) {
+                            let html = '';
+                            data.forEach((item, index) => {
+                                html += `
+                                    <a href="<?php echo $base_path; ?>admin/products/edit-product.php?id=${item.id}" class="admin-suggestion-item admin-nav-item" data-index="${index}">
+                                        <img src="<?php echo $base_path; ?>${item.image}" class="admin-suggestion-img">
+                                        <div class="admin-suggestion-info">
+                                            <p class="admin-suggestion-name">${item.name}</p>
+                                            <p class="admin-suggestion-price">${item.price}</p>
+                                        </div>
+                                    </a>
+                                `;
+                            });
+                            html += `<a href="<?php echo $base_path; ?>admin/products/manage-products.php?search=${encodeURIComponent(query)}" class="admin-view-all admin-nav-item" data-index="${data.length}">View All Results</a>`;
+                            adminSuggestionsBox.innerHTML = html;
+                        } else {
+                            adminSuggestionsBox.innerHTML = '<div style="padding:10px;text-align:center;color:#ccc;">No products found</div>';
+                        }
+                    })
+                    .catch(err => {
+                        adminSuggestionsBox.innerHTML = '<div style="padding:10px;text-align:center;color:#ff6b6b;">Failed to fetch</div>';
+                    });
+                }, 300);
+            });
+
+            adminSearchInput.addEventListener('keydown', function(e) {
+                const items = adminSuggestionsBox.querySelectorAll('.admin-nav-item');
+                if (!items || items.length === 0) return;
+                if (e.keyCode == 40) { adminCurrentFocus++; addActive(items); }
+                else if (e.keyCode == 38) { adminCurrentFocus--; addActive(items); }
+                else if (e.keyCode == 13) {
+                    if (adminCurrentFocus > -1) {
+                        e.preventDefault();
+                        items[adminCurrentFocus].click();
+                    }
+                } else if (e.keyCode == 27) { adminSuggestionsBox.style.display = 'none'; }
+            });
+
+            function addActive(items) {
+                if (!items) return false;
+                for (let i = 0; i < items.length; i++) items[i].classList.remove("admin-active-suggestion");
+                if (adminCurrentFocus >= items.length) adminCurrentFocus = 0;
+                if (adminCurrentFocus < 0) adminCurrentFocus = items.length - 1;
+                items[adminCurrentFocus].classList.add("admin-active-suggestion");
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!adminSearchInput.contains(e.target) && !adminSuggestionsBox.contains(e.target)) {
+                    adminSuggestionsBox.style.display = 'none';
+                }
             });
         }
 
