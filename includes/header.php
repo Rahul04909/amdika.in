@@ -224,6 +224,15 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
 
 <!-- Header Section -->
 <header>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-67D67L6BKY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-67D67L6BKY');
+</script>
     <!-- Main Header (Logo, Search, Actions) -->
     <div class="main-header">
         <div class="container">
