@@ -539,7 +539,7 @@
             const message = input.value.trim();
             if (message === '') return;
 
-            const phone = "919871626089"; // Using number from user's OTP request earlier
+            const phone = "918447616924"; // Using number from user's OTP request earlier
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
             window.open(url, '_blank');
