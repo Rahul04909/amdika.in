@@ -174,13 +174,12 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             display: flex;
             align-items: center;
             padding: 10px 15px;
-            text-decoration: none !important;
-            color: #333;
-            border-bottom: 1px solid #f8f9fa;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
             transition: background 0.2s;
         }
         .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover { background: #f8f9fb; }
+        .suggestion-item:hover, .active-suggestion { background: #f8f9fb; }
         .suggestion-img {
             width: 45px;
             height: 45px;
@@ -1068,34 +1067,44 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     }
 
     // --- Search Suggestions Logic ---
+    const searchForm = document.getElementById('headerSearchForm');
     const searchInput = document.getElementById('headerSearchInput');
     const suggestionsBox = document.getElementById('searchSuggestions');
     let searchTimeout = null;
+    let currentFocus = -1;
 
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function(e) {
             const query = this.value.trim();
             clearTimeout(searchTimeout);
+            currentFocus = -1;
 
             if (query.length < 2) {
                 suggestionsBox.style.display = 'none';
                 return;
             }
 
+            // Show loading state
+            suggestionsBox.innerHTML = '<div class="p-3 text-center text-muted"><i class="fas fa-spinner fa-spin me-2"></i>Searching...</div>';
+            suggestionsBox.style.display = 'block';
+
             searchTimeout = setTimeout(() => {
                 fetch('<?php echo $link_prefix; ?>api/search-suggestions.php?q=' + encodeURIComponent(query))
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
                 .then(data => {
                     if (data.error) {
                         console.error("Search API Error:", data.error);
-                        suggestionsBox.style.display = 'none';
+                        suggestionsBox.innerHTML = '<div class="p-3 text-center text-danger">Error loading suggestions</div>';
                         return;
                     }
                     if (data && data.length > 0) {
                         let html = '';
-                        data.forEach(item => {
+                        data.forEach((item, index) => {
                             html += `
-                                <a href="<?php echo $link_prefix; ?>product-details.php?slug=${item.slug}" class="suggestion-item">
+                                <a href="<?php echo $link_prefix; ?>product-details.php?slug=${item.slug}" class="suggestion-item suggestion-nav-item" data-index="${index}">
                                     <img src="<?php echo $link_prefix; ?>${item.image}" class="suggestion-img">
                                     <div class="suggestion-info">
                                         <p class="suggestion-name">${item.name}</p>
@@ -1104,20 +1113,63 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                 </a>
                             `;
                         });
-                        html += `<a href="<?php echo $link_prefix; ?>products.php?search=${encodeURIComponent(query)}" class="view-all-results">View All Results</a>`;
+                        html += `<a href="<?php echo $link_prefix; ?>products.php?search=${encodeURIComponent(query)}" class="view-all-results suggestion-nav-item" data-index="${data.length}">View All Results</a>`;
                         suggestionsBox.innerHTML = html;
-                        suggestionsBox.style.display = 'block';
                     } else {
-                        suggestionsBox.innerHTML = '<div class="no-results">No products found</div>';
-                        suggestionsBox.style.display = 'block';
+                        suggestionsBox.innerHTML = '<div class="no-results p-3 text-center text-muted">No products found</div>';
                     }
                 })
                 .catch(err => {
                     console.error("Fetch Error:", err);
-                    suggestionsBox.style.display = 'none';
+                    suggestionsBox.innerHTML = '<div class="p-3 text-center text-danger">Failed to fetch results</div>';
                 });
             }, 300);
         });
+
+        // Keyboard Navigation
+        searchInput.addEventListener('keydown', function(e) {
+            const items = suggestionsBox.querySelectorAll('.suggestion-nav-item');
+            if (!items || items.length === 0) return;
+
+            if (e.keyCode == 40) { // Down
+                currentFocus++;
+                addActive(items);
+            } else if (e.keyCode == 38) { // Up
+                currentFocus--;
+                addActive(items);
+            } else if (e.keyCode == 13) { // Enter
+                if (currentFocus > -1) {
+                    e.preventDefault(); // Prevent form submission
+                    items[currentFocus].click(); // Navigate to the selected item
+                }
+            } else if (e.keyCode == 27) { // Escape
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        function addActive(items) {
+            if (!items) return false;
+            removeActive(items);
+            if (currentFocus >= items.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = items.length - 1;
+            items[currentFocus].classList.add("active-suggestion");
+            items[currentFocus].scrollIntoView({ block: "nearest", behavior: "smooth" });
+        }
+
+        function removeActive(items) {
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove("active-suggestion");
+            }
+        }
+
+        // Form submission listener to prevent empty searches if desired
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                if (searchInput.value.trim() === '') {
+                    e.preventDefault();
+                }
+            });
+        }
 
         // Close suggestions when clicking outside
         document.addEventListener('click', function(e) {
