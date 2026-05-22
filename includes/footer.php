@@ -140,18 +140,18 @@
 
     .chat-widget {
         position: fixed;
-        bottom: 30px;
+        bottom: 50px;
         left: 30px;
-        width: 50px;
-        height: 50px;
-        background-color: var(--accent-gold);
-        color: var(--secondary-color);
+        width: 55px;
+        height: 55px;
+        background-color: #25D366;
+        color: #ffffff;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        font-size: 28px;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         cursor: pointer;
         z-index: 9999;
         transition: transform 0.3s;
@@ -160,13 +160,14 @@
 
     .chat-widget:hover {
         transform: scale(1.1);
-        color: var(--white);
+        color: #ffffff;
+        background-color: #128C7E;
     }
 
     /* WhatsApp Chat Box */
     .whatsapp-chat-box {
         position: fixed;
-        bottom: 95px;
+        bottom: 120px;
         left: 30px;
         width: 320px;
         background: #fff;
