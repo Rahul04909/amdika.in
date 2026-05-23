@@ -486,7 +486,7 @@
                     <div class="social-icons">
                         <a href="https://www.facebook.com/amadikaofficial/" target="_blank" rel="noopener noreferrer" class="fb"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/amadika.shopping/" target="_blank" rel="noopener noreferrer" class="insta"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer" class="pin"><i class="fa-brands fa-pinterest"></i></a>
+                        <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" rel="noopener noreferrer" class="pin"><i class="fa-brands fa-pinterest"></i></a>
                         <!-- <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="in"><i class="fa-brands fa-linkedin-in"></i></a> -->
                     </div>
                 </div>

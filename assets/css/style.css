@@ -121,34 +121,37 @@ a {
 
 /* --- Bottom Navigation --- */
 .bottom-header {
-    background-color: var(--secondary-color);
-    /* Dark background for contrast */
+    background-color: #1A1F22;
+    /* Deep luxury dark background */
     border-bottom: none;
-    height: 50px;
+    height: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 /* Categories Dropdown */
 .all-categories-btn {
     background-color: var(--accent-gold);
     /* Gold button */
-    color: var(--secondary-color);
-    /* Dark text on gold */
-    height: 50px;
-    padding: 0 20px;
-    font-weight: 700;
-    font-size: 14px;
+    color: var(--white);
+    /* White text on gold */
+    height: 60px;
+    padding: 0 25px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 250px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
 }
 
 .all-categories-btn:hover {
-    background-color: #C6920E;
+    background-color: #b8860b;
     /* Darker gold hover */
-    color: var(--secondary-color);
+    color: var(--white);
 }
 
 /* Main Nav Links */
@@ -156,23 +159,43 @@ a {
     display: flex;
     align-items: center;
     height: 100%;
+    gap: 20px;
 }
 
 .main-nav .nav-link {
-    color: var(--white);
-    /* White text on dark bar */
+    color: #f8f9fa;
+    /* Soft white text */
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 17px;
+    letter-spacing: 0.5px;
     padding: 0 15px;
-    height: 50px;
+    height: 60px;
     display: flex;
     align-items: center;
-    transition: color 0.2s;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.main-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background-color: var(--accent-gold);
+    transition: width 0.3s ease;
 }
 
 .main-nav .nav-link:hover {
     color: var(--accent-gold);
-    /* Gold text on hover */
+}
+
+.main-nav .nav-link:hover::after {
+    width: 60%;
 }
 
 /* Responsive */
@@ -220,6 +243,10 @@ a {
         width: 100%;
         color: var(--secondary-color);
         padding-left: 0;
+    }
+    
+    .main-nav .nav-link::after {
+        display: none;
     }
 
     .bottom-header {
