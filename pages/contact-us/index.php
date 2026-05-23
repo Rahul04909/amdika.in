@@ -89,7 +89,7 @@ include '../../includes/header.php';
                 <div class="contact-card">
                     <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                     <h5>Call Us</h5>
-                    <p class="text-muted mb-1">+91 98716 26089</p>
+                    <!-- <p class="text-muted mb-1">+91 98716 26089</p> -->
                     <p class="text-muted mb-1">+91 84476 16924</p>
                     <p class="text-muted mb-0">Mon - Sat, 9am - 7pm</p>
                 </div>
