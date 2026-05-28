@@ -320,8 +320,8 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">The Company</span>
                 <ul class="footer-links">
-                    <li><a href="../../pages/help/index.php">Help</a></li>
-                    <li><a href="../../pages/privacy-policy/index.php">Privacy Policy</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/help/index.php">Help</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/privacy-policy/index.php">Privacy Policy</a></li>
                     <!-- <li><a href="#">Blog</a></li> -->
                 </ul>
             </div>
@@ -330,14 +330,14 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <span class="footer-heading">More Information</span>
                 <ul class="footer-links">
-                    <li><a href="../../pages/fees-and-payments/index.php">Fees and Payments</a></li>
-                    <li><a href="../../pages/shipping-policy/index.php">Shipping & Delivery</a></li>
-                    <li><a href="../../pages/terms-and-conditions/index.php">Terms and Conditions</a></li>
-                    <li><a href="../../pages/warrnty-retrun-refund-policy/index.php">Warranty, Return and Refund</a>
+                    <li><a href="<?php echo $link_prefix; ?>pages/fees-and-payments/index.php">Fees and Payments</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/shipping-policy/index.php">Shipping & Delivery</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/terms-and-conditions/index.php">Terms and Conditions</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/warrnty-retrun-refund-policy/index.php">Warranty, Return and Refund</a>
                     </li>
-                    <li><a href="../../pages/contact-us/index.php">Contact Us</a></li>
-                    <li><a href="../../pages/visit-us/index.php">Visit Us</a></li>
-                    <li><a href="../../pages/buy-in-bulk/index.php">Buy In Bulk</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/contact-us/index.php">Contact Us</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/visit-us/index.php">Visit Us</a></li>
+                    <li><a href="<?php echo $link_prefix; ?>pages/buy-in-bulk/index.php">Buy In Bulk</a></li>
                 </ul>
             </div>
 
@@ -458,9 +458,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-4 mb-3 mb-lg-0">
                     <div class="d-flex gap-3 text-small footer-bottom-text" style="font-size: 12px;">
-                        <a href="../../pages/terms-and-conditions/index.php"
+                        <a href="<?php echo $link_prefix; ?>pages/terms-and-conditions/index.php"
                             class="text-decoration-none footer-bottom-link">Terms of use</a>
-                        <a href="../../pages/privacy-policy/index.php"
+                        <a href="<?php echo $link_prefix; ?>pages/privacy-policy/index.php"
                             class="text-decoration-none footer-bottom-link">Privacy Policy</a>
                     </div>
                     <div class="mt-2 footer-bottom-text" style="font-size: 12px;">
@@ -498,7 +498,7 @@
     <!-- WhatsApp Chat Widget -->
     <div class="whatsapp-chat-box" id="whatsappChat">
         <div class="chat-header">
-            <img src="assets/images/amdika-logo.png" alt="Amadika Support"
+            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika Support"
                 onerror="this.src='https://ui-avatars.com/api/?name=Amadika+Support&background=fff&color=25D366'">
             <div class="chat-header-info">
                 <h4>Amadika Support</h4>

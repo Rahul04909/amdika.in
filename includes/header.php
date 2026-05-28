@@ -239,7 +239,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
             <div class="row align-items-center">
                 <!-- Logo -->
                 <div class="col-lg-2 col-md-3 col-6">
-                    <a href="<?php echo $assets_path == '../assets/' ? '../index.php' : 'index.php'; ?>" class="brand-logo">
+                    <a href="<?php echo $link_prefix; ?>index.php" class="brand-logo">
                         <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="img-fluid">
                     </a>
                 </div>
@@ -345,11 +345,11 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                 $h_cat_res = $conn->query($h_cat_sql);
                                 if($h_cat_res && $h_cat_res->num_rows > 0) {
                                     while($h_row = $h_cat_res->fetch_assoc()) {
-                                        echo '<li><a href="products.php?category='.urlencode($h_row['slug']).'">'.htmlspecialchars($h_row['name']).' <i class="fa-solid fa-chevron-right"></i></a></li>';
+                                        echo '<li><a href="'.$link_prefix.'products.php?category='.urlencode($h_row['slug']).'">'.htmlspecialchars($h_row['name']).' <i class="fa-solid fa-chevron-right"></i></a></li>';
                                     }
-                                    echo '<li><a href="products.php" class="text-center justify-content-center text-primary fw-bold" style="padding-left:20px;">View All Categories</a></li>';
+                                    echo '<li><a href="'.$link_prefix.'products.php" class="text-center justify-content-center text-primary fw-bold" style="padding-left:20px;">View All Categories</a></li>';
                                 } else {
-                                     echo '<li><a href="products.php">No products Found</a></li>';
+                                     echo '<li><a href="'.$link_prefix.'products.php">No products Found</a></li>';
                                 }
                             }
                             ?>
