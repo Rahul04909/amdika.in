@@ -129,7 +129,7 @@ elseif ($action === 'count') {
     echo json_encode(['status' => 'success', 'count' => ($result['total'] ?? 0)]);
 }
 elseif ($action === 'fetch') {
-    $sql = "SELECT c.id as cart_row_id, c.quantity, p.name, p.sale_price, p.featured_image, p.slug, cl.name as color_name, cv.price as variant_price, cv.image_path as variant_image
+    $sql = "SELECT c.id as cart_row_id, c.quantity, p.name, p.sale_price, p.gst_percent, p.featured_image, p.slug, cl.name as color_name, cv.price as variant_price, cv.image_path as variant_image
             FROM cart c 
             JOIN products p ON c.product_id = p.id 
             LEFT JOIN colors cl ON c.color_id = cl.id
@@ -144,7 +144,9 @@ elseif ($action === 'fetch') {
     $items = [];
     $total_price = 0;
     while($row = $result->fetch_assoc()) {
-        $price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
+        $base_price = ($row['variant_price'] > 0) ? $row['variant_price'] : $row['sale_price'];
+        $gst_pct = isset($row['gst_percent']) ? $row['gst_percent'] : 0;
+        $price = $base_price + ($base_price * $gst_pct / 100);
         $image = (!empty($row['variant_image'])) ? $row['variant_image'] : $row['featured_image'];
         
         $items[] = [
