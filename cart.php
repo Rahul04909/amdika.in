@@ -37,9 +37,12 @@ if ($session_id) {
             // Use variant image if available
             $row['display_image'] = (!empty($row['variant_image'])) ? $row['variant_image'] : $row['featured_image'];
 
+            $gst_percent = $row['gst_percent'];
+            $row['display_price_inc'] = $effective_price + ($effective_price * $gst_percent / 100);
+            $row['mrp_inc'] = $row['mrp'] + ($row['mrp'] * $gst_percent / 100);
+
             $products[] = $row;
             
-            $gst_percent = $row['gst_percent'];
             $gst_amount = ($effective_price * $qty * $gst_percent) / 100;
             
             $total_mrp += $row['mrp'] * $qty;
@@ -143,10 +146,10 @@ if ($session_id) {
                                 <span class="seller-text">Seller: Amadika Retail</span>
                                 
                                 <div class="price-row">
-                                    <span class="mrp-strike">₹<?php echo number_format($p['mrp']); ?></span>
-                                    <span class="final-price">₹<?php echo number_format($p['display_price']); ?></span>
+                                    <span class="mrp-strike">₹<?php echo number_format($p['mrp_inc']); ?></span>
+                                    <span class="final-price">₹<?php echo number_format($p['display_price_inc']); ?></span>
                                     <?php 
-                                        $p_disc = round((($p['mrp'] - $p['display_price']) / $p['mrp']) * 100);
+                                        $p_disc = round((($p['mrp_inc'] - $p['display_price_inc']) / $p['mrp_inc']) * 100);
                                     ?>
                                     <span class="disc-green"><?php echo $p_disc; ?>% Off</span>
                                 </div>
