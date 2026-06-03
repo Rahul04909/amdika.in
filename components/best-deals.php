@@ -269,7 +269,7 @@ if (!isset($bd_products)) {
                                 $inc_reg = $prod['regular_price'] + ($prod['regular_price'] * $gst_pct / 100);
                                 ?>
                                 <div class="deal-price-row">
-                                    <span class="deal-sale-price">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></span>
+                                    <span class="deal-sale-price">₹<?php echo number_format($inc_sale); ?></span>
                                     <?php if($prod['regular_price'] > $prod['sale_price']): ?>
                                         <span class="deal-reg-price">₹<?php echo number_format($inc_reg); ?></span>
                                     <?php endif; ?>

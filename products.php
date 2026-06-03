@@ -332,7 +332,7 @@ body { background-color: #f8f9fb; }
                                     $inc_reg = $p['regular_price'] + ($p['regular_price'] * $gst_pct / 100);
                                     ?>
                                     <div class="sp-price-box">
-                                        <span class="sp-sale">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></span>
+                                        <span class="sp-sale">₹<?php echo number_format($inc_sale); ?></span>
                                         <?php if($p['regular_price'] > $p['sale_price']): ?>
                                             <span class="sp-reg">₹<?php echo number_format($inc_reg); ?></span>
                                         <?php endif; ?>

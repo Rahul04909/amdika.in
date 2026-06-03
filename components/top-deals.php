@@ -334,7 +334,7 @@
                                     $gst_pct = isset($lp['gst_percent']) ? $lp['gst_percent'] : 0;
                                     $inc_sale = $lp['sale_price'] + ($lp['sale_price'] * $gst_pct / 100);
                                     ?>
-                                    <div class="td-hero-price">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></div>
+                                    <div class="td-hero-price">₹<?php echo number_format($inc_sale); ?></div>
                                 </div>
                             </a>
                         </div>
@@ -389,7 +389,7 @@
                                     $gst_pct = isset($item['gst_percent']) ? $item['gst_percent'] : 0;
                                     $inc_sale = $item['sale_price'] + ($item['sale_price'] * $gst_pct / 100);
                                     ?>
-                                    <div class="td-grid-price-text">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></div>
+                                    <div class="td-grid-price-text">₹<?php echo number_format($inc_sale); ?></div>
                                 </a>
                             <?php endforeach; ?>
                         </div>

@@ -298,7 +298,7 @@ if ($cat_res && $cat_res->num_rows > 0):
                             $inc_reg = $prod['regular_price'] + ($prod['regular_price'] * $gst_pct / 100);
                             ?>
                             <div class="cp-price-row">
-                                <span class="cp-sale-price">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></span>
+                                <span class="cp-sale-price">₹<?php echo number_format($inc_sale); ?></span>
                                 <?php if($prod['regular_price'] > $prod['sale_price']): ?>
                                     <span class="cp-reg-price">₹<?php echo number_format($inc_reg); ?></span>
                                 <?php endif; ?>
