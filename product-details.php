@@ -106,8 +106,9 @@ try {
 }
 */
 
-$mrp = $product['mrp'];
-$sale = $product['sale_price'];
+$gst_pct = isset($product['gst_percent']) ? $product['gst_percent'] : 0;
+$mrp = $product['mrp'] + ($product['mrp'] * $gst_pct / 100);
+$sale = $product['sale_price'] + ($product['sale_price'] * $gst_pct / 100);
 $disc = $product['discount_percent'];
 ?>
 <style>
@@ -713,7 +714,7 @@ $disc = $product['discount_percent'];
                 </div>
 
                 <div class="price-block">
-                    <span class="sale-price" id="displaySalePrice">₹<?php echo number_format((float) $sale); ?></span>
+                    <span class="sale-price" id="displaySalePrice">₹<?php echo number_format((float) $sale); ?> <small class="text-muted" style="font-size: 14px; font-weight:normal;">Inc. GST</small></span>
                     <?php if ($disc > 0): ?>
                         <span class="mrp-price">₹<?php echo number_format((float) $mrp); ?></span>
                         <span class="disc-off" id="displayDiscount"><?php echo $disc; ?>% off</span>
@@ -1389,10 +1390,13 @@ if ($rel_res && $rel_res->num_rows > 0):
         document.getElementById('selectedColorName').innerText = el.dataset.name;
 
         // Update Price
-        const variantPrice = parseFloat(el.dataset.price);
+        let variantPrice = parseFloat(el.dataset.price);
         const emiEl = document.getElementById('emiDisplay');
+        const gstPct = <?php echo isset($product['gst_percent']) ? $product['gst_percent'] : 0; ?>;
+        
         if (variantPrice > 0) {
-            document.getElementById('displaySalePrice').innerText = '₹' + variantPrice.toLocaleString();
+            variantPrice = variantPrice + (variantPrice * gstPct / 100);
+            document.getElementById('displaySalePrice').innerHTML = '₹' + variantPrice.toLocaleString() + ' <small class="text-muted" style="font-size: 14px; font-weight:normal;">Inc. GST</small>';
             if (emiEl) emiEl.innerText = 'EMI from ₹' + Math.ceil(variantPrice / 24).toLocaleString() + '/month';
             // Recalculate discount if needed
             if (baseMrp > variantPrice) {
@@ -1401,7 +1405,7 @@ if ($rel_res && $rel_res->num_rows > 0):
                 if (discEl) discEl.innerText = newDisc + '% off';
             }
         } else {
-            document.getElementById('displaySalePrice').innerText = '₹' + baseSalePrice.toLocaleString();
+            document.getElementById('displaySalePrice').innerHTML = '₹' + baseSalePrice.toLocaleString() + ' <small class="text-muted" style="font-size: 14px; font-weight:normal;">Inc. GST</small>';
             if (emiEl) emiEl.innerText = 'EMI from ₹' + Math.ceil(baseSalePrice / 24).toLocaleString() + '/month';
             const discEl = document.getElementById('displayDiscount');
             if (discEl) discEl.innerText = '<?php echo $disc; ?>% off';

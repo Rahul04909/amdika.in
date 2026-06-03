@@ -15,9 +15,6 @@
 <!-- Promotional Banner -->
 <?php include 'components/promo-banner.php'; ?>
 
-<?php include 'components/top-deals.php'; ?>
-
-
 <!-- Garden Category Products -->
 <?php include 'components/category-products.php'; ?>
 

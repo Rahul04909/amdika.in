@@ -330,7 +330,11 @@
                                 </div>
                                 <div class="td-hero-info">
                                     <h4 class="td-hero-name"><?php echo htmlspecialchars($lp['name']); ?></h4>
-                                    <div class="td-hero-price">₹<?php echo number_format($lp['sale_price']); ?></div>
+                                    <?php 
+                                    $gst_pct = isset($lp['gst_percent']) ? $lp['gst_percent'] : 0;
+                                    $inc_sale = $lp['sale_price'] + ($lp['sale_price'] * $gst_pct / 100);
+                                    ?>
+                                    <div class="td-hero-price">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></div>
                                 </div>
                             </a>
                         </div>
@@ -381,7 +385,11 @@
                                         <img src="<?php echo $img_url; ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
                                     </div>
                                     <div class="td-grid-title-text"><?php echo mb_strimwidth(htmlspecialchars($item['name']), 0, 18, "..."); ?></div>
-                                    <div class="td-grid-price-text">₹<?php echo number_format($item['sale_price']); ?></div>
+                                    <?php 
+                                    $gst_pct = isset($item['gst_percent']) ? $item['gst_percent'] : 0;
+                                    $inc_sale = $item['sale_price'] + ($item['sale_price'] * $gst_pct / 100);
+                                    ?>
+                                    <div class="td-grid-price-text">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></div>
                                 </a>
                             <?php endforeach; ?>
                         </div>

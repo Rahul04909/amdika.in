@@ -292,10 +292,15 @@ if ($cat_res && $cat_res->num_rows > 0):
 
                             <h3 class="cp-name"><?php echo htmlspecialchars($prod['name']); ?></h3>
                             
+                            <?php
+                            $gst_pct = isset($prod['gst_percent']) ? $prod['gst_percent'] : 0;
+                            $inc_sale = $prod['sale_price'] + ($prod['sale_price'] * $gst_pct / 100);
+                            $inc_reg = $prod['regular_price'] + ($prod['regular_price'] * $gst_pct / 100);
+                            ?>
                             <div class="cp-price-row">
-                                <span class="cp-sale-price">₹<?php echo number_format($prod['sale_price']); ?></span>
+                                <span class="cp-sale-price">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></span>
                                 <?php if($prod['regular_price'] > $prod['sale_price']): ?>
-                                    <span class="cp-reg-price">₹<?php echo number_format($prod['regular_price']); ?></span>
+                                    <span class="cp-reg-price">₹<?php echo number_format($inc_reg); ?></span>
                                 <?php endif; ?>
                             </div>
                         </a>

@@ -326,10 +326,15 @@ body { background-color: #f8f9fb; }
                                         <?php echo htmlspecialchars($p['name']); ?>
                                     </a>
 
+                                    <?php
+                                    $gst_pct = isset($p['gst_percent']) ? $p['gst_percent'] : 0;
+                                    $inc_sale = $p['sale_price'] + ($p['sale_price'] * $gst_pct / 100);
+                                    $inc_reg = $p['regular_price'] + ($p['regular_price'] * $gst_pct / 100);
+                                    ?>
                                     <div class="sp-price-box">
-                                        <span class="sp-sale">₹<?php echo number_format($p['sale_price']); ?></span>
+                                        <span class="sp-sale">₹<?php echo number_format($inc_sale); ?> <small class="text-muted" style="font-size: 10px; font-weight:normal;">Inc. GST</small></span>
                                         <?php if($p['regular_price'] > $p['sale_price']): ?>
-                                            <span class="sp-reg">₹<?php echo number_format($p['regular_price']); ?></span>
+                                            <span class="sp-reg">₹<?php echo number_format($inc_reg); ?></span>
                                         <?php endif; ?>
                                     </div>
 
