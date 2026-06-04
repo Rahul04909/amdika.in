@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($sql);
         if (!$stmt) throw new Exception($conn->error);
 
-        $stmt->bind_param("issssssddiiissss", 
+        $stmt->bind_param("issssssddiisssss", 
             $category_id, $name, $slug, $description, $featured_img_path, $gallery_json, $video_url,
             $mrp, $sale_price, $discount_percent, $gst_percent, $seo_title, $seo_description, $seo_keywords, $schema_markup, $status
         );

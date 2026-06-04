@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($sql);
         if (!$stmt) throw new Exception($conn->error);
 
-        $stmt->bind_param("issssssddiiissssi", 
+        $stmt->bind_param("issssddiisssssssi", 
             $category_id, $name, $slug, $description, $video_url, 
             $mrp, $sale_price, $discount_percent, $gst_percent,
             $seo_title, $seo_description, $seo_keywords, 
