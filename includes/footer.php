@@ -294,6 +294,53 @@
     .footer-bottom-link:hover {
         color: var(--accent-gold);
     }
+
+    /* Fixed Floating Social Icons (matching WhatsApp widget) */
+    .fixed-social-icons {
+        position: fixed;
+        right: 30px;
+        bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 9999;
+    }
+
+    .fixed-social-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff !important;
+        font-size: 24px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none !important;
+    }
+
+    .fixed-social-btn:hover {
+        transform: scale(1.1) translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .fixed-social-btn.fb { background-color: #1877F2; }
+    .fixed-social-btn.insta { background-color: #E4405F; }
+    .fixed-social-btn.pin { background-color: #E60023; }
+
+    @media (max-width: 768px) {
+        .fixed-social-icons {
+            right: 15px;
+            bottom: 120px; /* Shift up to prevent overlap with mobile checkout/action bars */
+            gap: 8px;
+        }
+        .fixed-social-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
+        }
+    }
 </style>
 <footer class="site-footer">
     <div class="container">
@@ -524,6 +571,13 @@
     <button class="chat-widget" onclick="toggleChat()">
         <i class="fa-brands fa-whatsapp"></i>
     </button>
+
+    <!-- Fixed Floating Social Icons -->
+    <div class="fixed-social-icons">
+        <a href="https://www.facebook.com/amadikaofficial/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn fb" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/amadika.shopping/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn pin" title="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+    </div>
 
     <script>
         function toggleChat() {
