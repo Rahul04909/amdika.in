@@ -147,7 +147,7 @@ $disc = $product['discount_percent'];
         max-width: 100%;
         object-fit: contain;
         transition: transform 0.3s;
-        cursor: crosshair;
+        cursor: zoom-in;
     }
 
     .thumbnail-track {
@@ -643,6 +643,164 @@ $disc = $product['discount_percent'];
         gap: 5px;
         text-decoration: none !important;
     }
+
+    /* Custom Lightbox Modal Styles */
+    .lightbox-modal {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+    }
+
+    .lightbox-content {
+        max-width: 80%;
+        max-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    #lightboxMainImage {
+        max-width: 100%;
+        max-height: 75vh;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 45px;
+        font-weight: 300;
+        cursor: pointer;
+        z-index: 100000;
+        transition: color 0.3s;
+        line-height: 1;
+    }
+
+    .lightbox-close:hover {
+        color: #ff9f00;
+    }
+
+    .lightbox-prev, .lightbox-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: none;
+        font-size: 24px;
+        padding: 15px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: 100000;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .lightbox-prev {
+        left: 40px;
+    }
+
+    .lightbox-next {
+        right: 40px;
+    }
+
+    .lightbox-prev:hover, .lightbox-next:hover {
+        background: rgba(255, 255, 255, 0.25);
+        color: #ff9f00;
+    }
+
+    .lightbox-thumbnails-container {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 100000;
+    }
+
+    .lightbox-thumbnails-track {
+        display: flex;
+        gap: 10px;
+        max-width: 90%;
+        overflow-x: auto;
+        padding: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.3) transparent;
+    }
+    
+    .lightbox-thumbnails-track::-webkit-scrollbar {
+        height: 6px;
+    }
+    .lightbox-thumbnails-track::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.3);
+        border-radius: 3px;
+    }
+
+    .lightbox-thumb {
+        width: 60px;
+        height: 60px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: all 0.3s;
+        flex-shrink: 0;
+        padding: 2px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-thumb.active {
+        border-color: #ff9f00;
+        opacity: 1;
+    }
+
+    .lightbox-thumb img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    @media (max-width: 768px) {
+        .lightbox-prev {
+            left: 10px;
+            padding: 10px 15px;
+            font-size: 18px;
+        }
+        .lightbox-next {
+            right: 10px;
+            padding: 10px 15px;
+            font-size: 18px;
+        }
+        .lightbox-content {
+            max-width: 95%;
+        }
+        .lightbox-close {
+            top: 10px;
+            right: 20px;
+            font-size: 35px;
+        }
+        .lightbox-thumb {
+            width: 50px;
+            height: 50px;
+        }
+    }
 </style>
 
 <div class="container-fluid mt-3 mb-5 px-lg-4">
@@ -650,7 +808,7 @@ $disc = $product['discount_percent'];
         <div class="row">
             <!-- Left: Gallery -->
             <div class="col-lg-5 col-md-6 gallery-col">
-                <div class="main-img-container" id="zoomContainer">
+                <div class="main-img-container" id="zoomContainer" onclick="openLightbox()">
                     <img src="<?php echo $gallery[0]; ?>" class="main-img" id="mainImage">
                 </div>
 
@@ -1338,6 +1496,21 @@ if ($rel_res && $rel_res->num_rows > 0):
     </script>
 <?php endif; ?>
 
+<!-- Custom Lightbox Modal -->
+<div id="lightboxModal" class="lightbox-modal">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <button class="lightbox-prev" onclick="prevLightboxImage()"><i class="fas fa-chevron-left"></i></button>
+    <div class="lightbox-content">
+        <img id="lightboxMainImage" src="" alt="Gallery Image">
+    </div>
+    <button class="lightbox-next" onclick="nextLightboxImage()"><i class="fas fa-chevron-right"></i></button>
+    
+    <!-- Lightbox Thumbnails -->
+    <div class="lightbox-thumbnails-container">
+        <div id="lightboxThumbnailsTrack" class="lightbox-thumbnails-track"></div>
+    </div>
+</div>
+
 <!-- Mobile Sticky Footer -->
 <!-- Mobile Sticky Footer -->
 <div class="mobile-footer-actions">
@@ -1362,6 +1535,103 @@ if ($rel_res && $rel_res->num_rows > 0):
         document.querySelectorAll('.thumb-btn').forEach(el => el.classList.remove('active'));
         btn.classList.add('active');
     }
+
+    // Lightbox Functionality
+    let currentGalleryImages = <?php echo json_encode($gallery); ?>;
+    let currentLightboxIndex = 0;
+
+    function openLightbox() {
+        const mainImgSrc = document.getElementById('mainImage').src;
+        // Find matching image index in currentGalleryImages
+        currentLightboxIndex = currentGalleryImages.findIndex(img => {
+            const prefix = '<?php echo $link_prefix; ?>';
+            const fullSrc = (img.startsWith('http') || img.startsWith('/')) ? img : prefix + img;
+            
+            try {
+                const url1 = new URL(mainImgSrc);
+                const url2 = new URL(fullSrc, window.location.origin);
+                return url1.pathname === url2.pathname;
+            } catch (e) {
+                return mainImgSrc.endsWith(img) || fullSrc.endsWith(mainImgSrc);
+            }
+        });
+
+        if (currentLightboxIndex === -1) {
+            currentLightboxIndex = 0;
+        }
+
+        document.getElementById('lightboxModal').style.display = 'flex';
+        updateLightboxImage();
+        renderLightboxThumbnails();
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightboxModal').style.display = 'none';
+    }
+
+    function updateLightboxImage() {
+        const imgPath = currentGalleryImages[currentLightboxIndex];
+        if (!imgPath) return;
+        const fullSrc = (imgPath.startsWith('http') || imgPath.startsWith('/')) ? imgPath : '<?php echo $link_prefix; ?>' + imgPath;
+        document.getElementById('lightboxMainImage').src = fullSrc;
+
+        // Update active thumbnail
+        document.querySelectorAll('.lightbox-thumb').forEach((thumb, idx) => {
+            if (idx === currentLightboxIndex) {
+                thumb.classList.add('active');
+                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+    }
+
+    function prevLightboxImage() {
+        if (currentGalleryImages.length <= 1) return;
+        currentLightboxIndex = (currentLightboxIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+        updateLightboxImage();
+    }
+
+    function nextLightboxImage() {
+        if (currentGalleryImages.length <= 1) return;
+        currentLightboxIndex = (currentLightboxIndex + 1) % currentGalleryImages.length;
+        updateLightboxImage();
+    }
+
+    function selectLightboxImage(index) {
+        currentLightboxIndex = index;
+        updateLightboxImage();
+    }
+
+    function renderLightboxThumbnails() {
+        const track = document.getElementById('lightboxThumbnailsTrack');
+        if (!track) return;
+        track.innerHTML = '';
+        currentGalleryImages.forEach((img, idx) => {
+            if (!img) return;
+            const fullSrc = (img.startsWith('http') || img.startsWith('/')) ? img : '<?php echo $link_prefix; ?>' + img;
+            
+            const btn = document.createElement('div');
+            btn.className = `lightbox-thumb ${idx === currentLightboxIndex ? 'active' : ''}`;
+            btn.onclick = function() { selectLightboxImage(idx); };
+            btn.innerHTML = `<img src="${fullSrc}">`;
+            track.appendChild(btn);
+        });
+    }
+
+    // Keyboard Controls
+    document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('lightboxModal');
+        if (modal && modal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') {
+                prevLightboxImage();
+            } else if (e.key === 'ArrowRight') {
+                nextLightboxImage();
+            } else if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        }
+    });
 
     // Simple Zoom Effect
     const container = document.getElementById('zoomContainer');
@@ -1454,6 +1724,7 @@ if ($rel_res && $rel_res->num_rows > 0):
     }
 
     function updateThumbnailTrack(images) {
+        currentGalleryImages = images;
         const track = document.querySelector('.thumbnail-track');
         if (!track) return;
         track.innerHTML = '';
