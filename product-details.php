@@ -1633,23 +1633,7 @@ if ($rel_res && $rel_res->num_rows > 0):
         }
     });
 
-    // Simple Zoom Effect
-    const container = document.getElementById('zoomContainer');
-    const img = document.getElementById('mainImage');
 
-    container.addEventListener('mousemove', function (e) {
-        const { left, top, width, height } = container.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
-
-        img.style.transformOrigin = `${x * 100}% ${y * 100}%`;
-        img.style.transform = 'scale(1.5)';
-    });
-
-    container.addEventListener('mouseleave', function () {
-        img.style.transform = 'scale(1)';
-        img.style.transformOrigin = 'center center';
-    });
 
     // Cart Functions
     let selectedColorId = null;
