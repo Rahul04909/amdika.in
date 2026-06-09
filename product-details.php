@@ -1285,6 +1285,9 @@ if ($rel_res && $rel_res->num_rows > 0):
                     $fp_img = !empty($fp['featured_image']) ? $fp['featured_image'] : 'assets/images/demo-data/product.jpg';
                     $fp_rating = number_format(4.0 + (rand(0, 10) / 10), 1);
                     $fp_reviews = rand(5, 500);
+                    $fp_gst_pct = isset($fp['gst_percent']) ? $fp['gst_percent'] : 0;
+                    $fp_sale_inc = $fp['sale_price'] + ($fp['sale_price'] * $fp_gst_pct / 100);
+                    $fp_mrp_inc = $fp['mrp'] + ($fp['mrp'] * $fp_gst_pct / 100);
                     ?>
                     <div class="cp-product-item">
                         <div class="premium-product-card">
@@ -1302,9 +1305,11 @@ if ($rel_res && $rel_res->num_rows > 0):
                                 <h3 class="product-title"><?php echo htmlspecialchars($fp['name']); ?></h3>
                             </a>
                             <div class="price-container">
-                                <span class="current-price">₹<?php echo number_format((float) $fp['sale_price']); ?></span>
-                                <span class="original-price">₹<?php echo number_format((float) $fp['mrp']); ?></span>
-                                <span class="discount-text"><?php echo $fp['discount_percent']; ?>% off</span>
+                                <span class="current-price">₹<?php echo number_format($fp_sale_inc); ?></span>
+                                <?php if($fp['mrp'] > $fp['sale_price']): ?>
+                                    <span class="original-price">₹<?php echo number_format($fp_mrp_inc); ?></span>
+                                    <span class="discount-text"><?php echo $fp['discount_percent']; ?>% off</span>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

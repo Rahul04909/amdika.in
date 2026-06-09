@@ -18,7 +18,7 @@ $link_prefix = str_replace('assets/', '', $assets_path);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : "Amadika | Premium Home Decor Store in Faridabad Online"; ?></title>
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : "Amadika | Belive In Quality"; ?></title>
     <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : "Shop Luxury Leather Accessories Online at Amadika. Explore Premium Home Accessories, Leather Home Decor Products & stylish luxury décor in Faridabad."; ?>">
     <meta name="keywords" content="<?php echo isset($page_keywords) ? htmlspecialchars($page_keywords) : "premium home decor faridabad, luxury leather accessories online, premium home accessories, leather home decor products, stylish luxury decor faridabad, luxury leather accessories, amadika, amadika faridabad, amadika home decor"; ?>">
 
