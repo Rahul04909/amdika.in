@@ -240,7 +240,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                 <!-- Logo -->
                 <div class="col-lg-2 col-md-3 col-6">
                     <a href="<?php echo $link_prefix; ?>index.php" class="brand-logo">
-                        <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="img-fluid">
+                        <img src="<?php echo $assets_path; ?>images/logo.jpeg" alt="Amadika" class="img-fluid">
                     </a>
                 </div>
 
