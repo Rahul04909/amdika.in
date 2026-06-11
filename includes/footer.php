@@ -295,50 +295,48 @@
         color: var(--accent-gold);
     }
 
-    /* Fixed Floating Social Icons (matching WhatsApp widget) */
+    /* Fixed Floating Social Icons (Left Sticky Sidebar style) */
     .fixed-social-icons {
         position: fixed;
-        right: 30px;
-        bottom: 50px;
+        left: 0;
+        bottom: 130px; /* Vertically stacked above the WhatsApp widget */
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        z-index: 9999;
+        gap: 0; /* Zero gaps between icons like the sample image */
+        z-index: 99999;
     }
 
     .fixed-social-btn {
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
+        width: 40px; /* Smaller size */
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #ffffff !important;
-        font-size: 24px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-size: 18px;
+        transition: all 0.3s ease;
         text-decoration: none !important;
+        border-radius: 0 4px 4px 0; /* Rounded only on the right edge */
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .fixed-social-btn:hover {
-        transform: scale(1.1) translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        transform: translateX(8px); /* Slide out slightly to the right on hover */
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
     }
 
     .fixed-social-btn.fb { background-color: #1877F2; }
-    .fixed-social-btn.insta { background-color: #E4405F; }
+    .fixed-social-btn.insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
     .fixed-social-btn.pin { background-color: #E60023; }
 
     @media (max-width: 768px) {
         .fixed-social-icons {
-            right: 15px;
-            bottom: 120px; /* Shift up to prevent overlap with mobile checkout/action bars */
-            gap: 8px;
+            bottom: 120px; /* Avoid overlapping mobile bottom bar elements */
         }
         .fixed-social-btn {
-            width: 45px;
-            height: 45px;
-            font-size: 18px;
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
         }
     }
 </style>
