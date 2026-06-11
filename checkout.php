@@ -193,7 +193,7 @@ $u_state = $user_data['state'] ?? '';
                 </div>
                 <?php foreach($cart_items as $item): ?>
                     <div class="order-summary-item">
-                        <img src="<?php echo $item['display_image']; ?>" class="summary-img">
+                        <img src="<?php echo (strpos($item['display_image'], 'http') === 0 || strpos($item['display_image'], '/') === 0) ? $item['display_image'] : $link_prefix . $item['display_image']; ?>" class="summary-img">
                         <div>
                             <div class="fw-500"><?php echo htmlspecialchars($item['name']); ?></div>
                             <?php if(!empty($item['color_name'])): ?>

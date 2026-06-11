@@ -281,7 +281,7 @@ function loadSidebarCart() {
                 data.items.forEach(item => {
                     html += `
                         <div class="sidebar-item-card">
-                            <img src="${item.image}" class="sidebar-item-img">
+                            <img src="${(item.image.startsWith('http') || item.image.startsWith('/')) ? item.image : '<?php echo $link_prefix; ?>' + item.image}" class="sidebar-item-img">
                             <div class="sidebar-item-info">
                                 <div class="sidebar-item-name">${item.name}</div>
                                 <div class="sidebar-item-meta">

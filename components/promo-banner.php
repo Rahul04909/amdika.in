@@ -42,7 +42,7 @@
                 // Using image helper to ensure optimized loading, though for banners 'cover' or direct is often used
                 $banner_path = 'assets/images/banners/bags-banner.png';
             ?>
-            <img src="<?php echo $banner_path; ?>" alt="Promotional Banner" class="promo-banner-img">
+            <img src="<?php echo $link_prefix . $banner_path; ?>" alt="Promotional Banner" class="promo-banner-img">
         </a>
     </div>
 </div>

@@ -85,6 +85,10 @@ if (!empty($product['featured_image'])) {
 // }
 
 $gallery = array_unique(array_filter($gallery));
+// Prepend $link_prefix to all gallery images so they load on rewritten paths
+$gallery = array_map(function($img) use ($link_prefix) {
+    return (strpos($img, 'http') === 0 || strpos($img, '/') === 0) ? $img : $link_prefix . $img;
+}, $gallery);
 
 /* 
 // --- Razorpay EMI Plans Implementation ---
@@ -1441,6 +1445,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             <div class="cp-product-container" id="slider_<?php echo $unique_id; ?>">
                 <?php while ($fp = $rel_res->fetch_assoc()):
                     $fp_img = !empty($fp['featured_image']) ? $fp['featured_image'] : 'assets/images/demo-data/product.jpg';
+                    $fp_img = (strpos($fp_img, 'http') === 0 || strpos($fp_img, '/') === 0) ? $fp_img : $link_prefix . $fp_img;
                     $fp_rating = number_format(4.0 + (rand(0, 10) / 10), 1);
                     $fp_reviews = rand(5, 500);
                     $fp_gst_pct = isset($fp['gst_percent']) ? $fp['gst_percent'] : 0;

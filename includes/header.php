@@ -1121,7 +1121,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                         data.forEach((item, index) => {
                             html += `
                                 <a href="<?php echo $link_prefix; ?>product/${item.slug}" class="suggestion-item suggestion-nav-item" data-index="${index}">
-                                    <img src="<?php echo $link_prefix; ?>${item.image}" class="suggestion-img">
+                                    <img src="${(item.image.startsWith('http') || item.image.startsWith('/')) ? item.image : '<?php echo $link_prefix; ?>' + item.image}" class="suggestion-img">
                                     <div class="suggestion-info">
                                         <p class="suggestion-name">${item.name}</p>
                                         <p class="suggestion-price">${item.price}</p>

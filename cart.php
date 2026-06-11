@@ -135,7 +135,7 @@ if ($session_id) {
                         <div class="cart-item" id="item-<?php echo $p['cart_row_id']; ?>">
                             <div class="item-img-container">
                                 <a href="<?php echo $link_prefix; ?>product/<?php echo $p['slug']; ?>">
-                                    <img src="<?php echo $p['display_image']; ?>" class="item-img">
+                                    <img src="<?php echo (strpos($p['display_image'], 'http') === 0 || strpos($p['display_image'], '/') === 0) ? $p['display_image'] : $link_prefix . $p['display_image']; ?>" class="item-img">
                                 </a>
                             </div>
                             <div class="item-details">
