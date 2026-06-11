@@ -251,7 +251,7 @@ if (!isset($bd_products)) {
                         
                         $resized_img = get_resized_image($img, 400, 500, 'contain'); // Preserves full product aspect ratio
                     ?>
-                        <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="deal-product-card">
+                        <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="deal-product-card">
                             <?php if($prod['discount_percent'] > 0): ?>
                                 <div class="deal-badge"><?php echo $prod['discount_percent']; ?>% OFF</div>
                             <?php endif; ?>

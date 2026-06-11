@@ -1016,7 +1016,7 @@ $disc = $product['discount_percent'];
                               ($prod_id, '$r_name', '$r_email', $r_rating, '$r_message', '$r_image_path', 'approved')";
 
                     if ($conn->query($is_sql)) {
-                        echo "<script>alert('Review submitted successfully!'); window.location.href='product-details.php?slug=$slug';</script>";
+                        echo "<script>alert('Review submitted successfully!'); window.location.href='{$link_prefix}product/$slug';</script>";
                     } else {
                         echo "<script>alert('Error submitting review.');</script>";
                     }
@@ -1450,7 +1450,7 @@ if ($rel_res && $rel_res->num_rows > 0):
                     <div class="cp-product-item">
                         <div class="premium-product-card">
                             <div class="product-img-wrapper">
-                                <a href="product-details.php?slug=<?php echo $fp['slug']; ?>" class="d-block w-100 h-100">
+                                <a href="<?php echo $link_prefix; ?>product/<?php echo $fp['slug']; ?>" class="d-block w-100 h-100">
                                     <img src="<?php echo $fp_img; ?>" class="product-img"
                                         alt="<?php echo htmlspecialchars($fp['name']); ?>">
                                 </a>
@@ -1459,7 +1459,7 @@ if ($rel_res && $rel_res->num_rows > 0):
                                 <span class="rating-badge"><?php echo $fp_rating; ?> <i class="fa-solid fa-star"></i></span>
                                 <span class="review-count">(<?php echo $fp_reviews; ?>)</span>
                             </div>
-                            <a href="product-details.php?slug=<?php echo $fp['slug']; ?>" class="text-decoration-none">
+                            <a href="<?php echo $link_prefix; ?>product/<?php echo $fp['slug']; ?>" class="text-decoration-none">
                                 <h3 class="product-title"><?php echo htmlspecialchars($fp['name']); ?></h3>
                             </a>
                             <div class="price-container">

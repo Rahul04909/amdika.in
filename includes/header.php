@@ -2,15 +2,22 @@
 // Use centralized session config
 require_once __DIR__ . '/session_config.php';
 
-// Determine Assets Path
+// Determine root-relative Base Path dynamically
 $current_script = $_SERVER['SCRIPT_NAME'];
-$assets_path = 'assets/'; // Default for root files
 if (strpos($current_script, '/user/') !== false) {
-    $assets_path = '../assets/';
+    $base_path = substr($current_script, 0, strpos($current_script, '/user/') + 1);
 } elseif (strpos($current_script, '/pages/') !== false) {
-    $assets_path = '../../assets/';
+    $base_path = substr($current_script, 0, strpos($current_script, '/pages/') + 1);
+} else {
+    $base_path = dirname($current_script);
+    if ($base_path === DIRECTORY_SEPARATOR || $base_path === '\\' || $base_path === '/') {
+        $base_path = '/';
+    } else {
+        $base_path = rtrim(str_replace('\\', '/', $base_path), '/') . '/';
+    }
 }
-$link_prefix = str_replace('assets/', '', $assets_path);
+$assets_path = $base_path . 'assets/';
+$link_prefix = $base_path;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1113,7 +1120,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                         let html = '';
                         data.forEach((item, index) => {
                             html += `
-                                <a href="<?php echo $link_prefix; ?>product-details.php?slug=${item.slug}" class="suggestion-item suggestion-nav-item" data-index="${index}">
+                                <a href="<?php echo $link_prefix; ?>product/${item.slug}" class="suggestion-item suggestion-nav-item" data-index="${index}">
                                     <img src="<?php echo $link_prefix; ?>${item.image}" class="suggestion-img">
                                     <div class="suggestion-info">
                                         <p class="suggestion-name">${item.name}</p>

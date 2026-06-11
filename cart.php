@@ -134,12 +134,12 @@ if ($session_id) {
                     <?php foreach($products as $p): ?>
                         <div class="cart-item" id="item-<?php echo $p['cart_row_id']; ?>">
                             <div class="item-img-container">
-                                <a href="product-details.php?slug=<?php echo $p['slug']; ?>">
+                                <a href="<?php echo $link_prefix; ?>product/<?php echo $p['slug']; ?>">
                                     <img src="<?php echo $p['display_image']; ?>" class="item-img">
                                 </a>
                             </div>
                             <div class="item-details">
-                                <a href="product-details.php?slug=<?php echo $p['slug']; ?>" class="item-title"><?php echo htmlspecialchars($p['name']); ?></a>
+                                <a href="<?php echo $link_prefix; ?>product/<?php echo $p['slug']; ?>" class="item-title"><?php echo htmlspecialchars($p['name']); ?></a>
                                 <?php if(!empty($p['color_name'])): ?>
                                     <div class="mb-1"><span class="badge bg-light text-dark border">Color: <?php echo htmlspecialchars($p['color_name']); ?></span></div>
                                 <?php endif; ?>

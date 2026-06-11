@@ -309,7 +309,7 @@ body { background-color: #f8f9fb; }
                         ?>
                             <div class="col-6 col-md-4 col-xl-3">
                                 <div class="shop-product-card">
-                                    <a href="product-details.php?slug=<?php echo $p['slug']; ?>" class="sp-img-box">
+                                    <a href="<?php echo $link_prefix; ?>product/<?php echo $p['slug']; ?>" class="sp-img-box">
                                         <img src="<?php echo $resized; ?>" alt="<?php echo htmlspecialchars($p['name']); ?>" class="sp-img">
                                     </a>
                                     
@@ -322,7 +322,7 @@ body { background-color: #f8f9fb; }
                                         <span class="sp-rev">(<?php echo rand(10, 150); ?>)</span>
                                     </div>
 
-                                    <a href="product-details.php?slug=<?php echo $p['slug']; ?>" class="sp-name">
+                                    <a href="<?php echo $link_prefix; ?>product/<?php echo $p['slug']; ?>" class="sp-name">
                                         <?php echo htmlspecialchars($p['name']); ?>
                                     </a>
 

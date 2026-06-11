@@ -4,6 +4,9 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
+# SEO Friendly Product URLs
+RewriteRule ^product/([^/]+)/?$ product-details.php?slug=$1 [L,QSA]
+
 # Redirect to index.php if file/directory doesn't exist (Optional SEO)
 # RewriteCond %{REQUEST_FILENAME} !-f
 # RewriteCond %{REQUEST_FILENAME} !-d

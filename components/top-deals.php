@@ -324,7 +324,7 @@
                         $unique_hero_id = "hero_main_" . $lp['id'];
                     ?>
                         <div class="td-interactive-hero">
-                            <a href="product-details.php?slug=<?php echo $lp['slug']; ?>" class="text-decoration-none">
+                            <a href="<?php echo $link_prefix; ?>product/<?php echo $lp['slug']; ?>" class="text-decoration-none">
                                 <div class="td-hero-main-img-box">
                                     <img id="<?php echo $unique_hero_id; ?>" src="<?php echo $feat_img; ?>" alt="<?php echo htmlspecialchars($lp['name']); ?>">
                                 </div>
@@ -380,7 +380,7 @@
                                 
                                 $img_url = get_resized_image($f_img, 200, 200, 'contain');
                             ?>
-                                <a href="product-details.php?slug=<?php echo $item['slug']; ?>" class="td-grid-item-wrap">
+                                <a href="<?php echo $link_prefix; ?>product/<?php echo $item['slug']; ?>" class="td-grid-item-wrap">
                                     <div class="td-grid-img-wrap">
                                         <img src="<?php echo $img_url; ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
                                     </div>

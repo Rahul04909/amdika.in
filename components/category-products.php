@@ -276,7 +276,7 @@ if ($cat_res && $cat_res->num_rows > 0):
                         $presized = get_resized_image($pimg, 300, 300, 'contain');
                         $rating_val = 4 + (rand(0, 10)/10);
                     ?>
-                        <a href="product-details.php?slug=<?php echo $prod['slug']; ?>" class="cp-card">
+                        <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="cp-card">
                             <div class="cp-img-box">
                                 <img src="<?php echo $presized; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="cp-img">
                             </div>

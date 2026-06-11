@@ -15,10 +15,25 @@ use Intervention\Image\Drivers\Gd\Driver;
  */
 function get_resized_image($sourcePath, $width, $height, $method = 'cover')
 {
+    // Determine root-relative Base Path dynamically
+    $current_script = $_SERVER['SCRIPT_NAME'];
+    if (strpos($current_script, '/user/') !== false) {
+        $base_path = substr($current_script, 0, strpos($current_script, '/user/') + 1);
+    } elseif (strpos($current_script, '/pages/') !== false) {
+        $base_path = substr($current_script, 0, strpos($current_script, '/pages/') + 1);
+    } else {
+        $base_path = dirname($current_script);
+        if ($base_path === DIRECTORY_SEPARATOR || $base_path === '\\' || $base_path === '/') {
+            $base_path = '/';
+        } else {
+            $base_path = rtrim(str_replace('\\', '/', $base_path), '/') . '/';
+        }
+    }
+
     $absSourcePath = __DIR__ . '/../' . $sourcePath;
 
     if (!file_exists($absSourcePath)) {
-        return $sourcePath;
+        return (strpos($sourcePath, 'http') === 0 || strpos($sourcePath, '/') === 0) ? $sourcePath : $base_path . $sourcePath;
     }
 
     $extension = pathinfo($sourcePath, PATHINFO_EXTENSION);
@@ -31,7 +46,7 @@ function get_resized_image($sourcePath, $width, $height, $method = 'cover')
 
     $cacheFilename = "{$filename}_{$width}x{$height}_{$method}.{$extension}";
     $cachePath = $cacheDir . $cacheFilename;
-    $publicCachePath = 'assets/images/cache/' . $cacheFilename;
+    $publicCachePath = $base_path . 'assets/images/cache/' . $cacheFilename;
 
     // Return cached image if it exists and source hasn't changed
     if (file_exists($cachePath) && filemtime($cachePath) >= filemtime($absSourcePath)) {
@@ -55,6 +70,6 @@ function get_resized_image($sourcePath, $width, $height, $method = 'cover')
     } catch (Exception $e) {
         // Log error and return original path on failure
         error_log("Image Resizing Error: " . $e->getMessage());
-        return $sourcePath;
+        return (strpos($sourcePath, 'http') === 0 || strpos($sourcePath, '/') === 0) ? $sourcePath : $base_path . $sourcePath;
     }
 }
