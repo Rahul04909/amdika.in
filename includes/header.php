@@ -374,6 +374,7 @@ src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
                                     <div class="main-nav">
                                         <a href="<?php echo $link_prefix; ?>index.php" class="nav-link ps-lg-0">Home</a>
                                         <a href="<?php echo $link_prefix; ?>products.php" class="nav-link">Shop</a>
+                                        <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link">Blogs</a>
                                         <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link">About us</a>
                                         <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link">Contact</a>
                                     </div>

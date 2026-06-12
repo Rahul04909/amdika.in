@@ -7,6 +7,9 @@ RewriteEngine On
 # SEO Friendly Product URLs
 RewriteRule ^product/([^/]+)/?$ product-details.php?slug=$1 [L,QSA]
 
+# SEO Friendly Blog URLs
+RewriteRule ^blog/([^/]+)/?$ blog-details.php?slug=$1 [L,QSA]
+
 # Rewrite sitemap.xml to sitemap.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 

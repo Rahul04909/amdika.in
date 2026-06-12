@@ -60,6 +60,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         <priority>0.8</priority>
     </url>
     <url>
+        <loc><?php echo $site_url; ?>blogs.php</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc><?php echo $site_url; ?>pages/about-us/index.php</loc>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -127,6 +132,23 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
                     echo "        <loc>" . htmlspecialchars($prod_url) . "</loc>\n";
                     echo "        <changefreq>weekly</changefreq>\n";
                     echo "        <priority>0.8</priority>\n";
+                    echo "    </url>\n";
+                }
+            }
+        }
+
+        // Fetch Blogs
+        $blog_res = $conn->query("SELECT slug, updated_at FROM blogs WHERE status = 'active' ORDER BY id DESC");
+        if ($blog_res) {
+            while ($blog = $blog_res->fetch_assoc()) {
+                if (!empty($blog['slug'])) {
+                    $blog_url = $site_url . "blog/" . $blog['slug'];
+                    $lastmod = !empty($blog['updated_at']) ? date('Y-m-d', strtotime($blog['updated_at'])) : date('Y-m-d');
+                    echo "    <url>\n";
+                    echo "        <loc>" . htmlspecialchars($blog_url) . "</loc>\n";
+                    echo "        <lastmod>" . $lastmod . "</lastmod>\n";
+                    echo "        <changefreq>weekly</changefreq>\n";
+                    echo "        <priority>0.7</priority>\n";
                     echo "    </url>\n";
                 }
             }
