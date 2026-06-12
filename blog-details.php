@@ -22,7 +22,7 @@ if (!$blog) {
         <i class="far fa-frown fs-1 text-muted mb-4 opacity-50"></i>
         <h2 class="h3 serif-title text-secondary mb-2" style="font-family: 'Playfair Display', serif;">Article Not Found</h2>
         <p class="text-muted">The blog post you are looking for does not exist or has been removed.</p>
-        <a href="blogs.php" class="btn btn-dark mt-3 px-4 py-2 border-0" style="background: #D4A017; border-radius: 30px;">Back to Blogs</a>
+        <a href="<?php echo $link_prefix; ?>blogs.php" class="btn btn-dark mt-3 px-4 py-2 border-0" style="background: #D4A017; border-radius: 30px;">Back to Blogs</a>
     </div>
     <?php
     include 'includes/footer.php';
@@ -326,7 +326,7 @@ $related_blogs = $related_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         <!-- Cover Image -->
                         <?php if (!empty($blog['featured_image'])): ?>
                             <div class="article-banner-wrap">
-                                <img src="<?php echo $blog['featured_image']; ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
+                                <img src="<?php echo $link_prefix . $blog['featured_image']; ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
                             </div>
                         <?php endif; ?>
                         
@@ -343,7 +343,7 @@ $related_blogs = $related_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <div class="sidebar-widget text-center py-4" data-aos="fade-up">
                         <h4 class="sidebar-widget-title justify-content-center serif-title">Amadika Journal</h4>
                         <p class="text-muted small">Explore home decor insights and silent luxury guides.</p>
-                        <a href="blogs.php" class="btn btn-dark w-100 py-2 border-0 mt-2" style="background: #1A1D20; border-radius: 30px; font-weight: 500;"><i class="fas fa-arrow-left me-2"></i>Back to Journal</a>
+                        <a href="<?php echo $link_prefix; ?>blogs.php" class="btn btn-dark w-100 py-2 border-0 mt-2" style="background: #1A1D20; border-radius: 30px; font-weight: 500;"><i class="fas fa-arrow-left me-2"></i>Back to Journal</a>
                     </div>
 
                     <!-- Related Articles widget -->
@@ -355,12 +355,12 @@ $related_blogs = $related_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                     <?php $rb_img = !empty($rb['featured_image']) ? $rb['featured_image'] : 'https://via.placeholder.com/150'; ?>
                                     <div class="related-item">
                                         <div class="related-thumb">
-                                            <a href="blog/<?php echo $rb['slug']; ?>">
-                                                <img src="<?php echo $rb_img; ?>" alt="<?php echo htmlspecialchars($rb['title']); ?>">
+                                            <a href="<?php echo $link_prefix; ?>blog/<?php echo $rb['slug']; ?>">
+                                                <img src="<?php echo (strpos($rb_img, 'http') === 0) ? $rb_img : $link_prefix . $rb_img; ?>" alt="<?php echo htmlspecialchars($rb['title']); ?>">
                                             </a>
                                         </div>
                                         <div class="related-info">
-                                            <a href="blog/<?php echo $rb['slug']; ?>" class="related-link serif-title">
+                                            <a href="<?php echo $link_prefix; ?>blog/<?php echo $rb['slug']; ?>" class="related-link serif-title">
                                                 <?php echo htmlspecialchars($rb['title']); ?>
                                             </a>
                                             <span class="related-date"><i class="far fa-calendar-alt me-2"></i><?php echo date('M d, Y', strtotime($rb['created_at'])); ?></span>
