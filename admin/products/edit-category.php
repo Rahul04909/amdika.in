@@ -212,7 +212,10 @@ $page_title = 'Edit Category';
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script>
-        if(document.getElementById('editor')) CKEDITOR.replace('editor');
+        if(document.getElementById('editor')) {
+            CKEDITOR.config.versionCheck = false;
+            CKEDITOR.replace('editor');
+        }
         
         // Only auto-generate slug if user hasn't manually edited it significantly (simple heuristic)
         function generateSlug(text) {

@@ -3,7 +3,11 @@
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
+// Disable CKEditor EOL version check warning globally
+CKEDITOR.config.versionCheck = false;
+
 CKEDITOR.editorConfig = function( config ) {
+	config.versionCheck = false;
 	// Define changes to default configuration here.
 	// For complete reference see:
 	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html

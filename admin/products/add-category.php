@@ -223,6 +223,7 @@ $page_title = 'Add New Category';
     <script>
         // Init CKEditor
         if (document.getElementById('editor')) {
+            CKEDITOR.config.versionCheck = false;
             CKEDITOR.replace('editor');
         }
 

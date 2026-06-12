@@ -471,7 +471,10 @@ $page_title = 'Edit Product';
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script>
-        if(document.getElementById('editor')) CKEDITOR.replace('editor');
+        if(document.getElementById('editor')) {
+            CKEDITOR.config.versionCheck = false;
+            CKEDITOR.replace('editor');
+        }
         
         function calcDiscount() {
             let mrp = parseFloat(document.getElementById('mrp').value) || 0;

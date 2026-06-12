@@ -185,6 +185,7 @@ $page_title = 'Add New Blog';
     <script>
         // Init CKEditor
         if(document.getElementById('editor')) {
+            CKEDITOR.config.versionCheck = false;
             CKEDITOR.replace('editor');
         }
 

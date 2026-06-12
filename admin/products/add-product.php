@@ -331,7 +331,10 @@ $page_title = 'Add New Product';
     <script src="../../vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script>
         // Init CKEditor
-        if(document.getElementById('editor')) CKEDITOR.replace('editor');
+        if(document.getElementById('editor')) {
+            CKEDITOR.config.versionCheck = false;
+            CKEDITOR.replace('editor');
+        }
 
         // Discount Calc
         function calcDiscount() {
