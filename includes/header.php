@@ -278,14 +278,14 @@ function getSubcategoriesForCategory($slug, $cat_name) {
             position: sticky;
             top: 0;
             z-index: 1040;
-            background: #ffffff;
+            background: #111827; /* Dark Slate default background */
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .sticky-scrolled {
-            background: rgba(255, 255, 255, 0.9) !important;
+            background: rgba(17, 24, 39, 0.95) !important; /* Translucent dark slate */
             backdrop-filter: blur(16px) !important;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08) !important;
-            border-bottom: 1px solid rgba(229, 231, 235, 0.5) !important;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
 
         /* Gold underline slide effect */
@@ -567,7 +567,7 @@ function getSubcategoriesForCategory($slug, $cat_name) {
     </div>
 
     <!-- LAYER 3: BOTTOM NAVIGATION & MEGA MENU -->
-    <div id="bottomHeader" class="bg-white border-b border-gray-200 z-[100] relative transition-all duration-300">
+    <div id="bottomHeader" class="hidden md:block bg-[#111827] border-b border-gray-800 z-[100] relative transition-all duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between px-4 lg:px-12 h-14">
             
             <!-- Sticky menu items container -->
@@ -575,7 +575,7 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 <div class="flex items-center gap-1 h-full">
                     <!-- Categories Button Wrapper -->
                     <div class="relative h-full flex items-center" id="categoriesMenuTrigger">
-                        <button class="bg-[#111827] hover:bg-luxGold text-white text-[11px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all duration-300 shadow-sm">
+                        <button class="bg-luxGold hover:bg-white hover:text-darkLux text-white text-[11px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all duration-300 shadow-sm border-0">
                             <i data-lucide="menu" class="w-4 h-4"></i>
                             Categories
                         </button>
@@ -704,12 +704,12 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                     </div>
                     
                     <!-- Main Nav Links -->
-                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Home</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Shop</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Collections</a>
-                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Blogs</a>
-                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">About Us</a>
-                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Contact</a>
+                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Home</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Shop</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Collections</a>
+                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Blogs</a>
+                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">About Us</a>
+                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Contact</a>
                 </div>
             </div>
             
@@ -757,6 +757,9 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 </a>
                 <a href="<?php echo $link_prefix; ?>products.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
                     <i data-lucide="shopping-bag" class="w-4 h-4 text-gray-400"></i> Shop
+                </a>
+                <a href="<?php echo $link_prefix; ?>products.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
+                    <i data-lucide="layers" class="w-4 h-4 text-gray-400"></i> Collections
                 </a>
                 <a href="<?php echo $link_prefix; ?>blogs.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
                     <i data-lucide="newspaper" class="w-4 h-4 text-gray-400"></i> Blogs
