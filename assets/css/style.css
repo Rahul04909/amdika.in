@@ -1,18 +1,14 @@
 :root {
-    /* Premium Palette */
-    --primary-color: #D32F2F;
-    /* Softer, premium red */
-    --primary-hover: #B71C1C;
-    --accent-gold: #D4A017;
-    /* Warm Golden Tone */
-    --secondary-color: #2D3436;
-    /* Soft Black/Dark Slate */
-    --text-muted: #636E72;
-    --border-color: #ECECEC;
+    /* Luxury Redesign Palette */
+    --primary-color: #C89B2C; /* Luxury Gold */
+    --primary-hover: #b58b27;
+    --accent-gold: #C89B2C;
+    --secondary-color: #111827; /* Dark Luxury Slate */
+    --text-muted: #6B7280;
+    --border-color: #E5E7EB;
     --white: #ffffff;
     --warm-bg: #FCFBF8;
-    /* Very subtle warm background */
-    --light-bg: #F5F5F5;
+    --light-bg: #F9FAFB;
 }
 
 body {
