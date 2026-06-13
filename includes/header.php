@@ -68,7 +68,7 @@ if ($session_id && isset($conn)) {
     $cart_count = $res['count'] ?? 0;
 
     $c_stmt = $conn->prepare("
-        SELECT c.*, p.name, p.slug, p.featured_image, p.sale_price, p.regular_price, p.gst_percent 
+        SELECT c.*, p.name, p.slug, p.featured_image, p.sale_price, p.mrp, p.gst_percent 
         FROM cart c 
         JOIN products p ON c.product_id = p.id 
         WHERE c.session_id = ?
