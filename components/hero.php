@@ -74,7 +74,7 @@
     }
 </style>
 
-<section class="hero-section mb-3">
+<section class="hero-section mb-0">
     <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
         <!-- Indicators -->
         <div class="carousel-indicators">

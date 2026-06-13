@@ -307,6 +307,30 @@ function getSubcategoriesForCategory($slug, $cat_name) {
             transform-origin: bottom left;
         }
 
+        /* Ensure bottom header navigation links are strictly white by default and gold on hover */
+        #bottomHeader a.nav-link-underline {
+            color: #ffffff !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px; /* Space between icon and text */
+        }
+        #bottomHeader a.nav-link-underline:hover {
+            color: #C89B2C !important;
+        }
+        #bottomHeader a.nav-link-underline i,
+        #bottomHeader a.nav-link-underline svg {
+            color: #ffffff !important;
+            width: 15px;
+            height: 15px;
+            stroke-width: 2.2;
+            transition: color 0.2s ease, stroke 0.2s ease;
+        }
+        #bottomHeader a.nav-link-underline:hover i,
+        #bottomHeader a.nav-link-underline:hover svg {
+            color: #C89B2C !important;
+            stroke: #C89B2C !important;
+        }
+
         /* Search suggestions styling */
         .search-bar-container { position: relative; }
         .search-suggestions-box {
@@ -704,12 +728,12 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                     </div>
                     
                     <!-- Main Nav Links -->
-                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Home</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Shop</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Collections</a>
-                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Blogs</a>
-                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">About Us</a>
-                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Contact</a>
+                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="home"></i>Home</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="shopping-bag"></i>Shop</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="layers"></i>Collections</a>
+                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="newspaper"></i>Blogs</a>
+                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="info"></i>About Us</a>
+                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="phone"></i>Contact</a>
                 </div>
             </div>
             
