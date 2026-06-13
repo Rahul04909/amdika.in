@@ -8,6 +8,10 @@ if (strpos($current_script, '/user/') !== false) {
     $base_path = substr($current_script, 0, strpos($current_script, '/user/') + 1);
 } elseif (strpos($current_script, '/pages/') !== false) {
     $base_path = substr($current_script, 0, strpos($current_script, '/pages/') + 1);
+} elseif (strpos($current_script, '/api/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/api/') + 1);
+} elseif (strpos($current_script, '/admin/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/admin/') + 1);
 } else {
     $base_path = dirname($current_script);
     if ($base_path === DIRECTORY_SEPARATOR || $base_path === '\\' || $base_path === '/') {
@@ -328,7 +332,7 @@ function getSubcategoriesForCategory($slug, $cat_name) {
             backdrop-filter: blur(12px);
             border-radius: 12px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            z-index: 1000;
+            z-index: 2000;
             margin-top: 8px;
             display: none;
             overflow: hidden;
@@ -720,11 +724,6 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                     <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Blogs</a>
                     <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">About Us</a>
                     <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-700 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none">Contact</a>
-                </div>
-
-                <!-- Right Contact Support link -->
-                <div class="hidden lg:flex items-center gap-2">
-                    <span class="text-xs text-gray-400 font-semibold uppercase">Luxury Décor Partner</span>
                 </div>
             </div>
             

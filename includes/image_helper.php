@@ -21,6 +21,10 @@ function get_resized_image($sourcePath, $width, $height, $method = 'cover')
         $base_path = substr($current_script, 0, strpos($current_script, '/user/') + 1);
     } elseif (strpos($current_script, '/pages/') !== false) {
         $base_path = substr($current_script, 0, strpos($current_script, '/pages/') + 1);
+    } elseif (strpos($current_script, '/api/') !== false) {
+        $base_path = substr($current_script, 0, strpos($current_script, '/api/') + 1);
+    } elseif (strpos($current_script, '/admin/') !== false) {
+        $base_path = substr($current_script, 0, strpos($current_script, '/admin/') + 1);
     } else {
         $base_path = dirname($current_script);
         if ($base_path === DIRECTORY_SEPARATOR || $base_path === '\\' || $base_path === '/') {
