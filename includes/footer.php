@@ -168,26 +168,27 @@
     .whatsapp-chat-box {
         position: fixed;
         bottom: 120px;
-        left: 30px;
+        left: 60px; /* Offset to clear the side panel */
         width: 320px;
         background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border-radius: 16px; /* Smooth rounded corners */
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         display: none;
         flex-direction: column;
-        z-index: 10000;
+        z-index: 100000; /* Float above the sidebar */
         overflow: hidden;
         font-family: 'Inter', sans-serif;
-        border: 1px solid #eee;
+        border: 1px solid rgba(229, 231, 235, 0.7);
     }
 
     .chat-header {
-        background-color: #25D366;
+        background-color: #111827; /* Dark Luxury Slate */
         color: #fff;
-        padding: 20px;
+        padding: 18px 20px;
         display: flex;
         align-items: center;
         gap: 12px;
+        border-bottom: 3px solid #C89B2C; /* Luxury Gold border */
     }
 
     .chat-header img {
@@ -240,17 +241,21 @@
 
     .chat-input {
         flex: 1;
-        border: 1px solid #ddd;
+        border: 1px solid #e5e7eb;
         padding: 10px 15px;
         border-radius: 20px;
-        font-size: 14px;
+        font-size: 13px;
         outline: none;
+        transition: border-color 0.2s;
+    }
+    .chat-input:focus {
+        border-color: #C89B2C;
     }
 
     .chat-send-btn {
         width: 40px;
         height: 40px;
-        background: #25D366;
+        background: #111827; /* Matches theme */
         color: #fff;
         border: none;
         border-radius: 50%;
@@ -258,11 +263,12 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: transform 0.2s;
+        transition: all 0.3s ease;
     }
 
     .chat-send-btn:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
+        background: #C89B2C; /* Gold transition */
     }
 
     .whatsapp-chat-box.show {
@@ -295,48 +301,53 @@
         color: var(--accent-gold);
     }
 
-    /* Fixed Floating Social Icons (Left Sticky Sidebar style) */
+    /* Unified Luxury Side Panel (Left Sticky) */
     .fixed-social-icons {
         position: fixed;
         left: 0;
-        bottom: 130px; /* Vertically stacked above the WhatsApp widget */
+        bottom: 180px; /* Centered nicely on the viewport */
         display: flex;
         flex-direction: column;
-        gap: 0; /* Zero gaps between icons like the sample image */
+        gap: 0; /* Stacked continuously */
         z-index: 99999;
     }
 
     .fixed-social-btn {
-        width: 40px; /* Smaller size */
-        height: 40px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #ffffff !important;
-        font-size: 18px;
-        transition: all 0.3s ease;
+        font-size: 19px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none !important;
-        border-radius: 0 4px 4px 0; /* Rounded only on the right edge */
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 0 8px 8px 0; /* Premium rounded edges on right */
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: none;
+        margin-bottom: 2px; /* Subtle separator line */
     }
 
     .fixed-social-btn:hover {
-        transform: translateX(8px); /* Slide out slightly to the right on hover */
-        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
+        transform: translateX(8px); /* Slide out animation */
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.18);
+        padding-left: 10px; /* Shifts icon slightly */
     }
 
     .fixed-social-btn.fb { background-color: #1877F2; }
     .fixed-social-btn.insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
     .fixed-social-btn.pin { background-color: #E60023; }
+    .fixed-social-btn.wa { background-color: #25D366; } /* WhatsApp integrated green color */
 
     @media (max-width: 768px) {
         .fixed-social-icons {
-            bottom: 120px; /* Avoid overlapping mobile bottom bar elements */
+            bottom: 140px; /* Offset from sticky bottom bar */
         }
         .fixed-social-btn {
-            width: 35px;
-            height: 35px;
-            font-size: 16px;
+            width: 38px;
+            height: 38px;
+            font-size: 17px;
         }
     }
 </style>
@@ -543,22 +554,22 @@
     <!-- WhatsApp Chat Widget -->
     <div class="whatsapp-chat-box" id="whatsappChat">
         <div class="chat-header">
-            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika Support"
+            <img src="<?php echo $assets_path; ?>images/logo.jpeg" alt="Amadika Support"
                 onerror="this.src='https://ui-avatars.com/api/?name=Amadika+Support&background=fff&color=25D366'">
             <div class="chat-header-info">
-                <h4>Amadika Support</h4>
-                <p>Online | Typically replies in minutes</p>
+                <h4 class="font-serif italic text-white mb-0">Amadika Client Services</h4>
+                <p class="mb-0 text-luxGold font-sans font-medium" style="font-size: 11px;">Typically replies in minutes</p>
             </div>
             <button onclick="toggleChat()"
-                style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">&times;</button>
+                style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer; line-height: 1;">&times;</button>
         </div>
         <div class="chat-body">
             <div class="chat-msg">
-                Hi there! 👋 How can we help you today?
+                Welcome to Amadika. 👋 How may we assist you with our collection today?
             </div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..."
+            <input type="text" id="chatInput" class="chat-input" placeholder="Inquire about our collection..."
                 onkeypress="if(event.key === 'Enter') sendToWhatsApp()">
             <button class="chat-send-btn" onclick="sendToWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i>
@@ -566,15 +577,12 @@
         </div>
     </div>
 
-    <button class="chat-widget" onclick="toggleChat()">
-        <i class="fa-brands fa-whatsapp"></i>
-    </button>
-
-    <!-- Fixed Floating Social Icons -->
+    <!-- Unified Fixed Floating Social Sidebar (Left Sticky) -->
     <div class="fixed-social-icons">
         <a href="https://www.facebook.com/amadikaofficial/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn fb" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="https://www.instagram.com/amadika.shopping/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" rel="noopener noreferrer" class="fixed-social-btn pin" title="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+        <a href="javascript:void(0)" onclick="toggleChat()" class="fixed-social-btn wa" title="WhatsApp Chat Support"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
 
     <script>
