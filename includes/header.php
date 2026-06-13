@@ -284,21 +284,18 @@ function getSubcategoriesForCategory($slug, $cat_name) {
         }
         
         /* Sticky bottom nav style */
-        .sticky-active {
-            position: fixed;
+        #bottomHeader {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
             z-index: 1040;
+            background: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sticky-scrolled {
             background: rgba(255, 255, 255, 0.9) !important;
             backdrop-filter: blur(16px) !important;
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08) !important;
-            animation: headerSlideDown 0.3s ease-out forwards;
-        }
-
-        @keyframes headerSlideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5) !important;
         }
 
         /* Gold underline slide effect */
@@ -416,41 +413,37 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 Complimentary shipping on orders above ₹9,999
             </span>
             <div class="flex items-center gap-3 border-l border-gray-700 pl-6">
-                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" class="hover:text-luxGold transition-colors duration-200">
+                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
-                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" class="hover:text-luxGold transition-colors duration-200">
+                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" class="hover:text-luxGold transition-colors duration-200">
+                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
                     <i class="fa-brands fa-pinterest"></i>
                 </a>
             </div>
         </div>
         
-        <!-- Right: Support, Tracking, Wishlist -->
+        <!-- Right: Support & Tracking (Wishlist removed) -->
         <div class="flex items-center gap-5">
-            <a href="tel:+918447616924" class="hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium">
+            <a href="tel:+918447616924" class="text-gray-300 hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
                 <i data-lucide="phone" class="w-3.5 h-3.5 text-luxGold"></i>
                 +91 8447616924
             </a>
-            <a href="mailto:support@amadika.in" class="hidden lg:inline-flex hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium">
+            <a href="mailto:support@amadika.in" class="hidden lg:inline-flex text-gray-300 hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
                 <i data-lucide="mail" class="w-3.5 h-3.5 text-luxGold"></i>
                 support@amadika.in
             </a>
             <span class="hidden md:inline text-gray-700">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/shipping-policy/index.php" class="hover:text-luxGold transition-colors duration-200 font-medium">
+            <a href="<?php echo $link_prefix; ?>pages/shipping-policy/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
                 Track Order
-            </a>
-            <a href="<?php echo $link_prefix; ?>products.php" class="hover:text-luxGold transition-colors duration-200 font-medium flex items-center gap-1">
-                <i data-lucide="heart" class="w-3.5 h-3.5 text-luxGold"></i>
-                Wishlist
             </a>
         </div>
     </div>
 
     <!-- LAYER 2: MIDDLE HEADER -->
-    <div class="bg-white py-4 px-4 lg:px-12 border-b border-gray-100 shadow-sm transition-all duration-300">
+    <div class="bg-white py-4 px-4 lg:px-12 border-b border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)] transition-all duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <!-- Brand Logo (Left) -->
             <div class="flex-shrink-0">
@@ -462,10 +455,10 @@ function getSubcategoriesForCategory($slug, $cat_name) {
             <!-- Premium Search Bar (Center) -->
             <div class="hidden md:block flex-grow max-w-2xl">
                 <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="relative">
-                    <div class="flex items-center bg-gray-50 border border-gray-200 rounded-full shadow-sm focus-within:border-luxGold focus-within:ring-2 focus-within:ring-luxGold/15 transition-all duration-300 overflow-hidden h-11">
+                    <div class="flex items-center bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] focus-within:border-luxGold focus-within:ring-2 focus-within:ring-luxGold/15 transition-all duration-300 overflow-hidden h-11">
                         <!-- Category Dropdown Select -->
-                        <div class="relative flex-shrink-0 border-r border-gray-200">
-                            <select name="category" class="bg-transparent text-xs text-gray-600 font-bold pl-4 pr-8 py-2 appearance-none focus:outline-none cursor-pointer h-full">
+                        <div class="relative flex-shrink-0 border-r border-gray-200/40">
+                            <select name="category" class="bg-transparent text-xs text-gray-600 font-bold pl-4 pr-8 py-2 appearance-none focus:outline-none cursor-pointer h-full border-0">
                                 <option value="">All Categories</option>
                                 <?php foreach ($h_categories as $cat): ?>
                                     <option value="<?php echo htmlspecialchars($cat['slug']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
@@ -483,7 +476,7 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                                autocomplete="off">
                                
                         <!-- Search Action Button -->
-                        <button type="submit" class="bg-darkLux hover:bg-luxGold text-white h-full px-6 flex items-center justify-center transition-colors duration-300 rounded-r-full">
+                        <button type="submit" class="bg-darkLux hover:bg-luxGold text-white h-full px-6 flex items-center justify-center transition-colors duration-300 rounded-r-full border-0">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -492,45 +485,35 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 </form>
             </div>
 
-            <!-- Action Icons (Right) -->
+            <!-- Action Icons (Right - Wishlist & Compare removed as requested) -->
             <div class="flex items-center gap-2 lg:gap-5">
                 <!-- Mobile Toggler -->
-                <button onclick="toggleMobileDrawer()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none">
+                <button onclick="toggleMobileDrawer()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
 
                 <!-- Search for Mobile Trigger -->
-                <button onclick="toggleMobileSearch()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none">
+                <button onclick="toggleMobileSearch()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
                     <i data-lucide="search" class="w-5.5 h-5.5"></i>
                 </button>
 
                 <!-- User Account/Auth -->
                 <div class="relative group">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo $link_prefix; ?>user/index.php" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block" title="My Account">
+                        <a href="<?php echo $link_prefix; ?>user/index.php" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block text-decoration-none" title="My Account">
                             <i data-lucide="user" class="w-5 h-5"></i>
                         </a>
                     <?php else: ?>
                         <!-- Trigger Login Modal -->
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block" title="Login / Register">
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block text-decoration-none" title="Login / Register">
                             <i data-lucide="user" class="w-5 h-5"></i>
                         </a>
                     <?php endif; ?>
                 </div>
 
-                <!-- Compare (Luxury details) -->
-                <a href="<?php echo $link_prefix; ?>products.php" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 relative hidden lg:block" title="Compare Items">
-                    <i data-lucide="git-compare" class="w-5 h-5"></i>
-                </a>
-
-                <!-- Wishlist -->
-                <a href="<?php echo $link_prefix; ?>products.php" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 relative" title="My Wishlist">
-                    <i data-lucide="heart" class="w-5 h-5"></i>
-                </a>
-
                 <!-- Shopping Cart Icon (with Hover Mini Cart) -->
                 <div class="relative group" onmouseenter="loadMiniCart()">
-                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block relative">
+                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block relative text-decoration-none">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         <span id="headerCartCount" class="absolute -top-1.5 -right-1.5 bg-luxGold text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm"><?php echo $cart_count; ?></span>
                     </a>
@@ -1164,16 +1147,16 @@ function getSubcategoriesForCategory($slug, $cat_name) {
     // Initialize Lucide icons
     lucide.createIcons();
 
-    // Sticky Bottom Header logic
+    // Sticky Bottom Header scroll transitions (position remains sticky in CSS to prevent layout shift/flickering)
     window.addEventListener('scroll', function() {
         const bottomHeader = document.getElementById('bottomHeader');
         if (!bottomHeader) return;
-        if (window.scrollY > 120) {
-            if (!bottomHeader.classList.contains('sticky-active')) {
-                bottomHeader.classList.add('sticky-active');
+        if (window.scrollY > 10) {
+            if (!bottomHeader.classList.contains('sticky-scrolled')) {
+                bottomHeader.classList.add('sticky-scrolled');
             }
         } else {
-            bottomHeader.classList.remove('sticky-active');
+            bottomHeader.classList.remove('sticky-scrolled');
         }
     });
 
