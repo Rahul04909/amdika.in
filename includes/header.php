@@ -201,32 +201,43 @@ function getSubcategoriesForCategory($slug, $cat_name) {
       ]
     }
     </script>
-    
-    <!-- Meta Pixel Code -->
+    <!-- Defer Google Tag Manager & Meta Pixel to run after page load (Performance Optimization) -->
     <script>
+    // Initialize stub queue functions immediately so any early tracking calls do not throw errors
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-67D67L6BKY');
+
+    // Meta Pixel stub
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+    n.queue=[];}(window, document);
     fbq('init', '967381769597169');
     fbq('track', 'PageView');
+
+    // Load actual tracker script files only after page load completes
+    window.addEventListener('load', function() {
+        // Load Meta Pixel Script
+        var fbScript = document.createElement('script');
+        fbScript.async = true;
+        fbScript.src = 'https://connect.facebook.net/en_US/fbevents.js';
+        document.head.appendChild(fbScript);
+
+        // Load GTM Script
+        var gTagScript = document.createElement('script');
+        gTagScript.async = true;
+        gTagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-67D67L6BKY';
+        document.head.appendChild(gTagScript);
+    });
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=967381769597169&ev=PageView&noscript=1"
     /></noscript>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D67L6BKY"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-67D67L6BKY');
-    </script>
+
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -237,34 +248,9 @@ function getSubcategoriesForCategory($slug, $cat_name) {
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <!-- Tailwind CSS (Play CDN) with custom color scheme & configuration -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        corePlugins: {
-          preflight: false, // Prevent reset of Bootstrap 5 layout style templates
-        },
-        theme: {
-          extend: {
-            colors: {
-              luxGold: '#C89B2C',
-              darkLux: '#111827',
-              accentGold: '#EAB308',
-              borderLight: '#E5E7EB',
-              textPrimary: '#1F2937',
-            },
-            fontFamily: {
-              sans: ['Outfit', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            },
-            boxShadow: {
-              luxury: '0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03)',
-              luxuryHover: '0 20px 40px -15px rgba(200, 155, 44, 0.15), 0 1px 5px rgba(0, 0, 0, 0.05)',
-            }
-          }
-        }
-      }
-    </script>
+    <!-- Statically Compiled Tailwind CSS (Optimized for Production) -->
+    <link rel="stylesheet" href="<?php echo $assets_path; ?>css/tailwind.min.css">
+
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
