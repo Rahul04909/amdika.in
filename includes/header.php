@@ -68,7 +68,7 @@ if ($session_id && isset($conn)) {
     $cart_count = $res['count'] ?? 0;
 
     $c_stmt = $conn->prepare("
-        SELECT c.*, p.name, p.slug, p.featured_image, p.sale_price, p.mrp, p.gst_percent 
+        SELECT c.id as cart_row_id, c.quantity, p.* 
         FROM cart c 
         JOIN products p ON c.product_id = p.id 
         WHERE c.session_id = ?
@@ -77,7 +77,7 @@ if ($session_id && isset($conn)) {
     $c_stmt->execute();
     $c_res = $c_stmt->get_result();
     while ($c_row = $c_res->fetch_assoc()) {
-        $gst_pct = $c_row['gst_percent'] ?? 0;
+        $gst_pct = isset($c_row['gst_percent']) ? $c_row['gst_percent'] : 0;
         $price_inc_gst = $c_row['sale_price'] + ($c_row['sale_price'] * $gst_pct / 100);
         $c_row['display_price'] = $price_inc_gst;
         $cart_items[] = $c_row;
