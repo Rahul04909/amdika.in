@@ -18,10 +18,10 @@ if ($result->num_rows == 0) {
     header("HTTP/1.0 404 Not Found");
     include 'includes/header.php';
     echo '<div class="container py-5 text-center">
-            <img src="assets/images/no-product.png" alt="Not Found" style="max-width:200px; opacity:0.6;">
+            <img src="' . $link_prefix . 'assets/images/no-product.png" alt="Not Found" style="max-width:200px; opacity:0.6;">
             <h2 class="mt-3 text-secondary">Product Not Found</h2>
             <p class="text-muted">The product you are looking for might have been removed or unavailable.</p>
-            <a href="index.php" class="btn btn-warning px-4 mt-2">Continue Shopping</a>
+            <a href="' . $link_prefix . 'index.php" class="btn btn-warning px-4 mt-2">Continue Shopping</a>
           </div>';
     include 'includes/footer.php';
     exit;
@@ -855,10 +855,10 @@ $disc = $product['discount_percent'];
                 <!-- Breadcrumb -->
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb" style="font-size: 12px; background:transparent; padding:0;">
-                        <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none text-muted">Home</a>
+                        <li class="breadcrumb-item"><a href="<?php echo $link_prefix; ?>index.php" class="text-decoration-none text-muted">Home</a>
                         </li>
                         <!-- Ideally fetch category name here, logic simplified for now -->
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Products</a>
+                        <li class="breadcrumb-item"><a href="<?php echo $link_prefix; ?>products.php" class="text-decoration-none text-muted">Products</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
                             <?php echo htmlspecialchars($product['name']); ?></li>
@@ -871,7 +871,7 @@ $disc = $product['discount_percent'];
                     <span class="rating-badge">4.5 <i class="fas fa-star" style="font-size:10px;"></i></span>
                     <span class="rating-text text-muted">1,234 Ratings & 102 Reviews</span>
                     <!-- Verified Tag -->
-                    <span class="ms-3"><img src="assets/images/amdika-logo.png"
+                    <span class="ms-3"><img src="<?php echo $link_prefix; ?>assets/images/amdika-logo.png"
                             style="height:15px; opacity:0.5;"></span>
                 </div>
 
@@ -931,7 +931,7 @@ $disc = $product['discount_percent'];
                                     data-gallery='<?php echo htmlspecialchars($v['gallery_images'], ENT_QUOTES, 'UTF-8'); ?>'
                                     onclick="selectColor(this)">
                                     <?php if (!empty($v['image_path'])): ?>
-                                        <img src="<?php echo $v['image_path']; ?>"
+                                        <img src="<?php echo (strpos($v['image_path'], 'http') === 0 || strpos($v['image_path'], '/') === 0) ? $v['image_path'] : $link_prefix . $v['image_path']; ?>"
                                             alt="<?php echo htmlspecialchars($v['color_name']); ?>">
                                     <?php endif; ?>
                                 </div>
@@ -1737,7 +1737,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             }
         <?php endif; ?>
 
-        fetch('includes/cart_actions.php', {
+        fetch('<?php echo $link_prefix; ?>includes/cart_actions.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=add&product_id=${id}&quantity=1&color_id=${selectedColorId || ''}`
@@ -1761,7 +1761,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             }
         <?php endif; ?>
 
-        fetch('includes/cart_actions.php', {
+        fetch('<?php echo $link_prefix; ?>includes/cart_actions.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=add&product_id=${id}&quantity=1&color_id=${selectedColorId || ''}`
@@ -1769,7 +1769,7 @@ if ($rel_res && $rel_res->num_rows > 0):
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
-                    window.location.href = 'cart.php';
+                    window.location.href = '<?php echo $link_prefix; ?>cart.php';
                 }
             });
     }
