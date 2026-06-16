@@ -349,6 +349,10 @@ $disc = $product['discount_percent'];
     }
 
     @media (max-width: 768px) {
+        body {
+            padding-bottom: 60px !important;
+        }
+
         .gallery-col {
             position: static;
         }
@@ -369,7 +373,7 @@ $disc = $product['discount_percent'];
             bottom: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 1050;
         }
 
         .mobile-btn {
