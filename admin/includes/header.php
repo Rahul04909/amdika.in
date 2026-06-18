@@ -312,9 +312,8 @@
 $depth = substr_count(dirname($_SERVER['SCRIPT_NAME']), '/') - 1; // Adjust based on your server structure.
 // Let's use a simpler approach: define a helper if not exists or use hardcoded relative based on known structure.
 
-// Since user is editing manually to ../../ or ../, let's auto-detect.
 $base_path = '../'; // Default for admin/index.php
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/profile/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/profile/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/sales-report/') !== false) {
     $base_path = '../../';
 }
 // This is fragile but respects the user's current manual fix style without rewriting config.

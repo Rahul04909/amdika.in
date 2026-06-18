@@ -283,7 +283,7 @@ body.sb-collapsed #page-content-wrapper {
 <?php
 // Dynamic Path Logic
 $base_path = '../';
-if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/profile/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/attributes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/coupon-codes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/smtp/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/razorpay/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/users/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/orders/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/manage-best-deals/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/support-tickets/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/frontend/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/profile/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/attributes/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false || strpos($_SERVER['REQUEST_URI'], '/admin/sales-report/') !== false) {
     $base_path = '../../';
 }
 
@@ -294,6 +294,7 @@ $is_add_cat = ($current_page == 'add-category.php');
 $is_manage_attr = ($current_page == 'manage-colors.php' || $current_page == 'add-color.php' || $current_page == 'edit-color.php');
 $is_products_group = ($is_manage_cat || $is_add_cat || $is_manage_attr || strpos($_SERVER['REQUEST_URI'], '/admin/products/') !== false);
 $is_blogs_group = (strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false);
+$is_reports_group = (strpos($_SERVER['REQUEST_URI'], '/admin/sales-report/') !== false);
 ?>
 <nav id="amd-sidebar">
     <div class="sb-logo-area">
@@ -412,21 +413,19 @@ $is_blogs_group = (strpos($_SERVER['REQUEST_URI'], '/admin/blogs/') !== false);
             </div>
         </div>
 
-        <!-- Reports Submenu
+        <!-- Reports Submenu -->
         <div class="sb-item" data-tooltip="Reports">
-            <a href="#menuReports" class="sb-link collapsed" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion">
+            <a href="#menuReports" class="sb-link <?php echo $is_reports_group ? '' : 'collapsed'; ?>" data-bs-toggle="collapse" data-bs-parent="#sidebarAccordion" aria-expanded="<?php echo $is_reports_group ? 'true' : 'false'; ?>">
                 <i class="fas fa-chart-line sb-icon"></i>
                 <span class="sb-text">Reports</span>
                 <i class="fas fa-chevron-right sb-arrow"></i>
             </a>
-             <div class="collapse" id="menuReports">
+             <div class="collapse <?php echo $is_reports_group ? 'show' : ''; ?>" id="menuReports">
                 <ul class="sb-submenu">
-                    <li><a href="#" class="sb-link">Sales Report</a></li>
-                    <li><a href="#" class="sb-link">User Traffic</a></li>
-                    <li><a href="#" class="sb-link">Product Perf.</a></li>
+                    <li><a href="<?php echo $base_path; ?>admin/sales-report/index.php" class="sb-link <?php echo ($is_reports_group) ? 'active text-warning' : ''; ?>">Sales Report</a></li>
                 </ul>
             </div>
-        </div> -->
+        </div>
 
         <div class="sb-label mt-3">System</div>
 

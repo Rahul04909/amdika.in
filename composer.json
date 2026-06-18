@@ -5,6 +5,7 @@
         "mpdf/mpdf": "^8.2",
         "ckeditor/ckeditor": "~4.22.1",
         "fyre/color": "^3.0",
-        "intervention/image": "^3.11"
+        "intervention/image": "^3.11",
+        "phpoffice/phpspreadsheet": "^5.8"
     }
 }
