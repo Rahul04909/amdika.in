@@ -178,6 +178,13 @@ include 'includes/header.php';
     }
 
     /* Visibility and Contrast Adjustments */
+    .b2b-bg .text-luxGold,
+    .b2b-bg span.badge,
+    .b2b-bg span.rounded-pill,
+    .text-luxGold {
+        color: #C89B2C !important;
+    }
+
     .b2b-bg .text-muted {
         color: #4B5563 !important; /* Premium dark neutral gray for optimal readability on off-white */
     }
