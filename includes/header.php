@@ -727,10 +727,10 @@ function getSubcategoriesForCategory($slug, $cat_name) {
 
                     </div>
                     
-                    <!-- Main Nav Links -->
                     <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="home"></i>Home</a>
                     <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="shopping-bag"></i>Shop</a>
                     <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="layers"></i>Collections</a>
+                    <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="gift"></i>Corporate Gifting</a>
                     <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="newspaper"></i>Blogs</a>
                     <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="info"></i>About Us</a>
                     <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="phone"></i>Contact</a>
@@ -784,6 +784,9 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 </a>
                 <a href="<?php echo $link_prefix; ?>products.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
                     <i data-lucide="layers" class="w-4 h-4 text-gray-400"></i> Collections
+                </a>
+                <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
+                    <i data-lucide="gift" class="w-4 h-4 text-gray-400"></i> Corporate Gifting
                 </a>
                 <a href="<?php echo $link_prefix; ?>blogs.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
                     <i data-lucide="newspaper" class="w-4 h-4 text-gray-400"></i> Blogs

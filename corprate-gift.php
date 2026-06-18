@@ -1,349 +1,863 @@
 <?php
 require_once 'database/db_config.php';
 $page_title = "Corporate Gifting | Amadika Premium Leather";
-$page_description = "Handcrafted premium leather corporate gifts, desk organizers, laptop satchels, and gift sets by Amadika. Customized corporate gifting with monogramming.";
+$page_description = "Premium corporate leather gifting by Amadika. Debossed leather sets, custom notebooks, desk mats, and curated luxury gift hampers.";
 include 'includes/header.php';
 ?>
 
 <style>
-    /* Corporate Gifting page specific styles */
-    .gift-card-hover:hover {
+    /* Premium Dribbble-Inspired Showcase styling */
+    .b2b-bg {
+        background-color: #FCFBF8;
+        background-image: radial-gradient(circle at 80% 20%, rgba(200, 155, 44, 0.05) 0%, transparent 50%);
+    }
+    
+    .gold-accent {
+        color: #C89B2C !important;
+    }
+    
+    .bg-gold-accent {
+        background-color: #C89B2C !important;
+    }
+    
+    .border-gold-accent {
         border-color: #C89B2C !important;
-        transform: translateY(-4px);
     }
-    .trust-border {
-        border-color: rgba(200, 155, 44, 0.15);
+    
+    .bg-dark-slate {
+        background-color: #111827 !important;
     }
-    .step-number-glow {
-        text-shadow: 0 0 15px rgba(200, 155, 44, 0.2);
+    
+    .text-dark-slate {
+        color: #111827 !important;
+    }
+
+    /* Cards */
+    .luxury-card {
+        background: #ffffff;
+        border: 1px solid #E5E7EB;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 24px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .luxury-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px -15px rgba(200, 155, 44, 0.15);
+        border-color: #C89B2C;
+    }
+
+    /* Tab buttons */
+    .showcase-tab {
+        background: #ffffff;
+        border: 1px solid #E5E7EB;
+        color: #4B5563;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 10px 24px;
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .showcase-tab.active, .showcase-tab:hover {
+        background: #111827;
+        color: #ffffff;
+        border-color: #111827;
+    }
+
+    /* Timeline */
+    .timeline-line {
+        position: relative;
+    }
+    .timeline-line::before {
+        content: '';
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: repeating-linear-gradient(to bottom, #E5E7EB 0px, #E5E7EB 4px, transparent 4px, transparent 8px);
+        z-index: 1;
+    }
+    .timeline-node {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #111827;
+        border: 2px solid #C89B2C;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-weight: bold;
+        color: #C89B2C;
+        z-index: 2;
+        box-shadow: 0 0 15px rgba(200, 155, 44, 0.2);
+        flex-shrink: 0;
+    }
+    
+    @media (max-width: 768px) {
+        .timeline-line::before {
+            left: 16px;
+        }
+        .timeline-node {
+            width: 34px;
+            height: 34px;
+            font-size: 12px;
+        }
+    }
+
+    /* Range slider custom styling */
+    .slider-input {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
+        background: #E5E7EB;
+        border-radius: 9999px;
+        outline: none;
+    }
+    .slider-input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #C89B2C;
+        border: 2px solid #111827;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+    }
+    .slider-input::-webkit-slider-thumb:hover {
+        transform: scale(1.25);
+    }
+
+    /* Form Inputs */
+    .luxury-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: #ffffff;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    .luxury-input:focus {
+        border-color: #C89B2C;
+        box-shadow: 0 0 0 2px rgba(200, 155, 44, 0.15);
+        outline: none;
+    }
+    .luxury-input::placeholder {
+        color: #6B7280;
+    }
+    
+    /* Occasions badges */
+    .occasion-badge {
+        background: #ffffff;
+        border: 1px solid #E5E7EB;
+        color: #4B5563;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+        cursor: default;
+    }
+    .occasion-badge:hover {
+        border-color: #C89B2C;
+        color: #C89B2C;
+        background-color: rgba(200, 155, 44, 0.02);
     }
 </style>
 
-<div class="bg-[#FCFBF8] text-gray-800 min-h-screen">
-    <!-- HERO SECTION -->
-    <section class="relative py-20 lg:py-32 overflow-hidden">
-        <!-- Delicate abstract mesh background -->
-        <div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-luxGold/20 via-transparent to-transparent"></div>
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 font-serif text-[40vw] lg:text-[450px] font-bold text-gray-100/40 select-none pointer-events-none leading-none">A</div>
-        
-        <div class="container max-w-7xl mx-auto px-6 relative z-10">
-            <div class="max-w-2xl">
-                <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block mb-4">AMADIKA CORPORATE COLLABORATIONS</span>
-                <h1 class="font-serif text-5xl lg:text-7xl font-bold text-darkLux leading-tight mb-2">Gift with</h1>
-                <div class="font-serif italic text-3xl lg:text-4xl text-luxGold mb-6">intention.</div>
-                <div class="w-20 h-[2px] bg-gradient-to-r from-luxGold to-transparent mb-8"></div>
-                <p class="font-serif italic text-lg lg:text-xl text-gray-500 font-light leading-relaxed mb-8 max-w-lg">
-                    Handcrafted premium leather accessories that carry your brand's prestige long after the moment of giving. Amadika designs solutions that are memorable, functional, and impeccably made.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#enquiry" class="bg-darkLux hover:bg-luxGold text-white text-[11px] font-bold tracking-widest uppercase px-8 py-3.5 rounded-lg transition-all duration-300 shadow-md text-decoration-none">Request Proposal</a>
-                    <a href="#gifts" class="border border-luxGold text-luxGold hover:bg-luxGold hover:text-white text-[11px] font-bold tracking-widest uppercase px-8 py-3.5 rounded-lg transition-all duration-300 text-decoration-none">Explore Curation</a>
+<div class="b2b-bg min-h-screen pb-5">
+    <!-- Dribbble Hero Section -->
+    <section class="position-relative py-5 py-lg-7 overflow-hidden">
+        <div class="container max-w-7xl mx-auto px-4 position-relative z-3">
+            <div class="row align-items-center g-5">
+                <!-- Left: Hero Text -->
+                <div class="col-lg-7">
+                    <span class="d-inline-flex align-items-center gap-2 bg-gold-accent bg-opacity-10 text-luxGold text-[10px] font-bold tracking-[0.25em] uppercase px-4 py-2 rounded-pill mb-4" style="background-color: rgba(200, 155, 44, 0.1);">
+                        <i data-lucide="award" class="w-4 h-4 text-luxGold"></i> B2B Luxury Curation
+                    </span>
+                    
+                    <h1 class="font-serif display-4 fw-bold text-dark-slate mb-3" style="line-height: 1.1;">
+                        Elevating corporate <br><span class="italic font-light text-luxGold" style="font-family: 'Playfair Display', serif; font-style: italic;">relationships.</span>
+                    </h1>
+                    
+                    <div class="w-16 h-[2px] bg-gold-accent my-4" style="background-color: #C89B2C; width: 60px; height: 2px;"></div>
+                    
+                    <p class="font-sans text-muted mb-5 leading-relaxed max-w-xl" style="font-size: 16px; font-weight: 300;">
+                        Handcrafted premium leather accessories tailored for leadership milestones, key clients, and premium organizational gifts. We build statement pieces designed to make an impact.
+                    </p>
+                    
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#calculator" class="btn bg-dark-slate hover:bg-gold-accent text-white px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all shadow text-decoration-none" style="background: #111827;">
+                            Estimate Budget <i class="fa-solid fa-calculator ms-1"></i>
+                        </a>
+                        <a href="#enquiry" class="btn border border-dark-slate hover:bg-dark-slate hover:text-white px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all text-decoration-none" style="color: #111827; border-color: #111827;">
+                            Request Catalogue
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- TRUST STRIP -->
-    <div class="bg-darkLux border-y border-gray-800 py-10">
-        <div class="container max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4 text-center divide-x-0 divide-y lg:divide-y-0 lg:divide-x divide-gray-850">
-                <div class="px-4 py-2 lg:py-0">
-                    <span class="font-serif text-3xl font-bold text-luxGold block mb-1">100+</span>
-                    <span class="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase block">Curated SKUs</span>
-                </div>
-                <div class="px-4 py-2 lg:py-0 border-gray-800">
-                    <span class="font-serif text-3xl font-bold text-luxGold block mb-1">Pan-India</span>
-                    <span class="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase block">Express Delivery</span>
-                </div>
-                <div class="px-4 py-2 lg:py-0 border-gray-800">
-                    <span class="font-serif text-3xl font-bold text-luxGold block mb-1">Custom</span>
-                    <span class="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase block">Logo Monogramming</span>
-                </div>
-                <div class="px-4 py-2 lg:py-0 border-gray-800">
-                    <span class="font-serif text-3xl font-bold text-luxGold block mb-1">B2B</span>
-                    <span class="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase block">Account Support</span>
-                </div>
-                <div class="px-4 py-2 lg:py-0 border-gray-800">
-                    <span class="font-serif text-3xl font-bold text-luxGold block mb-1">100%</span>
-                    <span class="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase block">Premium Leather</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- GIFT CATEGORIES -->
-    <section class="py-20 lg:py-28" id="gifts">
-        <div class="container max-w-7xl mx-auto px-6">
-            <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block text-center mb-3">THE CORPORATE COLLECTION</span>
-            <h2 class="font-serif text-4xl lg:text-5xl font-bold text-center text-darkLux mb-4">Every gift, <span class="italic text-luxGold">extraordinary.</span></h2>
-            <div class="w-16 h-[2px] bg-luxGold mx-auto mb-16"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="layout-grid" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Executive Desk Sets</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Leather-crafted desk organisers, pen holders, document trays, and mouse pads. The complete workspace, reimagined.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="briefcase" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Leather Satchels & Sleeves</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Structured laptop satchels and padded tech sleeves. Sleek minimalist lines crafted from high-grade leather.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="box" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Valet Trays & Coasters</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Artisan leather valet organizers, coaster sets, and boxes that add functional luxury to homes and offices.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="wine" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Premium Bar Accessories</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Handcrafted leather-wrapped cocktail sets and mini bar boxes for celebrating milestones in style.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="gem" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Watch & Jewellery Cases</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Secure, elegant leather cases lined with velvet to organize watches and jewelry. A highly personal gift.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-luxury hover:shadow-luxuryHover hover:-translate-y-1 transition-all duration-300 p-8 border border-gray-100 flex flex-col justify-between group">
-                    <div>
-                       <div class="w-12 h-12 rounded-lg bg-luxGold/10 flex items-center justify-center text-luxGold mb-6 group-hover:bg-luxGold group-hover:text-white transition-colors duration-300">
-                           <i data-lucide="sparkles" class="w-6 h-6"></i>
-                       </div>
-                       <h3 class="font-serif text-lg font-bold text-gray-800 mb-3">Custom Curated Sets</h3>
-                       <p class="font-serif italic text-sm text-gray-500 leading-relaxed">Bespoke combination packages tailored to your brand identity, budget tier, and event schedule.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- THE EXPERIENCE (PROCESS) -->
-    <section class="bg-white py-20 lg:py-28" id="process">
-        <div class="container max-w-7xl mx-auto px-6">
-            <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block text-center mb-3">THE EXPERIENCE</span>
-            <h2 class="font-serif text-4xl lg:text-5xl font-bold text-center text-darkLux mb-4">Simple. <span class="italic text-luxGold">Seamless.</span> Premium.</h2>
-            <div class="w-16 h-[2px] bg-luxGold mx-auto mb-16"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="border border-gray-100 bg-gray-50/50 p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="absolute right-4 top-2 font-serif text-6xl font-bold text-gray-200/50 group-hover:text-luxGold/10 transition-colors duration-300">01</div>
-                    <h4 class="font-serif text-base font-bold text-gray-800 mb-3 mt-4">Share Your Brief</h4>
-                    <p class="text-xs text-gray-500 leading-relaxed">Provide your event occasion, quantity, timeline, and branding desires. Our curators will map out the ideal proposals.</p>
-                </div>
-                <div class="border border-gray-100 bg-gray-50/50 p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="absolute right-4 top-2 font-serif text-6xl font-bold text-gray-200/50 group-hover:text-luxGold/10 transition-colors duration-300">02</div>
-                    <h4 class="font-serif text-base font-bold text-gray-800 mb-3 mt-4">Receive a Proposal</h4>
-                    <p class="text-xs text-gray-500 leading-relaxed">Within 24-48 hours, receive a catalog proposal with curated products, visualization drafts, and volume pricing.</p>
-                </div>
-                <div class="border border-gray-100 bg-gray-50/50 p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="absolute right-4 top-2 font-serif text-6xl font-bold text-gray-200/50 group-hover:text-luxGold/10 transition-colors duration-300">03</div>
-                    <h4 class="font-serif text-base font-bold text-gray-800 mb-3 mt-4">Customize & Sample</h4>
-                    <p class="text-xs text-gray-500 leading-relaxed">Finalize color preferences, leather types, and verify standard debossed or hot-foiled corporate branding mockups.</p>
-                </div>
-                <div class="border border-gray-100 bg-gray-50/50 p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="absolute right-4 top-2 font-serif text-6xl font-bold text-gray-200/50 group-hover:text-luxGold/10 transition-colors duration-300">04</div>
-                    <h4 class="font-serif text-base font-bold text-gray-800 mb-3 mt-4">Luxury Fulfillment</h4>
-                    <p class="text-xs text-gray-500 leading-relaxed">Every item is packed in signature premium packaging and dispatched on time via direct secure transport channels.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- OCCASIONS -->
-    <section class="py-20" id="occasions">
-        <div class="container max-w-7xl mx-auto px-6">
-            <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block text-center mb-3">CURATED FOR ALL EVENTS</span>
-            <h2 class="font-serif text-4xl font-bold text-center text-darkLux mb-4">Every <span class="italic text-luxGold">celebration.</span></h2>
-            <div class="w-16 h-[2px] bg-luxGold mx-auto mb-12"></div>
-            
-            <div class="flex flex-wrap gap-3 justify-center max-w-4xl mx-auto">
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Diwali Gifting</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Employee Welcomes</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Client Appreciations</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Leadership Milestones</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Onboarding Kits</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Conference Souvenirs</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">Board-Member Recognitions</span>
-                <span class="border border-gray-200 hover:border-luxGold hover:text-luxGold bg-white text-gray-600 text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 cursor-default">New Year & Festivals</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="bg-white py-20 lg:py-28">
-        <div class="container max-w-7xl mx-auto px-6">
-            <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block text-center mb-3">B2B TESTIMONIALS</span>
-            <h2 class="font-serif text-4xl lg:text-5xl font-bold text-center text-darkLux mb-4">Gifting with <span class="italic text-luxGold">prestige.</span></h2>
-            <div class="w-16 h-[2px] bg-luxGold mx-auto mb-16"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
-                    <div>
-                        <span class="font-serif text-5xl text-luxGold/20 leading-none block mb-2">“</span>
-                        <p class="font-serif italic text-sm text-gray-600 leading-relaxed mb-6">"Amadika elevated our Diwali gifting campaign. Several key clients reached out to personally praise the premium leather quality — a response we hadn't seen in years."</p>
-                    </div>
-                    <span class="text-[10px] font-extrabold tracking-wider text-luxGold uppercase block">Director &mdash; Real Estate Enterprise</span>
-                </div>
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
-                    <div>
-                        <span class="font-serif text-5xl text-luxGold/20 leading-none block mb-2">“</span>
-                        <p class="font-serif italic text-sm text-gray-600 leading-relaxed mb-6">"We customized 150 desk set pairings for our board and senior leadership. The debossing, packaging details, and logistics were handled impeccably."</p>
-                    </div>
-                    <span class="text-[10px] font-extrabold tracking-wider text-luxGold uppercase block">VP of HR &mdash; Financial Advisory Firm</span>
-                </div>
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
-                    <div>
-                        <span class="font-serif text-5xl text-luxGold/20 leading-none block mb-2">“</span>
-                        <p class="font-serif italic text-sm text-gray-600 leading-relaxed mb-6">"Their corporate desk team was outstanding. The product suggestions were highly tailored, and alignment was fast. Truly professional from start to delivery."</p>
-                    </div>
-                    <span class="text-[10px] font-extrabold tracking-wider text-luxGold uppercase block">Brand Manager &mdash; Premium Automotive</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ENQUIRY FORM SECTION -->
-    <section class="bg-[#111827] text-white py-20 lg:py-28 relative overflow-hidden" id="enquiry">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-luxGold/30 via-transparent to-transparent pointer-events-none"></div>
-        
-        <div class="container max-w-4xl mx-auto px-6 relative z-10">
-            <span class="text-[10px] font-extrabold tracking-[0.4em] text-luxGold uppercase block text-center mb-3">GET IN TOUCH</span>
-            <h2 class="font-serif text-4xl lg:text-5xl font-bold text-center text-white mb-4">Request a <span class="italic text-luxGold">proposal.</span></h2>
-            <div class="w-16 h-[2px] bg-luxGold mx-auto mb-16"></div>
-            
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-800 rounded-2xl p-8 lg:p-12 shadow-2xl">
-                <form onsubmit="handleCorporateSubmit(event)" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Your Name</label>
-                            <input type="text" id="name" placeholder="Anurag Singh" required class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-4 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white">
+                <!-- Right: High-fidelity image mockup -->
+                <div class="col-lg-5 position-relative">
+                    <div class="position-absolute bg-gold-accent bg-opacity-10 rounded-5 w-100 h-100" style="background-color: rgba(200, 155, 44, 0.04); transform: rotate(3deg); top: -10px; left: -10px; z-index: 1; border-radius: 24px;"></div>
+                    
+                    <div class="card border-0 rounded-4 overflow-hidden shadow-lg position-relative z-2 bg-white" style="border-radius: 24px; border: 1px solid #E5E7EB !important;">
+                        <span class="position-absolute top-0 start-0 m-4 bg-dark-slate text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-pill shadow-sm z-3" style="background: rgba(17, 24, 39, 0.9);">
+                            Exclusive Curation
+                        </span>
+                        
+                        <div class="w-100 overflow-hidden bg-light" style="height: 380px;">
+                            <img src="<?php echo $link_prefix; ?>assets/images/corporate_gift_set.png" 
+                                 alt="Amadika Signature Leather Gift Box" 
+                                 class="w-100 h-100 object-fit-cover">
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Company Name</label>
-                            <input type="text" id="company" placeholder="Your Organisation" required class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-4 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white">
+                        
+                        <div class="card-body p-4 text-center">
+                            <h4 class="font-serif fw-bold mb-1 text-dark">The Signature Executive Set</h4>
+                            <p class="text-[10px] text-luxGold fw-bold uppercase tracking-wider mb-0">Notebook, Desk Mat & Valet Combo</p>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Email Address</label>
-                            <input type="email" id="email" placeholder="you@company.com" required class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-4 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+91 98765 43210" class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-4 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Quantity Required</label>
-                            <div class="relative">
-                                <select id="quantity" class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-8 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white cursor-pointer w-full appearance-none">
-                                    <option value="" disabled selected class="bg-gray-900 text-gray-400">Select range</option>
-                                    <option class="bg-gray-900 text-white">25 – 50 items</option>
-                                    <option class="bg-gray-900 text-white">51 – 100 items</option>
-                                    <option class="bg-gray-900 text-white">101 – 250 items</option>
-                                    <option class="bg-gray-900 text-white">251 – 500 items</option>
-                                    <option class="bg-gray-900 text-white">500+ items</option>
-                                </select>
-                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B2B Estimator Widget -->
+    <section class="py-5" id="calculator">
+        <div class="container max-w-5xl mx-auto px-4">
+            <div class="card border-0 shadow-lg overflow-hidden rounded-4" style="border-radius: 24px; border: 1px solid #E5E7EB !important;">
+                <div class="row g-0">
+                    <!-- Calculator Inputs -->
+                    <div class="col-lg-7 p-4 p-md-5 bg-white">
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-luxGold uppercase d-block mb-1">INTERACTIVE CALCULATOR</span>
+                        <h3 class="font-serif fw-bold text-dark mb-2">Estimate Pricing</h3>
+                        <p class="text-xs text-muted mb-5">Adjust order variables to estimate unit rates and discount structures immediately.</p>
+                        
+                        <!-- Range slider for quantity -->
+                        <div class="mb-5">
+                            <div class="d-flex justify-content-between align-items-baseline mb-2">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-widest">Order Quantity</label>
+                                <span class="font-serif fs-5 fw-bold text-dark" id="calcQtyVal">100 items</span>
+                            </div>
+                            <input type="range" id="calcQty" min="25" max="500" step="5" value="100" class="slider-input" oninput="updateB2BEstimate()">
+                            <div class="d-flex justify-content-between text-[9px] text-muted fw-bold uppercase mt-2">
+                                <span>25 items</span>
+                                <span>250 items</span>
+                                <span>500+ items</span>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Occasion</label>
-                            <div class="relative">
-                                <select id="occasion" class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-8 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white cursor-pointer w-full appearance-none">
-                                    <option value="" disabled selected class="bg-gray-900 text-gray-400">Select occasion</option>
-                                    <option class="bg-gray-900 text-white">Diwali Gifting</option>
-                                    <option class="bg-gray-900 text-white">Employee Recognition</option>
-                                    <option class="bg-gray-900 text-white">Client Appreciation</option>
-                                    <option class="bg-gray-900 text-white">New Year & Festivals</option>
-                                    <option class="bg-gray-900 text-white">Corporate Milestones</option>
-                                    <option class="bg-gray-900 text-white">Other</option>
-                                </select>
-                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+
+                        <!-- Tier buttons -->
+                        <div>
+                            <label class="text-[10px] fw-bold text-secondary uppercase tracking-widest d-block mb-3">Product Quality Tier</label>
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <button onclick="selectTier('classic', 1499)" id="tier-classic" class="btn w-100 border rounded-3 py-3 text-center transition-all bg-light">
+                                        <span class="d-block text-[11px] fw-bold text-dark uppercase tracking-wider mb-1">Classic</span>
+                                        <span class="text-[10px] text-muted d-block font-sans">From ₹1,499</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button onclick="selectTier('elite', 2499)" id="tier-elite" class="btn w-100 border rounded-3 py-3 text-center transition-all bg-light">
+                                        <span class="d-block text-[11px] fw-bold text-dark uppercase tracking-wider mb-1">Elite</span>
+                                        <span class="text-[10px] text-muted d-block font-sans">From ₹2,499</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button onclick="selectTier('signature', 4999)" id="tier-signature" class="btn w-100 border rounded-3 py-3 text-center transition-all bg-light">
+                                        <span class="d-block text-[11px] fw-bold text-dark uppercase tracking-wider mb-1">Signature</span>
+                                        <span class="text-[10px] text-muted d-block font-sans">From ₹4,999</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Additional details</label>
-                        <textarea id="message" placeholder="Provide any budget targets, preferred colors, logo monogram details, or custom packaging preferences..." class="bg-gray-950/70 border border-gray-800 focus:border-luxGold text-sm pl-4 pr-4 py-3 rounded-xl focus:outline-none transition-all duration-305 text-white min-h-[120px] resize-y"></textarea>
+
+                    <!-- Calculator Output Card -->
+                    <div class="col-lg-5 p-4 p-md-5 bg-dark-slate text-white d-flex flex-column justify-content-between position-relative" style="background-color: #111827;">
+                        <div class="position-absolute bg-gold-accent opacity-10 w-100 h-100 top-0 start-0" style="background: radial-gradient(circle at bottom right, rgba(200, 155, 44, 0.3) 0%, transparent 60%); pointer-events: none;"></div>
+                        
+                        <div class="position-relative z-2">
+                            <span class="text-luxGold text-[9px] font-bold tracking-[0.2em] uppercase d-block mb-4">ESTIMATION SUMMARY</span>
+                            
+                            <div class="mb-4">
+                                <span class="text-xs text-secondary d-block mb-1">Estimated Budget Range</span>
+                                <h2 class="font-serif fw-bold text-white mb-2" id="estimatedTotal">₹2,24,910 - ₹2,49,900</h2>
+                                <p class="text-[10px] text-muted mb-0">Includes debossed branding setup fee.</p>
+                            </div>
+
+                            <div class="border-top border-secondary border-opacity-25 pt-4">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-secondary text-xs">Unit Rate (approx):</span>
+                                    <span id="estUnitVal" class="fw-bold text-white text-xs">₹2,499 / item</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-secondary text-xs">Volume Discount:</span>
+                                    <span id="discountVal" class="fw-bold text-xs text-success">10% Off Included</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative z-2 mt-5">
+                            <button onclick="lockEstimateAndScroll()" class="btn bg-gold-accent hover:bg-white w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase text-white shadow border-0" style="background-color: #C89B2C;">
+                                Lock in Estimate & Inquire <i class="fa-solid fa-arrow-down ms-1"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="w-full bg-luxGold hover:bg-white hover:text-darkLux text-white text-xs font-bold tracking-widest uppercase py-4 rounded-xl transition-all duration-300 shadow-md border-0">Submit Gifting Enquiry</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Tabs Catalog -->
+    <section class="py-5" id="collection-tabs">
+        <div class="container max-w-7xl mx-auto px-4">
+            <div class="text-center mb-5">
+                <span class="text-[10px] font-bold tracking-[0.3em] text-luxGold uppercase d-block mb-2">EXQUISITE COLLECTIONS</span>
+                <h2 class="font-serif fw-bold text-dark-slate mb-3">Product Catalogues</h2>
+                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px;"></div>
+            </div>
+
+            <!-- Tabs buttons -->
+            <div class="d-flex flex-wrap gap-2 justify-content-center mb-5">
+                <button onclick="switchCategory('desk', this)" class="btn showcase-tab active">
+                    Desk Organization
+                </button>
+                <button onclick="switchCategory('travel', this)" class="btn showcase-tab">
+                    Travel & Tech
+                </button>
+                <button onclick="switchCategory('boxes', this)" class="btn showcase-tab">
+                    Luxury Gift Boxes
+                </button>
+                <button onclick="switchCategory('monogram', this)" class="btn showcase-tab">
+                    Monogrammed Accents
+                </button>
+            </div>
+
+            <!-- Tabs Panels -->
+            <div id="tab-panel-container">
+                <!-- Desk Panel (Active) -->
+                <div id="panel-desk" class="tab-panel row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-success bg-opacity-10 text-success text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(56, 142, 60, 0.1);">Best Seller</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Artisan Desk Mats</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Premium leather mats offering smooth precision tracking, suede backing protectors, and subtle edge-stitched borders.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Custom Debossing</span>
+                                <i data-lucide="layout-grid" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Handcrafted</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Organiser Cups</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Structured cylindrical leather containers featuring rigid wall plates and velvet protective inner dividers.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Genuine Leather</span>
+                                <i data-lucide="package" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(108, 117, 125, 0.1);">Modern Office</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Folding Valet Trays</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Flat-folding organizers perfect for storing keys, monogram card cases, and pins on hotel bedside tables.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Metal Corner Snaps</span>
+                                <i data-lucide="box" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travel Panel (Hidden) -->
+                <div id="panel-travel" class="tab-panel d-none row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Premium Tech</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Laptop Satchels</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Full-grain leather satchels featuring padded compartments, brass fittings, and detachable shoulder straps.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Fits up to 16" Laptops</span>
+                                <i data-lucide="briefcase" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(108, 117, 125, 0.1);">RFID Protection</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Passport Sleeves</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Premium travel wallets featuring RFID blocking layers, custom ticket dividers, and secure slots.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">RFID Lined Interior</span>
+                                <i data-lucide="wallet" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-success bg-opacity-10 text-success text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(56, 142, 60, 0.1);">Travel Token</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Leather Luggage Tags</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Classy secure travel tags built with high-grade leather straps and confidentiality address flaps.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Debossed Logo Custom</span>
+                                <i data-lucide="tag" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boxes Panel (Hidden) -->
+                <div id="panel-boxes" class="tab-panel d-none row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Executive Case</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Single Watch Rolls</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Watch storage roll designed with rigid safety walls, sliding watch dividers, and microfiber inner velvet.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Microfiber Velvet</span>
+                                <i data-lucide="clock" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-success bg-opacity-10 text-success text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(56, 142, 60, 0.1);">Milestone Gift</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Corporate Hamper Box</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">The photorealistic curated desk planner box containing our premium notebook, pen holder, and key loop.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Custom Debossed Lid</span>
+                                <i data-lucide="gem" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(108, 117, 125, 0.1);">Celeb Kit</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Leather Wine Box cases</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Premium vintage carrying box containing divider panels, secure brass latches, and handle holds.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Brass Locks & Accents</span>
+                                <i data-lucide="wine" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monogram Panel (Hidden) -->
+                <div id="panel-monogram" class="tab-panel d-none row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Refillable</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Notebook Sleeves</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Refillable A5 journals debossed with hot-stamped gold foil monograms or clean standard blind impressions.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Gold Foil Embossed</span>
+                                <i data-lucide="book-open" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-success bg-opacity-10 text-success text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(56, 142, 60, 0.1);">Welcome Pack</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Luxury Leather Keyloops</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Hand-crafted thick leather loops secured by polished titanium loops. Ideal entry token item.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Monogrammed Loops</span>
+                                <i data-lucide="key" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="luxury-card">
+                            <div>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(108, 117, 125, 0.1);">Desk Accessory</span>
+                                <h4 class="font-serif fw-bold text-dark mb-2">Leather Coasters</h4>
+                                <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Luxury coaster disc packages stacked in matching leather holder containers with gold stitch outlines.</p>
+                            </div>
+                            <div class="border-top border-light pt-3 d-flex justify-content-between align-items-center">
+                                <span class="text-muted text-[11px]">Coaster Set of 4/6</span>
+                                <i data-lucide="layers" class="w-4 h-4 text-luxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Timeline -->
+    <section class="py-5 bg-white" id="experience-timeline">
+        <div class="container max-w-4xl mx-auto px-4">
+            <div class="text-center mb-5">
+                <span class="text-[10px] font-bold tracking-[0.3em] text-luxGold uppercase d-block mb-2">B2B TIMELINE</span>
+                <h2 class="font-serif fw-bold text-dark-slate mb-3">Fulfillment Process</h2>
+                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px;"></div>
+            </div>
+
+            <div class="timeline-line py-4">
+                <!-- Step 1 -->
+                <div class="d-flex align-items-start gap-4 mb-4 relative z-3">
+                    <div class="timeline-node">01</div>
+                    <div class="bg-light border border-light p-4 rounded-4 shadow-sm flex-grow-1" style="border-radius: 16px;">
+                        <h4 class="font-serif fw-bold text-dark mb-1" style="font-size: 15px;">Creative Briefing</h4>
+                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">Submit your initial targets. Our accounts consultant clarifies layout patterns, target monogramming logos, and bulk limits within 24 hours.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="d-flex align-items-start gap-4 mb-4 relative z-3">
+                    <div class="timeline-node">02</div>
+                    <div class="bg-light border border-light p-4 rounded-4 shadow-sm flex-grow-1" style="border-radius: 16px;">
+                        <h4 class="font-serif fw-bold text-dark mb-1" style="font-size: 15px;">Visual Deck Proposals</h4>
+                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">Review customized photorealistic renders of your products bearing your debossed company logo alongside tailored volume price breakdowns.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="d-flex align-items-start gap-4 mb-4 relative z-3">
+                    <div class="timeline-node">03</div>
+                    <div class="bg-light border border-light p-4 rounded-4 shadow-sm flex-grow-1" style="border-radius: 16px;">
+                        <h4 class="font-serif fw-bold text-dark mb-1" style="font-size: 15px;">Sample Manufacturing</h4>
+                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">We produce and dispatch physical sample products of your selection for tactile evaluation, ensuring exact deboss depth alignment.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="d-flex align-items-start gap-4 relative z-3">
+                    <div class="timeline-node">04</div>
+                    <div class="bg-light border border-light p-4 rounded-4 shadow-sm flex-grow-1" style="border-radius: 16px;">
+                        <h4 class="font-serif fw-bold text-dark mb-1" style="font-size: 15px;">Delivery & Logistics</h4>
+                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">Approved specifications move to full B2B production. Every item is packed in signature rigid boxes and delivered pan-India.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Occasions Badges -->
+    <section class="py-5" style="background-color: #111827;">
+        <div class="container max-w-7xl mx-auto px-4 text-center">
+            <span class="text-luxGold text-[9px] font-bold tracking-[0.3em] uppercase d-block mb-3">B2B EVENTS</span>
+            <h3 class="font-serif fw-bold text-white mb-4">Gifting curations for every milestone event.</h3>
+            
+            <div class="d-flex flex-wrap gap-2 justify-content-center max-w-4xl mx-auto">
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Diwali Gifts</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Employee Onboarding Welcomes</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Key Client Tokens</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Milestone Celebrations</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Board Member Recognitions</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">New Year & Festivals</span>
+                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Bespoke Monograms</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5 bg-white">
+        <div class="container max-w-7xl mx-auto px-4">
+            <div class="text-center mb-5">
+                <span class="text-[10px] font-bold tracking-[0.3em] text-luxGold uppercase d-block mb-2">B2B TESTIMONIALS</span>
+                <h2 class="font-serif fw-bold text-dark-slate mb-3">Client Feedback</h2>
+                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px;"></div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                        <div>
+                            <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
+                            <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"Amadika elevated our Diwali gifting campaign. Several key clients reached out to personally praise the premium leather quality — a response we hadn't seen in years."</p>
+                        </div>
+                        <div>
+                            <div class="border-top border-light pt-3">
+                                <span class="text-[9px] font-bold tracking-widest text-luxGold uppercase d-block">Director</span>
+                                <span class="text-[10px] text-muted font-sans block">Real Estate Enterprise, NCR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                        <div>
+                            <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
+                            <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"We customized 150 desk set pairings for our board and senior leadership. The debossing, packaging details, and logistics were handled impeccably."</p>
+                        </div>
+                        <div>
+                            <div class="border-top border-light pt-3">
+                                <span class="text-[9px] font-bold tracking-widest text-luxGold uppercase d-block">VP of Human Resources</span>
+                                <span class="text-[10px] text-muted font-sans block">Financial Advisory Firm, Mumbai</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                        <div>
+                            <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
+                            <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"Their corporate desk team was outstanding. The product suggestions were highly tailored, and alignment was fast. Truly professional from start to delivery."</p>
+                        </div>
+                        <div>
+                            <div class="border-top border-light pt-3">
+                                <span class="text-[9px] font-bold tracking-widest text-luxGold uppercase d-block">Brand Manager</span>
+                                <span class="text-[10px] text-muted font-sans block">Automotive Group, Pune</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enquiry Form -->
+    <section class="py-5 bg-dark-slate text-white position-relative overflow-hidden" id="enquiry" style="background-color: #111827;">
+        <div class="position-absolute bg-gold-accent opacity-10 w-100 h-100 top-0 start-0" style="background: radial-gradient(circle at center, rgba(200, 155, 44, 0.2) 0%, transparent 60%); pointer-events: none;"></div>
+        
+        <div class="container max-w-4xl mx-auto px-4 position-relative z-2">
+            <div class="text-center mb-5">
+                <span class="text-[10px] font-bold tracking-[0.3em] text-luxGold uppercase d-block mb-2">B2B QUOTE REQUEST</span>
+                <h2 class="font-serif fw-bold">Request a Proposal</h2>
+                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px;"></div>
+            </div>
+
+            <div class="card border-0 rounded-4 p-4 p-md-5 bg-opacity-50" style="background: rgba(31, 41, 55, 0.4); border: 1px solid rgba(255, 255, 255, 0.05) !important; border-radius: 24px;">
+                <form onsubmit="handleCorporateSubmit(event)" class="row g-4">
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Your Name</label>
+                        <input type="text" id="name" placeholder="Anurag Singh" required class="luxury-input">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Company Name</label>
+                        <input type="text" id="company" placeholder="Your Organisation" required class="luxury-input">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Email Address</label>
+                        <input type="email" id="email" placeholder="you@company.com" required class="luxury-input">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+91 98765 43210" class="luxury-input">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Quantity Range</label>
+                        <div class="position-relative">
+                            <select id="quantity" class="luxury-input appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select range</option>
+                                <option>25 – 50 items</option>
+                                <option>51 – 100 items</option>
+                                <option>101 – 250 items</option>
+                                <option>251 – 500 items</option>
+                                <option>500+ items</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Occasion</label>
+                        <div class="position-relative">
+                            <select id="occasion" class="luxury-input appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select occasion</option>
+                                <option>Diwali Gifting</option>
+                                <option>Employee Recognition</option>
+                                <option>Client Appreciation</option>
+                                <option>New Year & Festivals</option>
+                                <option>Corporate Milestones</option>
+                                <option>Other</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Additional details</label>
+                        <textarea id="message" placeholder="Provide any budget targets, preferred colors, logo monogram details, or custom packaging preferences..." class="luxury-input" style="min-height: 120px; resize: vertical;"></textarea>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn bg-gold-accent hover:bg-white text-white w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase border-0" style="background-color: #C89B2C;">
+                            Submit Quote Inquiry
+                        </button>
+                    </div>
                 </form>
-                <p class="text-[10px] text-center text-gray-500 mt-6 tracking-wide uppercase">Our corporate relationships team will get back to you within 24 hours.</p>
+                <p class="text-[10px] text-center text-muted mt-4 mb-0 tracking-wide uppercase">Our corporate relationships team will get back to you within 24 hours.</p>
             </div>
         </div>
     </section>
 </div>
 
 <script>
+    // Estimator variables
+    let selectedTierName = 'classic';
+    let baseUnitPrice = 1499;
+
+    function selectTier(tier, basePrice) {
+        selectedTierName = tier;
+        baseUnitPrice = basePrice;
+        
+        // Reset classes
+        document.querySelectorAll('[id^="tier-"]').forEach(btn => {
+            btn.classList.remove('border-gold-accent', 'bg-gold-accent', 'bg-opacity-10', 'text-luxGold');
+            btn.classList.add('bg-light');
+        });
+        
+        // Set active style
+        const activeBtn = document.getElementById(`tier-${tier}`);
+        activeBtn.classList.remove('bg-light');
+        activeBtn.classList.add('border-gold-accent', 'text-luxGold');
+        activeBtn.style.backgroundColor = 'rgba(200, 155, 44, 0.05)';
+        
+        updateB2BEstimate();
+    }
+
+    function updateB2BEstimate() {
+        const qtyVal = parseInt(document.getElementById('calcQty').value);
+        document.getElementById('calcQtyVal').innerText = `${qtyVal} items`;
+
+        // Calculate discount
+        let discountPct = 0;
+        if (qtyVal >= 50 && qtyVal < 100) {
+            discountPct = 5;
+        } else if (qtyVal >= 100 && qtyVal < 250) {
+            discountPct = 10;
+        } else if (qtyVal >= 250 && qtyVal < 500) {
+            discountPct = 15;
+        } else if (qtyVal >= 500) {
+            discountPct = 20;
+        }
+
+        const discountedUnitPrice = Math.round(baseUnitPrice * (1 - discountPct / 100));
+        const totalMin = discountedUnitPrice * qtyVal;
+        const totalMax = Math.round(totalMin * 1.1);
+
+        document.getElementById('estUnitVal').innerText = `₹${discountedUnitPrice.toLocaleString()} / item`;
+        
+        const discEl = document.getElementById('discountVal');
+        if (discountPct > 0) {
+            discEl.innerText = `${discountPct}% Volume Discount Applied`;
+            discEl.className = "fw-bold text-xs text-success";
+        } else {
+            discEl.innerText = "Standard Rate (No discount)";
+            discEl.className = "fw-bold text-xs text-secondary";
+        }
+
+        document.getElementById('estimatedTotal').innerText = `₹${totalMin.toLocaleString()} - ₹${totalMax.toLocaleString()}`;
+    }
+
+    function lockEstimateAndScroll() {
+        const qtyVal = document.getElementById('calcQty').value;
+        const qtySelect = document.getElementById('quantity');
+        
+        if (qtyVal <= 50) {
+            qtySelect.value = "25 – 50 items";
+        } else if (qtyVal > 50 && qtyVal <= 100) {
+            qtySelect.value = "51 – 100 items";
+        } else if (qtyVal > 100 && qtyVal <= 250) {
+            qtySelect.value = "101 – 250 items";
+        } else if (qtyVal > 250 && qtyVal <= 500) {
+            qtySelect.value = "251 – 500 items";
+        } else {
+            qtySelect.value = "500+ items";
+        }
+
+        const detailMessage = document.getElementById('message');
+        detailMessage.value = `Locked Estimate: Selected ${selectedTierName.toUpperCase()} Collection for approx. ${qtyVal} items. Please provide custom branding instructions.`;
+
+        const targetElement = document.getElementById('enquiry');
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+
+        if (typeof Swal !== 'undefined') {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+            Toast.fire({
+                icon: 'info',
+                title: 'Calculator selections synced to B2B form.'
+            });
+        }
+    }
+
+    function switchCategory(catId, btn) {
+        document.querySelectorAll('#collection-tabs .showcase-tab').forEach(b => {
+            b.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        document.querySelectorAll('#tab-panel-container .tab-panel').forEach(panel => {
+            panel.classList.add('d-none');
+        });
+
+        const targetPanel = document.getElementById(`panel-${catId}`);
+        targetPanel.classList.remove('d-none');
+
+        // Animation
+        gsap.fromTo(targetPanel.children, 
+            { opacity: 0, y: 15 }, 
+            { opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out' }
+        );
+    }
+
     function handleCorporateSubmit(e) {
         e.preventDefault();
         
-        // Fetch inputs
         const name = document.getElementById('name').value;
         const company = document.getElementById('company').value;
         const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const quantity = document.getElementById('quantity').value;
-        const occasion = document.getElementById('occasion').value;
-        const message = document.getElementById('message').value;
 
-        // Display a high-end luxury SweetAlert confirmation
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 icon: 'success',
-                title: 'Enquiry Submitted',
+                title: 'Enquiry Received',
                 text: `Thank you, ${name}. Our Corporate Gifting Advisor will connect with you at ${email} shortly to discuss options for ${company}.`,
                 confirmButtonColor: '#C89B2C',
                 customClass: {
-                    popup: 'rounded-2xl border border-gray-100 shadow-luxury',
-                    confirmButton: 'px-5 py-2.5 text-xs font-bold uppercase rounded-lg tracking-wider'
+                    popup: 'rounded-4 border shadow-lg',
+                    confirmButton: 'btn bg-gold-accent hover:bg-white text-white px-4 py-2.5 text-xs font-bold uppercase rounded-3'
                 }
             });
         } else {
             alert(`Thank you, ${name}. We have received your B2B enquiry for ${company} and will get back to you shortly.`);
         }
 
-        // Reset form
         e.target.reset();
     }
 
-    // Micro-interactions with scroll reveal
     document.addEventListener('DOMContentLoaded', () => {
-        // Scroll Reveal Observer
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach((e) => {
-                if (e.isIntersecting) {
-                    e.target.style.opacity = '1';
-                    e.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.05 });
-
-        document.querySelectorAll('.gifts-section, .gifts-grid > div, .steps > div, .testimonial-card').forEach((el) => {
-            // Add inline styling for transition
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-            revealObserver.observe(el);
-        });
+        selectTier('classic', 1499);
     });
 </script>
 
