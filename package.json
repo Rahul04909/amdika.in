@@ -1,0 +1,12 @@
+{
+  "name": "amadika",
+  "version": "1.0.0",
+  "description": "Amadika Premium Leather Home Decor & Accessories",
+  "main": "index.php",
+  "scripts": {
+    "build:css": "tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

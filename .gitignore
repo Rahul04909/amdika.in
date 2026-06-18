@@ -1,0 +1,7 @@
+/node_modules/
+/.vscode/
+/composer.lock
+/vendor/
+/tmp/
+/scratch/
+/error_log
