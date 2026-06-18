@@ -117,6 +117,38 @@ $grand_total = $total_sales + $total_gst;
         
         .card-custom { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: #fff; }
         .kpi-card { border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+        
+        /* KPI Cards Styling */
+        .kpi-label {
+            font-size: 10px !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8c98a5 !important;
+            white-space: nowrap !important;
+        }
+        .kpi-value {
+            font-size: 1.45rem !important;
+            font-weight: 700;
+            color: #2d3436;
+        }
+        .kpi-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .kpi-icon i {
+            font-size: 1.1rem !important;
+        }
+        .kpi-icon.icon-primary { background-color: rgba(79, 70, 229, 0.1); color: #4f46e5 !important; }
+        .kpi-icon.icon-success { background-color: rgba(16, 185, 129, 0.1); color: #10b981 !important; }
+        .kpi-icon.icon-warning { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b !important; }
+        .kpi-icon.icon-danger { background-color: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
+
         .table-hover tbody tr:hover { background-color: rgba(0,0,0,0.02); }
         
         /* Professional Report Table Styles */
@@ -222,59 +254,59 @@ $grand_total = $total_sales + $total_gst;
                 </div>
 
                 <!-- KPI Summary Dashboard Cards -->
-                <div class="row g-4 mb-4">
+                <div class="row g-3 mb-4">
                     <!-- Total Items Sold -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card kpi-card bg-white p-4">
+                        <div class="card kpi-card bg-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted text-xs uppercase fw-bold d-block mb-1">Items Sold</span>
-                                    <h3 class="fw-bold mb-0 text-dark"><?php echo number_format($total_qty); ?></h3>
+                                    <span class="kpi-label mb-1 d-block">Items Sold</span>
+                                    <h3 class="kpi-value mb-0"><?php echo number_format($total_qty); ?></h3>
                                 </div>
-                                <div class="bg-light p-3 rounded-circle text-primary">
-                                    <i class="fas fa-box fs-4"></i>
+                                <div class="kpi-icon icon-primary">
+                                    <i class="fas fa-box"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Total Sales (Excl. Tax) -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card kpi-card bg-white p-4">
+                        <div class="card kpi-card bg-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted text-xs uppercase fw-bold d-block mb-1">Net Revenue</span>
-                                    <h3 class="fw-bold mb-0 text-dark">₹<?php echo number_format($total_sales, 2); ?></h3>
+                                    <span class="kpi-label mb-1 d-block">Net Revenue</span>
+                                    <h3 class="kpi-value mb-0">₹<?php echo number_format($total_sales, 2); ?></h3>
                                 </div>
-                                <div class="bg-light p-3 rounded-circle text-success">
-                                    <i class="fas fa-chart-line fs-4"></i>
+                                <div class="kpi-icon icon-success">
+                                    <i class="fas fa-chart-line"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Total GST Tax -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card kpi-card bg-white p-4">
+                        <div class="card kpi-card bg-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted text-xs uppercase fw-bold d-block mb-1">Tax Collected (GST)</span>
-                                    <h3 class="fw-bold mb-0 text-dark">₹<?php echo number_format($total_gst, 2); ?></h3>
+                                    <span class="kpi-label mb-1 d-block">GST Collected</span>
+                                    <h3 class="kpi-value mb-0">₹<?php echo number_format($total_gst, 2); ?></h3>
                                 </div>
-                                <div class="bg-light p-3 rounded-circle text-warning">
-                                    <i class="fas fa-percent fs-4"></i>
+                                <div class="kpi-icon icon-warning">
+                                    <i class="fas fa-percent"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Gross Revenue (Sales + GST) -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card kpi-card bg-white p-4">
+                        <div class="card kpi-card bg-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted text-xs uppercase fw-bold d-block mb-1">Gross Total</span>
-                                    <h3 class="fw-bold mb-0 text-dark">₹<?php echo number_format($grand_total, 2); ?></h3>
+                                    <span class="kpi-label mb-1 d-block">Gross Total</span>
+                                    <h3 class="kpi-value mb-0">₹<?php echo number_format($grand_total, 2); ?></h3>
                                 </div>
-                                <div class="bg-light p-3 rounded-circle text-danger">
-                                    <i class="fas fa-rupee-sign fs-4"></i>
+                                <div class="kpi-icon icon-danger">
+                                    <i class="fas fa-rupee-sign"></i>
                                 </div>
                             </div>
                         </div>
