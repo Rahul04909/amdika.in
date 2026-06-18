@@ -86,13 +86,87 @@ $grand_total = $total_sales + $total_gst;
     <link rel="icon" type="image/png" href="../../assets/images/amdika-logo.png">
 
     <style>
-        body { font-family: 'Rubik', sans-serif; background-color: #f5f7fa; }
-        .wrapper { display: flex; }
-        #page-content-wrapper { width: 100%; padding: 0; }
+        body { 
+            font-family: 'Rubik', sans-serif; 
+            background-color: #f5f7fa; 
+            overflow-x: hidden; 
+        }
+        .wrapper { 
+            display: flex; 
+            overflow-x: hidden; 
+            width: 100%; 
+        }
+        
+        /* Layout Scrollbar Fixes */
+        #page-content-wrapper {
+            margin-left: 260px !important;
+            width: calc(100% - 260px) !important;
+            min-width: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body.sb-collapsed #page-content-wrapper {
+            margin-left: 70px !important;
+            width: calc(100% - 70px) !important;
+        }
+        @media (max-width: 991px) {
+            #page-content-wrapper {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+        }
         
         .card-custom { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: #fff; }
         .kpi-card { border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
         .table-hover tbody tr:hover { background-color: rgba(0,0,0,0.02); }
+        
+        /* Professional Report Table Styles */
+        .report-table {
+            font-size: 11px !important;
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .report-table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 10px !important;
+            letter-spacing: 0.5px;
+            background-color: #f8f9fa;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap !important;
+            padding: 8px 10px !important;
+        }
+        .report-table td {
+            white-space: nowrap !important;
+            vertical-align: middle;
+            padding: 6px 10px !important;
+            border-bottom: 1px solid #e9ecef;
+            color: #495057;
+        }
+        .report-table td, 
+        .report-table td div,
+        .report-table td span,
+        .report-table th {
+            font-size: 11px !important;
+        }
+        .report-table td small {
+            font-size: 9px !important;
+            opacity: 0.8;
+        }
+        .customer-name-txt {
+            max-width: 100px;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            display: block;
+        }
+        .product-name-txt {
+            max-width: 160px;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            display: block;
+        }
         
         /* Pagination */
         .page-link { color: #333; border: none; margin: 0 5px; border-radius: 50% !important; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
@@ -215,8 +289,8 @@ $grand_total = $total_sales + $total_gst;
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="bg-light">
+                        <table class="table table-hover align-middle report-table">
+                            <thead>
                                 <tr>
                                     <th>Date</th>
                                     <th>Invoice No.</th>
@@ -245,17 +319,27 @@ $grand_total = $total_sales + $total_gst;
                                         ?>
                                         <tr>
                                             <td>
-                                                <div class="text-secondary text-xs"><?php echo date('d M Y', strtotime($row['created_at'])); ?></div>
+                                                <span class="text-secondary"><?php echo date('d M Y', strtotime($row['created_at'])); ?></span>
                                             </td>
-                                            <td class="fw-semibold text-primary text-xs"><?php echo htmlspecialchars($row['order_no']); ?></td>
-                                            <td><div class="fw-medium text-dark text-xs"><?php echo htmlspecialchars($cust_name); ?></div></td>
-                                            <td><div class="text-secondary text-xs" style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?php echo htmlspecialchars($row['product_name']); ?></div></td>
-                                            <td class="text-center text-xs"><?php echo $qty; ?></td>
-                                            <td class="text-end text-xs">₹<?php echo number_format($mrp, 2); ?></td>
-                                            <td class="text-end text-xs">₹<?php echo number_format($sales_price, 2); ?></td>
-                                            <td class="text-end text-xs text-success fw-medium">-₹<?php echo number_format($discount, 2); ?></td>
-                                            <td class="text-end text-xs text-secondary">₹<?php echo number_format($gst, 2); ?> <small class="text-muted">(<?php echo $row['gst_percent']; ?>%)</small></td>
-                                            <td class="text-end text-xs fw-bold">₹<?php echo number_format($line_total, 2); ?></td>
+                                            <td class="fw-semibold text-primary"><?php echo htmlspecialchars($row['order_no']); ?></td>
+                                            <td>
+                                                <span class="customer-name-txt fw-medium text-dark" title="<?php echo htmlspecialchars($cust_name); ?>">
+                                                    <?php echo htmlspecialchars($cust_name); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="product-name-txt text-secondary" title="<?php echo htmlspecialchars($row['product_name']); ?>">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </span>
+                                            </td>
+                                            <td class="text-center"><?php echo $qty; ?></td>
+                                            <td class="text-end">₹<?php echo number_format($mrp, 2); ?></td>
+                                            <td class="text-end">₹<?php echo number_format($sales_price, 2); ?></td>
+                                            <td class="text-end text-success fw-medium">-₹<?php echo number_format($discount, 2); ?></td>
+                                            <td class="text-end text-secondary">
+                                                ₹<?php echo number_format($gst, 2); ?> <small class="text-muted">(<?php echo $row['gst_percent']; ?>%)</small>
+                                            </td>
+                                            <td class="text-end fw-bold">₹<?php echo number_format($line_total, 2); ?></td>
                                         </tr>
                                     <?php endwhile; ?>
                                 <?php else: ?>
