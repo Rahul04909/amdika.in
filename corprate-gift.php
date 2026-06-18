@@ -261,7 +261,7 @@ include 'includes/header.php';
             <div class="row align-items-center g-5">
                 <!-- Left: Hero Text -->
                 <div class="col-lg-7">
-                    <span class="d-inline-flex align-items-center gap-2 bg-gold-accent bg-opacity-10 text-luxGold text-[10px] font-bold tracking-[0.25em] uppercase px-4 py-2 rounded-pill mb-4" style="background-color: rgba(200, 155, 44, 0.1);">
+                    <span class="d-inline-flex align-items-center gap-2 bg-opacity-10 text-luxGold text-[10px] font-bold tracking-[0.25em] uppercase px-4 py-2 rounded-pill mb-4" style="background-color: rgba(200, 155, 44, 0.1);">
                         <i data-lucide="award" class="w-4 h-4 text-luxGold"></i> B2B Luxury Curation
                     </span>
                     
@@ -442,7 +442,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6">
                         <div class="luxury-card">
                             <div>
-                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Handcrafted</span>
+                                <span class="badge bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Handcrafted</span>
                                 <h4 class="font-serif fw-bold text-dark mb-2">Organiser Cups</h4>
                                 <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Structured cylindrical leather containers featuring rigid wall plates and velvet protective inner dividers.</p>
                             </div>
@@ -472,7 +472,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6">
                         <div class="luxury-card">
                             <div>
-                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Premium Tech</span>
+                                <span class="badge bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Premium Tech</span>
                                 <h4 class="font-serif fw-bold text-dark mb-2">Laptop Satchels</h4>
                                 <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Full-grain leather satchels featuring padded compartments, brass fittings, and detachable shoulder straps.</p>
                             </div>
@@ -515,7 +515,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6">
                         <div class="luxury-card">
                             <div>
-                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Executive Case</span>
+                                <span class="badge bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Executive Case</span>
                                 <h4 class="font-serif fw-bold text-dark mb-2">Single Watch Rolls</h4>
                                 <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Watch storage roll designed with rigid safety walls, sliding watch dividers, and microfiber inner velvet.</p>
                             </div>
@@ -558,7 +558,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6">
                         <div class="luxury-card">
                             <div>
-                                <span class="badge bg-gold-accent bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Refillable</span>
+                                <span class="badge bg-opacity-10 text-luxGold text-[8px] font-bold uppercase px-3 py-1 rounded-pill mb-3" style="background-color: rgba(200, 155, 44, 0.1);">Refillable</span>
                                 <h4 class="font-serif fw-bold text-dark mb-2">Notebook Sleeves</h4>
                                 <p class="text-muted leading-relaxed mb-4" style="font-size: 13px; font-weight: 300;">Refillable A5 journals debossed with hot-stamped gold foil monograms or clean standard blind impressions.</p>
                             </div>
