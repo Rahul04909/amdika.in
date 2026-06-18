@@ -65,9 +65,9 @@ include 'includes/header.php';
         letter-spacing: 0.05em;
     }
     .showcase-tab.active, .showcase-tab:hover {
-        background: #111827;
+        background: #C89B2C;
         color: #ffffff;
-        border-color: #111827;
+        border-color: #C89B2C;
     }
 
     /* Timeline */
@@ -154,12 +154,16 @@ include 'includes/header.php';
     .luxury-input::placeholder {
         color: #6B7280;
     }
+    select.luxury-input option {
+        background-color: #111827 !important;
+        color: #ffffff !important;
+    }
     
     /* Occasions badges */
     .occasion-badge {
-        background: #ffffff;
-        border: 1px solid #E5E7EB;
-        color: #4B5563;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #374151;
+        color: #F3F4F6;
         font-size: 12px;
         font-weight: 600;
         padding: 8px 20px;
@@ -169,8 +173,77 @@ include 'includes/header.php';
     }
     .occasion-badge:hover {
         border-color: #C89B2C;
-        color: #C89B2C;
-        background-color: rgba(200, 155, 44, 0.02);
+        color: #111827;
+        background-color: #C89B2C;
+    }
+
+    /* Visibility and Contrast Adjustments */
+    .b2b-bg .text-muted {
+        color: #4B5563 !important; /* Premium dark neutral gray for optimal readability on off-white */
+    }
+    
+    .bg-dark-slate .text-muted,
+    #enquiry .text-muted {
+        color: #9CA3AF !important; /* Premium light gray for high visibility on dark backgrounds */
+    }
+    
+    .bg-dark-slate .text-secondary,
+    #enquiry .text-secondary {
+        color: #D1D5DB !important; /* Premium soft gray for high visibility labels on dark backgrounds */
+    }
+    
+    /* Luxury Form Inputs */
+    .luxury-input {
+        background: rgba(255, 255, 255, 0.07) !important;
+        border: 1px solid #4B5563 !important;
+        color: #ffffff !important;
+    }
+    
+    .luxury-input:focus {
+        border-color: #C89B2C !important;
+        box-shadow: 0 0 0 3px rgba(200, 155, 44, 0.25) !important;
+    }
+    
+    /* Interactive Button Transitions */
+    .btn-luxury-dark {
+        background-color: #111827 !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        border: 1px solid #111827 !important;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-luxury-dark:hover {
+        background-color: #C89B2C !important;
+        color: #ffffff !important;
+        border-color: #C89B2C !important;
+        box-shadow: 0 10px 20px rgba(200, 155, 44, 0.2);
+    }
+    
+    .btn-luxury-outline {
+        background-color: transparent !important;
+        border: 1px solid #111827 !important;
+        color: #111827 !important;
+        font-weight: 700;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-luxury-outline:hover {
+        background-color: #111827 !important;
+        color: #ffffff !important;
+        box-shadow: 0 10px 20px rgba(17, 24, 39, 0.1);
+    }
+    
+    .btn-luxury-submit {
+        background-color: #C89B2C !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        border: 1px solid #C89B2C !important;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-luxury-submit:hover {
+        background-color: transparent !important;
+        color: #C89B2C !important;
+        border-color: #C89B2C !important;
+        box-shadow: 0 10px 20px rgba(200, 155, 44, 0.2);
     }
 </style>
 
@@ -196,10 +269,10 @@ include 'includes/header.php';
                     </p>
                     
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="#calculator" class="btn bg-dark-slate hover:bg-gold-accent text-white px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all shadow text-decoration-none" style="background: #111827;">
+                        <a href="#calculator" class="btn btn-luxury-dark px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all shadow text-decoration-none">
                             Estimate Budget <i class="fa-solid fa-calculator ms-1"></i>
                         </a>
-                        <a href="#enquiry" class="btn border border-dark-slate hover:bg-dark-slate hover:text-white px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all text-decoration-none" style="color: #111827; border-color: #111827;">
+                        <a href="#enquiry" class="btn btn-luxury-outline px-4 py-3 rounded-3 text-[11px] font-bold tracking-widest uppercase transition-all text-decoration-none">
                             Request Catalogue
                         </a>
                     </div>
@@ -307,7 +380,7 @@ include 'includes/header.php';
                         </div>
 
                         <div class="position-relative z-2 mt-5">
-                            <button onclick="lockEstimateAndScroll()" class="btn bg-gold-accent hover:bg-white w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase text-white shadow border-0" style="background-color: #C89B2C;">
+                            <button onclick="lockEstimateAndScroll()" class="btn btn-luxury-submit w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase shadow border-0">
                                 Lock in Estimate & Inquire <i class="fa-solid fa-arrow-down ms-1"></i>
                             </button>
                         </div>
@@ -534,7 +607,7 @@ include 'includes/header.php';
                     <div class="timeline-node">01</div>
                     <div class="bg-light border border-light p-4 rounded-4 shadow-sm flex-grow-1" style="border-radius: 16px;">
                         <h4 class="font-serif fw-bold text-dark mb-1" style="font-size: 15px;">Creative Briefing</h4>
-                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">Submit your initial targets. Our accounts consultant clarifies layout patterns, target monogramming logos, and bulk limits within 24 hours.</p>
+                        <p class="text-muted mb-0" style="font-size: 12px; font-weight: 300;">Submit your initial B2B targets. Our accounts consultant clarifies layout patterns, target monogramming logos, and bulk limits within 24 hours.</p>
                     </div>
                 </div>
 
@@ -575,13 +648,13 @@ include 'includes/header.php';
             <h3 class="font-serif fw-bold text-white mb-4">Gifting curations for every milestone event.</h3>
             
             <div class="d-flex flex-wrap gap-2 justify-content-center max-w-4xl mx-auto">
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Diwali Gifts</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Employee Onboarding Welcomes</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Key Client Tokens</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Milestone Celebrations</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Board Member Recognitions</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">New Year & Festivals</span>
-                <span class="occasion-badge text-white bg-dark border-secondary border-opacity-25">Bespoke Monograms</span>
+                <span class="occasion-badge">Diwali Gifts</span>
+                <span class="occasion-badge">Employee Onboarding Welcomes</span>
+                <span class="occasion-badge">Key Client Tokens</span>
+                <span class="occasion-badge">Milestone Celebrations</span>
+                <span class="occasion-badge">Board Member Recognitions</span>
+                <span class="occasion-badge">New Year & Festivals</span>
+                <span class="occasion-badge">Bespoke Monograms</span>
             </div>
         </div>
     </section>
@@ -597,7 +670,7 @@ include 'includes/header.php';
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-column justify-content-between h-100" style="border-radius: 16px;">
                         <div>
                             <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
                             <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"Amadika elevated our Diwali gifting campaign. Several key clients reached out to personally praise the premium leather quality — a response we hadn't seen in years."</p>
@@ -611,7 +684,7 @@ include 'includes/header.php';
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-column justify-content-between h-100" style="border-radius: 16px;">
                         <div>
                             <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
                             <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"We customized 150 desk set pairings for our board and senior leadership. The debossing, packaging details, and logistics were handled impeccably."</p>
@@ -625,7 +698,7 @@ include 'includes/header.php';
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="bg-light border rounded-4 p-4 d-flex flex-col justify-content-between h-100" style="border-radius: 16px;">
+                    <div class="bg-light border rounded-4 p-4 d-flex flex-column justify-content-between h-100" style="border-radius: 16px;">
                         <div>
                             <span class="font-serif display-4 text-luxGold text-opacity-25 d-block mb-2" style="color: rgba(200,155,44,0.15); line-height: 0.5;">“</span>
                             <p class="font-serif italic text-muted leading-relaxed mb-4" style="font-size: 13px;">"Their corporate desk team was outstanding. The product suggestions were highly tailored, and alignment was fast. Truly professional from start to delivery."</p>
@@ -646,71 +719,95 @@ include 'includes/header.php';
     <section class="py-5 bg-dark-slate text-white position-relative overflow-hidden" id="enquiry" style="background-color: #111827;">
         <div class="position-absolute bg-gold-accent opacity-10 w-100 h-100 top-0 start-0" style="background: radial-gradient(circle at center, rgba(200, 155, 44, 0.2) 0%, transparent 60%); pointer-events: none;"></div>
         
-        <div class="container max-w-4xl mx-auto px-4 position-relative z-2">
+        <div class="container max-w-7xl mx-auto px-4 position-relative z-2">
             <div class="text-center mb-5">
                 <span class="text-[10px] font-bold tracking-[0.3em] text-luxGold uppercase d-block mb-2">B2B QUOTE REQUEST</span>
                 <h2 class="font-serif fw-bold">Request a Proposal</h2>
-                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px;"></div>
+                <div class="w-12 h-[2px] bg-gold-accent mx-auto" style="width: 50px; height: 2px; background-color: #C89B2C;"></div>
             </div>
 
-            <div class="card border-0 rounded-4 p-4 p-md-5 bg-opacity-50" style="background: rgba(31, 41, 55, 0.4); border: 1px solid rgba(255, 255, 255, 0.05) !important; border-radius: 24px;">
-                <form onsubmit="handleCorporateSubmit(event)" class="row g-4">
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Your Name</label>
-                        <input type="text" id="name" placeholder="Anurag Singh" required class="luxury-input">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Company Name</label>
-                        <input type="text" id="company" placeholder="Your Organisation" required class="luxury-input">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Email Address</label>
-                        <input type="email" id="email" placeholder="you@company.com" required class="luxury-input">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Phone Number</label>
-                        <input type="tel" id="phone" placeholder="+91 98765 43210" class="luxury-input">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Quantity Range</label>
-                        <div class="position-relative">
-                            <select id="quantity" class="luxury-input appearance-none cursor-pointer">
-                                <option value="" disabled selected>Select range</option>
-                                <option>25 – 50 items</option>
-                                <option>51 – 100 items</option>
-                                <option>101 – 250 items</option>
-                                <option>251 – 500 items</option>
-                                <option>500+ items</option>
-                            </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
+            <div class="row align-items-stretch g-5">
+                <!-- Left Side: Image Showcase -->
+                <div class="col-lg-5 col-12 mb-4 mb-lg-0">
+                    <div class="h-100 rounded-4 overflow-hidden position-relative border border-secondary border-opacity-25" style="border-radius: 24px; min-height: 380px;">
+                        <!-- Absolute background overlay -->
+                        <div class="position-absolute w-100 h-100" style="background: linear-gradient(180deg, rgba(17,24,39,0.1) 0%, rgba(17,24,39,0.8) 100%); z-index: 2;"></div>
+                        <!-- Photorealistic showcase image -->
+                        <img src="<?php echo $link_prefix; ?>assets/images/corporate_gift_set.png" 
+                             alt="Luxury Gifting Proposals" 
+                             class="w-100 h-100 object-fit-cover position-absolute" style="z-index: 1;">
+                        
+                        <!-- Floating caption inside the image -->
+                        <div class="position-absolute bottom-0 start-0 p-5 text-white z-3">
+                            <span class="text-luxGold text-[10px] font-bold tracking-[0.2em] uppercase d-block mb-2">Tailored Elegance</span>
+                            <h3 class="font-serif fw-bold text-white mb-2">Amadika Signature</h3>
+                            <p class="text-muted text-xs leading-relaxed mb-0">Every gift curated and monogrammed to perfection. Request our corporate catalog containing 100+ exclusive leather selections.</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Occasion</label>
-                        <div class="position-relative">
-                            <select id="occasion" class="luxury-input appearance-none cursor-pointer">
-                                <option value="" disabled selected>Select occasion</option>
-                                <option>Diwali Gifting</option>
-                                <option>Employee Recognition</option>
-                                <option>Client Appreciation</option>
-                                <option>New Year & Festivals</option>
-                                <option>Corporate Milestones</option>
-                                <option>Other</option>
-                            </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
-                        </div>
+                </div>
+
+                <!-- Right Side: Proposal Form -->
+                <div class="col-lg-7 col-12">
+                    <div class="card border-0 rounded-4 p-4 p-md-5 bg-opacity-50 h-100" style="background: rgba(31, 41, 55, 0.4); border: 1px solid rgba(255, 255, 255, 0.05) !important; border-radius: 24px;">
+                        <form onsubmit="handleCorporateSubmit(event)" class="row g-4">
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Your Name</label>
+                                <input type="text" id="name" placeholder="Anurag Singh" required class="luxury-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Company Name</label>
+                                <input type="text" id="company" placeholder="Your Organisation" required class="luxury-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Email Address</label>
+                                <input type="email" id="email" placeholder="you@company.com" required class="luxury-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="+91 98765 43210" class="luxury-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Quantity Range</label>
+                                <div class="position-relative">
+                                    <select id="quantity" class="luxury-input appearance-none cursor-pointer">
+                                        <option value="" disabled selected>Select range</option>
+                                        <option>25 – 50 items</option>
+                                        <option>51 – 100 items</option>
+                                        <option>101 – 250 items</option>
+                                        <option>251 – 500 items</option>
+                                        <option>500+ items</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Occasion</label>
+                                <div class="position-relative">
+                                    <select id="occasion" class="luxury-input appearance-none cursor-pointer">
+                                        <option value="" disabled selected>Select occasion</option>
+                                        <option>Diwali Gifting</option>
+                                        <option>Employee Recognition</option>
+                                        <option>Client Appreciation</option>
+                                        <option>New Year & Festivals</option>
+                                        <option>Corporate Milestones</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-muted position-absolute end-0 top-50 translate-middle-y me-3 pointer-events-none"></i>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Additional details</label>
+                                <textarea id="message" placeholder="Provide any budget targets, preferred colors, logo monogram details, or custom packaging preferences..." class="luxury-input" style="min-height: 120px; resize: vertical;"></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-luxury-submit w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase border-0">
+                                    Submit Quote Inquiry
+                                </button>
+                            </div>
+                        </form>
+                        <p class="text-[10px] text-center text-muted mt-4 mb-0 tracking-wide uppercase">Our corporate relationships team will get back to you within 24 hours.</p>
                     </div>
-                    <div class="col-12">
-                        <label class="text-[10px] fw-bold text-secondary uppercase tracking-wider mb-2 d-block">Additional details</label>
-                        <textarea id="message" placeholder="Provide any budget targets, preferred colors, logo monogram details, or custom packaging preferences..." class="luxury-input" style="min-height: 120px; resize: vertical;"></textarea>
-                    </div>
-                    <div class="col-12 mt-4">
-                        <button type="submit" class="btn bg-gold-accent hover:bg-white text-white w-100 py-3 rounded-3 text-[10px] font-bold tracking-widest uppercase border-0" style="background-color: #C89B2C;">
-                            Submit Quote Inquiry
-                        </button>
-                    </div>
-                </form>
-                <p class="text-[10px] text-center text-muted mt-4 mb-0 tracking-wide uppercase">Our corporate relationships team will get back to you within 24 hours.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -727,14 +824,17 @@ include 'includes/header.php';
         
         // Reset classes
         document.querySelectorAll('[id^="tier-"]').forEach(btn => {
-            btn.classList.remove('border-gold-accent', 'bg-gold-accent', 'bg-opacity-10', 'text-luxGold');
+            btn.classList.remove('border-gold-accent', 'text-luxGold');
             btn.classList.add('bg-light');
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
         });
         
         // Set active style
         const activeBtn = document.getElementById(`tier-${tier}`);
         activeBtn.classList.remove('bg-light');
-        activeBtn.classList.add('border-gold-accent', 'text-luxGold');
+        activeBtn.classList.add('border-gold-accent');
+        activeBtn.style.color = '#C89B2C';
         activeBtn.style.backgroundColor = 'rgba(200, 155, 44, 0.05)';
         
         updateB2BEstimate();
@@ -858,6 +958,10 @@ include 'includes/header.php';
 
     document.addEventListener('DOMContentLoaded', () => {
         selectTier('classic', 1499);
+        // Force-trigger Lucide icon generation inside late-loaded page content template
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     });
 </script>
 

@@ -318,3 +318,14 @@ a {
     font-size: 12px;
     color: #ccc;
 }
+
+/* Custom Global Utility Styles for Premium B2B and headers */
+.text-luxGold {
+    color: #C89B2C !important;
+}
+.bg-luxGold {
+    background-color: #C89B2C !important;
+}
+.border-luxGold {
+    border-color: #C89B2C !important;
+}
