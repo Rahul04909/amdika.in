@@ -941,26 +941,84 @@ include 'includes/header.php';
     function handleCorporateSubmit(e) {
         e.preventDefault();
         
+        const form = e.target;
         const name = document.getElementById('name').value;
         const company = document.getElementById('company').value;
         const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const quantity = document.getElementById('quantity').value;
+        const occasion = document.getElementById('occasion').value;
+        const message = document.getElementById('message').value;
 
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Enquiry Received',
-                text: `Thank you, ${name}. Our Corporate Gifting Advisor will connect with you at ${email} shortly to discuss options for ${company}.`,
-                confirmButtonColor: '#C89B2C',
-                customClass: {
-                    popup: 'rounded-4 border shadow-lg',
-                    confirmButton: 'btn bg-gold-accent hover:bg-white text-white px-4 py-2.5 text-xs font-bold uppercase rounded-3'
+        // Show loading spinner on submit button
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const origBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Submitting...';
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('company', company);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('quantity', quantity);
+        formData.append('occasion', occasion);
+        formData.append('message', message);
+
+        fetch('api/save-proposal.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = origBtnText;
+
+            if (data.status === 'success') {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Enquiry Received',
+                        text: data.message,
+                        confirmButtonColor: '#C89B2C',
+                        customClass: {
+                            popup: 'rounded-4 border shadow-lg',
+                            confirmButton: 'btn bg-gold-accent hover:bg-white text-white px-4 py-2.5 text-xs font-bold uppercase rounded-3'
+                        }
+                    });
+                } else {
+                    alert(data.message);
                 }
-            });
-        } else {
-            alert(`Thank you, ${name}. We have received your B2B enquiry for ${company} and will get back to you shortly.`);
-        }
-
-        e.target.reset();
+                form.reset();
+            } else {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Submission Failed',
+                        text: data.message || 'An error occurred. Please try again.',
+                        confirmButtonColor: '#C89B2C'
+                    });
+                } else {
+                    alert(data.message || 'Submission failed.');
+                }
+            }
+        })
+        .catch(err => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = origBtnText;
+            console.error('Submission error:', err);
+            
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Error',
+                    text: 'Unable to connect to the server. Please check your connection and try again.',
+                    confirmButtonColor: '#C89B2C'
+                });
+            } else {
+                alert('Connection error. Please try again.');
+            }
+        });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
