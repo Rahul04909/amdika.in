@@ -112,7 +112,7 @@ if(!empty($coupon_code)) {
     }
 }
 
-$final_amount = ($total_price + $total_gst + $delivery_charge) - $discount_amount;
+$final_amount = round(($total_price + $total_gst + $delivery_charge) - $discount_amount);
 
 // 4. Save Order
 $order_no = 'AMDK-' . date('ymd') . '-' . rand(100, 999);

@@ -51,7 +51,7 @@ if ($session_id) {
         }
         
         $delivery_charge = ($total_price > 500) ? 0 : 60; // Free delivery over 500
-        $final_payable = $total_price + $total_gst + $delivery_charge;
+        $final_payable = round($total_price + $total_gst + $delivery_charge);
     }
     $total_discount = $total_mrp - $total_price;
 }

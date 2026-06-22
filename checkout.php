@@ -363,7 +363,7 @@ function applyCoupon() {
             msgDiv.innerHTML = `<span class="text-success">Coupon Applied! You saved ₹${data.discount}</span>`;
             
             // Recalculate Total
-            let newTotal = currentTotal - data.discount;
+            let newTotal = Math.round(currentTotal - data.discount);
             // Update UI
             document.getElementById('finalAmount').innerText = '₹' + newTotal.toLocaleString('en-IN');
             document.getElementById('payBtnAmount').innerText = newTotal.toLocaleString('en-IN');
@@ -396,8 +396,8 @@ document.getElementById('rzp-button1').onclick = function(e){
         return;
     }
     
-    // Calculate Final Amount in Paisa
-    let finalAmt = (currentTotal - discountDetails.amount) * 100;
+    // Calculate Final Amount in Paisa (Ensure strict integer rounding to prevent float precision issues and UPI decimal discrepancies)
+    let finalAmt = Math.round(currentTotal - discountDetails.amount) * 100;
     
     // Prepare User Data from Form
     const addressData = new FormData(form);
