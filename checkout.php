@@ -48,7 +48,7 @@ while($row = $result->fetch_assoc()) {
     $total_gst += $gst_amount;
 }
 $delivery_charge = ($total_price > 500) ? 0 : 60;
-$grand_total = $total_price + $total_gst + $delivery_charge;
+$grand_total = round($total_price + $total_gst + $delivery_charge);
 
 // Fetch Razorpay Key
 $rzp_settings = $conn->query("SELECT key_id FROM razorpay_settings WHERE status='active' LIMIT 1")->fetch_assoc();
