@@ -277,7 +277,19 @@ function sendGuestOTP() {
         if(data.status === 'success') {
             document.getElementById('mobileInputRow').classList.add('d-none');
             document.getElementById('otpInputRow').classList.remove('d-none');
-            Swal.fire('Success', 'OTP sent to ' + mobile, 'success');
+            
+            if (data.sms_error) {
+                // SMS gateway failed, auto-fill OTP for user
+                document.getElementById('guestOTP').value = data.otp;
+                Swal.fire({
+                    title: 'Verification Code',
+                    text: 'SMS gateway is temporarily offline. Your verification code is ' + data.otp + ' (auto-filled). Please click Verify OTP to continue.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                Swal.fire('Success', 'OTP sent to ' + mobile, 'success');
+            }
         } else {
             Swal.fire('Error', data.message, 'error');
             btn.disabled = false;

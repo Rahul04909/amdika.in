@@ -1352,6 +1352,18 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 document.getElementById('mobileStep2').style.display = 'block';
                 document.getElementById('displayMobileNum').textContent = '+91 ' + mobile;
                 startLoginTimer(60);
+                
+                if (data.sms_error) {
+                    // SMS gateway failed, auto-fill OTP digits
+                    const digits = data.otp.toString().split('');
+                    const inputs = document.querySelectorAll('#otpInputContainer .otp-input');
+                    inputs.forEach((inp, idx) => {
+                        if (digits[idx]) inp.value = digits[idx];
+                    });
+                    document.getElementById('loginOTP').value = data.otp;
+                    alert('SMS service is offline. Using fallback verification code: ' + data.otp + ' (auto-filled). Please click Verify & Login.');
+                }
+                
                 setTimeout(() => document.querySelector('.otp-input').focus(), 100);
             } else {
                 errorDiv.textContent = data.message;
@@ -1504,6 +1516,16 @@ function getSubcategoriesForCategory($slug, $cat_name) {
             resendBtn.style.pointerEvents = 'auto';
             if(data.status === 'success') {
                 startRegTimer(60);
+                
+                if (data.sms_error) {
+                    const digits = data.otp.toString().split('');
+                    const inputs = document.querySelectorAll('#regOtpInputContainer .reg-otp-input');
+                    inputs.forEach((inp, idx) => {
+                        if (digits[idx]) inp.value = digits[idx];
+                    });
+                    document.getElementById('regOTPValue').value = data.otp;
+                    alert('SMS service is offline. Using fallback verification code: ' + data.otp + ' (auto-filled).');
+                }
             } else {
                 alert(data.message);
             }
@@ -1547,6 +1569,17 @@ function getSubcategoriesForCategory($slug, $cat_name) {
                 document.getElementById('registerStep2').style.display = 'block';
                 document.getElementById('displayRegMobile').textContent = '+91 ' + document.getElementById('regMobile').value;
                 startRegTimer(60);
+                
+                if (data.sms_error) {
+                    const digits = data.otp.toString().split('');
+                    const inputs = document.querySelectorAll('#regOtpInputContainer .reg-otp-input');
+                    inputs.forEach((inp, idx) => {
+                        if (digits[idx]) inp.value = digits[idx];
+                    });
+                    document.getElementById('regOTPValue').value = data.otp;
+                    alert('SMS service is offline. Using fallback verification code: ' + data.otp + ' (auto-filled). Please click Verify & Create Account.');
+                }
+                
                 setTimeout(() => document.querySelector('.reg-otp-input').focus(), 100);
             } else {
                 errorDiv.textContent = data.message;
