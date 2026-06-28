@@ -232,6 +232,8 @@ body { background-color: #f8f9fb; }
 @media (max-width: 991px) {
     .shop-sidebar { display: none; }
     .sp-img-box { height: 140px; }
+    /* Hide header's sticky bottom nav on products page to prevent overlap */
+    #mobileBottomNav { display: none !important; }
 }
 </style>
 
@@ -381,9 +383,44 @@ body { background-color: #f8f9fb; }
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function addToCart(pid) {
-        Swal.fire({ toast: true, position: 'bottom-end', icon: 'success', title: 'Added to cart', showConfirmButton: false, timer: 1500 });
+        fetch('<?php echo $link_prefix; ?>includes/cart_actions.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=add&product_id=' + pid + '&quantity=1'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({ toast: true, position: 'bottom-end', icon: 'success', title: 'Added to cart', showConfirmButton: false, timer: 1500 });
+                if (typeof updateCartCount === 'function') updateCartCount();
+                if (typeof openCartSidebar === 'function') openCartSidebar();
+            } else {
+                Swal.fire({ icon: 'error', title: 'Error', text: data.message || 'Failed to add to cart' });
+            }
+        })
+        .catch(err => {
+            Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong' });
+        });
     }
-    function buyNow(pid) { window.location.href = 'cart.php'; }
+
+    function buyNow(pid) {
+        fetch('<?php echo $link_prefix; ?>includes/cart_actions.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=add&product_id=' + pid + '&quantity=1'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = '<?php echo $link_prefix; ?>cart.php';
+            } else {
+                Swal.fire({ icon: 'error', title: 'Error', text: data.message || 'Failed to process' });
+            }
+        })
+        .catch(err => {
+            Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong' });
+        });
+    }
 </script>
 
 <?php include 'includes/footer.php'; ?>
