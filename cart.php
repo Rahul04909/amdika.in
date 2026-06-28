@@ -114,6 +114,8 @@ if ($session_id) {
     @media (max-width: 991px) {
         .place-order-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; }
         .cart-container { padding-bottom: 80px; }
+        /* Hide header's sticky bottom nav on cart page to prevent overlap */
+        #mobileBottomNav { display: none !important; }
     }
     @media (max-width: 768px) {
         .item-details { margin-left: 0; margin-top: 10px; clear: both; }
