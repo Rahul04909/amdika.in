@@ -862,7 +862,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
 </div>
 
 <!-- STICKY BOTTOM ACTIONS FOR MOBILE -->
-<div class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-150 h-14 flex items-center justify-around z-[1000] md:hidden shadow-lg">
+<div id="mobileBottomNav" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-150 h-14 flex items-center justify-around z-[1000] md:hidden shadow-lg">
     <a href="<?php echo $link_prefix; ?>index.php" class="flex flex-col items-center gap-0.5 text-gray-400 hover:text-luxGold text-decoration-none transition-colors duration-200">
         <i data-lucide="home" class="w-5 h-5"></i>
         <span class="text-[10px] font-bold">Home</span>

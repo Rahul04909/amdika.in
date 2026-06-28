@@ -386,6 +386,11 @@ $disc = $product['discount_percent'];
             color: #fff;
             border: none;
         }
+
+        /* Hide header's sticky bottom nav on product page to prevent overlap with Buy Now / Add to Cart */
+        #mobileBottomNav {
+            display: none !important;
+        }
     }
 
     /* Social Share */
