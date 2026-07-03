@@ -124,15 +124,18 @@ $recent_res = $conn->query($recent_sql);
         }
 
         .kpi-value-solid {
-            font-size: 2rem;
+            font-size: 1.45rem;
             font-weight: 700;
             line-height: 1;
             margin-bottom: 5px;
             display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .kpi-label-solid {
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             font-weight: 500;
             opacity: 0.9;
         }
