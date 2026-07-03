@@ -28,6 +28,9 @@ if (!isset($conn)) {
     require_once __DIR__ . '/../database/db_config.php';
 }
 
+// Track visitor activity
+require_once __DIR__ . '/visitor_tracker.php';
+
 // Fetch categories for Middle Search Dropdown & Mega Menu
 $h_categories = [];
 if (isset($conn)) {

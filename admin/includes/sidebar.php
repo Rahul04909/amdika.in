@@ -428,6 +428,14 @@ $is_proposals_group = (strpos($_SERVER['REQUEST_URI'], '/admin/proposals/') !== 
             </div>
         </div>
 
+        <!-- Visitor Logs -->
+        <div class="sb-item" data-tooltip="Visitor Logs">
+            <a href="<?php echo $base_path; ?>admin/visitor-logs.php" class="sb-link <?php echo ($current_page == 'visitor-logs.php') ? 'active' : ''; ?>">
+                <i class="fas fa-chart-line sb-icon"></i>
+                <span class="sb-text">Visitor Logs</span>
+            </a>
+        </div>
+
         <div class="sb-label mt-3">System</div>
 
         <!-- Settings Submenu -->
