@@ -69,7 +69,7 @@ while (count($cb_cats) < 6) {
 
 /* Outer container */
 .cb-grid-container {
-    max-width: 1360px;
+    max-width: 1200px;          /* narrower container for portrait cards */
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -78,14 +78,14 @@ while (count($cb_cats) < 6) {
 .cb-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 14px;
+    margin-bottom: 14px;
 }
 .cb-row:last-child {
     margin-bottom: 0;
 }
 
-/* Individual card */
+/* Individual card — portrait (taller than wide) */
 .cb-card {
     position: relative;
     display: block;
@@ -93,7 +93,7 @@ while (count($cb_cats) < 6) {
     border-radius: 4px;
     text-decoration: none !important;
     cursor: pointer;
-    aspect-ratio: 4 / 3;        /* consistent card ratio */
+    aspect-ratio: 3 / 4;        /* portrait ratio — taller, narrower */
     background: #2a2118;        /* dark fallback */
 }
 
@@ -194,13 +194,13 @@ while (count($cb_cats) < 6) {
 @media (max-width: 991px) {
     .cb-row {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        gap: 10px;
     }
     .cb-row:last-child {
-        grid-template-columns: repeat(2, 1fr); /* keep even on tablet */
+        grid-template-columns: repeat(2, 1fr);
     }
     .cb-section {
-        padding: 40px 0 48px;
+        padding: 36px 0 44px;
     }
 }
 
@@ -213,7 +213,7 @@ while (count($cb_cats) < 6) {
         grid-template-columns: 1fr 1fr;
     }
     .cb-card__body {
-        padding: 16px 14px 18px;
+        padding: 14px 12px 16px;
     }
     .cb-card__title {
         font-size: 10px;
@@ -226,7 +226,7 @@ while (count($cb_cats) < 6) {
         letter-spacing: 1.5px;
     }
     .cb-section {
-        padding: 30px 0 36px;
+        padding: 28px 0 34px;
     }
     .cb-grid-container {
         padding: 0 10px;
@@ -250,7 +250,7 @@ while (count($cb_cats) < 6) {
                 if ($cat):
                     $cat_name  = htmlspecialchars($cat['name']);
                     $cat_slug  = htmlspecialchars($cat['slug']);
-                    $img_src   = get_resized_image($cat['image'], 800, 600, 'cover');
+                    $img_src   = 'https://www.nappadori.com/cdn/shop/products/steamer-green-large-1_1_600x.jpg?v=1767690338';
                     $href      = $link_prefix . 'products.php?category=' . $cat_slug;
                 ?>
                 <a href="<?php echo $href; ?>" class="cb-card" aria-label="Shop <?php echo $cat_name; ?>">
@@ -284,7 +284,7 @@ while (count($cb_cats) < 6) {
                 if ($cat):
                     $cat_name  = htmlspecialchars($cat['name']);
                     $cat_slug  = htmlspecialchars($cat['slug']);
-                    $img_src   = get_resized_image($cat['image'], 800, 600, 'cover');
+                    $img_src   = 'https://www.nappadori.com/cdn/shop/products/steamer-green-large-1_1_600x.jpg?v=1767690338';
                     $href      = $link_prefix . 'products.php?category=' . $cat_slug;
                 ?>
                 <a href="<?php echo $href; ?>" class="cb-card" aria-label="Shop <?php echo $cat_name; ?>">
