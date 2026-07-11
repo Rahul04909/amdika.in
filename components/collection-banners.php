@@ -36,7 +36,7 @@ while (count($cb_cats) < 6) {
    Collection Banners — 2-Row Grid
    ========================================================= */
 .cb-section {
-    background: #f8f6f2;
+    background: #ffffff;
     padding: 56px 0 64px;
 }
 
@@ -144,16 +144,20 @@ while (count($cb_cats) < 6) {
 }
 
 .cb-card__title {
-    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;          /* max 3 lines before truncating */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(13px, 1.5vw, 16px);
+    font-size: clamp(12px, 1.3vw, 15px);
     font-weight: 700;
-    letter-spacing: 3.5px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: #ffffff;
-    margin-bottom: 16px;
-    line-height: 1;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    margin-bottom: 14px;
+    line-height: 1.4;               /* comfortable leading for wrapped text */
+    word-break: break-word;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 
 /* "View Collection" pill button */
