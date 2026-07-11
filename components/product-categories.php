@@ -1,261 +1,281 @@
-<!-- Import Elegant Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap"
-    rel="stylesheet">
-
 <style>
-    /* --- Modern Product Categories (Professional Bubbles) --- */
-    .category-section-wrapper {
-        background-color: #fff;
-        padding: 50px 0;
-        overflow: hidden;
+/* =============================================================
+   Shop By Category — Circular Bubbles (Reference-Match Build)
+   ============================================================= */
+
+.sbc-section {
+    background-color: #ffffff;
+    padding: 52px 0 56px;
+}
+
+/* ── Heading ─────────────────────────────────────────────── */
+.sbc-heading {
+    text-align: center;
+    margin-bottom: 42px;
+}
+.sbc-heading h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 400;           /* thin/light weight */
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #3a2e1e;
+    margin: 0;
+    line-height: 1;
+}
+
+/* ── Slider track ────────────────────────────────────────── */
+.sbc-track-wrap {
+    position: relative;
+    overflow: hidden;           /* hide scrollbar visually */
+}
+
+.sbc-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;                     /* items manage their own spacing */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 60px 12px;    /* side padding so first/last items aren't clipped */
+}
+.sbc-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Individual bubble item ──────────────────────────────── */
+.sbc-item {
+    flex: 0 0 auto;
+    width: 118px;               /* controls spacing between items */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.sbc-item:hover {
+    transform: translateY(-4px);
+}
+
+/* ── Circle image wrapper ────────────────────────────────── */
+.sbc-circle {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e8e4de;        /* neutral fallback */
+    flex-shrink: 0;
+    margin-bottom: 14px;
+    position: relative;
+    /* No border, no box-shadow — exactly like reference */
+}
+
+.sbc-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+    display: block;
+}
+.sbc-item:hover .sbc-circle img {
+    transform: scale(1.1);
+}
+
+/* ── Label ───────────────────────────────────────────────── */
+.sbc-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #3a2e1e;
+    text-align: center;
+    line-height: 1.4;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+}
+
+/* First item label gets the accent highlight (like "NEW ARRIVAL" in ref) */
+.sbc-item:first-child .sbc-label,
+.sbc-item.sbc-accent .sbc-label {
+    color: #C89B2C;             /* brand gold accent */
+}
+
+/* Hover: all labels go accent gold */
+.sbc-item:hover .sbc-label {
+    color: #C89B2C;
+}
+
+/* ── Arrow nav buttons ───────────────────────────────────── */
+.sbc-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background: #ffffff;
+    border: 1px solid #e5e0d8;
+    border-radius: 50%;
+    display: none;              /* shown on hover of wrapper */
+    align-items: center;
+    justify-content: center;
+    color: #3a2e1e;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    line-height: 1;
+}
+.sbc-nav-btn:hover {
+    background: #C89B2C;
+    border-color: #C89B2C;
+    color: #fff;
+}
+.sbc-nav-prev { left: 16px; }
+.sbc-nav-next { right: 16px; }
+
+.sbc-track-wrap:hover .sbc-nav-btn {
+    display: flex;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (min-width: 1200px) {
+    .sbc-circle {
+        width: 100px;
+        height: 100px;
     }
-
-    .category-header {
-        padding: 0 20px;
-        margin-bottom: 40px;
-        text-align: center;
+    .sbc-item {
+        width: 138px;
     }
-
-    .category-header h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 32px;
-        font-weight: 700;
-        font-style: italic;
-        color: #232f3e;
-        letter-spacing: 1px;
-        margin: 0;
-        position: relative;
-        display: inline-block;
+    .sbc-label {
+        font-size: 10.5px;
+        letter-spacing: 2px;
     }
+}
 
-    .category-header h2::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 2px;
-        background-color: var(--accent-gold, #d4a017);
+@media (max-width: 768px) {
+    .sbc-section {
+        padding: 36px 0 40px;
     }
-
-    .category-slider {
-        display: flex;
-        overflow-x: auto;
-        gap: 25px;
-        padding: 10px 20px 30px 20px;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
+    .sbc-heading h2 {
+        font-size: 11px;
+        letter-spacing: 4px;
     }
-
-    .category-slider::-webkit-scrollbar {
-        display: none;
+    .sbc-heading {
+        margin-bottom: 30px;
     }
-
-    .category-bubble-item {
-        flex: 0 0 auto;
-        width: 130px;
-        text-align: center;
-        text-decoration: none !important;
-        transition: transform 0.3s ease;
+    .sbc-circle {
+        width: 72px;
+        height: 72px;
     }
-
-    .category-bubble-item:hover {
-        transform: translateY(-8px);
+    .sbc-item {
+        width: 96px;
     }
-
-    .bubble-img-container {
-        width: 110px;
-        height: 110px;
-        border-radius: 20px;
-        /* Modern Rounded Square */
-        margin: 0 auto 15px;
-        padding: 4px;
-        border: 1px solid #eee;
-        background: #fff;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    .sbc-label {
+        font-size: 9px;
+        letter-spacing: 1.2px;
     }
-
-    .category-bubble-item:hover .bubble-img-container {
-        border-color: var(--accent-gold, #d4a017);
-        box-shadow: 0 8px 20px rgba(212, 160, 23, 0.2);
+    .sbc-track {
+        padding: 6px 20px 10px;
     }
+}
 
-    .bubble-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 18px;
-        object-fit: cover;
-        transition: transform 0.5s ease;
+@media (max-width: 480px) {
+    .sbc-circle {
+        width: 62px;
+        height: 62px;
     }
-
-    .category-bubble-item:hover .bubble-img {
-        transform: scale(1.15);
+    .sbc-item {
+        width: 80px;
     }
-
-    .bubble-name {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        height: 40px;
-        transition: color 0.3s;
+    .sbc-label {
+        font-size: 8px;
+        letter-spacing: 0.8px;
     }
-
-    .category-bubble-item:hover .bubble-name {
-        color: var(--accent-gold, #d4a017);
+    .sbc-track {
+        gap: 0;
+        padding: 4px 12px 8px;
     }
-
-    /* Navigation Buttons */
-    .category-section-wrapper {
-        position: relative;
-    }
-
-    .cat-nav-btn {
-        position: absolute;
-        top: 55%;
-        transform: translateY(-50%);
-        width: 45px;
-        height: 45px;
-        background: #fff;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        color: #333;
-        transition: all 0.2s;
-    }
-
-    .cat-nav-btn:hover {
-        background: #232f3e;
-        color: #fff;
-    }
-
-    .cat-prev {
-        left: 15px;
-    }
-
-    .cat-next {
-        right: 15px;
-    }
-
-    @media (min-width: 992px) {
-        .category-section-wrapper:hover .cat-nav-btn {
-            display: flex;
-        }
-
-        .category-bubble-item {
-            width: 180px;
-            /* 5-6 items logic */
-        }
-
-        .bubble-img-container {
-            width: 160px;
-            height: 160px;
-        }
-
-        .bubble-name {
-            font-size: 16px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .category-header h2 {
-            font-size: 22px;
-        }
-
-        .category-slider {
-            gap: 15px;
-            padding: 10px 15px 20px 15px;
-        }
-
-        .category-bubble-item {
-            width: 100px;
-        }
-
-        .bubble-img-container {
-            width: 90px;
-            height: 90px;
-        }
-
-        .bubble-name {
-            font-size: 12px;
-            height: 34px;
-        }
-    }
+}
 </style>
 
-<section class="category-section-wrapper">
-    <div class="category-header">
-        <h2>Explore Top <span style="color: var(--accent-gold, #d4a017);">Categories On Amadika</span></h2>
+<section class="sbc-section">
+    <!-- Heading -->
+    <div class="sbc-heading">
+        <h2>Shop By Category</h2>
     </div>
 
-    <!-- Navigation Arrows -->
-    <button id="catPrev" class="cat-nav-btn cat-prev"><i class="fa-solid fa-chevron-left"></i></button>
-    <button id="catNext" class="cat-nav-btn cat-next"><i class="fa-solid fa-chevron-right"></i></button>
+    <!-- Slider -->
+    <div class="sbc-track-wrap">
 
-    <div id="catSlider" class="category-slider">
-        <?php
-        require_once __DIR__ . '/../database/db_config.php';
-        require_once __DIR__ . '/../includes/image_helper.php';
+        <!-- Prev Arrow -->
+        <button id="sbcPrev" class="sbc-nav-btn sbc-nav-prev" aria-label="Scroll left">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
 
-        $cat_sql = "SELECT * FROM product_categories ORDER BY created_at DESC";
-        $cat_result = $conn->query($cat_sql);
+        <div id="sbcTrack" class="sbc-track">
+            <?php
+            require_once __DIR__ . '/../database/db_config.php';
+            require_once __DIR__ . '/../includes/image_helper.php';
 
-        if ($cat_result && $cat_result->num_rows > 0) {
-            while ($cat = $cat_result->fetch_assoc()) {
-                $cat_name = htmlspecialchars($cat['name']);
-                $cat_slug = htmlspecialchars($cat['slug']);
-                $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
+            $sbc_sql    = "SELECT * FROM product_categories ORDER BY created_at ASC";
+            $sbc_result = $conn->query($sbc_sql);
+            $sbc_index  = 0;
 
-                $bubble_img = get_resized_image($img_path, 300, 300, 'cover');
-                ?>
-                <a href="products.php?category=<?php echo $cat_slug; ?>" class="category-bubble-item">
-                    <div class="bubble-img-container">
-                        <img src="<?php echo $bubble_img; ?>" alt="<?php echo $cat_name; ?>" class="bubble-img">
+            if ($sbc_result && $sbc_result->num_rows > 0):
+                while ($cat = $sbc_result->fetch_assoc()):
+                    $cat_name = htmlspecialchars($cat['name']);
+                    $cat_slug = htmlspecialchars($cat['slug']);
+                    $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
+                    $circle_img = get_resized_image($img_path, 220, 220, 'cover');
+
+                    // First item gets the accent class to mirror the reference highlight
+                    $accent_class = ($sbc_index === 0) ? ' sbc-accent' : '';
+                    $sbc_index++;
+            ?>
+                <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo $cat_slug; ?>"
+                   class="sbc-item<?php echo $accent_class; ?>"
+                   title="<?php echo $cat_name; ?>">
+                    <div class="sbc-circle">
+                        <img src="<?php echo $circle_img; ?>"
+                             alt="<?php echo $cat_name; ?>"
+                             loading="lazy">
                     </div>
-                    <span class="bubble-name"><?php echo $cat_name; ?></span>
+                    <span class="sbc-label"><?php echo $cat_name; ?></span>
                 </a>
-                <?php
-            }
-        }
-        ?>
-    </div>
+            <?php
+                endwhile;
+            endif;
+            ?>
+        </div><!-- /#sbcTrack -->
+
+        <!-- Next Arrow -->
+        <button id="sbcNext" class="sbc-nav-btn sbc-nav-next" aria-label="Scroll right">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+    </div><!-- /.sbc-track-wrap -->
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const slider = document.getElementById('catSlider');
-        const prev = document.getElementById('catPrev');
-        const next = document.getElementById('catNext');
+(function () {
+    const track = document.getElementById('sbcTrack');
+    const prev  = document.getElementById('sbcPrev');
+    const next  = document.getElementById('sbcNext');
+    if (!track) return;
 
-        if (!slider) return;
+    const SCROLL_AMT = 360;
 
-        const scrollAmount = 400;
-
-        if (prev) {
-            prev.addEventListener('click', () => {
-                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            });
-        }
-
-        if (next) {
-            next.addEventListener('click', () => {
-                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            });
-        }
+    prev && prev.addEventListener('click', () => {
+        track.scrollBy({ left: -SCROLL_AMT, behavior: 'smooth' });
     });
+    next && next.addEventListener('click', () => {
+        track.scrollBy({ left: SCROLL_AMT, behavior: 'smooth' });
+    });
+})();
 </script>
