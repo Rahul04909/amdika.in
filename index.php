@@ -6,6 +6,9 @@
 <!-- News Ticker -->
 <?php include 'components/news-ticker.php'; ?>
 
+<!-- Collection Banners (2-row grid) -->
+<?php include 'components/collection-banners.php'; ?>
+
 <!-- Product Categories -->
 <?php include 'components/product-categories.php'; ?>
 
