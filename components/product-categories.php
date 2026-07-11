@@ -94,7 +94,10 @@
     text-transform: uppercase;
     color: #3a2e1e;
     text-align: center;
-    line-height: 1.4;
+    line-height: 1.3;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     transition: color 0.25s ease;
 }
