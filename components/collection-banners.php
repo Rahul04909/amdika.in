@@ -4,7 +4,7 @@
 
         <div class="cb-heading-wrap">
             <h2 id="collection-heading" class="cb-heading">
-                Trending Summer Picks
+                Explore Our Curated Collections
             </h2>
         </div>
 
