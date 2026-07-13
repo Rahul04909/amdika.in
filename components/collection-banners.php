@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="assets/css/collection-component.css">
+<link rel="stylesheet" href="<?php echo $assets_path; ?>css/collection-component.css">
 <section class="cb-collection-section" aria-labelledby="collection-heading">
     <div class="cb-container">
 
