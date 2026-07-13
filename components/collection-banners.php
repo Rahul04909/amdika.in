@@ -1,319 +1,72 @@
-<?php
-/**
- * Collection Banners Component
- * Displays top 6 product categories as full-bleed image cards
- * in a luxury 2-row × 3-column grid — inspired by premium e-commerce layouts.
- *
- * Row 1: 3 wide landscape cards (equal width)
- * Row 2: 3 wide landscape cards (equal width)
- */
+<link rel="stylesheet" href="assets/css/collection-component.css">
+<section class="cb-collection-section" aria-labelledby="collection-heading">
+    <div class="cb-container">
 
-if (!isset($conn)) {
-    require_once __DIR__ . '/../database/db_config.php';
-}
-if (!function_exists('get_resized_image')) {
-    require_once __DIR__ . '/../includes/image_helper.php';
-}
+        <div class="cb-heading-wrap">
+            <h2 id="collection-heading" class="cb-heading">
+                Trending Summer Picks
+            </h2>
+        </div>
 
-// Fetch up to 6 categories ordered by created_at DESC (most recent / featured first)
-$cb_sql  = "SELECT * FROM product_categories WHERE image IS NOT NULL AND image != '' ORDER BY created_at DESC LIMIT 6";
-$cb_res  = $conn->query($cb_sql);
-$cb_cats = [];
-if ($cb_res && $cb_res->num_rows > 0) {
-    while ($r = $cb_res->fetch_assoc()) {
-        $cb_cats[] = $r;
-    }
-}
+        <div class="cb-slider">
 
-// If fewer than 6 results, pad with NULL so the grid stays balanced
-while (count($cb_cats) < 6) {
-    $cb_cats[] = null;
-}
-?>
+            <a href="#" class="cb-card" aria-label="Collection Banner 1">
+                <img
+                    src="https://images-static.nykaa.com/uploads/4ff925da-b473-404c-a050-d9f406ceb175.jpg?tr=cm-pad_resize,w-450"
+                    alt="Trending Summer Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-<style>
-/* =========================================================
-   Collection Banners — 2-Row Grid
-   ========================================================= */
-.cb-section {
-    background: #ffffff;
-    padding: 56px 0 64px;
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 2">
+                <img
+                    src="https://images-static.nykaa.com/uploads/0c064be1-9b1d-4300-a588-d5e452278d2f.jpg?tr=cm-pad_resize,w-450"
+                    alt="Women's Summer Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Section heading */
-.cb-heading-wrap {
-    text-align: center;
-    margin-bottom: 40px;
-}
-.cb-heading-wrap .cb-eyebrow {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #C89B2C;
-    margin-bottom: 10px;
-}
-.cb-heading-wrap h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 700;
-    font-style: italic;
-    color: #1a1208;
-    margin: 0;
-    line-height: 1.2;
-}
-.cb-heading-wrap h2 span {
-    color: #C89B2C;
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 3">
+                <img
+                    src="https://images-static.nykaa.com/uploads/b1ea8c0e-692a-4721-a3a5-9266240c2727.jpg?tr=cm-pad_resize,w-450"
+                    alt="Metallic Watches Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Outer container */
-.cb-grid-container {
-    max-width: 1200px;          /* narrower container for portrait cards */
-    margin: 0 auto;
-    padding: 0 20px;
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 4">
+                <img
+                    src="https://images-static.nykaa.com/uploads/8d3cf6d9-b19c-409f-ac21-d4c337cac108.jpg?tr=cm-pad_resize,w-450"
+                    alt="Linen Shirts Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Two rows, each containing 3 cards */
-.cb-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 14px;
-}
-.cb-row:last-child {
-    margin-bottom: 0;
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 5">
+                <img
+                    src="https://images-static.nykaa.com/uploads/e9b3de40-e5fd-4f14-b48e-7832af0e58a6.jpg?tr=cm-pad_resize,w-450"
+                    alt="Sneakers Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Individual card — portrait (taller than wide) */
-.cb-card {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    border-radius: 4px;
-    text-decoration: none !important;
-    cursor: pointer;
-    aspect-ratio: 3 / 4;        /* portrait ratio — taller, narrower */
-    background: #2a2118;        /* dark fallback */
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 6">
+                <img
+                    src="https://images-static.nykaa.com/uploads/4867143a-d12e-4070-8d47-68e29df2c6fe.jpg?tr=cm-pad_resize,w-450"
+                    alt="Summer Fashion Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Image */
-.cb-card__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
-}
-.cb-card:hover .cb-card__img {
-    transform: scale(1.07);
-}
+            <a href="#" class="cb-card" aria-label="Collection Banner 7">
+                <img
+                    src="https://images-static.nykaa.com/uploads/b7ad2e04-32f4-49d4-9965-07615374a7b5.jpg?tr=cm-pad_resize,w-450"
+                    alt="Fashion Collection"
+                    loading="lazy"
+                    decoding="async">
+            </a>
 
-/* Dark gradient overlay — bottom-heavy so text stays legible */
-.cb-card__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(10, 8, 5, 0.78) 0%,
-        rgba(10, 8, 5, 0.30) 45%,
-        rgba(10, 8, 5, 0.04) 100%
-    );
-    transition: background 0.4s ease;
-}
-.cb-card:hover .cb-card__overlay {
-    background: linear-gradient(
-        to top,
-        rgba(10, 8, 5, 0.85) 0%,
-        rgba(10, 8, 5, 0.40) 50%,
-        rgba(10, 8, 5, 0.08) 100%
-    );
-}
+        </div>
 
-/* Text content anchored to bottom-left */
-.cb-card__body {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 28px 28px 30px;
-    z-index: 2;
-}
-
-.cb-card__title {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;          /* max 3 lines before truncating */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(12px, 1.3vw, 15px);
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 14px;
-    line-height: 1.4;               /* comfortable leading for wrapped text */
-    word-break: break-word;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-}
-
-/* "View Collection" pill button */
-.cb-card__btn {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.94);
-    color: #1a1208;
-    font-family: 'Outfit', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    padding: 9px 22px;
-    border: none;
-    border-radius: 2px;
-    text-decoration: none !important;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    transform: translateY(6px);
-    opacity: 0.92;
-}
-.cb-card:hover .cb-card__btn {
-    background: #C89B2C;
-    color: #fff;
-    transform: translateY(0);
-    opacity: 1;
-}
-
-/* Skeleton / placeholder card when no image */
-.cb-card--empty {
-    background: linear-gradient(135deg, #2a2118 0%, #3d2f1e 100%);
-    cursor: default;
-}
-.cb-card--empty .cb-card__overlay {
-    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
-}
-
-/* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 991px) {
-    .cb-row {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-    .cb-row:last-child {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .cb-section {
-        padding: 36px 0 44px;
-    }
-}
-
-@media (max-width: 576px) {
-    .cb-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-    .cb-row:last-child {
-        grid-template-columns: 1fr 1fr;
-    }
-    .cb-card__body {
-        padding: 14px 12px 16px;
-    }
-    .cb-card__title {
-        font-size: 10px;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-    }
-    .cb-card__btn {
-        font-size: 8px;
-        padding: 7px 14px;
-        letter-spacing: 1.5px;
-    }
-    .cb-section {
-        padding: 28px 0 34px;
-    }
-    .cb-grid-container {
-        padding: 0 10px;
-    }
-}
-</style>
-
-<section class="cb-section">
-    <!-- Section Heading -->
-    <div class="cb-heading-wrap">
-        <span class="cb-eyebrow">Curated Selections</span>
-        <h2>Shop By <span>Collection</span></h2>
     </div>
-
-    <div class="cb-grid-container">
-
-        <!-- ROW 1 — First 3 categories -->
-        <div class="cb-row">
-            <?php for ($i = 0; $i <= 2; $i++):
-                $cat = $cb_cats[$i] ?? null;
-                if ($cat):
-                    $cat_name  = htmlspecialchars($cat['name']);
-                    $cat_slug  = htmlspecialchars($cat['slug']);
-                    $img_src   = 'https://www.nappadori.com/cdn/shop/products/steamer-green-large-1_1_600x.jpg?v=1767690338';
-                    $href      = $link_prefix . 'products.php?category=' . $cat_slug;
-                ?>
-                <a href="<?php echo $href; ?>" class="cb-card" aria-label="Shop <?php echo $cat_name; ?>">
-                    <img src="<?php echo $img_src; ?>"
-                         alt="<?php echo $cat_name; ?>"
-                         class="cb-card__img"
-                         loading="lazy">
-                    <div class="cb-card__overlay"></div>
-                    <div class="cb-card__body">
-                        <span class="cb-card__title"><?php echo $cat_name; ?></span>
-                        <span class="cb-card__btn">View Collection</span>
-                    </div>
-                </a>
-                <?php else: ?>
-                <!-- Empty placeholder (fewer than 3 categories) -->
-                <div class="cb-card cb-card--empty">
-                    <div class="cb-card__overlay"></div>
-                    <div class="cb-card__body">
-                        <span class="cb-card__title" style="color:rgba(255,255,255,0.3);">Coming Soon</span>
-                    </div>
-                </div>
-                <?php endif; ?>
-            <?php endfor; ?>
-        </div>
-        <!-- END ROW 1 -->
-
-        <!-- ROW 2 — Next 3 categories -->
-        <div class="cb-row">
-            <?php for ($i = 3; $i <= 5; $i++):
-                $cat = $cb_cats[$i] ?? null;
-                if ($cat):
-                    $cat_name  = htmlspecialchars($cat['name']);
-                    $cat_slug  = htmlspecialchars($cat['slug']);
-                    $img_src   = 'https://www.nappadori.com/cdn/shop/products/steamer-green-large-1_1_600x.jpg?v=1767690338';
-                    $href      = $link_prefix . 'products.php?category=' . $cat_slug;
-                ?>
-                <a href="<?php echo $href; ?>" class="cb-card" aria-label="Shop <?php echo $cat_name; ?>">
-                    <img src="<?php echo $img_src; ?>"
-                         alt="<?php echo $cat_name; ?>"
-                         class="cb-card__img"
-                         loading="lazy">
-                    <div class="cb-card__overlay"></div>
-                    <div class="cb-card__body">
-                        <span class="cb-card__title"><?php echo $cat_name; ?></span>
-                        <span class="cb-card__btn">View Collection</span>
-                    </div>
-                </a>
-                <?php else: ?>
-                <!-- Empty placeholder -->
-                <div class="cb-card cb-card--empty">
-                    <div class="cb-card__overlay"></div>
-                    <div class="cb-card__body">
-                        <span class="cb-card__title" style="color:rgba(255,255,255,0.3);">Coming Soon</span>
-                    </div>
-                </div>
-                <?php endif; ?>
-            <?php endfor; ?>
-        </div>
-        <!-- END ROW 2 -->
-
-    </div><!-- /.cb-grid-container -->
 </section>

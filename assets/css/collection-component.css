@@ -1,0 +1,183 @@
+/* ==========================================================
+   COLLECTION BANNERS
+   Namespaced CSS
+========================================================== */
+
+.cb-collection-section{
+    width:100%;
+    padding:45px 0;
+    background:#fff;
+}
+
+.cb-container{
+    width:100%;
+    max-width:1480px;
+    margin:auto;
+    padding:0 18px;
+    box-sizing:border-box;
+}
+
+.cb-heading-wrap{
+    margin-bottom:28px;
+}
+
+.cb-heading{
+    margin:0;
+    font-size:42px;
+    font-weight:700;
+    line-height:1.2;
+    color:#111827;
+    letter-spacing:-0.4px;
+}
+
+/* Cards */
+
+.cb-slider{
+
+    display:grid;
+    grid-template-columns:repeat(7,minmax(210px,1fr));
+    gap:26px;
+
+}
+
+.cb-card{
+
+    display:block;
+    overflow:hidden;
+    border-radius:0;
+    text-decoration:none;
+    transition:transform .28s ease;
+
+}
+
+.cb-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.cb-card img{
+
+    display:block;
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    transition:transform .45s ease;
+
+}
+
+.cb-card:hover img{
+
+    transform:scale(1.03);
+
+}
+
+/* ==========================================================
+   Large Desktop
+========================================================== */
+
+@media (max-width:1500px){
+
+    .cb-slider{
+
+        grid-template-columns:repeat(5,minmax(220px,1fr));
+
+    }
+
+}
+
+/* ==========================================================
+   Laptop
+========================================================== */
+
+@media (max-width:1200px){
+
+    .cb-heading{
+
+        font-size:36px;
+
+    }
+
+    .cb-slider{
+
+        grid-template-columns:repeat(4,minmax(220px,1fr));
+
+    }
+
+}
+
+/* ==========================================================
+   Tablet
+========================================================== */
+
+@media (max-width:992px){
+
+    .cb-heading{
+
+        font-size:30px;
+
+    }
+
+    .cb-slider{
+
+        display:flex;
+        gap:18px;
+        overflow-x:auto;
+        scroll-behavior:smooth;
+        scrollbar-width:none;
+        -webkit-overflow-scrolling:touch;
+        padding-bottom:5px;
+
+    }
+
+    .cb-slider::-webkit-scrollbar{
+
+        display:none;
+
+    }
+
+    .cb-card{
+
+        flex:0 0 230px;
+
+    }
+
+}
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width:576px){
+
+    .cb-collection-section{
+
+        padding:30px 0;
+
+    }
+
+    .cb-container{
+
+        padding:0 14px;
+
+    }
+
+    .cb-heading{
+
+        font-size:24px;
+
+    }
+
+    .cb-heading-wrap{
+
+        margin-bottom:18px;
+
+    }
+
+    .cb-card{
+
+        flex:0 0 170px;
+
+    }
+
+}
