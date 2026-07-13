@@ -36,6 +36,8 @@ include '../../includes/header.php';
 
 <?php include '../../components/collection-banners.php'; ?>
 
+<?php include '../../components/fitness-showcase.php'; ?>
+
 <?php include '../../includes/footer.php'; ?>
 
 </body>
