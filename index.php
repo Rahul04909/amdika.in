@@ -10,7 +10,7 @@
 <?php include 'components/product-categories.php'; ?>
 
 <!-- Collection Banners (2-row grid) -->
-<?php include 'components/collection-banners.php'; ?>
+
 
 <!-- Best Deals (Smartphones) -->
 <?php include 'components/best-deals.php'; ?>

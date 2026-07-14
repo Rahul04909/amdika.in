@@ -34,9 +34,6 @@ include '../../includes/header.php';
         decoding="async">
 </section>
 
-<?php include '../../components/collection-banners.php'; ?>
-
-<?php include '../../components/fitness-showcase.php'; ?>
 
 <?php include '../../includes/footer.php'; ?>
 
