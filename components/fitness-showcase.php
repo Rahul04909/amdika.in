@@ -9,7 +9,7 @@
             <a href="#" class="fs-image-link" aria-label="Explore fitness collection">
                 <div class="fs-image-wrap">
                     <img
-                        src="assets/images/collection/collection-1.jpeg"
+                        src="../assets/images/collection/collection-1.jpeg"
                         alt="Fitness Collection Banner"
                         loading="lazy"
                         decoding="async"
