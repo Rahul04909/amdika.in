@@ -9,7 +9,7 @@
             <a href="#" class="fs-image-link" aria-label="Explore fitness collection">
                 <div class="fs-image-wrap">
                     <img
-                        src="https://images-static.nykaa.com/uploads/cfa3bdad-141e-45e8-ae7f-19148666b995.jpg?tr=cm-pad_resize,w-450"
+                        src="assets/images/collection/collection-1.jpeg"
                         alt="Fitness Collection Banner"
                         loading="lazy"
                         decoding="async"
