@@ -38,7 +38,6 @@ include '../../includes/header.php';
 .track-input-group button.loading .btn-text { display: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Result ── */
 .track-result { margin-top: 24px; }
 
 .track-status-bar { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: 10px; margin-bottom: 20px; }
@@ -53,7 +52,6 @@ include '../../includes/header.php';
 .track-status-bar .status-info .status-label { font-size: 16px; font-weight: 700; color: #111827; }
 .track-status-bar .status-info .status-date { font-size: 13px; color: #6b7280; margin-top: 2px; }
 
-/* ── Timeline ── */
 .track-timeline { position: relative; padding-left: 32px; }
 .track-timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: #e5e7eb; }
 .timeline-item { position: relative; padding: 0 0 24px 20px; }
@@ -64,19 +62,17 @@ include '../../includes/header.php';
 .timeline-item .time { font-size: 12px; color: #9ca3af; margin-bottom: 2px; }
 .timeline-item .event { font-size: 14px; font-weight: 600; color: #111827; }
 .timeline-item .location { font-size: 13px; color: #6b7280; margin-top: 2px; }
+.timeline-item .dp-detail { font-size: 12px; color: #6b7280; margin-top: 4px; padding: 6px 10px; background: #f9fafb; border-radius: 6px; display: inline-block; }
 
-/* ── Info Grid ── */
 .track-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #f3f4f6; }
 .track-info-item { }
 .track-info-item .label { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #9ca3af; font-weight: 600; margin-bottom: 4px; }
 .track-info-item .value { font-size: 14px; font-weight: 500; color: #111827; }
 
-/* ── Error ── */
 .track-error { padding: 20px; text-align: center; color: #ef4444; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-top: 24px; }
 .track-error i { font-size: 24px; margin-bottom: 8px; display: block; }
 .track-error .msg { font-size: 14px; font-weight: 500; }
 
-/* ── Empty ── */
 .track-empty { text-align: center; padding: 40px 20px; color: #9ca3af; }
 .track-empty i { font-size: 48px; margin-bottom: 12px; display: block; opacity: .3; }
 .track-empty p { font-size: 14px; margin: 0; }
@@ -103,16 +99,14 @@ include '../../includes/header.php';
                 <input type="text" id="awbInput" value="26040200188266" placeholder="Enter AWB number" autocomplete="off">
                 <button id="trackBtn" onclick="trackOrder()">
                     <span class="spinner"></span>
-                    <span class="btn-text"><i class="fas fa-search me-2"></i>Track</span>
+                    <span class="btn-text"><i class="fas fa-search"></i> Track</span>
                 </button>
             </div>
-
             <div id="trackResult" class="track-result"></div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 const awbInput = document.getElementById('awbInput');
 const trackBtn = document.getElementById('trackBtn');
@@ -122,34 +116,40 @@ awbInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') trackOrder();
 });
 
-function escHtml(str) {
+function esc(str) {
     if (!str) return '';
-    const d = document.createElement('div');
+    var d = document.createElement('div');
     d.textContent = str;
     return d.innerHTML;
 }
 
-function formatDate(dateStr) {
-    if (!dateStr) return '';
+function fmtDate(ts) {
+    if (!ts) return '';
     try {
-        const d = new Date(dateStr);
+        var d = new Date(Number(ts));
         return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) +
-               ' · ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-    } catch { return dateStr; }
+               ' \u00b7 ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    } catch(e) { return ts; }
 }
 
-function getStatusMeta(status) {
-    const s = (status || '').toLowerCase();
-    if (s.includes('deliver') || s.includes('delivered')) return { cls: 'delivered', icon: 'fas fa-check-circle', label: 'Delivered' };
-    if (s.includes('transit') || s.includes('pickup') || s.includes('out for')) return { cls: 'in-transit', icon: 'fas fa-truck', label: 'In Transit' };
-    if (s.includes('manifest') || s.includes('booked') || s.includes('lab') || s.includes('ready')) return { cls: 'in-transit', icon: 'fas fa-box', label: 'Processing' };
-    return { cls: 'pending', icon: 'fas fa-clock', label: status || 'Pending' };
+function fmtStatus(str) {
+    if (!str) return 'Pending';
+    return str.replace(/_/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+}
+
+function getStatusMeta(category) {
+    var c = (category || '').toUpperCase();
+    if (c === 'DELIVERED') return { cls: 'delivered', icon: 'fas fa-check-circle', label: 'Delivered' };
+    if (c === 'OUT_FOR_DELIVERY') return { cls: 'in-transit', icon: 'fas fa-truck', label: 'Out for Delivery' };
+    if (c === 'IN_TRANSIT') return { cls: 'in-transit', icon: 'fas fa-box', label: 'In Transit' };
+    if (c === 'PENDING') return { cls: 'pending', icon: 'fas fa-clock', label: 'Pending' };
+    return { cls: 'in-transit', icon: 'fas fa-sync-alt', label: fmtStatus(category) };
 }
 
 function trackOrder() {
-    const awb = awbInput.value.trim();
+    var awb = awbInput.value.trim();
     if (!awb) {
-        Swal.fire({ icon: 'warning', title: 'Enter AWB Number', text: 'Please enter a valid AWB number to track.', confirmButtonColor: '#f97316' });
+        trackResult.innerHTML = '<div class="track-error"><i class="fas fa-exclamation-circle"></i><div class="msg">Please enter a valid AWB number.</div></div>';
         return;
     }
 
@@ -158,99 +158,91 @@ function trackOrder() {
     trackResult.innerHTML = '';
 
     fetch('https://apis-hubops.innofulfill.com/tracking/v2/' + encodeURIComponent(awb))
-        .then(res => {
-            if (!res.ok) throw new Error('API returned status ' + res.status);
+        .then(function(res) {
+            if (!res.ok) throw new Error('Request failed');
             return res.json();
         })
-        .then(data => {
+        .then(function(data) {
             renderTracking(data);
         })
-        .catch(err => {
-            trackResult.innerHTML = `
-                <div class="track-error">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <div class="msg">Unable to fetch tracking details. Please try again later.</div>
-                    <div style="font-size:12px;color:#9ca3af;margin-top:6px">${escHtml(err.message)}</div>
-                </div>
-            `;
+        .catch(function(err) {
+            trackResult.innerHTML = '<div class="track-error"><i class="fas fa-exclamation-circle"></i><div class="msg">Unable to fetch tracking details. Please try again.</div><div style="font-size:12px;color:#9ca3af;margin-top:6px">' + esc(err.message) + '</div></div>';
         })
-        .finally(() => {
+        .finally(function() {
             trackBtn.classList.remove('loading');
             trackBtn.disabled = false;
         });
 }
 
 function renderTracking(data) {
-    // Normalize: API might return data in different structures
-    const info = data?.data || data?.result || data;
-    const trackingData = info?.tracking_data || info?.shipment || info;
-    const events = trackingData?.scan_events || trackingData?.events || trackingData?.scans || info?.scan_events || [];
-    const status = trackingData?.current_status || trackingData?.status || info?.current_status || info?.status || 'Pending';
-    const awb = trackingData?.awb_number || trackingData?.awb || info?.awb_number || info?.awb || awbInput.value.trim();
-    const origin = trackingData?.origin || trackingData?.from || info?.origin || '';
-    const destination = trackingData?.destination || trackingData?.to || info?.destination || '';
-    const courier = trackingData?.courier || trackingData?.carrier || info?.courier || info?.carrier || '';
-    const weight = trackingData?.weight || info?.weight || '';
-    const eta = trackingData?.eta || trackingData?.delivery_date || info?.eta || '';
-    const sender = trackingData?.sender || info?.sender || '';
-    const receiver = trackingData?.receiver || info?.receiver || '';
-    const refNo = trackingData?.reference_no || trackingData?.ref_no || info?.reference_no || '';
+    var info = data.orderInformation || {};
+    var statuses = data.statuses || [];
 
-    const statusMeta = getStatusMeta(status);
-    const hasEvents = Array.isArray(events) && events.length > 0;
+    var awb = info.trackingId || '';
+    var sourceCity = info.sourceLocation ? info.sourceLocation.city || '' : '';
+    var sourceState = info.sourceLocation ? info.sourceLocation.state || '' : '';
+    var destCity = info.destinationLocation ? info.destinationLocation.city || '' : '';
+    var destState = info.destinationLocation ? info.destinationLocation.state || '' : '';
+    var source = sourceCity + (sourceState ? ', ' + sourceState : '');
+    var destination = destCity + (destState ? ', ' + destState : '');
+    var sender = info.senderDetails ? (info.senderDetails.sender_name || '') : '';
+    var receiver = info.receiverDetails ? (info.receiverDetails.receiver_name || '') : '';
+    var phase = info.currentShipmentPhase || '';
+    var podLinks = info.pod_links || [];
 
-    let timelineHtml = '';
-    if (hasEvents) {
-        events.forEach((ev, idx) => {
-            const isLast = idx === events.length - 1;
-            const cls = isLast ? 'active' : 'completed';
-            const loc = ev.location || ev.city || ev.place || ev.scan_location || '';
-            const time = formatDate(ev.scan_datetime || ev.datetime || ev.date || ev.timestamp || '');
-            const desc = ev.scan_description || ev.description || ev.event || ev.status || ev.scan || '';
-            timelineHtml += `
-                <div class="timeline-item ${cls}">
-                    <div class="dot"></div>
-                    <div class="time">${escHtml(time)}</div>
-                    <div class="event">${escHtml(desc)}</div>
-                    ${loc ? '<div class="location"><i class="fas fa-map-marker-alt me-1" style="color:#9ca3af;font-size:11px"></i>' + escHtml(loc) + '</div>' : ''}
-                </div>
-            `;
-        });
+    var lastStatus = statuses.length > 0 ? statuses[0] : null;
+    var category = lastStatus ? lastStatus.category : '';
+    var statusLabel = lastStatus ? (lastStatus.subcategory || fmtStatus(lastStatus.status)) : 'Pending';
+    var lastTime = lastStatus ? fmtDate(lastStatus.statusTimestamp) : '';
+
+    var statusMeta = getStatusMeta(category);
+
+    var timelineHtml = '';
+    var reversed = statuses.slice().reverse();
+    for (var i = 0; i < reversed.length; i++) {
+        var ev = reversed[i];
+        var isLast = i === reversed.length - 1;
+        var cls = isLast ? 'active' : 'completed';
+        var loc = ev.location || '';
+        var time = fmtDate(ev.statusTimestamp);
+        var desc = ev.subcategory || fmtStatus(ev.status);
+        var dp = ev.dpDetails || {};
+        var dpInfo = '';
+        if (dp.daName || dp.daMobile) {
+            dpInfo = '<div class="dp-detail"><i class="fas fa-user"></i> ' + esc(dp.daName || '') + (dp.daMobile ? ' &mdash; ' + esc(dp.daMobile) : '') + '</div>';
+        }
+        timelineHtml += '<div class="timeline-item ' + cls + '"><div class="dot"></div><div class="time">' + time + '</div><div class="event">' + esc(desc) + '</div>' + (loc ? '<div class="location"><i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:11px;margin-right:4px"></i>' + esc(loc) + '</div>' : '') + dpInfo + '</div>';
     }
 
-    trackResult.innerHTML = `
-        <div class="track-status-bar ${statusMeta.cls}">
-            <div class="status-icon"><i class="${statusMeta.icon}"></i></div>
-            <div class="status-info">
-                <div class="status-label">${statusMeta.label} — ${escHtml(awb)}</div>
-                <div class="status-date">${escHtml(courier)}</div>
-            </div>
-        </div>
+    var infoHtml = '';
+    var infoItems = [];
+    if (source) infoItems.push('<div class="track-info-item"><div class="label">Origin</div><div class="value">' + esc(source) + '</div></div>');
+    if (destination) infoItems.push('<div class="track-info-item"><div class="label">Destination</div><div class="value">' + esc(destination) + '</div></div>');
+    if (sender) infoItems.push('<div class="track-info-item"><div class="label">Sender</div><div class="value">' + esc(sender) + '</div></div>');
+    if (receiver) infoItems.push('<div class="track-info-item"><div class="label">Receiver</div><div class="value">' + esc(receiver) + '</div></div>');
+    if (awb) infoItems.push('<div class="track-info-item"><div class="label">AWB Number</div><div class="value">' + esc(awb) + '</div></div>');
+    if (infoItems.length) infoHtml = '<div class="track-info-grid">' + infoItems.join('') + '</div>';
 
-        ${hasEvents ? `
-        <div class="track-timeline">${timelineHtml}</div>
-        ` : `
-        <div class="track-empty">
-            <i class="fas fa-box-open"></i>
-            <p>No tracking events available yet for this AWB number.</p>
-        </div>
-        `}
+    var podHtml = '';
+    if (podLinks.length) {
+        podHtml = '<div style="margin-top:16px;padding-top:16px;border-top:1px solid #f3f4f6;text-align:center">';
+        podHtml += '<a href="' + esc(podLinks[0]) + '" target="_blank" class="btn btn-sm btn-outline-success" style="padding:8px 20px;border-radius:8px;text-decoration:none;border:1px solid #86efac;color:#16a34a;font-size:13px;font-weight:600"><i class="fas fa-image"></i> View Delivery Proof</a>';
+        podHtml += '</div>';
+    }
 
-        <div class="track-info-grid">
-            ${origin ? `<div class="track-info-item"><div class="label">Origin</div><div class="value">${escHtml(origin)}</div></div>` : ''}
-            ${destination ? `<div class="track-info-item"><div class="label">Destination</div><div class="value">${escHtml(destination)}</div></div>` : ''}
-            ${eta ? `<div class="track-info-item"><div class="label">Estimated Delivery</div><div class="value">${escHtml(eta)}</div></div>` : ''}
-            ${weight ? `<div class="track-info-item"><div class="label">Weight</div><div class="value">${escHtml(weight)}</div></div>` : ''}
-            ${sender ? `<div class="track-info-item"><div class="label">Sender</div><div class="value">${escHtml(sender)}</div></div>` : ''}
-            ${receiver ? `<div class="track-info-item"><div class="label">Receiver</div><div class="value">${escHtml(receiver)}</div></div>` : ''}
-            ${refNo ? `<div class="track-info-item"><div class="label">Reference</div><div class="value">${escHtml(refNo)}</div></div>` : ''}
-        </div>
-    `;
+    var statusHtml = '<div class="track-status-bar ' + statusMeta.cls + '"><div class="status-icon"><i class="' + statusMeta.icon + '"></i></div><div class="status-info"><div class="status-label">' + statusMeta.label + ' \u2014 ' + esc(awb) + '</div><div class="status-date">' + esc(statusLabel) + (lastTime ? ' &middot; ' + lastTime : '') + '</div></div></div>';
 
+    var content = statusHtml;
+    if (timelineHtml) {
+        content += '<div class="track-timeline">' + timelineHtml + '</div>';
+    } else {
+        content += '<div class="track-empty"><i class="fas fa-box-open"></i><p>No tracking events available yet.</p></div>';
+    }
+    content += infoHtml + podHtml;
+    trackResult.innerHTML = content;
     trackResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Auto-track on load
 trackOrder();
 </script>
 
