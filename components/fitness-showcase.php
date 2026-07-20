@@ -3,40 +3,38 @@
 <?php
 $hero_img = $assets_path . 'images/collection/collection-1.jpeg';
 
-if (!isset($show_model_index)) $show_model_index = 0;
-
-$models = [
-    ['amk' => 'AMK 1501', 'name' => 'Flooting Model',  'products' => ['Laundry Hamper', 'Waste Bin', 'Remote Holder']],
-    ['amk' => 'AMK 1502', 'name' => 'Suitcase Model',  'products' => ['Laundry Hamper', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder']],
-    ['amk' => 'AMK 1503', 'name' => 'Dual Tone',       'products' => ['Waste Bin', 'Sq. Tissue Box', 'Tissue Box', 'Pen Holder', 'Towel Tray', 'Tray Small', 'Tray Large']],
-    ['amk' => 'AMK 1504', 'name' => 'Stud Model',      'products' => ['Laundry Hamper', 'Waste Bin', 'Basket', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Pen Holder']],
-    ['amk' => 'AMK 1505', 'name' => 'Flap Model',      'products' => ['Laundry Hamper', 'Waste Bin', 'Sq. Tissue Box', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large']],
-    ['amk' => 'AMK 1506', 'name' => 'Caller Model',    'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder', 'Belt']],
-    ['amk' => 'AMK 1507', 'name' => 'Flower Model',    'products' => ['Laundry Hamper', 'Waste Bin', 'Basket', 'Tissue Box']],
-    ['amk' => 'AMK 1508', 'name' => 'Classic',          'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large']],
-    ['amk' => 'AMK 1509', 'name' => 'Modern',          'products' => ['Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder']],
-    ['amk' => 'AMK 1510', 'name' => 'Essential',        'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box']],
-    ['amk' => 'AMK 1511', 'name' => 'Double Stud',     'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
-    ['amk' => 'AMK 1512', 'name' => 'Cane',            'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
-    ['amk' => 'AMK 1513', 'name' => 'Weave',           'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
-    ['amk' => '',          'name' => 'Caller Stud',     'products' => ['Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
-    ['amk' => 'AMK 1514', 'name' => 'Double Stud',     'products' => ['Laundry Hamper', 'Waste Bin', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket']],
+$all_models = [
+    ['amk' => 'AMK 1501', 'name' => 'Flooting Model', 'products' => ['Laundry Hamper', 'Waste Bin', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Candle Holder', 'Storage Basket', 'Wall Shelf', 'Desk Organizer', 'Table Clock']],
+    ['amk' => 'AMK 1502', 'name' => 'Suitcase Model', 'products' => ['Laundry Hamper', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Candle Holder']],
+    ['amk' => 'AMK 1503', 'name' => 'Dual Tone',      'products' => ['Waste Bin', 'Sq. Tissue Box', 'Tissue Box', 'Pen Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Key Holder', 'Coaster', 'Storage Basket']],
+    ['amk' => 'AMK 1504', 'name' => 'Stud Model',     'products' => ['Laundry Hamper', 'Waste Bin', 'Basket', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Pen Holder', 'Coaster']],
+    ['amk' => 'AMK 1505', 'name' => 'Flap Model',     'products' => ['Laundry Hamper', 'Waste Bin', 'Sq. Tissue Box', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Key Holder', 'Photo Frame']],
+    ['amk' => 'AMK 1506', 'name' => 'Caller Model',   'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder', 'Belt']],
+    ['amk' => 'AMK 1507', 'name' => 'Flower Model',   'products' => ['Laundry Hamper', 'Waste Bin', 'Basket', 'Tissue Box', 'Candle Holder', 'Photo Frame', 'Key Holder', 'Vase', 'Wall Shelf', 'Storage Basket']],
+    ['amk' => 'AMK 1508', 'name' => 'Classic',        'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Key Holder', 'Desk Organizer']],
+    ['amk' => 'AMK 1509', 'name' => 'Modern',         'products' => ['Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder', 'Key Holder', 'Desk Organizer', 'Photo Frame', 'Table Clock']],
+    ['amk' => 'AMK 1510', 'name' => 'Essential',      'products' => ['Laundry Hamper', 'Waste Bin', 'Coaster', 'Tissue Box', 'Key Holder', 'Photo Frame', 'Candle Holder', 'Storage Basket', 'Wall Shelf', 'Desk Organizer']],
+    ['amk' => 'AMK 1511', 'name' => 'Double Stud',    'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
+    ['amk' => 'AMK 1512', 'name' => 'Cane',           'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
+    ['amk' => 'AMK 1513', 'name' => 'Weave',          'products' => ['Tissue Box', 'Laundry Hamper', 'Waste Bin', 'Coaster', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder']],
+    ['amk' => '',          'name' => 'Caller Stud',    'products' => ['Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Coaster']],
+    ['amk' => 'AMK 1514', 'name' => 'Double Stud',    'products' => ['Laundry Hamper', 'Waste Bin', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Key Holder', 'Candle Holder']],
 ];
 
-$m = $models[$show_model_index] ?? $models[0];
-
-$products = $m['products'];
-$total = count($products);
 $per_page = 4;
-$pages = max(1, ceil($total / $per_page));
-$model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
+
+foreach ($all_models as $midx => $m):
+    $products = $m['products'];
+    $total = count($products);
+    $pages = max(1, ceil($total / $per_page));
+    $model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
 ?>
 
-<section class="fs-showcase" data-pages="<?php echo $pages; ?>" data-autoplay="4000" aria-labelledby="fs-heading-<?php echo $show_model_index; ?>">
+<section class="fs-showcase" data-autoplay="4000" aria-labelledby="fs-h-<?php echo $midx; ?>">
     <div class="fs-container">
         <div class="fs-layout">
 
-            <!-- ─── Left: Hero / Model Image ─── -->
+            <!-- ─── Left: Hero ─── -->
             <div class="fs-hero">
                 <div class="fs-hero-img">
                     <img
@@ -48,7 +46,7 @@ $model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
                 <div class="fs-hero-overlay"></div>
                 <div class="fs-hero-body">
                     <span class="fs-hero-sub">Amadika</span>
-                    <h2 id="fs-heading-<?php echo $show_model_index; ?>" class="fs-hero-title"><?php echo $m['name'] ?: 'Collection'; ?></h2>
+                    <h2 id="fs-h-<?php echo $midx; ?>" class="fs-hero-title"><?php echo $m['name'] ?: 'Collection'; ?></h2>
                     <p class="fs-hero-desc"><?php echo $m['amk']; ?> · <?php echo $total; ?> products</p>
                     <a href="#" class="fs-hero-btn" aria-label="View <?php echo $m['name']; ?>">
                         View Collection
@@ -100,6 +98,8 @@ $model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
         </div>
     </div>
 </section>
+
+<?php endforeach; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
