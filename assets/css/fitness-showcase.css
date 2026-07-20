@@ -25,7 +25,6 @@
     overflow: hidden;
     background: #fff;
     box-shadow: 0 2px 16px rgba(0,0,0,.06);
-    min-height: 480px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -34,27 +33,31 @@
 
 .fs-hero {
     flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
     position: relative;
-    overflow: hidden;
 }
 
 .fs-hero-img {
-    position: absolute;
-    inset: 0;
-    background: #fff;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #fff;
+    padding: 20px 20px 0;
+    min-height: 0;
 }
 
 .fs-hero-img img {
     display: block;
-    width: 100%;
-    height: 100%;
+    max-width: 85%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
     object-fit: contain;
     object-position: center;
-    transition: transform 1s ease;
-    padding: 24px;
+    transition: transform 0.6s ease;
 }
 
 .fs-hero:hover .fs-hero-img img {
@@ -62,46 +65,37 @@
 }
 
 .fs-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(130deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 50%, rgba(255,255,255,0) 100%);
-    pointer-events: none;
+    display: none;
 }
 
 .fs-hero-body {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 40px 44px;
-    z-index: 2;
+    padding: 16px 24px 24px;
+    text-align: center;
 }
 
 .fs-hero-sub {
     display: inline-block;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: rgba(255,255,255,.7);
-    margin-bottom: 10px;
-    border-left: 3px solid #f97316;
-    padding-left: 10px;
+    color: #f97316;
+    margin-bottom: 6px;
 }
 
 .fs-hero-title {
-    margin: 0 0 8px;
-    font-size: 34px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -.4px;
-    line-height: 1.12;
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -.3px;
+    line-height: 1.2;
 }
 
 .fs-hero-desc {
-    margin: 0 0 24px;
-    font-size: 14px;
-    color: rgba(255,255,255,.7);
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #6b7280;
     line-height: 1.5;
 }
 
@@ -360,12 +354,12 @@
     .fs-hero {
         flex: none;
         width: 100%;
-        min-height: 340px;
     }
 
-    .fs-hero-title { font-size: 28px; }
-    .fs-hero-body { padding: 28px 32px; }
-    .fs-hero-desc { font-size: 13px; margin-bottom: 20px; }
+    .fs-hero-img img { max-height: 260px; }
+    .fs-hero-title { font-size: 20px; }
+    .fs-hero-body { padding: 14px 20px 20px; }
+    .fs-hero-desc { font-size: 12px; margin-bottom: 12px; }
 
     .fs-right { padding: 18px 16px 14px; }
 
@@ -388,13 +382,14 @@
 
     .fs-layout { border-radius: 10px; }
 
-    .fs-hero { min-height: 260px; }
+    .fs-hero-img { padding: 12px 12px 0; }
+    .fs-hero-img img { max-height: 180px; max-width: 90%; }
 
-    .fs-hero-body { padding: 20px 22px; }
-    .fs-hero-sub { font-size: 10px; letter-spacing: 2px; margin-bottom: 6px; padding-left: 8px; }
-    .fs-hero-title { font-size: 22px; }
-    .fs-hero-desc { font-size: 12px; margin-bottom: 16px; }
-    .fs-hero-btn { padding: 10px 22px; font-size: 13px; }
+    .fs-hero-body { padding: 12px 16px 16px; }
+    .fs-hero-sub { font-size: 9px; letter-spacing: 2px; margin-bottom: 4px; }
+    .fs-hero-title { font-size: 18px; }
+    .fs-hero-desc { font-size: 11px; margin-bottom: 10px; }
+    .fs-hero-btn { padding: 8px 18px; font-size: 12px; }
 
     .fs-right { padding: 14px 12px 12px; }
     .fs-right-title { font-size: 15px; }
