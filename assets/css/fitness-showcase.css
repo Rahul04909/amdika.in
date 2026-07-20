@@ -195,31 +195,38 @@
     text-decoration: none;
     background: #fff;
     border: 1px solid #f0f0f0;
-    overflow: hidden;
-    transition: all .25s ease;
+    padding: 12px;
+    transition: box-shadow 0.2s ease, transform 0.1s;
+    position: relative;
 }
 
 .fs-card:hover {
-    border-color: #e5e7eb;
-    box-shadow: 0 4px 14px rgba(0,0,0,.07);
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, .11);
     transform: translateY(-2px);
+    z-index: 2;
+    border-color: transparent;
 }
 
 .fs-card-img {
     position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 140px;
     overflow: hidden;
-    background: #f3f4f6;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .fs-card-img img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform .4s ease;
+    object-fit: contain;
+    transition: transform 0.6s ease;
+    padding: 8px;
 }
 
 .fs-card:hover .fs-card-img img {
@@ -227,18 +234,72 @@
 }
 
 .fs-card-body {
-    padding: 8px 10px 10px;
+    padding: 0;
+}
+
+.fs-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.fs-card-stars {
+    color: #ffc107;
+    font-size: 10px;
+}
+
+.fs-card-rev {
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 500;
 }
 
 .fs-card-name {
     display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #1f2937;
-    line-height: 1.3;
-    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 500;
+    color: #212121;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    height: 36px;
+    text-decoration: none !important;
+}
+
+.fs-card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.fs-card-sale {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.fs-card-reg {
+    font-size: 12px;
+    color: #bbb;
+    text-decoration: line-through;
+}
+
+.fs-card-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #e31e24;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    z-index: 2;
 }
 
 /* ── Pagination Dots ─────────────────────────────────────── */
@@ -338,8 +399,12 @@
         gap: 8px;
     }
 
-    .fs-card-body { padding: 6px 8px 8px; }
-    .fs-card-name { font-size: 11px; }
+    .fs-card { padding: 8px; }
+    .fs-card-img { height: 100px; }
+    .fs-card-img img { padding: 4px; }
+    .fs-card-name { font-size: 11px; height: 30px; }
+    .fs-card-sale { font-size: 13px; }
+    .fs-card-reg { font-size: 11px; }
 
     .fs-dots { padding-top: 10px; gap: 5px; }
     .fs-dot { width: 6px; height: 6px; }

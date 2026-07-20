@@ -67,8 +67,21 @@ foreach ($all_models as $midx => $m):
                         <?php for ($i = 0; $i < $pages; $i++): ?>
                         <div class="fs-c-slide" role="group" aria-label="Page <?php echo $i + 1; ?> of <?php echo $pages; ?>">
                             <?php $chunk = array_slice($products, $i * $per_page, $per_page); ?>
-                            <?php foreach ($chunk as $prod): ?>
+                            <?php foreach ($chunk as $prod):
+                                $seed = crc32($prod);
+                                mt_srand($seed);
+                                $sale = mt_rand(299, 2499);
+                                $mrp = $sale + mt_rand(100, 1200);
+                                $disc = round((1 - $sale / $mrp) * 100);
+                                $rating_val = round(3.5 + (($seed & 0xFF) / 255) * 1.5, 1);
+                                $reviews = 10 + ($seed % 491);
+                                $full = floor($rating_val);
+                                $frac = $rating_val - $full;
+                                $stars = str_repeat('★', $full);
+                                if ($frac >= 0.5) $stars .= '★';
+                                ?>
                             <a href="#" class="fs-card" aria-label="<?php echo $prod; ?>">
+                                <span class="fs-card-badge"><?php echo $disc; ?>% off</span>
                                 <span class="fs-card-img">
                                     <img
                                         src="https://picsum.photos/seed/<?php echo urlencode(strtolower(str_replace([' ', '(', ')'], '-', $prod))); ?>/300/300"
@@ -77,7 +90,15 @@ foreach ($all_models as $midx => $m):
                                         decoding="async">
                                 </span>
                                 <span class="fs-card-body">
+                                    <span class="fs-card-rating">
+                                        <span class="fs-card-stars"><?php echo $stars; ?></span>
+                                        <span class="fs-card-rev">(<?php echo $reviews; ?>)</span>
+                                    </span>
                                     <span class="fs-card-name"><?php echo $prod; ?></span>
+                                    <span class="fs-card-price">
+                                        <span class="fs-card-sale">₹<?php echo $sale; ?></span>
+                                        <span class="fs-card-reg">₹<?php echo $mrp; ?></span>
+                                    </span>
                                 </span>
                             </a>
                             <?php endforeach; ?>
