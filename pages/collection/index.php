@@ -28,7 +28,7 @@ include '../../includes/header.php';
 
 <section class="collection-hero">
     <img
-        src="assets/images/collection/banner amadika.png"
+        src="../assets/images/collection/banner amadika.png"
         alt="Amadika Collection"
         loading="eager"
         decoding="async">
