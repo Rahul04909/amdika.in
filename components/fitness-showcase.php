@@ -1,7 +1,47 @@
 <link rel="stylesheet" href="<?php echo $assets_path; ?>css/fitness-showcase.css">
 
 <?php
-$hero_img = $assets_path . 'images/collection/collection-1.jpeg';
+$hero_images = [
+    'collection-1.jpeg',
+    'style-1.png',
+    'style-2.png',
+    'banner-2.png',
+    'banner-3.png',
+    'prod_1769666277_feat.png',
+    'prod_1769664231_feat.jpeg',
+    'prod_1769668560_feat.png',
+    'prod_1769668868_feat.png',
+    'prod_1769672667_feat.jpeg',
+    'prod_1769674164_feat.jpeg',
+    'prod_1769680450_feat.png',
+    'prod_1769684162_feat.png',
+    'prod_1769686628_feat.png',
+    'prod_1769687740_feat.png',
+];
+
+$prod_img_map = [
+    'Basket'          => 'prod_1769577427_feat.png',
+    'Belt'            => 'prod_1769577659_feat.png',
+    'Candle Holder'   => 'prod_1769604957_feat.jpeg',
+    'Coaster'         => 'prod_1770626934_feat.jpeg',
+    'Desk Organizer'  => 'prod_1769605484_feat.png',
+    'Key Holder'      => 'prod_1769605883_feat.jpeg',
+    'Laundry Hamper'  => 'prod_1769662551_feat.jpeg',
+    'Magazine Holder' => 'prod_1769664796_feat.jpeg',
+    'Pen Holder'      => 'prod_1769668209_feat.png',
+    'Photo Frame'     => 'prod_1769673099_feat.jpeg',
+    'Remote Holder'   => 'prod_1769673326_feat.jpeg',
+    'Sq. Tissue Box'  => 'prod_1769679071_feat.png',
+    'Storage Basket'  => 'prod_1769679897_feat.png',
+    'Table Clock'     => 'prod_1769686204_feat.png',
+    'Tissue Box'      => 'prod_1769687334_feat.png',
+    'Towel Tray'      => 'prod_1770282874_feat.jpeg',
+    'Tray Large'      => 'prod_1770295066_feat.jpeg',
+    'Tray Small'      => 'prod_1770295149_feat.jpeg',
+    'Vase'            => 'prod_1770364000_feat.jpeg',
+    'Wall Shelf'      => 'prod_1770364260_feat.jpeg',
+    'Waste Bin'       => 'prod_1770368561_feat.jpeg',
+];
 
 $all_models = [
     ['amk' => 'AMK 1501', 'name' => 'Flooting Model', 'products' => ['Laundry Hamper', 'Waste Bin', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Candle Holder', 'Storage Basket', 'Wall Shelf', 'Desk Organizer', 'Table Clock']],
@@ -28,6 +68,8 @@ foreach ($all_models as $midx => $m):
     $total = count($products);
     $pages = max(1, ceil($total / $per_page));
     $model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
+    $hero_file = $hero_images[$midx % count($hero_images)];
+    $hero_img = $assets_path . 'images/' . (in_array($hero_file, ['collection-1.jpeg','style-1.png','style-2.png','banner-2.png','banner-3.png']) ? 'collection/' : 'products/') . $hero_file;
 ?>
 
 <section class="fs-showcase" data-autoplay="4000" aria-labelledby="fs-h-<?php echo $midx; ?>">
@@ -84,7 +126,7 @@ foreach ($all_models as $midx => $m):
                                 <span class="fs-card-badge"><?php echo $disc; ?>% off</span>
                                 <span class="fs-card-img">
                                     <img
-                                        src="https://picsum.photos/seed/<?php echo urlencode(strtolower(str_replace([' ', '(', ')'], '-', $prod))); ?>/300/300"
+                                        src="<?php echo $assets_path . 'images/products/' . (isset($prod_img_map[$prod]) ? $prod_img_map[$prod] : 'prod_1769666277_feat.png'); ?>"
                                         alt="<?php echo $prod; ?>"
                                         loading="lazy"
                                         decoding="async">
