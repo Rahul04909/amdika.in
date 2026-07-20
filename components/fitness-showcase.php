@@ -1,25 +1,51 @@
 <link rel="stylesheet" href="<?php echo $assets_path; ?>css/fitness-showcase.css">
 
 <?php
-$hero_images = [
-    'collection-1.jpeg',
-    'style-1.png',
-    'style-2.png',
-    'banner-2.png',
-    'banner-3.png',
-    'prod_1769666277_feat.png',
-    'prod_1769664231_feat.jpeg',
-    'prod_1769668560_feat.png',
-    'prod_1769668868_feat.png',
-    'prod_1769672667_feat.jpeg',
-    'prod_1769674164_feat.jpeg',
-    'prod_1769680450_feat.png',
-    'prod_1769684162_feat.png',
-    'prod_1769686628_feat.png',
+if (!isset($conn)) {
+    require_once __DIR__ . '/../database/db_config.php';
+}
+
+$per_page = 4;
+
+// ─── Try reading from DB ───────────────────────────────────────
+$db_collections = [];
+$table_check = $conn->query("SHOW TABLES LIKE 'collections'");
+if ($table_check && $table_check->num_rows > 0) {
+    $col_res = $conn->query("SELECT c.*, p.slug as main_slug FROM collections c LEFT JOIN products p ON c.main_product_id = p.id WHERE c.status = 'active' ORDER BY c.sort_order ASC, c.created_at DESC");
+    if ($col_res && $col_res->num_rows > 0) {
+        while ($col = $col_res->fetch_assoc()) {
+            $prods_ids = json_decode($col['selected_products'], true) ?? [];
+            $prods_data = [];
+            if (!empty($prods_ids)) {
+                $ids_str = implode(',', array_map('intval', $prods_ids));
+                $p_res = $conn->query("SELECT id, name, slug, featured_image, mrp, sale_price FROM products WHERE id IN ($ids_str) AND status = 'active'");
+                if ($p_res) {
+                    while ($p = $p_res->fetch_assoc()) {
+                        $prods_data[] = $p;
+                    }
+                }
+            }
+            $db_collections[] = [
+                'amk'         => $col['amk_code'],
+                'name'        => $col['model_name'],
+                'hero_image'  => $col['hero_image'],
+                'main_slug'   => $col['main_slug'],
+                'products'    => $prods_data,
+            ];
+        }
+    }
+}
+
+// ─── Fallback hardcoded data ────────────────────────────────────
+$hero_images_fallback = [
+    'collection-1.jpeg', 'style-1.png', 'style-2.png', 'banner-2.png', 'banner-3.png',
+    'prod_1769666277_feat.png', 'prod_1769664231_feat.jpeg', 'prod_1769668560_feat.png',
+    'prod_1769668868_feat.png', 'prod_1769672667_feat.jpeg', 'prod_1769674164_feat.jpeg',
+    'prod_1769680450_feat.png', 'prod_1769684162_feat.png', 'prod_1769686628_feat.png',
     'prod_1769687740_feat.png',
 ];
 
-$prod_img_map = [
+$prod_img_fallback = [
     'Basket'          => 'prod_1769577427_feat.png',
     'Belt'            => 'prod_1769577659_feat.png',
     'Candle Holder'   => 'prod_1769604957_feat.jpeg',
@@ -43,7 +69,7 @@ $prod_img_map = [
     'Waste Bin'       => 'prod_1770368561_feat.jpeg',
 ];
 
-$all_models = [
+$fallback_models = [
     ['amk' => 'AMK 1501', 'name' => 'Flooting Model', 'products' => ['Laundry Hamper', 'Waste Bin', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Candle Holder', 'Storage Basket', 'Wall Shelf', 'Desk Organizer', 'Table Clock']],
     ['amk' => 'AMK 1502', 'name' => 'Suitcase Model', 'products' => ['Laundry Hamper', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Remote Holder', 'Key Holder', 'Photo Frame', 'Candle Holder']],
     ['amk' => 'AMK 1503', 'name' => 'Dual Tone',      'products' => ['Waste Bin', 'Sq. Tissue Box', 'Tissue Box', 'Pen Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Key Holder', 'Coaster', 'Storage Basket']],
@@ -61,15 +87,29 @@ $all_models = [
     ['amk' => 'AMK 1514', 'name' => 'Double Stud',    'products' => ['Laundry Hamper', 'Waste Bin', 'Tissue Box', 'Magazine Holder', 'Towel Tray', 'Tray Small', 'Tray Large', 'Basket', 'Key Holder', 'Candle Holder']],
 ];
 
-$per_page = 4;
+// ─── Decide which data to render ────────────────────────────────
+$use_db = !empty($db_collections);
+$all_models = $use_db ? $db_collections : $fallback_models;
 
 foreach ($all_models as $midx => $m):
     $products = $m['products'];
     $total = count($products);
     $pages = max(1, ceil($total / $per_page));
-    $model_label = trim($m['amk'] ? $m['amk'] . ' · ' . $m['name'] : $m['name']);
-    $hero_file = $hero_images[$midx % count($hero_images)];
-    $hero_img = $assets_path . 'images/' . (in_array($hero_file, ['collection-1.jpeg','style-1.png','style-2.png','banner-2.png','banner-3.png']) ? 'collection/' : 'products/') . $hero_file;
+    $model_label = trim(($m['amk'] ?? '') ? ($m['amk'] . ' · ' . $m['name']) : $m['name']);
+
+    // ─── Hero image ──────────────────────────────────────────────
+    if ($use_db && !empty($m['hero_image'])) {
+        $hero_img = $assets_path . $m['hero_image'];
+    } else {
+        $hero_file = $hero_images_fallback[$midx % count($hero_images_fallback)];
+        $hero_img = $assets_path . 'images/' . (in_array($hero_file, ['collection-1.jpeg','style-1.png','style-2.png','banner-2.png','banner-3.png']) ? 'collection/' : 'products/') . $hero_file;
+    }
+
+    // ─── Shop Collection URL ─────────────────────────────────────
+    $shop_url = '#';
+    if ($use_db && !empty($m['main_slug'])) {
+        $shop_url = $link_prefix . 'product/' . $m['main_slug'];
+    }
 ?>
 
 <section class="fs-showcase" data-autoplay="4000" aria-labelledby="fs-h-<?php echo $midx; ?>">
@@ -89,9 +129,9 @@ foreach ($all_models as $midx => $m):
                 <div class="fs-hero-body">
                     <span class="fs-hero-sub">Amadika</span>
                     <h2 id="fs-h-<?php echo $midx; ?>" class="fs-hero-title"><?php echo $m['name'] ?: 'Collection'; ?></h2>
-                    <p class="fs-hero-desc"><?php echo $m['amk']; ?> · <?php echo $total; ?> products</p>
-                    <a href="#" class="fs-hero-btn" aria-label="View <?php echo $m['name']; ?>">
-                        View Collection
+                    <p class="fs-hero-desc"><?php echo ($m['amk'] ?? ''); ?> · <?php echo $total; ?> products</p>
+                    <a href="<?php echo $shop_url; ?>" class="fs-hero-btn" aria-label="Shop <?php echo $m['name']; ?>">
+                        Shop Collection
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                     </a>
                 </div>
@@ -110,24 +150,44 @@ foreach ($all_models as $midx => $m):
                         <div class="fs-c-slide" role="group" aria-label="Page <?php echo $i + 1; ?> of <?php echo $pages; ?>">
                             <?php $chunk = array_slice($products, $i * $per_page, $per_page); ?>
                             <?php foreach ($chunk as $prod):
-                                $seed = crc32($prod);
-                                mt_srand($seed);
-                                $sale = mt_rand(299, 2499);
-                                $mrp = $sale + mt_rand(100, 1200);
-                                $disc = round((1 - $sale / $mrp) * 100);
-                                $rating_val = round(3.5 + (($seed & 0xFF) / 255) * 1.5, 1);
-                                $reviews = 10 + ($seed % 491);
-                                $full = floor($rating_val);
-                                $frac = $rating_val - $full;
+                                if ($use_db):
+                                    // DB product (associative array)
+                                    $prod_name  = $prod['name'];
+                                    $prod_slug  = $prod['slug'];
+                                    $prod_img   = !empty($prod['featured_image']) ? $assets_path . $prod['featured_image'] : $assets_path . 'images/products/prod_1769666277_feat.png';
+                                    $prod_url   = $link_prefix . 'product/' . $prod_slug;
+                                    $mrp        = floatval($prod['mrp'] ?? 0);
+                                    $sale       = floatval($prod['sale_price'] ?? 0);
+                                    $disc       = $mrp > 0 ? round((1 - $sale / $mrp) * 100) : 0;
+                                    $rating_val = round(3.5 + (crc32($prod_name) % 100) / 100 * 1.5, 1);
+                                    $reviews    = 10 + (crc32($prod_name) % 491);
+                                else:
+                                    // Fallback: product name string
+                                    $prod_name  = $prod;
+                                    $prod_slug  = '';
+                                    $img_key    = isset($prod_img_fallback[$prod]) ? $prod_img_fallback[$prod] : 'prod_1769666277_feat.png';
+                                    $prod_img   = $assets_path . 'images/products/' . $img_key;
+                                    $prod_url   = '#';
+                                    $seed       = crc32($prod);
+                                    mt_srand($seed);
+                                    $sale       = mt_rand(299, 2499);
+                                    $mrp        = $sale + mt_rand(100, 1200);
+                                    $disc       = round((1 - $sale / $mrp) * 100);
+                                    $rating_val = round(3.5 + (($seed & 0xFF) / 255) * 1.5, 1);
+                                    $reviews    = 10 + ($seed % 491);
+                                endif;
+
+                                $full  = floor($rating_val);
+                                $frac  = $rating_val - $full;
                                 $stars = str_repeat('★', $full);
                                 if ($frac >= 0.5) $stars .= '★';
-                                ?>
-                            <a href="#" class="fs-card" aria-label="<?php echo $prod; ?>">
+                            ?>
+                            <a href="<?php echo $prod_url; ?>" class="fs-card" aria-label="<?php echo $prod_name; ?>">
                                 <span class="fs-card-badge"><?php echo $disc; ?>% off</span>
                                 <span class="fs-card-img">
                                     <img
-                                        src="<?php echo $assets_path . 'images/products/' . (isset($prod_img_map[$prod]) ? $prod_img_map[$prod] : 'prod_1769666277_feat.png'); ?>"
-                                        alt="<?php echo $prod; ?>"
+                                        src="<?php echo $prod_img; ?>"
+                                        alt="<?php echo $prod_name; ?>"
                                         loading="lazy"
                                         decoding="async">
                                 </span>
@@ -136,10 +196,10 @@ foreach ($all_models as $midx => $m):
                                         <span class="fs-card-stars"><?php echo $stars; ?></span>
                                         <span class="fs-card-rev">(<?php echo $reviews; ?>)</span>
                                     </span>
-                                    <span class="fs-card-name"><?php echo $prod; ?></span>
+                                    <span class="fs-card-name"><?php echo $prod_name; ?></span>
                                     <span class="fs-card-price">
-                                        <span class="fs-card-sale">₹<?php echo $sale; ?></span>
-                                        <span class="fs-card-reg">₹<?php echo $mrp; ?></span>
+                                        <span class="fs-card-sale">₹<?php echo number_format($sale); ?></span>
+                                        <span class="fs-card-reg">₹<?php echo number_format($mrp); ?></span>
                                     </span>
                                 </span>
                             </a>
