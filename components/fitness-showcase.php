@@ -102,7 +102,7 @@ foreach ($all_models as $midx => $m):
 
     // ─── Hero image ──────────────────────────────────────────────
     if ($use_db && !empty($m['hero_image'])) {
-        $hero_img = $assets_path . $m['hero_image'];
+        $hero_img = $link_prefix . $m['hero_image'];
     } else {
         $hero_file = $hero_images_fallback[$midx % count($hero_images_fallback)];
         $hero_img = $assets_path . 'images/' . (in_array($hero_file, ['collection-1.jpeg','style-1.png','style-2.png','banner-2.png','banner-3.png']) ? 'collection/' : 'products/') . $hero_file;
@@ -157,7 +157,7 @@ foreach ($all_models as $midx => $m):
                                     // DB product (associative array)
                                     $prod_name  = $prod['name'];
                                     $prod_slug  = $prod['slug'];
-                                    $prod_img   = !empty($prod['featured_image']) ? $assets_path . $prod['featured_image'] : $assets_path . 'images/products/prod_1769666277_feat.png';
+                                    $prod_img   = !empty($prod['featured_image']) ? $link_prefix . $prod['featured_image'] : $assets_path . 'images/products/prod_1769666277_feat.png';
                                     $prod_url   = $link_prefix . 'product/' . $prod_slug;
                                     $mrp        = floatval($prod['mrp'] ?? 0);
                                     $sale       = floatval($prod['sale_price'] ?? 0);
