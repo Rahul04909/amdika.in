@@ -155,9 +155,10 @@ $page_title = 'Add Collection';
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Hero Image</label>
+                                <label class="form-label">Hero Image <span class="text-muted fw-normal">(recommended: 1200×675 px · 16:9 · max 500 KB)</span></label>
                                 <input type="file" class="form-control" name="hero_image" accept="image/*" onchange="previewImage(this, 'heroPreview')">
                                 <img id="heroPreview" class="preview-img">
+                                <small class="text-muted">For perfect fit, use a landscape image with 16:9 aspect ratio. The image will be displayed fully without cropping.</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Status</label>
