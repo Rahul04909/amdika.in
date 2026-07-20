@@ -103,6 +103,24 @@ $page_title = 'Add Collection';
         .selected-card .remove-btn { width: 26px; height: 26px; border-radius: 50%; border: none; background: #fee2e2; color: #ef4444; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; font-size: 14px; flex-shrink: 0; }
         .selected-card .remove-btn:hover { background: #ef4444; color: #fff; }
         .selected-empty { text-align: center; padding: 24px; color: #d1d5db; font-size: 14px; border: 2px dashed #e5e7eb; border-radius: 12px; }
+
+        /* ── Main Product Picker ── */
+        .main-product-card { display: flex; align-items: center; gap: 14px; background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 12px 16px; margin-top: 8px; }
+        .main-product-card .thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; flex-shrink: 0; background: #fff; }
+        .main-product-card .info { flex: 1; min-width: 0; }
+        .main-product-card .info .name { font-size: 15px; font-weight: 600; color: #111827; }
+        .main-product-card .info .slug { font-size: 11px; color: #6b7280; }
+        .main-product-card .change-btn { padding: 6px 16px; border-radius: 8px; border: 1px solid #22c55e; background: #fff; color: #22c55e; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+        .main-product-card .change-btn:hover { background: #22c55e; color: #fff; }
+        .main-product-card .check-badge { width: 28px; height: 28px; border-radius: 50%; background: #22c55e; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+        .main-product-empty { text-align: center; padding: 16px; color: #9ca3af; font-size: 13px; border: 2px dashed #e5e7eb; border-radius: 10px; margin-top: 8px; cursor: pointer; transition: all 0.15s; }
+        .main-product-empty:hover { border-color: #D32F2F; color: #D32F2F; background: #fef2f2; }
+        .main-product-search-wrap { position: relative; margin-top: 8px; }
+        .main-product-search-wrap .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 14px; pointer-events: none; }
+        .main-product-search-wrap .clear-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; display: none; font-size: 16px; padding: 4px 8px; }
+        .main-product-search-wrap .clear-btn:hover { color: #ef4444; }
+        .main-product-search-input { padding-left: 38px !important; padding-right: 40px !important; border-radius: 10px !important; border: 2px solid #e5e7eb !important; transition: all 0.2s; height: 44px; font-size: 14px; }
+        .main-product-search-input:focus { border-color: #22c55e !important; box-shadow: 0 0 0 3px rgba(34,197,94,0.1) !important; }
     </style>
 </head>
 <body>
@@ -152,12 +170,31 @@ $page_title = 'Add Collection';
 
                         <div class="mb-3">
                             <label class="form-label">Main Product <span class="text-muted">(for "Shop Collection" button link)</span></label>
-                            <select class="form-select" name="main_product_id">
-                                <option value="">— Select Main Product —</option>
-                                <?php foreach ($all_products as $p): ?>
-                                    <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['name']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
+
+                            <div class="main-product-picker" id="mainProductPicker">
+                                <div class="main-product-empty" id="mainProductEmpty" onclick="document.getElementById('mainProductSearch').focus()">
+                                    <i class="fas fa-search me-2"></i>Click to select the main product for this collection
+                                </div>
+
+                                <div class="main-product-card" id="mainProductCard" style="display:none">
+                                    <span class="check-badge"><i class="fas fa-check"></i></span>
+                                    <img src="" alt="" class="thumb" id="mainProductThumb">
+                                    <div class="info">
+                                        <div class="name" id="mainProductName"></div>
+                                        <div class="slug" id="mainProductSlug"></div>
+                                    </div>
+                                    <button type="button" class="change-btn" onclick="clearMainProduct()">Change</button>
+                                </div>
+
+                                <div class="main-product-search-wrap" style="display:none" id="mainProductSearchWrap">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" class="form-control main-product-search-input" id="mainProductSearch" placeholder="Search main product by name..." autocomplete="off">
+                                    <button type="button" class="clear-btn" id="clearMainSearch"><i class="fas fa-times"></i></button>
+                                    <div class="search-results-dropdown" id="mainSearchResults"></div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="main_product_id" id="mainProductIdInput" value="">
                             <small class="text-muted">Customers will be redirected to this product's detail page</small>
                         </div>
 
@@ -331,6 +368,9 @@ $page_title = 'Add Collection';
             if (!e.target.closest('.product-search-wrap')) {
                 resultsDropdown.style.display = 'none';
             }
+            if (!e.target.closest('.main-product-search-wrap') && !e.target.closest('.main-product-picker')) {
+                mainSearchResults.style.display = 'none';
+            }
         });
 
         clearBtn.addEventListener('click', function() {
@@ -344,6 +384,123 @@ $page_title = 'Add Collection';
             if (e.key === 'Escape') {
                 resultsDropdown.style.display = 'none';
                 searchInput.blur();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════
+        // ─── Main Product Picker ──────────────────────────────────
+        // ═══════════════════════════════════════════════════════════
+        let mainProductId = null;
+
+        const mainProductEmpty = document.getElementById('mainProductEmpty');
+        const mainProductCard = document.getElementById('mainProductCard');
+        const mainProductThumb = document.getElementById('mainProductThumb');
+        const mainProductName = document.getElementById('mainProductName');
+        const mainProductSlug = document.getElementById('mainProductSlug');
+        const mainProductIdInput = document.getElementById('mainProductIdInput');
+        const mainSearchWrap = document.getElementById('mainProductSearchWrap');
+        const mainSearchInput = document.getElementById('mainProductSearch');
+        const mainClearBtn = document.getElementById('clearMainSearch');
+        const mainSearchResults = document.getElementById('mainSearchResults');
+
+        mainProductEmpty.addEventListener('click', function() {
+            mainSearchWrap.style.display = 'block';
+            mainSearchInput.focus();
+        });
+
+        function selectMainProduct(id) {
+            id = Number(id);
+            const prod = allProducts.find(p => p.id == id);
+            if (!prod) return;
+
+            mainProductId = id;
+            mainProductIdInput.value = id;
+            mainProductEmpty.style.display = 'none';
+            mainProductCard.style.display = 'flex';
+
+            const imgSrc = prod.featured_image
+                ? '../../' + prod.featured_image
+                : '../../assets/images/products/prod_1769666277_feat.png';
+            mainProductThumb.src = imgSrc;
+            mainProductName.textContent = prod.name;
+            mainProductSlug.textContent = prod.slug;
+
+            mainSearchInput.value = '';
+            mainSearchResults.style.display = 'none';
+            mainSearchWrap.style.display = 'none';
+            mainClearBtn.style.display = 'none';
+        }
+
+        function clearMainProduct() {
+            mainProductId = null;
+            mainProductIdInput.value = '';
+            mainProductCard.style.display = 'none';
+            mainProductEmpty.style.display = 'block';
+            mainSearchInput.value = '';
+            mainSearchResults.style.display = 'none';
+            mainSearchWrap.style.display = 'none';
+            mainClearBtn.style.display = 'none';
+        }
+
+        function performMainSearch(query) {
+            if (!query) {
+                mainSearchResults.style.display = 'none';
+                return;
+            }
+            const filtered = allProducts.filter(p =>
+                p.name.toLowerCase().includes(query)
+            );
+            if (filtered.length === 0) {
+                mainSearchResults.innerHTML = '<div class="search-result-empty">No products found matching "<strong>' + escHtml(query) + '</strong>"</div>';
+                mainSearchResults.style.display = 'block';
+                return;
+            }
+            let html = '';
+            filtered.forEach(p => {
+                const isSelected = mainProductId === p.id;
+                const imgSrc = p.featured_image
+                    ? '../../' + p.featured_image
+                    : '../../assets/images/products/prod_1769666277_feat.png';
+                html += `
+                    <div class="search-result-item ${isSelected ? 'added' : ''}" onclick="${isSelected ? '' : "selectMainProduct(" + p.id + ")"}" ${isSelected ? 'style="cursor:default;opacity:0.6"' : ''}>
+                        <img src="${imgSrc}" alt="" class="thumb" onerror="this.src='../../assets/images/amdika-logo.png'">
+                        <div class="info">
+                            <div class="name">${highlightMatch(escHtml(p.name), query)}</div>
+                            <div class="slug">${escHtml(p.slug)}</div>
+                        </div>
+                        <span class="add-badge">${isSelected ? '<i class="fas fa-check"></i>' : '<i class="fas fa-arrow-right"></i>'}</span>
+                    </div>
+                `;
+            });
+            mainSearchResults.innerHTML = html;
+            mainSearchResults.style.display = 'block';
+        }
+
+        let mainSearchTimer;
+        mainSearchInput.addEventListener('input', function() {
+            const val = this.value.trim();
+            mainClearBtn.style.display = val ? 'block' : 'none';
+            clearTimeout(mainSearchTimer);
+            mainSearchTimer = setTimeout(() => performMainSearch(val.toLowerCase()), 150);
+        });
+
+        mainSearchInput.addEventListener('focus', function() {
+            if (this.value.trim()) {
+                mainSearchResults.style.display = 'block';
+            }
+        });
+
+        mainClearBtn.addEventListener('click', function() {
+            mainSearchInput.value = '';
+            mainClearBtn.style.display = 'none';
+            mainSearchResults.style.display = 'none';
+            mainSearchInput.focus();
+        });
+
+        mainSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                mainSearchResults.style.display = 'none';
+                mainSearchInput.blur();
             }
         });
 
