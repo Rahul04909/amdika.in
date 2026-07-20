@@ -1,301 +1,435 @@
-/* ==========================================================
-   FITNESS SHOWCASE
-   Namespaced with fs- prefix
-========================================================== */
+/* ===============================================================
+   FITNESS SHOWCASE  —  namespaced with fs-
+   =============================================================== */
 
-.fs-showcase{
-    width:100%;
-    background:#fff;
-    padding:50px 0;
+.fs-showcase {
+    width: 100%;
+    background: #f8f9fb;
+    padding: 60px 0;
 }
 
-.fs-heading{
-    margin:0 0 28px;
-    font-size:36px;
-    font-weight:700;
-    color:#111827;
-    text-align:center;
-    letter-spacing:-0.3px;
+.fs-container {
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-.fs-container{
-    width:100%;
-    max-width:1480px;
-    margin:0 auto;
-    padding:0 18px;
-    box-sizing:border-box;
+/* ── Main Layout ─────────────────────────────────────────── */
+
+.fs-layout {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
 }
 
-/* ── Main Layout ────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   LEFT — HERO IMAGE
+   ═══════════════════════════════════════════════════════════ */
 
-.fs-layout{
-    display:flex;
-    align-items:stretch;
-    gap:16px;
+.fs-hero {
+    flex: 0 0 58%;
+    position: relative;
+    overflow: hidden;
+    min-height: 680px;
 }
 
-/* ── Left Image ─────────────────────────────────────────── */
-
-.fs-image-link{
-    width:48%;
-    flex-shrink:0;
-    display:block;
-    overflow:hidden;
-    border-radius:10px;
-    text-decoration:none;
+.fs-hero-img {
+    position: absolute;
+    inset: 0;
 }
 
-.fs-image-wrap{
-    width:100%;
-    height:100%;
-    overflow:hidden;
+.fs-hero-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(.25,.46,.45,.94);
 }
 
-.fs-image{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .5s ease;
+.fs-hero:hover .fs-hero-img img {
+    transform: scale(1.05);
 }
 
-.fs-image-link:hover .fs-image{
-    transform:scale(1.04);
+.fs-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(0,0,0,.55) 0%,
+        rgba(0,0,0,.35) 50%,
+        rgba(0,0,0,.15) 100%
+    );
+    pointer-events: none;
 }
 
-/* ── Right Section ──────────────────────────────────────── */
+/* Hero text */
 
-.fs-right{
-    width:52%;
-    display:grid;
-    grid-template-columns:1fr 1fr 1.15fr;
-    grid-template-rows:1fr 1fr;
-    gap:14px;
+.fs-hero-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 48px 44px;
+    z-index: 2;
 }
 
-/* Track passes its children into the parent grid */
-.fs-track{
-    display:contents;
+.fs-hero-sub {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.8);
+    margin-bottom: 12px;
+    border-left: 3px solid #f97316;
+    padding-left: 12px;
 }
 
-/* Card positions in grid */
-.fs-track .fs-card:nth-child(1){ grid-column:1; grid-row:1; }
-.fs-track .fs-card:nth-child(2){ grid-column:2; grid-row:1; }
-.fs-track .fs-card:nth-child(3){ grid-column:1; grid-row:2; }
-.fs-track .fs-card:nth-child(4){ grid-column:2; grid-row:2; }
-
-/* CTA position */
-.fs-cta{
-    grid-column:3;
-    grid-row:1 / 3;
+.fs-hero-title {
+    margin: 0 0 10px;
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.5px;
+    line-height: 1.15;
 }
 
-/* ── Cards ──────────────────────────────────────────────── */
-
-.fs-card{
-    position:relative;
-    display:block;
-    overflow:hidden;
-    border-radius:10px;
-    text-decoration:none;
-    transition:transform .3s ease,box-shadow .3s ease;
+.fs-hero-desc {
+    margin: 0 0 28px;
+    font-size: 16px;
+    color: rgba(255,255,255,.8);
+    line-height: 1.55;
+    max-width: 400px;
 }
 
-.fs-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 8px 24px rgba(0,0,0,.12);
+.fs-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #f97316;
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .3s ease;
 }
 
-.fs-card-img{
-    width:100%;
-    height:100%;
-    overflow:hidden;
+.fs-hero-btn:hover {
+    background: #ea580c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(249,115,22,.35);
 }
 
-.fs-card-img img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .4s ease;
+.fs-hero-btn svg {
+    transition: transform .3s ease;
 }
 
-.fs-card:hover .fs-card-img img{
-    transform:scale(1.06);
+.fs-hero-btn:hover svg {
+    transform: translateX(4px);
 }
 
-/* Bottom gradient overlay */
-.fs-card-overlay{
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:60%;
-    background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 100%);
-    pointer-events:none;
+/* ═══════════════════════════════════════════════════════════
+   RIGHT — PRODUCT GRID
+   ═══════════════════════════════════════════════════════════ */
+
+.fs-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 24px 24px;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
-.fs-card-title{
-    position:absolute;
-    bottom:16px;
-    left:16px;
-    right:16px;
-    margin:0;
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    line-height:1.3;
-    z-index:2;
+/* Header */
+
+.fs-right-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
-/* ── CTA Block ──────────────────────────────────────────── */
-
-.fs-cta{
-    background:#314C86;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px 18px;
-    box-sizing:border-box;
+.fs-right-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -.3px;
 }
 
-.fs-cta-content{
-    max-width:220px;
+.fs-right-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f97316;
+    text-decoration: none;
+    transition: color .2s ease;
 }
 
-.fs-cta-title{
-    margin:0 0 16px;
-    color:#fff;
-    font-size:18px;
-    font-weight:700;
-    line-height:1.4;
+.fs-right-link:hover {
+    color: #ea580c;
 }
 
-.fs-cta-btn{
-    display:inline-block;
-    background:#fff;
-    color:#314C86;
-    padding:10px 28px;
-    border-radius:6px;
-    font-size:14px;
-    font-weight:700;
-    text-decoration:none;
-    transition:all .3s ease;
-    letter-spacing:0.3px;
+/* Grid */
+
+.fs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    flex: 1;
+    align-content: start;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
 }
 
-.fs-cta-btn:hover{
-    background:#f0f2f5;
-    transform:translateY(-2px);
-    box-shadow:0 6px 16px rgba(0,0,0,.15);
+.fs-grid::-webkit-scrollbar {
+    width: 4px;
 }
 
-/* ==========================================================
-   TABLET
-========================================================== */
+.fs-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-@media (max-width:992px){
+.fs-grid::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
 
-    .fs-showcase{
-        padding:40px 0;
+/* ── Product Card ────────────────────────────────────────── */
+
+.fs-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    transition: all .3s ease;
+}
+
+.fs-card:hover {
+    transform: translateY(-3px);
+    border-color: #e5e7eb;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.fs-card-img {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f3f4f6;
+}
+
+.fs-card-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.fs-card:hover .fs-card-img img {
+    transform: scale(1.08);
+}
+
+/* Badge */
+
+.fs-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.fs-badge--new {
+    background: #22c55e;
+    color: #fff;
+}
+
+.fs-badge--sale {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* Card body */
+
+.fs-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px 12px;
+    gap: 2px;
+}
+
+.fs-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fs-card-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET  ≤ 992px
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 992px) {
+
+    .fs-showcase {
+        padding: 40px 0;
     }
 
-    .fs-heading{
-        font-size:30px;
-        margin-bottom:22px;
+    .fs-layout {
+        flex-direction: column;
+        border-radius: 12px;
     }
 
-    .fs-layout{
-        flex-direction:column;
+    .fs-hero {
+        flex: none;
+        width: 100%;
+        min-height: 420px;
     }
 
-    .fs-image-link{
-        width:100%;
-        height:360px;
+    .fs-hero-body {
+        padding: 36px 32px;
     }
 
-    .fs-right{
-        width:100%;
+    .fs-hero-title {
+        font-size: 32px;
+    }
+
+    .fs-hero-desc {
+        font-size: 14px;
+        max-width: 340px;
+    }
+
+    .fs-right {
+        padding: 24px 20px 20px;
+    }
+
+    .fs-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .fs-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .fs-card {
+        min-width: 180px;
+    }
+
+    .fs-right-link {
+        display: none;
     }
 
 }
 
-/* ==========================================================
-   MOBILE
-========================================================== */
+/* ═══════════════════════════════════════════════════════════
+   MOBILE  ≤ 576px
+   ═══════════════════════════════════════════════════════════ */
 
-@media (max-width:576px){
+@media (max-width: 576px) {
 
-    .fs-showcase{
-        padding:30px 0;
+    .fs-showcase {
+        padding: 24px 0;
     }
 
-    .fs-heading{
-        font-size:24px;
-        margin-bottom:18px;
+    .fs-container {
+        padding: 0 12px;
     }
 
-    .fs-image-link{
-        height:220px;
-        border-radius:8px;
+    .fs-hero {
+        min-height: 340px;
+        border-radius: 10px 10px 0 0;
     }
 
-    .fs-container{
-        padding:0 14px;
+    .fs-hero-body {
+        padding: 24px 20px;
     }
 
-    /* Cards become horizontal swipe */
-    .fs-right{
-        display:block;
+    .fs-hero-sub {
+        font-size: 10px;
+        margin-bottom: 8px;
+        padding-left: 10px;
     }
 
-    .fs-track{
-        display:flex;
-        gap:12px;
-        overflow-x:auto;
-        scrollbar-width:none;
-        -webkit-overflow-scrolling:touch;
-        padding-bottom:6px;
-        cursor:grab;
+    .fs-hero-title {
+        font-size: 26px;
     }
 
-    .fs-track::-webkit-scrollbar{
-        display:none;
+    .fs-hero-desc {
+        font-size: 13px;
+        margin-bottom: 20px;
+        max-width: 280px;
     }
 
-    .fs-track .fs-card:nth-child(n){
-        flex:0 0 220px;
-        border-radius:8px;
-        min-height:280px;
-        grid-column:auto;
-        grid-row:auto;
+    .fs-hero-btn {
+        padding: 12px 24px;
+        font-size: 13px;
     }
 
-    .fs-card-title{
-        font-size:14px;
-        bottom:12px;
-        left:12px;
-        right:12px;
+    .fs-right {
+        padding: 18px 14px 14px;
     }
 
-    /* CTA moves below cards */
-    .fs-cta{
-        margin-top:12px;
-        border-radius:8px;
-        padding:20px 16px;
-        grid-column:auto;
-        grid-row:auto;
+    .fs-right-title {
+        font-size: 17px;
     }
 
-    .fs-cta-title{
-        font-size:16px;
+    .fs-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
     }
 
-    .fs-cta-btn{
-        font-size:13px;
-        padding:8px 22px;
+    .fs-card {
+        min-width: 150px;
+        border-radius: 8px;
+    }
+
+    .fs-card-body {
+        padding: 8px 10px 10px;
+    }
+
+    .fs-card-name {
+        font-size: 12px;
+    }
+
+    .fs-card-price {
+        font-size: 13px;
     }
 
 }
