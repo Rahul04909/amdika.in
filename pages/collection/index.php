@@ -28,7 +28,7 @@ include '../../includes/header.php';
 
 <section class="collection-hero">
     <img
-        src="https://images-static.nykaa.com/uploads/febd2a3e-d758-4b5e-996d-8497e3280ea5.jpg?tr=cm-pad_resize,w-1800"
+        src="assets/images/collection/banner amadika.png"
         alt="Amadika Collection"
         loading="eager"
         decoding="async">
