@@ -96,7 +96,7 @@ include '../../includes/header.php';
     <div class="track-card">
         <div class="track-card-body">
             <div class="track-input-group">
-                <input type="text" id="awbInput" value="26040200188266" placeholder="Enter AWB number" autocomplete="off">
+                <input type="text" id="awbInput" value="" placeholder="Enter AWB number" autocomplete="off">
                 <button id="trackBtn" onclick="trackOrder()">
                     <span class="spinner"></span>
                     <span class="btn-text"><i class="fas fa-search"></i> Track</span>
@@ -243,7 +243,6 @@ function renderTracking(data) {
     trackResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-trackOrder();
 </script>
 
 <?php include '../../includes/footer.php'; ?>
