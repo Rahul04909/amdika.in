@@ -469,7 +469,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                 support@amadika.in
             </a>
             <span class="hidden md:inline text-gray-700">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/shipping-policy/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
+            <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
                 Track Order
             </a>
         </div>
