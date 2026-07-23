@@ -55,32 +55,80 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-$search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$where_clause = "";
+// --- Filters ---
+$search       = isset($_GET['search']) ? trim($_GET['search']) : '';
+$category_id  = isset($_GET['category_id']) ? trim($_GET['category_id']) : '';
+$status_filter = isset($_GET['status']) ? trim($_GET['status']) : '';
+
+$where_clauses = [];
 $params = [];
 $types = "";
 
 if (!empty($search)) {
-    $where_clause = " WHERE p.name LIKE ? OR p.slug LIKE ? ";
-    $s_param = "%$search%";
-    $params[] = $s_param;
-    $params[] = $s_param;
+    $where_clauses[] = "(p.name LIKE ? OR p.slug LIKE ?)";
+    $s = "%$search%";
+    $params[] = $s;
+    $params[] = $s;
     $types .= "ss";
 }
 
-// Fetch Products with Category Name
-$sql = "SELECT p.*, c.name as category_name 
-        FROM products p 
-        LEFT JOIN product_categories c ON p.category_id = c.id 
-        $where_clause
-        ORDER BY p.created_at DESC";
-
-$stmt = $conn->prepare($sql);
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
+if (!empty($category_id)) {
+    $where_clauses[] = "p.category_id = ?";
+    $params[] = (int)$category_id;
+    $types .= "i";
 }
+
+if (!empty($status_filter)) {
+    $where_clauses[] = "p.status = ?";
+    $params[] = $status_filter;
+    $types .= "s";
+}
+
+$where_sql = "";
+if (!empty($where_clauses)) {
+    $where_sql = " WHERE " . implode(" AND ", $where_clauses);
+}
+
+// --- Pagination ---
+$per_page    = 20;
+$page        = max(1, intval($_GET['page'] ?? 1));
+$offset      = ($page - 1) * $per_page;
+
+// Count total matching records
+$count_sql = "SELECT COUNT(*) FROM products p LEFT JOIN product_categories c ON p.category_id = c.id $where_sql";
+$count_stmt = $conn->prepare($count_sql);
+if (!empty($params)) {
+    $count_stmt->bind_param($types, ...$params);
+}
+$count_stmt->execute();
+$total_rows  = (int)$count_stmt->get_result()->fetch_row()[0];
+$total_pages = max(1, (int)ceil($total_rows / $per_page));
+
+// Fetch current page of products
+$data_sql = "SELECT p.*, c.name as category_name 
+             FROM products p 
+             LEFT JOIN product_categories c ON p.category_id = c.id 
+             $where_sql
+             ORDER BY p.created_at DESC 
+             LIMIT ? OFFSET ?";
+
+$all_params = array_merge($params, [$per_page, $offset]);
+$all_types  = $types . "ii";
+
+$stmt = $conn->prepare($data_sql);
+$stmt->bind_param($all_types, ...$all_params);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// Build query-string fragment to preserve filters in pagination links
+$filter_qs = http_build_query(array_filter([
+    'search'      => $search,
+    'category_id' => $category_id,
+    'status'      => $status_filter,
+], 'strlen'));
+
+// Fetch categories for the filter dropdown
+$cat_result = $conn->query("SELECT id, name FROM product_categories ORDER BY name ASC");
 
 $page_title = 'Manage Products';
 ?>
@@ -136,7 +184,50 @@ $page_title = 'Manage Products';
                     </div>
                 <?php endif; ?>
 
+                <!-- Filter Bar -->
+                <div class="card card-custom p-3 mb-4">
+                    <form method="GET" class="row g-2 align-items-end">
+                        <div class="col-md-4">
+                            <label class="form-label small text-muted mb-1">Search</label>
+                            <input type="text" name="search" class="form-control form-control-sm" placeholder="Name or slug..." value="<?php echo htmlspecialchars($search); ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted mb-1">Category</label>
+                            <select name="category_id" class="form-select form-select-sm">
+                                <option value="">All Categories</option>
+                                <?php while($cat = $cat_result->fetch_assoc()): ?>
+                                    <option value="<?php echo $cat['id']; ?>" <?php echo $category_id == $cat['id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($cat['name']); ?>
+                                    </option>
+                                <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted mb-1">Status</label>
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="">All</option>
+                                <option value="active" <?php echo $status_filter === 'active' ? 'selected' : ''; ?>>Active</option>
+                                <option value="inactive" <?php echo $status_filter === 'inactive' ? 'selected' : ''; ?>>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-dark btn-sm me-1"><i class="fas fa-filter me-1"></i>Filter</button>
+                            <a href="manage-products.php" class="btn btn-outline-secondary btn-sm"><i class="fas fa-times me-1"></i>Clear</a>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="card card-custom p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <small class="text-muted">
+                            Showing 
+                            <?php echo $total_rows ? ($offset + 1) : 0; ?>
+                            to 
+                            <?php echo min($offset + $per_page, $total_rows); ?>
+                            of 
+                            <?php echo $total_rows; ?> products
+                        </small>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="bg-light">
@@ -197,6 +288,43 @@ $page_title = 'Manage Products';
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Pagination -->
+                    <?php if ($total_pages > 1): ?>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <small class="text-muted">Page <?php echo $page; ?> of <?php echo $total_pages; ?></small>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                                    <a class="page-link" href="?page=1<?php echo $filter_qs ? '&'.$filter_qs : ''; ?>">&laquo;</a>
+                                </li>
+                                <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo $filter_qs ? '&'.$filter_qs : ''; ?>">&lsaquo;</a>
+                                </li>
+                                <?php
+                                $start_page = max(1, $page - 2);
+                                $end_page   = min($total_pages, $page + 2);
+                                if ($start_page > 1): ?>
+                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                <?php endif; ?>
+                                <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo $filter_qs ? '&'.$filter_qs : ''; ?>"><?php echo $i; ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                                <?php if ($end_page < $total_pages): ?>
+                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                <?php endif; ?>
+                                <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo $filter_qs ? '&'.$filter_qs : ''; ?>">&rsaquo;</a>
+                                </li>
+                                <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $total_pages; ?><?php echo $filter_qs ? '&'.$filter_qs : ''; ?>">&raquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
