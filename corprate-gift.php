@@ -295,7 +295,7 @@ include 'includes/header.php';
                         </span>
                         
                         <div class="w-100 overflow-hidden bg-light" style="height: 380px;">
-                            <img src="<?php echo $link_prefix; ?>assets/images/corporate_gift_set.png" 
+                            <img src="<?php echo $link_prefix; ?>assets/images/corprate.jpeg" 
                                  alt="Amadika Signature Leather Gift Box" 
                                  class="w-100 h-100 object-fit-cover">
                         </div>
@@ -740,7 +740,7 @@ include 'includes/header.php';
                         <!-- Absolute background overlay -->
                         <div class="position-absolute w-100 h-100" style="background: linear-gradient(180deg, rgba(17,24,39,0.1) 0%, rgba(17,24,39,0.8) 100%); z-index: 2;"></div>
                         <!-- Photorealistic showcase image -->
-                        <img src="<?php echo $link_prefix; ?>assets/images/corporate_gift_set.png" 
+                        <img src="<?php echo $link_prefix; ?>assets/images/corprate.jpeg" 
                              alt="Luxury Gifting Proposals" 
                              class="w-100 h-100 object-fit-cover position-absolute" style="z-index: 1;">
                         
