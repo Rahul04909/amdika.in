@@ -472,6 +472,10 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
                 Track Order
             </a>
+            <span class="hidden md:inline text-gray-700">|</span>
+            <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
+                Our Stores
+            </a>
         </div>
     </div>
 
@@ -753,6 +757,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                     <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="newspaper"></i>Blogs</a>
                     <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="info"></i>About Us</a>
                     <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="phone"></i>Contact</a>
+                    <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="map-pin"></i>Our Stores</a>
                 </div>
             </div>
             
@@ -815,6 +820,9 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                 </a>
                 <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
                     <i data-lucide="phone-call" class="w-4 h-4 text-gray-400"></i> Contact Us
+                </a>
+                <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="flex items-center gap-3 text-sm font-semibold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-gray-400"></i> Our Stores
                 </a>
             </div>
         </div>
