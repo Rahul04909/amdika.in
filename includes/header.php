@@ -137,6 +137,7 @@ function getSubcategoriesForCategory($slug, $cat_name) {
     <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : "Amadika | Believe In Quality"; ?></title>
     <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : "Shop Luxury Leather Accessories Online at Amadika. Explore Premium Home Accessories, Leather Home Decor Products & stylish luxury décor in Faridabad."; ?>">
     <meta name="keywords" content="<?php echo isset($page_keywords) ? htmlspecialchars($page_keywords) : "premium home decor faridabad, luxury leather accessories online, premium home accessories, leather home decor products, stylish luxury decor faridabad, luxury leather accessories, amadika, amadika faridabad, amadika home decor"; ?>">
+    <?php if (isset($extra_head_tags)) echo $extra_head_tags; ?>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
