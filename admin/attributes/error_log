@@ -1,0 +1,5 @@
+[21-Feb-2026 10:08:38 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'amadik_ecom.colors' doesn't exist in /home4/amadik/public_html/admin/attributes/manage-colors.php:19
+Stack trace:
+#0 /home4/amadik/public_html/admin/attributes/manage-colors.php(19): mysqli->query('SELECT * FROM c...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/attributes/manage-colors.php on line 19

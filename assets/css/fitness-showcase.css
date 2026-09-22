@@ -1,0 +1,414 @@
+/* ===============================================================
+   AMADIKA SHOWCASE  —  namespaced with fs-
+   =============================================================== */
+
+.fs-showcase {
+    width: 100%;
+    background: #f5f6f8;
+    padding: 48px 0;
+}
+
+.fs-container {
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* ── Main Layout ─────────────────────────────────────────── */
+
+.fs-layout {
+    display: flex;
+    align-items: stretch;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LEFT — HERO
+   ═══════════════════════════════════════════════════════════ */
+
+.fs-hero {
+    flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    position: relative;
+}
+
+.fs-hero-img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 20px 20px 0;
+    min-height: 0;
+}
+
+.fs-hero-img img {
+    display: block;
+    max-width: 85%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.6s ease;
+}
+
+.fs-hero:hover .fs-hero-img img {
+    transform: scale(1.02);
+}
+
+.fs-hero-overlay {
+    display: none;
+}
+
+.fs-hero-body {
+    padding: 16px 24px 24px;
+    text-align: center;
+}
+
+.fs-hero-sub {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #f97316;
+    margin-bottom: 6px;
+}
+
+.fs-hero-title {
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -.3px;
+    line-height: 1.2;
+}
+
+.fs-hero-desc {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.fs-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f97316;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .25s ease;
+}
+
+.fs-hero-btn:hover {
+    background: #ea580c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(249,115,22,.35);
+}
+
+.fs-hero-btn svg {
+    transition: transform .25s ease;
+}
+
+.fs-hero-btn:hover svg {
+    transform: translateX(3px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RIGHT — CAROUSEL
+   ═══════════════════════════════════════════════════════════ */
+
+.fs-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 20px 18px 22px;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.fs-right-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+.fs-right-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -.2px;
+}
+
+.fs-right-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+}
+
+/* ── Carousel ────────────────────────────────────────────── */
+
+.fs-carousel {
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+}
+
+.fs-c-track {
+    display: flex;
+    transition: transform .5s cubic-bezier(.25,.46,.45,.94);
+    will-change: transform;
+    width: 100%;
+}
+
+.fs-c-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex: 0 0 100%;
+    min-width: 0;
+    align-content: start;
+}
+
+/* ── Product Card ────────────────────────────────────────── */
+
+.fs-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    padding: 12px;
+    transition: box-shadow 0.2s ease, transform 0.1s;
+    position: relative;
+}
+
+.fs-card:hover {
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, .11);
+    transform: translateY(-2px);
+    z-index: 2;
+    border-color: transparent;
+}
+
+.fs-card-img {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.fs-card-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s ease;
+    padding: 8px;
+}
+
+.fs-card:hover .fs-card-img img {
+    transform: scale(1.08);
+}
+
+.fs-card-body {
+    padding: 0;
+}
+
+.fs-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.fs-card-stars {
+    color: #ffc107;
+    font-size: 10px;
+}
+
+.fs-card-rev {
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 500;
+}
+
+.fs-card-name {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #212121;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 36px;
+    text-decoration: none !important;
+}
+
+.fs-card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.fs-card-sale {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.fs-card-reg {
+    font-size: 12px;
+    color: #bbb;
+    text-decoration: line-through;
+}
+
+.fs-card-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #e31e24;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+/* ── Pagination Dots ─────────────────────────────────────── */
+
+.fs-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding-top: 14px;
+    flex-shrink: 0;
+}
+
+.fs-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: #d1d5db;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.fs-dot.is-active {
+    background: #f97316;
+    width: 24px;
+    border-radius: 4px;
+}
+
+.fs-dot:hover {
+    background: #9ca3af;
+}
+
+.fs-dot.is-active:hover {
+    background: #ea580c;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET  ≤ 992px
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 992px) {
+
+    .fs-showcase { padding: 32px 0; }
+
+    .fs-layout {
+        flex-direction: column;
+        min-height: 0;
+        border-radius: 12px;
+    }
+
+    .fs-hero {
+        flex: none;
+        width: 100%;
+    }
+
+    .fs-hero-img img { max-height: 260px; }
+    .fs-hero-title { font-size: 20px; }
+    .fs-hero-body { padding: 14px 20px 20px; }
+    .fs-hero-desc { font-size: 12px; margin-bottom: 12px; }
+
+    .fs-right { padding: 18px 16px 14px; }
+
+    .fs-c-slide {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .fs-right-header { margin-bottom: 12px; }
+
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE  ≤ 576px
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 576px) {
+
+    .fs-showcase { padding: 20px 0; }
+    .fs-container { padding: 0 12px; }
+
+    .fs-layout { border-radius: 10px; }
+
+    .fs-hero-img { padding: 12px 12px 0; }
+    .fs-hero-img img { max-height: 180px; max-width: 90%; }
+
+    .fs-hero-body { padding: 12px 16px 16px; }
+    .fs-hero-sub { font-size: 9px; letter-spacing: 2px; margin-bottom: 4px; }
+    .fs-hero-title { font-size: 18px; }
+    .fs-hero-desc { font-size: 11px; margin-bottom: 10px; }
+    .fs-hero-btn { padding: 8px 18px; font-size: 12px; }
+
+    .fs-right { padding: 14px 12px 12px; }
+    .fs-right-title { font-size: 15px; }
+    .fs-right-header { margin-bottom: 10px; }
+
+    .fs-c-slide {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .fs-card { padding: 8px; }
+    .fs-card-img { height: 100px; }
+    .fs-card-img img { padding: 4px; }
+    .fs-card-name { font-size: 11px; height: 30px; }
+    .fs-card-sale { font-size: 13px; }
+    .fs-card-reg { font-size: 11px; }
+
+    .fs-dots { padding-top: 10px; gap: 5px; }
+    .fs-dot { width: 6px; height: 6px; }
+    .fs-dot.is-active { width: 18px; }
+
+}

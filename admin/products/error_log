@@ -1,0 +1,47 @@
+[27-Jan-2026 11:49:58 UTC] PHP Warning:  Undefined array key "gst_percent" in /home4/amadik/public_html/admin/products/add-product.php on line 65
+[29-Jan-2026 10:56:03 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'leather-desk' for key 'slug' in /home4/amadik/public_html/admin/products/add-product.php:75
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/add-product.php(75): mysqli->query('INSERT INTO pro...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/add-product.php on line 75
+[29-Jan-2026 11:30:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'leather-desk' for key 'slug' in /home4/amadik/public_html/admin/products/add-product.php:75
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/add-product.php(75): mysqli->query('INSERT INTO pro...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/add-product.php on line 75
+[29-Jan-2026 11:37:08 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'leather-desk' for key 'slug' in /home4/amadik/public_html/admin/products/add-product.php:75
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/add-product.php(75): mysqli->query('INSERT INTO pro...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/add-product.php on line 75
+[29-Jan-2026 11:48:54 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'leather-desk' for key 'slug' in /home4/amadik/public_html/admin/products/add-product.php:75
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/add-product.php(75): mysqli->query('INSERT INTO pro...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/add-product.php on line 75
+[16-Feb-2026 08:12:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Invalid JSON text: "The document is empty." at position 0 in value for column 'products.schema_markup'. in /home4/amadik/public_html/admin/products/edit-product.php:99
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/edit-product.php(99): mysqli->query('UPDATE products...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/edit-product.php on line 99
+[16-Feb-2026 08:14:08 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Invalid JSON text: "The document is empty." at position 0 in value for column 'products.schema_markup'. in /home4/amadik/public_html/admin/products/edit-product.php:99
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/edit-product.php(99): mysqli->query('UPDATE products...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/edit-product.php on line 99
+[16-Feb-2026 08:15:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Invalid JSON text: "The document is empty." at position 0 in value for column 'products.schema_markup'. in /home4/amadik/public_html/admin/products/edit-product.php:99
+Stack trace:
+#0 /home4/amadik/public_html/admin/products/edit-product.php(99): mysqli->query('UPDATE products...')
+#1 {main}
+  thrown in /home4/amadik/public_html/admin/products/edit-product.php on line 99
+[21-Feb-2026 10:11:47 UTC] PHP Warning:  Undefined variable $all_colors in /home4/amadik/public_html/admin/products/add-product.php on line 328
+[21-Feb-2026 10:11:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function data_seek() on null in /home4/amadik/public_html/admin/products/add-product.php:328
+Stack trace:
+#0 {main}
+  thrown in /home4/amadik/public_html/admin/products/add-product.php on line 328
+[24-Feb-2026 08:57:24 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home4/amadik/public_html/database/db_config.php:9
+Stack trace:
+#0 /home4/amadik/public_html/database/db_config.php(9): mysqli->__construct('localhost', 'amadik_ecom', Object(SensitiveParameterValue), 'amadik_ecom')
+#1 /home4/amadik/public_html/admin/products/manage-products.php(3): require_once('/home4/amadik/p...')
+#2 {main}
+  thrown in /home4/amadik/public_html/database/db_config.php on line 9

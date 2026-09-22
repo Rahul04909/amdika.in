@@ -1,0 +1,331 @@
+:root {
+    /* Luxury Redesign Palette */
+    --primary-color: #C89B2C; /* Luxury Gold */
+    --primary-hover: #b58b27;
+    --accent-gold: #C89B2C;
+    --secondary-color: #111827; /* Dark Luxury Slate */
+    --text-muted: #6B7280;
+    --border-color: #E5E7EB;
+    --white: #ffffff;
+    --warm-bg: #FCFBF8;
+    --light-bg: #F9FAFB;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: var(--warm-bg);
+    /* Warm background */
+}
+
+a {
+    text-decoration: none;
+}
+
+/* --- Top Header (Main) --- */
+.main-header {
+    background-color: var(--white);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.brand-logo img {
+    max-height: 40px;
+}
+
+/* Search Bar */
+.search-bar-container {
+    max-width: 650px;
+    width: 100%;
+}
+
+.search-input-group {
+    border: 2px solid var(--accent-gold);
+    /* Gold border for premium feel */
+    border-radius: 5px;
+    background-color: var(--white);
+    overflow: hidden;
+    height: 42px;
+    display: flex;
+}
+
+.search-input {
+    border: none;
+    flex-grow: 1;
+    padding: 0 15px;
+    font-size: 14px;
+    height: 100%;
+    color: var(--secondary-color);
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-btn {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white);
+    padding: 0 25px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Header Actions (Wishlist, Cart, User) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.action-icon {
+    position: relative;
+    color: var(--secondary-color);
+    font-size: 20px;
+    transition: color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-icon:hover {
+    color: var(--accent-gold);
+    /* Gold hover effect */
+}
+
+.icon-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: bold;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Bottom Navigation --- */
+.bottom-header {
+    background-color: #1A1F22;
+    /* Deep luxury dark background */
+    border-bottom: none;
+    height: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Categories Dropdown */
+.all-categories-btn {
+    background-color: var(--accent-gold);
+    /* Gold button */
+    color: var(--white);
+    /* White text on gold */
+    height: 60px;
+    padding: 0 25px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.all-categories-btn:hover {
+    background-color: #b8860b;
+    /* Darker gold hover */
+    color: var(--white);
+}
+
+/* Main Nav Links */
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 20px;
+}
+
+.main-nav .nav-link {
+    color: #f8f9fa;
+    /* Soft white text */
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    padding: 0 15px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.main-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background-color: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.main-nav .nav-link:hover {
+    color: var(--accent-gold);
+}
+
+.main-nav .nav-link:hover::after {
+    width: 60%;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .main-header {
+        padding: 10px 0;
+    }
+
+    .bottom-header {
+        height: auto;
+    }
+
+    .all-categories-btn {
+        width: 100%;
+        height: 45px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .search-bar-container {
+        margin: 10px 0;
+        width: auto;
+        /* Let flex handle width */
+    }
+
+    .navbar-toggler {
+        padding: 5px;
+    }
+
+    .header-actions {
+        gap: 15px;
+    }
+
+    .main-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        border-top: 1px solid var(--border-color);
+        /* Add separator */
+        margin-top: 10px;
+    }
+
+    .main-nav .nav-link {
+        height: 40px;
+        width: 100%;
+        color: var(--secondary-color);
+        padding-left: 0;
+    }
+    
+    .main-nav .nav-link::after {
+        display: none;
+    }
+
+    .bottom-header {
+        background-color: var(--white);
+    }
+}
+
+/* --- Categories Dropdown Menu --- */
+.categories-dropdown-wrapper {
+    position: relative;
+    width: 250px; /* Match button width */
+}
+
+.all-categories-btn {
+    width: 100%; /* Fill wrapper */
+}
+
+.categories-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0 0 8px 8px;
+    
+    /* Animation */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+/* Show on Hover */
+.categories-dropdown-wrapper:hover .categories-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.categories-dropdown-menu li {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.categories-dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.categories-dropdown-menu li a {
+    display: block;
+    padding: 12px 20px;
+    color: var(--secondary-color);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categories-dropdown-menu li a:hover {
+    background-color: #f9f9f9;
+    color: var(--primary-color);
+    padding-left: 25px;
+}
+
+.categories-dropdown-menu li a i {
+    font-size: 12px;
+    color: #ccc;
+}
+
+/* Custom Global Utility Styles for Premium B2B and headers */
+.text-luxGold {
+    color: #C89B2C !important;
+}
+.bg-luxGold {
+    background-color: #C89B2C !important;
+}
+.border-luxGold {
+    border-color: #C89B2C !important;
+}
