@@ -1,27 +1,36 @@
 <?php include 'includes/header.php'; ?>
 
-<!-- Hero Slider -->
-<?php include 'components/hero.php'; ?>
-
-<!-- News Ticker -->
+<!-- Brand Artisanal Ticker -->
 <?php include 'components/news-ticker.php'; ?>
 
-<!-- Product Categories -->
+<!-- Hero Editorial Lifestyle Carousel -->
+<?php include 'components/hero.php'; ?>
+
+<!-- Shop By Category Circular Bubbles -->
 <?php include 'components/product-categories.php'; ?>
 
-<!-- Collection Banners (2-row grid) -->
-
-
-<!-- Best Deals (Smartphones) -->
+<!-- Iconic Creations & Bestsellers Slider -->
 <?php include 'components/best-deals.php'; ?>
 
-<!-- Promotional Banner -->
-<?php include 'components/promo-banner.php'; ?>
+<!-- Artisanal Philosophy & Craftsmanship Split Section -->
+<?php include 'components/craftsmanship-story.php'; ?>
 
-<!-- Garden Category Products -->
+<!-- Dual Curated Editorial Edits (Work & Gifting) -->
+<?php include 'components/editorial-edits.php'; ?>
+
+<!-- Handcrafted Category Collections Showcase -->
 <?php include 'components/category-products.php'; ?>
 
-<!-- Simple Footer for closing tags -->
+<!-- Promotional Mid-Page Banner -->
+<?php include 'components/promo-banner.php'; ?>
+
+<!-- Brand Pillars & Trust Marks -->
+<?php include 'components/brand-pillars.php'; ?>
+
+<!-- Patron Stories & Testimonials -->
+<?php include 'components/customer-voices.php'; ?>
+
+<!-- Footer & Scripts -->
 <?php include 'includes/footer.php'; ?>
 
 </body>

@@ -1,45 +1,72 @@
 <style>
-/* --- Premium Best Deals Section --- */
+/* =============================================================
+   The Icons & Bestsellers — Hidesign Luxury Product Showcase
+   ============================================================= */
+
 .best-deals-section-wrapper {
-    background-color: #ffffff; /* Pure white background as requested */
-    padding: 40px 0; /* Reduced padding to tighten spacing */
+    background-color: #ffffff;
+    padding: 70px 0 80px;
     overflow: hidden;
+    position: relative;
 }
 
-.deals-container-fluid {
-    width: 100%;
-    padding: 0 40px;
+.deals-container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 30px;
 }
 
 .deals-header {
     text-align: center;
-    margin-bottom: 45px;
+    margin-bottom: 50px;
+}
+
+.deals-kicker {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #9a6431;
+    margin-bottom: 8px;
 }
 
 .deals-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 700;
-    font-style: italic;
-    color: #1a1a1a;
-    margin-bottom: 10px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: #1a1614;
+    margin: 0 0 12px;
 }
 
-.deals-header .subtitle {
+.deals-header .deals-subtitle {
+    font-family: 'Outfit', sans-serif;
     font-size: 14px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: block;
+    font-weight: 300;
+    color: #6b635b;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.5;
 }
 
-/* Slider Layout */
-.best-deals-slider-container {
+.deals-header .deals-divider {
+    width: 48px;
+    height: 2px;
+    background-color: #c59b27;
+    margin: 16px auto 0;
+}
+
+/* Slider Track Layout */
+.best-deals-slider-outer {
     position: relative;
+}
+
+.best-deals-slider-container {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     overflow-x: auto;
-    padding: 20px 5px;
+    padding: 15px 5px 30px;
     scrollbar-width: none;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -49,158 +76,215 @@
     display: none;
 }
 
-/* Premium Product Card */
+/* Luxury Product Card */
 .deal-product-card {
-    flex: 0 0 280px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 15px;
+    flex: 0 0 290px;
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 16px;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
-    border: 1px solid #f0f0f0; /* Subtle border */
+    border: 1px solid #ebe6df;
     text-decoration: none !important;
     display: flex;
     flex-direction: column;
 }
 
 .deal-product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-    border-color: var(--accent-gold, #d4a017);
+    transform: translateY(-8px);
+    border-color: #c59b27;
+    box-shadow: 0 16px 36px rgba(28, 25, 23, 0.08);
 }
 
 .deal-img-box {
     width: 100%;
-    height: 250px;
-    border-radius: 8px;
-    background: #ffffff; /* White background for image box */
-    margin-bottom: 15px;
+    height: 260px;
+    border-radius: 2px;
+    background: #faf8f5;
+    margin-bottom: 18px;
     overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 14px;
 }
 
 .deal-img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Changed to contain for perfect fit */
-    padding: 10px;
-    transition: transform 0.6s ease;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .deal-product-card:hover .deal-img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .deal-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #e31e24;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
+    top: 12px;
+    left: 12px;
+    background: #1a1614;
+    color: #e5b94c;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: 2px;
     z-index: 2;
+    border: 1px solid rgba(197, 155, 39, 0.4);
 }
 
 .deal-content {
-    padding: 5px;
+    padding: 0 4px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .deal-category {
-    font-size: 11px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
     text-transform: uppercase;
-    color: #999;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
+    color: #9a6431;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
 }
 
 .deal-name {
-    font-size: 16px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
     font-weight: 600;
-    color: #222;
-    margin-bottom: 10px;
-    line-height: 1.4;
-    height: 44px;
+    color: #1a1614;
+    margin-bottom: 12px;
+    line-height: 1.35;
+    height: 46px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    transition: color 0.25s ease;
+}
+
+.deal-product-card:hover .deal-name {
+    color: #9a6431;
 }
 
 .deal-price-row {
     margin-top: auto;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f2eee8;
 }
 
 .deal-sale-price {
-    font-size: 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 19px;
     font-weight: 700;
-    color: var(--accent-gold, #d4a017);
+    color: #1a1614;
+    letter-spacing: -0.2px;
 }
 
 .deal-reg-price {
-    font-size: 14px;
-    color: #bbb;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    color: #a89f91;
     text-decoration: line-through;
+}
+
+.deal-tax-note {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: #8c827a;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.deal-action-link {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1a1614;
+    transition: all 0.25s ease;
+}
+
+.deal-product-card:hover .deal-action-link {
+    color: #c59b27;
+}
+
+.deal-action-link i {
+    transition: transform 0.25s ease;
+}
+
+.deal-product-card:hover .deal-action-link i {
+    transform: translateX(4px);
 }
 
 /* Interactive Navigation */
 .deal-nav-btn {
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border: none;
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #eae5dd;
     border-radius: 50%;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #333;
-    transition: all 0.3s;
+    color: #1a1614;
+    font-size: 14px;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .deal-nav-btn:hover {
-    background: var(--accent-gold, #d4a017);
-    color: #fff;
+    background: #c59b27;
+    border-color: #c59b27;
+    color: #1a1614;
 }
 
-.deal-prev { left: 10px; }
-.deal-next { right: 10px; }
+.deal-prev { left: -16px; }
+.deal-next { right: -16px; }
 
 @media (max-width: 991px) {
-    .deals-container-fluid { padding: 0 20px; }
-    .deal-product-card { flex: 0 0 240px; }
-    .deal-img-box { height: 200px; }
-    .deals-header h2 { font-size: 26px; }
+    .best-deals-section-wrapper { padding: 50px 0 60px; }
+    .deals-container { padding: 0 20px; }
+    .deal-product-card { flex: 0 0 250px; }
+    .deal-img-box { height: 220px; }
+    .deals-header h2 { font-size: 28px; }
 }
 
 @media (max-width: 576px) {
-    .best-deals-section-wrapper { padding: 40px 0; }
-    .deal-product-card { flex: 0 0 200px; padding: 10px; }
-    .deal-img-box { height: 180px; }
-    .deal-name { font-size: 14px; height: 38px; }
+    .best-deals-section-wrapper { padding: 40px 0 45px; }
+    .deals-container { padding: 0 15px; }
+    .deals-header { margin-bottom: 28px; }
+    .deals-kicker { font-size: 10px; letter-spacing: 2.5px; }
+    .deals-header h2 { font-size: 23px; }
+    .deal-product-card { flex: 0 0 215px; padding: 12px; }
+    .deal-img-box { height: 180px; margin-bottom: 12px; }
+    .deal-name { font-size: 15px; height: 40px; }
     .deal-sale-price { font-size: 16px; }
-    .deal-nav-btn { display: none; } /* Better to scroll by touch on mobile */
+    .deal-nav-btn { display: none; }
 }
 </style>
 
 <?php
-// Re-fetch data if not already defined (in case of standalone testing)
 if (!isset($bd_products)) {
     $bd_settings_result = $conn->query("SELECT category_ids FROM best_deals_settings WHERE id = 1");
     $bd_category_ids = [];
@@ -230,38 +314,43 @@ if (!isset($bd_products)) {
 ?>
 
 <section class="best-deals-section-wrapper">
-    <div class="deals-container-fluid">
+    <div class="deals-container">
         <div class="deals-header">
-            <span class="subtitle">Handpicked For You</span>
-            <h2>Best <span style="color: var(--accent-gold, #d4a017);">Deals</span></h2>
+            <span class="deals-kicker">ICONIC CREATIONS</span>
+            <h2>Timeless Bestsellers</h2>
+            <p class="deals-subtitle">Handcrafted in genuine full-grain leather, sculpted to develop character and age gracefully with every journey.</p>
+            <div class="deals-divider"></div>
         </div>
 
-        <div style="position: relative;">
+        <div class="best-deals-slider-outer">
             <!-- Navigation -->
-            <button id="dealPrev" class="deal-nav-btn deal-prev"><i class="fa-solid fa-chevron-left"></i></button>
-            <button id="dealNext" class="deal-nav-btn deal-next"><i class="fa-solid fa-chevron-right"></i></button>
+            <button id="dealPrev" class="deal-nav-btn deal-prev" aria-label="Previous">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="dealNext" class="deal-nav-btn deal-next" aria-label="Next">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
 
             <div id="dealSlider" class="best-deals-slider-container">
                 <?php if (!empty($bd_products)): ?>
                     <?php foreach($bd_products as $prod): 
                         $img = $prod['featured_image'];
-                        
-                        // Strict check: skip if image is missing on disk
                         if (empty($img) || !file_exists(__DIR__ . '/../' . $img)) continue;
-                        
-                        $resized_img = get_resized_image($img, 400, 500, 'contain'); // Preserves full product aspect ratio
+                        $resized_img = get_resized_image($img, 450, 450, 'contain');
                     ?>
                         <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="deal-product-card">
-                            <?php if($prod['discount_percent'] > 0): ?>
+                            <?php if(!empty($prod['discount_percent']) && $prod['discount_percent'] > 0): ?>
                                 <div class="deal-badge"><?php echo $prod['discount_percent']; ?>% OFF</div>
+                            <?php else: ?>
+                                <div class="deal-badge">ICONIC</div>
                             <?php endif; ?>
                             
                             <div class="deal-img-box">
-                                <img src="<?php echo $resized_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="deal-img">
+                                <img src="<?php echo $resized_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="deal-img" loading="lazy">
                             </div>
 
                             <div class="deal-content">
-                                <span class="deal-category"><?php echo htmlspecialchars($prod['category_name'] ?? 'Collection'); ?></span>
+                                <span class="deal-category"><?php echo htmlspecialchars($prod['category_name'] ?? 'Leather Goods'); ?></span>
                                 <h3 class="deal-name"><?php echo htmlspecialchars($prod['name']); ?></h3>
                                 <?php
                                 $gst_pct = isset($prod['gst_percent']) ? $prod['gst_percent'] : 0;
@@ -274,11 +363,16 @@ if (!isset($bd_products)) {
                                         <span class="deal-reg-price">₹<?php echo number_format($inc_reg); ?></span>
                                     <?php endif; ?>
                                 </div>
+                                <span class="deal-tax-note">Includes GST &bull; Pan-India Shipping</span>
+                                <div class="deal-action-link">
+                                    <span>Discover Details</span>
+                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                </div>
                             </div>
                         </a>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p class="text-center w-100 text-muted">No deals found today. Check back soon!</p>
+                    <p class="text-center w-100 text-muted" style="padding: 40px 0;">Our iconic leather collection is being updated. Explore full catalog.</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -292,7 +386,6 @@ if (!isset($bd_products)) {
         const next = document.getElementById('dealNext');
 
         if (!slider) return;
-
         const scrollAmount = 350;
 
         if (prev) {

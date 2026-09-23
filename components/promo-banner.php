@@ -1,16 +1,16 @@
 <style>
-/* --- Edge-to-Edge Promo Banner --- */
+/* --- Hidesign Editorial Mid-Page Banner --- */
 .promo-banner-wrapper {
-    background-color: transparent;
-    padding: 0;
+    background-color: #ffffff;
+    padding: 20px 0 60px;
     margin: 0;
     width: 100%;
 }
 
 .promo-banner-container {
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 30px;
 }
 
 .promo-banner-box {
@@ -19,17 +19,28 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(28, 25, 23, 0.08);
+    position: relative;
 }
 
 .promo-banner-img {
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-@media (max-width: 991px) {
+.promo-banner-box:hover .promo-banner-img {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .promo-banner-wrapper {
+        padding: 10px 0 40px;
+    }
     .promo-banner-container {
-        padding: 0;
+        padding: 0 15px;
     }
 }
 </style>
@@ -39,10 +50,9 @@
         <a href="products.php" class="promo-banner-box">
             <?php 
                 require_once __DIR__ . '/../includes/image_helper.php';
-                // Using image helper to ensure optimized loading, though for banners 'cover' or direct is often used
                 $banner_path = 'assets/images/banners/bags-banner.png';
             ?>
-            <img src="<?php echo $link_prefix . $banner_path; ?>" alt="Promotional Banner" class="promo-banner-img">
+            <img src="<?php echo $link_prefix . $banner_path; ?>" alt="Amadika Handcrafted Leather Goods Collection" class="promo-banner-img" loading="lazy">
         </a>
     </div>
 </div>
