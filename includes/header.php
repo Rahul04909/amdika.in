@@ -288,92 +288,255 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     <link rel="icon" type="image/png" href="<?php echo $assets_path; ?>images/amdika-logo.png">
 
     <style>
-        /* Luxury typography & brand tokens */
+        /* =========================================================
+           AMADIKA LUXURY HEADER & MEGA MENU STYLES (PURE SCOPED CSS)
+           ========================================================= */
         :root {
             --lux-gold: #c59b27;
             --lux-gold-hover: #b0871d;
             --lux-dark: #0b0f19;
-            --lux-slate: #0f172a;
+            --lux-navy: #0f172a;
             --lux-border: #e2e8f0;
+            --lux-text: #1e293b;
+            --lux-muted: #64748b;
         }
 
-        body {
-            font-family: 'Outfit', sans-serif;
+        /* STRICT OVERFLOW CONTROL: Completely eliminates bottom horizontal scrollbar */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box;
             background-color: #fcfbf8;
-            color: #1e293b;
+            font-family: 'Outfit', sans-serif;
+            color: var(--lux-text);
         }
-        
-        /* Sticky bottom nav style */
-        #bottomHeader {
-            position: sticky;
-            top: 0;
-            z-index: 1040;
-            background: #0f172a;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .sticky-scrolled {
-            background: rgba(15, 23, 42, 0.96) !important;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
-        /* Gold underline slide effect */
-        .nav-link-underline {
+        /* HEADER WRAPPER */
+        .lux-header-wrapper {
             position: relative;
-            color: #f1f5f9 !important;
+            width: 100%;
+            max-width: 100%;
+            z-index: 1020;
+            background: #ffffff;
+        }
+
+        /* =========================================================
+           LAYER 1: TOP ANNOUNCEMENT BAR
+           ========================================================= */
+        .lux-top-bar {
+            height: 36px;
+            background-color: #0b0f19 !important;
+            color: #cbd5e1;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(16px, 4vw, 48px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .lux-top-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .lux-top-usp {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            padding: 0 16px;
-            height: 100%;
-            text-decoration: none !important;
-            transition: color 0.2s ease;
+            gap: 8px;
+            font-weight: 500;
+            color: #cbd5e1;
         }
-
-        .nav-link-underline i,
-        .nav-link-underline svg {
-            width: 15px;
-            height: 15px;
-            stroke-width: 2.2;
+        .lux-top-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--lux-gold);
+        }
+        .lux-gold-text {
+            color: var(--lux-gold) !important;
+            font-weight: 700;
+        }
+        .lux-top-socials {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 16px;
+        }
+        .lux-top-socials a {
             color: #94a3b8;
-            transition: color 0.2s ease, stroke 0.2s ease;
+            font-size: 11px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .lux-top-socials a:hover {
+            color: var(--lux-gold);
+        }
+        .lux-top-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+        }
+        .lux-top-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .lux-top-link:hover {
+            color: var(--lux-gold);
+        }
+        .lux-top-sep {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 11px;
         }
 
-        .nav-link-underline::after {
-            content: '';
-            position: absolute;
+        /* =========================================================
+           LAYER 2: MAIN BRAND IDENTITY & SEARCH ACTION BAR
+           ========================================================= */
+        .lux-mid-bar {
+            background-color: #ffffff !important;
+            padding: 12px clamp(16px, 4vw, 48px);
+            border-bottom: 1px solid #e2e8f0;
             width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: 10px;
-            left: 0;
-            background-color: var(--lux-gold);
-            transform-origin: bottom right;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            box-sizing: border-box;
         }
-        
-        .nav-link-underline:hover {
-            color: var(--lux-gold) !important;
-        }
-
-        .nav-link-underline:hover i,
-        .nav-link-underline:hover svg {
-            color: var(--lux-gold) !important;
-            stroke: var(--lux-gold) !important;
+        .lux-mid-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
         }
 
-        .nav-link-underline:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
+        /* BRAND LOGO CONSTRAINTS (STRICT FIX FOR HUGE LOGO) */
+        .lux-logo-wrap {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        .lux-brand-link {
+            display: block;
+            text-decoration: none;
+            line-height: 1;
+        }
+        .lux-brand-logo-img {
+            height: 38px !important;
+            max-height: 38px !important;
+            width: auto !important;
+            max-width: 200px !important;
+            object-fit: contain !important;
+            display: block !important;
+            transition: transform 0.25s ease;
+        }
+        .lux-brand-link:hover .lux-brand-logo-img {
+            transform: scale(1.02);
         }
 
-        /* Search suggestions styling */
-        .search-bar-container { position: relative; }
+        /* CENTER SEARCH BAR */
+        .lux-search-wrapper {
+            flex: 1 1 540px;
+            max-width: 560px;
+            margin: 0 16px;
+            position: relative;
+        }
+        .lux-search-form {
+            position: relative;
+            width: 100%;
+            margin: 0;
+        }
+        .lux-search-box {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 9999px;
+            height: 42px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .lux-search-box:focus-within {
+            border-color: var(--lux-gold);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.14);
+        }
+        .lux-search-select-wrap {
+            position: relative;
+            flex-shrink: 0;
+            border-right: 1px solid #e2e8f0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .lux-search-cat-select {
+            background: transparent;
+            border: none;
+            padding: 0 26px 0 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            height: 100%;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .lux-select-arrow {
+            position: absolute;
+            right: 8px;
+            width: 12px;
+            height: 12px;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+        .lux-search-input {
+            background: transparent;
+            border: none;
+            padding: 0 16px;
+            font-size: 13px;
+            color: #1e293b;
+            flex-grow: 1;
+            width: 100%;
+            outline: none;
+            height: 100%;
+        }
+        .lux-search-input::placeholder {
+            color: #94a3b8;
+        }
+        .lux-search-btn {
+            background: var(--lux-navy);
+            border: none;
+            color: #ffffff;
+            width: 44px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-radius: 0 9999px 9999px 0;
+            flex-shrink: 0;
+        }
+        .lux-search-btn:hover {
+            background: var(--lux-gold);
+        }
+
+        /* SEARCH SUGGESTIONS */
         .search-suggestions-box {
             position: absolute;
             top: 100%;
@@ -393,19 +556,19 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         .suggestion-item {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
+            padding: 10px 14px;
             text-decoration: none;
-            border-bottom: 1px solid rgba(241, 245, 249, 0.9);
+            border-bottom: 1px solid #f1f5f9;
             transition: background 0.2s;
         }
         .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover, .active-suggestion { background: rgba(197, 155, 39, 0.06); }
+        .suggestion-item:hover, .active-suggestion { background: rgba(197, 155, 39, 0.08); }
         .suggestion-img {
-            width: 46px;
-            height: 46px;
-            border-radius: 8px;
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
             object-fit: contain;
-            margin-right: 14px;
+            margin-right: 12px;
             background: #f8fafc;
             border: 1px solid #f1f5f9;
             padding: 2px;
@@ -424,25 +587,729 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         }
         .view-all-results {
             display: block;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             background: rgba(197, 155, 39, 0.08);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--lux-gold);
             text-decoration: none !important;
             transition: background 0.2s;
         }
-        .view-all-results:hover { background: rgba(197, 155, 39, 0.15); }
-        .no-results { padding: 20px; text-align: center; color: #888; font-size: 14px; }
+        .view-all-results:hover { background: rgba(197, 155, 39, 0.16); }
 
-        /* Custom inputs focus */
-        .premium-input-group:focus-within {
-            border-color: var(--lux-gold) !important;
-            box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15) !important;
+        /* ACTION BUTTONS (RIGHT) */
+        .lux-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .lux-helpline-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .lux-helpline-pill:hover {
+            border-color: var(--lux-gold);
+            color: var(--lux-gold);
+            background: #ffffff;
+        }
+        .lux-action-group {
+            position: relative;
+        }
+        .lux-icon-btn {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lux-icon-btn:hover {
+            background: #ffffff;
+            border-color: var(--lux-gold);
+            color: var(--lux-gold);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(197, 155, 39, 0.15);
+        }
+        .lux-cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--lux-gold);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            padding: 0 4px;
+            line-height: 1;
         }
 
-        /* Glassmorphism scrollbar */
+        /* HOVER MINI CART DROPDOWN */
+        .lux-cart-group:hover .lux-mini-cart-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lux-mini-cart-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            width: 320px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+            border: 1px solid #e2e8f0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1060;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .lux-mini-cart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .lux-mini-cart-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0f172a;
+        }
+        .lux-mini-cart-subtitle {
+            font-size: 10px;
+            color: var(--lux-gold);
+            font-weight: 700;
+        }
+        .lux-mini-cart-items {
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .lux-mini-cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f8fafc;
+        }
+        .lux-mini-cart-item:last-child { border-bottom: none; }
+        .lux-mini-cart-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: contain;
+            border: 1px solid #f1f5f9;
+            padding: 2px;
+            background: #f8fafc;
+            flex-shrink: 0;
+        }
+        .lux-mini-cart-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+        .lux-mini-cart-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 2px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .lux-mini-cart-qty {
+            font-size: 11px;
+            color: #94a3b8;
+            margin: 0;
+        }
+        .lux-mini-cart-price {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+        .lux-mini-cart-footer {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+        .lux-mini-cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        .lux-mini-cart-total-val {
+            color: #0f172a;
+            font-weight: 800;
+        }
+        .lux-mini-cart-btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .lux-mini-cart-btn-view {
+            background: #f1f5f9;
+            color: #1e293b;
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .lux-mini-cart-btn-view:hover { background: #e2e8f0; color: #0f172a; }
+        .lux-mini-cart-btn-chk {
+            background: var(--lux-gold);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .lux-mini-cart-btn-chk:hover { background: var(--lux-gold-hover); color: #ffffff; }
+
+        /* =========================================================
+           LAYER 3: BOTTOM NAVIGATION & MEGA MENU
+           ========================================================= */
+        .lux-bottom-bar {
+            background-color: #0f172a !important;
+            border-bottom: 1px solid #1e293b;
+            height: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .sticky-scrolled {
+            background: rgba(15, 23, 42, 0.98) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.3) !important;
+        }
+        .lux-bottom-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 clamp(16px, 4vw, 48px);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .lux-bottom-nav-left {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 8px;
+        }
+        .lux-cat-trigger-wrap {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .lux-cat-trigger-btn {
+            background: linear-gradient(135deg, #c59b27 0%, #b0871d 100%);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 8px;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(197, 155, 39, 0.25);
+            transition: all 0.25s ease;
+        }
+        .lux-cat-trigger-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+        .lux-nav-links {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 2px;
+        }
+        .lux-nav-item {
+            color: #e2e8f0 !important;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 13px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none !important;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        .lux-nav-item i, .lux-nav-item svg {
+            width: 14px;
+            height: 14px;
+            color: #94a3b8;
+            transition: color 0.2s ease;
+        }
+        .lux-nav-item:hover {
+            color: var(--lux-gold) !important;
+        }
+        .lux-nav-item:hover i, .lux-nav-item:hover svg {
+            color: var(--lux-gold) !important;
+        }
+        .lux-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 13px;
+            right: 13px;
+            height: 2px;
+            background: var(--lux-gold);
+            transform: scaleX(0);
+            transition: transform 0.25s ease;
+        }
+        .lux-nav-item:hover::after {
+            transform: scaleX(1);
+        }
+        .lux-bottom-nav-right {
+            display: flex;
+            align-items: center;
+        }
+        .lux-trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================================================
+           DRIBBLE LUXURY MEGA MENU CONTAINER
+           ========================================================= */
+        #megaMenuContainer {
+            position: absolute;
+            top: 100%;
+            left: clamp(16px, 4vw, 48px);
+            right: clamp(16px, 4vw, 48px);
+            background: #ffffff;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            border-top: 2px solid var(--lux-gold);
+            z-index: 1050;
+            padding: 24px;
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            box-sizing: border-box;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* Invisible hover bridge */
+        #megaMenuContainer::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: 0;
+            right: 0;
+            height: 16px;
+            background: transparent;
+        }
+        .lux-megamenu-col-1 {
+            width: 25%;
+            flex-shrink: 0;
+            border-right: 1px solid #f1f5f9;
+            padding-right: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .lux-megamenu-col-heading {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding: 0 8px;
+        }
+        .megamenu-category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 3px;
+            border-left: 3px solid transparent;
+        }
+        .megamenu-category-item:hover, .megamenu-category-item.active-category {
+            background: #f8fafc;
+            border-left-color: var(--lux-gold);
+        }
+        .megamenu-cat-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .megamenu-cat-icon {
+            width: 15px;
+            height: 15px;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        .megamenu-category-item.active-category .megamenu-cat-icon,
+        .megamenu-category-item:hover .megamenu-cat-icon {
+            color: var(--lux-gold);
+        }
+        .megamenu-cat-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            transition: color 0.2s;
+        }
+        .megamenu-category-item.active-category .megamenu-cat-text {
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .megamenu-cat-arrow {
+            width: 13px;
+            height: 13px;
+            color: #cbd5e1;
+        }
+
+        /* CENTER DETAIL PANELS (50%) */
+        .lux-megamenu-col-center {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            min-height: 360px;
+            position: relative;
+        }
+        .megamenu-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+        }
+        .lux-hidden {
+            display: none !important;
+        }
+        .lux-megamenu-subcats-col {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #f1f5f9;
+            padding-right: 16px;
+        }
+        .lux-subcat-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .megamenu-subcat-link {
+            font-size: 12px;
+            color: #475569;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .megamenu-subcat-link:hover {
+            color: var(--lux-gold);
+            transform: translateX(3px);
+        }
+        .lux-subcat-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--lux-gold);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+        .lux-view-all-cat-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--lux-gold);
+            text-decoration: none;
+            margin-top: auto;
+            padding-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .lux-view-all-cat-link:hover {
+            text-decoration: underline;
+        }
+
+        /* FEATURED PRODUCTS (COLUMN 3) */
+        .lux-megamenu-featured-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .lux-featured-prods-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .lux-featured-prod-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .lux-featured-prod-card:hover {
+            border-color: var(--lux-gold);
+            box-shadow: 0 4px 12px rgba(197, 155, 39, 0.1);
+        }
+        .lux-featured-thumb-wrap {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .lux-featured-thumb {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.25s ease;
+        }
+        .lux-featured-prod-card:hover .lux-featured-thumb {
+            transform: scale(1.06);
+        }
+        .lux-featured-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+        .lux-featured-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0 0 3px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .lux-featured-price {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--lux-gold);
+        }
+        .lux-featured-arrow {
+            width: 14px;
+            height: 14px;
+            color: #cbd5e1;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        .lux-featured-prod-card:hover .lux-featured-arrow {
+            color: var(--lux-gold);
+        }
+        .lux-featured-empty-card {
+            background: #f8fafc;
+            border: 1px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* EDITORIAL SPOTLIGHT (COLUMN 4 - 25%) */
+        .lux-megamenu-col-4 {
+            width: 25%;
+            flex-shrink: 0;
+            border-radius: 14px;
+            padding: 20px;
+            background: linear-gradient(145deg, #0b0f19 0%, #172236 100%);
+            border: 1px solid rgba(197, 155, 39, 0.3);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .lux-spotlight-badge {
+            display: inline-block;
+            background: var(--lux-gold);
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            margin-bottom: 12px;
+        }
+        .lux-spotlight-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 17px;
+            line-height: 1.3;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
+        .lux-spotlight-desc {
+            font-size: 11px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+            font-weight: 300;
+        }
+        .lux-spotlight-cta-wrap {
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            margin-top: 16px;
+        }
+        .lux-spotlight-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: var(--lux-gold);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .lux-spotlight-btn:hover {
+            background: #ffffff;
+            color: #0b0f19;
+        }
+
+        /* =========================================================
+           MOBILE RESPONSIVENESS & TOGGLES
+           ========================================================= */
+        .lux-show-mobile {
+            display: none !important;
+        }
+        .lux-mobile-search-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 16px;
+        }
+        .lux-mobile-search-inner {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 9999px;
+            padding: 0 12px;
+            height: 38px;
+        }
+        .lux-mobile-search-input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 13px;
+            color: #1e293b;
+            outline: none;
+        }
+        .lux-mobile-toggle-btn {
+            background: transparent;
+            border: none;
+            padding: 4px;
+            color: #1e293b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 991px) {
+            .lux-hide-mobile {
+                display: none !important;
+            }
+            .lux-show-mobile {
+                display: flex !important;
+            }
+            .lux-mid-bar {
+                padding: 10px 16px;
+            }
+            .lux-brand-logo-img {
+                height: 30px !important;
+                max-height: 30px !important;
+                max-width: 140px !important;
+            }
+            .lux-actions {
+                gap: 8px;
+            }
+            .lux-icon-btn {
+                width: 34px;
+                height: 34px;
+            }
+        }
+
+        /* SCROLLBAR REFINEMENTS */
         .scroll-luxury::-webkit-scrollbar {
             width: 5px;
         }
@@ -450,223 +1317,172 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             background: rgba(0, 0, 0, 0.02);
         }
         .scroll-luxury::-webkit-scrollbar-thumb {
-            background: rgba(197, 155, 39, 0.25);
+            background: rgba(197, 155, 39, 0.3);
             border-radius: 10px;
         }
         .scroll-luxury::-webkit-scrollbar-thumb:hover {
-            background: rgba(197, 155, 39, 0.45);
-        }
-
-        /* MEGA MENU CONTAINER & HOVER BRIDGE */
-        #megaMenuContainer {
-            position: absolute;
-            left: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 0 0 18px 18px;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.04);
-            border-top: 2px solid var(--lux-gold);
-            z-index: 1050;
-            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @media (min-width: 1024px) {
-            #megaMenuContainer {
-                left: 3rem;
-                right: 3rem;
-            }
-        }
-        /* Invisible hover bridge between trigger and mega menu */
-        #megaMenuContainer::before {
-            content: '';
-            position: absolute;
-            top: -14px;
-            left: 0;
-            width: 100%;
-            height: 16px;
-            background: transparent;
-        }
-
-        .megamenu-category-item {
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            border-left: 3px solid transparent;
-        }
-        .megamenu-category-item:hover, .megamenu-category-item.active-category {
-            background: #f8fafc;
-            border-left-color: var(--lux-gold);
-        }
-        .megamenu-category-item.active-category span {
-            color: #0f172a;
-            font-weight: 700;
-        }
-        .megamenu-category-item.active-category [data-lucide] {
-            color: var(--lux-gold) !important;
-        }
-
-        .megamenu-subcat-link {
-            transition: all 0.2s ease;
-        }
-        .megamenu-subcat-link:hover {
-            color: var(--lux-gold) !important;
-            transform: translateX(4px);
+            background: rgba(197, 155, 39, 0.5);
         }
     </style>
 </head>
-<body class="bg-[#FCFBF8] text-gray-800">
+<body>
 
-<header class="relative w-full z-50">
+<header class="lux-header-wrapper">
     <!-- LAYER 1: LUXURY TOP ANNOUNCEMENT BAR -->
-    <div class="h-[38px] bg-[#0b0f19] text-white text-xs flex items-center justify-between px-4 lg:px-12 border-b border-gray-800/80">
-        <!-- Left: Compliments & Socials -->
-        <div class="flex items-center gap-5">
-            <span class="inline-flex items-center gap-2 font-medium tracking-wide text-gray-300">
-                <i data-lucide="truck" class="w-3.5 h-3.5 text-luxGold animate-pulse"></i>
-                <span class="hidden sm:inline">Complimentary Express Shipping on orders above</span> 
-                <strong class="text-luxGold">₹9,999</strong>
+    <div class="lux-top-bar">
+        <!-- Left: USP & Socials -->
+        <div class="lux-top-left">
+            <span class="lux-top-usp">
+                <i data-lucide="truck" class="lux-top-icon"></i>
+                <span class="lux-hide-mobile">Complimentary Express Shipping on orders above</span> 
+                <strong class="lux-gold-text">₹9,999</strong>
             </span>
-            <div class="hidden md:flex items-center gap-3 border-l border-gray-800 pl-5">
-                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Facebook">
-                    <i class="fa-brands fa-facebook-f text-[11px]"></i>
-                </a>
-                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Instagram">
-                    <i class="fa-brands fa-instagram text-[11px]"></i>
-                </a>
-                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Pinterest">
-                    <i class="fa-brands fa-pinterest text-[11px]"></i>
-                </a>
+            <div class="lux-top-socials lux-hide-mobile">
+                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" title="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
             </div>
         </div>
         
-        <!-- Right: Concierge & Order Access -->
-        <div class="flex items-center gap-4 lg:gap-5 text-gray-400">
-            <a href="tel:+918447616924" class="hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
-                <i data-lucide="phone" class="w-3.5 h-3.5 text-luxGold"></i>
-                <span class="hidden sm:inline">+91 8447616924</span>
+        <!-- Right: Helpline & Tracking -->
+        <div class="lux-top-right">
+            <a href="tel:+918447616924" class="lux-top-link">
+                <i data-lucide="phone" class="lux-top-icon"></i>
+                <span>+91 8447616924</span>
             </a>
-            <span class="hidden md:inline text-gray-800">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none hidden sm:inline">
+            <span class="lux-top-sep lux-hide-mobile">|</span>
+            <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="lux-top-link lux-hide-mobile">
                 Track Order
             </a>
-            <span class="hidden md:inline text-gray-800">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none hidden sm:inline">
+            <span class="lux-top-sep lux-hide-mobile">|</span>
+            <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="lux-top-link lux-hide-mobile">
                 Our Stores
             </a>
         </div>
     </div>
 
     <!-- LAYER 2: BRAND IDENTITY & ACTION BAR -->
-    <div class="bg-white py-3.5 px-4 lg:px-12 border-b border-gray-150 shadow-[0_2px_15px_rgba(0,0,0,0.02)] transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <!-- Brand Logo (Left) -->
-            <div class="flex-shrink-0">
-                <a href="<?php echo $link_prefix; ?>index.php" class="block">
-                    <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika Luxury" class="h-9 lg:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]">
+    <div class="lux-mid-bar">
+        <div class="lux-mid-container">
+            <!-- Mobile Menu Toggle (Mobile only) -->
+            <button onclick="toggleMobileDrawer()" class="lux-mobile-toggle-btn lux-show-mobile" type="button" aria-label="Open Navigation">
+                <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+            </button>
+
+            <!-- Brand Logo (Left on Desktop, Centered on Mobile) -->
+            <div class="lux-logo-wrap">
+                <a href="<?php echo $link_prefix; ?>index.php" class="lux-brand-link">
+                    <img src="<?php echo $assets_path; ?>images/amdika-logo.png" 
+                         alt="Amadika Luxury" 
+                         class="lux-brand-logo-img" 
+                         style="height: 38px; max-height: 38px; width: auto; max-width: 200px; object-fit: contain; display: block;" 
+                         loading="eager">
                 </a>
             </div>
 
-            <!-- Dribbble-Grade Luxury Search Bar (Center) -->
-            <div class="hidden md:block flex-grow max-w-2xl mx-4">
-                <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="relative">
-                    <div class="flex items-center bg-stone-50/80 border border-gray-200 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] focus-within:border-luxGold focus-within:bg-white focus-within:ring-2 focus-within:ring-luxGold/15 transition-all duration-300 overflow-hidden h-11">
-                        <!-- Category Dropdown Select -->
-                        <div class="relative flex-shrink-0 border-r border-gray-200">
-                            <select name="category" class="bg-transparent text-xs text-gray-700 font-semibold pl-4 pr-8 py-2 appearance-none focus:outline-none cursor-pointer h-full border-0">
+            <!-- Center Search Bar (Desktop only) -->
+            <div class="lux-search-wrapper lux-hide-mobile">
+                <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="lux-search-form">
+                    <div class="lux-search-box">
+                        <!-- Category Select -->
+                        <div class="lux-search-select-wrap">
+                            <select name="category" class="lux-search-cat-select">
                                 <option value="">All Categories</option>
                                 <?php foreach ($h_categories as $cat): ?>
                                     <option value="<?php echo htmlspecialchars($cat['slug']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="lux-select-arrow"></i>
                         </div>
-                        
+
                         <!-- Search Input -->
                         <input type="text" 
-                               class="bg-transparent border-0 text-xs md:text-sm pl-4 pr-10 py-2 w-full text-gray-800 focus:outline-none placeholder-gray-400" 
-                               placeholder="Search handcrafted leather items, bags, trays..." 
+                               class="lux-search-input" 
+                               placeholder="Search handcrafted leather accessories, bags, trays..." 
                                name="search" 
                                id="headerSearchInput" 
                                autocomplete="off">
                                
-                        <!-- Search Action Button -->
-                        <button type="submit" class="bg-[#0f172a] hover:bg-luxGold text-white h-full px-5 flex items-center justify-center transition-colors duration-300 rounded-r-full border-0">
-                            <i data-lucide="search" class="w-4 h-4"></i>
+                        <!-- Search Button -->
+                        <button type="submit" class="lux-search-btn" aria-label="Search">
+                            <i data-lucide="search" style="width: 16px; height: 16px;"></i>
                         </button>
                     </div>
-                    <!-- Search Suggestions Container -->
+                    <!-- Search Suggestions Dropdown -->
                     <div id="searchSuggestions" class="search-suggestions-box"></div>
                 </form>
             </div>
 
-            <!-- Action Icons (Right) -->
-            <div class="flex items-center gap-2 lg:gap-4">
-                <!-- Mobile Menu Toggler -->
-                <button onclick="toggleMobileDrawer()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
-
+            <!-- Actions (Right) -->
+            <div class="lux-actions">
                 <!-- Mobile Search Trigger -->
-                <button onclick="toggleMobileSearch()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
-                    <i data-lucide="search" class="w-5 h-5"></i>
+                <button onclick="toggleMobileSearch()" class="lux-icon-btn lux-show-mobile" type="button" aria-label="Search">
+                    <i data-lucide="search" style="width: 18px; height: 18px;"></i>
                 </button>
 
-                <!-- User Account/Auth -->
-                <div class="relative group">
+                <!-- Phone Helpline Pill (Desktop) -->
+                <a href="tel:+918447616924" class="lux-helpline-pill lux-hide-mobile">
+                    <i data-lucide="phone-call" style="width: 13px; height: 13px; color: #c59b27;"></i>
+                    <span>Helpline</span>
+                </a>
+
+                <!-- User Auth Profile -->
+                <div class="lux-action-group">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo $link_prefix; ?>user/index.php" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 block text-decoration-none" title="My Account">
-                            <i data-lucide="user" class="w-5 h-5"></i>
+                        <a href="<?php echo $link_prefix; ?>user/index.php" class="lux-icon-btn" title="My Account">
+                            <i data-lucide="user" style="width: 18px; height: 18px;"></i>
                         </a>
                     <?php else: ?>
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 block text-decoration-none" title="Sign In">
-                            <i data-lucide="user" class="w-5 h-5"></i>
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="lux-icon-btn" title="Sign In">
+                            <i data-lucide="user" style="width: 18px; height: 18px;"></i>
                         </a>
                     <?php endif; ?>
                 </div>
 
-                <!-- Shopping Bag (with Hover Mini Cart) -->
-                <div class="relative group" onmouseenter="loadMiniCart()">
-                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 relative text-decoration-none">
-                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        <span id="headerCartCount" class="absolute top-1 right-1 bg-luxGold text-white text-[9px] font-extrabold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white shadow-sm leading-none"><?php echo $cart_count; ?></span>
+                <!-- Shopping Cart (with Hover Mini Cart) -->
+                <div class="lux-action-group lux-cart-group" onmouseenter="loadMiniCart()">
+                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="lux-icon-btn" title="Cart">
+                        <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+                        <span id="headerCartCount" class="lux-cart-badge"><?php echo $cart_count; ?></span>
                     </a>
 
                     <!-- Hover Mini Cart Dropdown -->
-                    <div class="absolute right-0 top-full mt-2 w-80 bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-150 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 p-4">
-                        <h6 class="text-xs font-bold text-gray-800 tracking-wider uppercase mb-3 border-b border-gray-100 pb-2 flex items-center justify-between">
-                            <span>Your Shopping Bag</span>
-                            <span class="text-[10px] text-luxGold font-bold normal-case">Live Preview</span>
-                        </h6>
-                        <!-- Mini Cart Items List -->
-                        <div id="miniCartItems" class="max-h-60 overflow-y-auto space-y-3 pr-1 scroll-luxury">
+                    <div class="lux-mini-cart-dropdown">
+                        <div class="lux-mini-cart-header">
+                            <span class="lux-mini-cart-title">Shopping Bag</span>
+                            <span class="lux-mini-cart-subtitle">Live Preview</span>
+                        </div>
+                        <!-- Mini Cart Items -->
+                        <div id="miniCartItems" class="lux-mini-cart-items scroll-luxury">
                             <?php if (empty($cart_items)): ?>
-                                <div class="text-center py-6">
-                                    <i data-lucide="shopping-bag" class="mx-auto text-gray-300 w-9 h-9 mb-2"></i>
-                                    <p class="text-xs text-gray-500 mb-0">Your bag is currently empty</p>
+                                <div style="text-align: center; padding: 24px 0;">
+                                    <i data-lucide="shopping-bag" style="width: 32px; height: 32px; margin: 0 auto 8px; color: #cbd5e1; display: block;"></i>
+                                    <p style="font-size: 12px; color: #64748b; margin: 0;">Your bag is currently empty</p>
                                 </div>
                             <?php else: ?>
                                 <?php foreach ($cart_items as $item): 
                                     $img = (strpos($item['featured_image'], 'http') === 0 || strpos($item['featured_image'], '/') === 0) ? $item['featured_image'] : $link_prefix . $item['featured_image'];
                                 ?>
-                                    <div class="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                                        <img src="<?php echo $img; ?>" class="w-12 h-12 rounded-lg object-contain border border-gray-100 p-1 flex-shrink-0 bg-stone-50">
-                                        <div class="flex-grow min-w-0">
-                                            <h6 class="text-xs font-semibold text-gray-800 truncate mb-0.5"><?php echo htmlspecialchars($item['name']); ?></h6>
-                                            <p class="text-[11px] text-gray-400 mb-0">Qty: <?php echo $item['quantity']; ?></p>
+                                    <div class="lux-mini-cart-item">
+                                        <img src="<?php echo $img; ?>" class="lux-mini-cart-thumb" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                                        <div class="lux-mini-cart-info">
+                                            <h6 class="lux-mini-cart-name"><?php echo htmlspecialchars($item['name']); ?></h6>
+                                            <p class="lux-mini-cart-qty">Qty: <?php echo $item['quantity']; ?></p>
                                         </div>
-                                        <span class="text-xs font-bold text-gray-900 flex-shrink-0">₹<?php echo number_format($item['display_price']); ?></span>
+                                        <span class="lux-mini-cart-price">₹<?php echo number_format($item['display_price']); ?></span>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                         <!-- Subtotal & Actions -->
-                        <div class="border-t border-gray-100 pt-3 mt-3">
-                            <div class="flex justify-between text-xs font-semibold mb-3">
-                                <span class="text-gray-500">Estimated Total</span>
-                                <span id="miniCartSubtotal" class="text-gray-950 font-bold">₹<?php echo number_format($cart_total); ?></span>
+                        <div class="lux-mini-cart-footer">
+                            <div class="lux-mini-cart-total-row">
+                                <span>Estimated Total</span>
+                                <span id="miniCartSubtotal" class="lux-mini-cart-total-val">₹<?php echo number_format($cart_total); ?></span>
                             </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <a href="<?php echo $link_prefix; ?>cart.php" class="bg-stone-100 hover:bg-stone-200 text-gray-900 text-center py-2.5 rounded-xl font-bold text-[11px] transition-colors duration-200 text-decoration-none">View Bag</a>
-                                <a href="<?php echo $link_prefix; ?>checkout.php" class="bg-luxGold hover:bg-[#b0871d] text-white text-center py-2.5 rounded-xl font-bold text-[11px] transition-colors duration-200 text-decoration-none shadow-sm">Checkout</a>
+                            <div class="lux-mini-cart-btn-row">
+                                <a href="<?php echo $link_prefix; ?>cart.php" class="lux-mini-cart-btn-view">View Bag</a>
+                                <a href="<?php echo $link_prefix; ?>checkout.php" class="lux-mini-cart-btn-chk">Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -676,104 +1492,106 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     </div>
 
     <!-- MOBILE EXPANDABLE SEARCH BAR -->
-    <div id="mobileSearchBar" class="hidden bg-white border-b border-gray-100 px-4 py-3 md:hidden">
+    <div id="mobileSearchBar" class="lux-mobile-search-bar" style="display: none;">
         <form action="<?php echo $link_prefix; ?>products.php" method="GET">
-            <div class="flex items-center bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 h-10">
-                <i data-lucide="search" class="w-4 h-4 text-gray-400 mr-2 flex-shrink-0"></i>
-                <input type="text" 
-                       class="bg-transparent border-0 text-xs w-full text-gray-700 focus:outline-none" 
-                       placeholder="Search products..." 
-                       name="search">
+            <div class="lux-mobile-search-inner">
+                <i data-lucide="search" style="width: 16px; height: 16px; color: #94a3b8; flex-shrink: 0; margin-right: 8px;"></i>
+                <input type="text" class="lux-mobile-search-input" placeholder="Search handcrafted leather products..." name="search">
             </div>
         </form>
     </div>
 
     <!-- LAYER 3: BOTTOM NAVIGATION & MEGA MENU -->
-    <div id="bottomHeader" class="hidden md:block bg-[#0f172a] border-b border-gray-800 z-[100] relative transition-all duration-300">
-        <!-- Relative bounding container for both nav bar and full-width mega menu -->
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 lg:px-12 h-14 relative">
-            
-            <div class="flex items-center gap-1.5 h-full w-full justify-between">
-                <!-- Navigation Links Left -->
-                <div class="flex items-center gap-1 h-full">
-                    <!-- Categories Button Wrapper -->
-                    <div class="h-full flex items-center" id="categoriesMenuTrigger">
-                        <button class="bg-gradient-to-r from-[#c59b27] to-[#b0871d] hover:brightness-105 text-white text-[11px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-lg flex items-center gap-2.5 transition-all duration-300 shadow-sm border-0">
-                            <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                            Categories
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-80"></i>
-                        </button>
-                    </div>
-                    
-                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline"><i data-lucide="home"></i>Home</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline"><i data-lucide="shopping-bag"></i>Shop</a>
-                    <a href="<?php echo $link_prefix; ?>pages/collection/index.php" class="nav-link-underline"><i data-lucide="layers"></i>Collections</a>
-                    <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="nav-link-underline"><i data-lucide="gift"></i>Corporate Gifting</a>
-                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline"><i data-lucide="newspaper"></i>Blogs</a>
-                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline"><i data-lucide="info"></i>About Us</a>
-                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline"><i data-lucide="phone"></i>Contact</a>
-                    <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="nav-link-underline"><i data-lucide="map-pin"></i>Our Stores</a>
+    <div id="bottomHeader" class="lux-bottom-bar lux-hide-mobile">
+        <div class="lux-bottom-container">
+            <!-- Left: Categories Trigger + Main Links -->
+            <div class="lux-bottom-nav-left">
+                <div id="categoriesMenuTrigger" class="lux-cat-trigger-wrap">
+                    <button type="button" class="lux-cat-trigger-btn">
+                        <i data-lucide="layout-grid" style="width: 15px; height: 15px;"></i>
+                        <span>Categories</span>
+                        <i data-lucide="chevron-down" style="width: 13px; height: 13px; opacity: 0.85;"></i>
+                    </button>
                 </div>
+                
+                <nav class="lux-nav-links">
+                    <a href="<?php echo $link_prefix; ?>index.php" class="lux-nav-item"><i data-lucide="home"></i>Home</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="lux-nav-item"><i data-lucide="shopping-bag"></i>Shop</a>
+                    <a href="<?php echo $link_prefix; ?>pages/collection/index.php" class="lux-nav-item"><i data-lucide="layers"></i>Collections</a>
+                    <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="lux-nav-item"><i data-lucide="gift"></i>Corporate Gifting</a>
+                    <a href="<?php echo $link_prefix; ?>blogs.php" class="lux-nav-item"><i data-lucide="newspaper"></i>Blogs</a>
+                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="lux-nav-item"><i data-lucide="info"></i>About Us</a>
+                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="lux-nav-item"><i data-lucide="phone"></i>Contact</a>
+                    <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="lux-nav-item"><i data-lucide="map-pin"></i>Our Stores</a>
+                </nav>
+            </div>
+
+            <!-- Right: Luxury Trust Badge -->
+            <div class="lux-bottom-nav-right">
+                <span class="lux-trust-pill">
+                    <i data-lucide="shield-check" style="width: 13px; height: 13px; color: #c59b27;"></i>
+                    <span>100% Genuine Leather</span>
+                </span>
             </div>
 
             <!-- CONTAINER-BOUNDED DRIBBLE LUXURY MEGA MENU -->
-            <div id="megaMenuContainer" class="opacity-0 invisible -translate-y-2 p-6 flex flex-row gap-6">
+            <div id="megaMenuContainer" class="lux-megamenu-box" style="opacity: 0; visibility: hidden; transform: translateY(-8px);">
                 <!-- Column 1: Category Directory (25%) -->
-                <div class="w-1/4 border-r border-gray-150 pr-4 flex flex-col gap-1.5 max-h-[420px] overflow-y-auto scroll-luxury">
-                    <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase mb-2 px-3">Product Categories</span>
+                <div class="lux-megamenu-col-1 scroll-luxury">
+                    <span class="lux-megamenu-col-heading">Product Categories</span>
                     <?php if (!empty($h_categories)): ?>
                         <?php foreach ($h_categories as $idx => $cat): ?>
-                            <div class="megamenu-category-item flex items-center justify-between p-2.5 rounded-xl cursor-pointer transition-all duration-200 <?php echo $idx === 0 ? 'active-category bg-stone-50 border-l-4 border-luxGold pl-2' : ''; ?>" data-category-id="<?php echo $cat['id']; ?>">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="<?php echo getCategoryIcon($cat['slug']); ?>" class="w-4 h-4 <?php echo $idx === 0 ? 'text-luxGold' : 'text-gray-400'; ?>"></i>
-                                    <span class="text-xs font-semibold text-gray-700"><?php echo htmlspecialchars($cat['name']); ?></span>
+                            <div class="megamenu-category-item <?php echo $idx === 0 ? 'active-category' : ''; ?>" data-category-id="<?php echo $cat['id']; ?>">
+                                <div class="megamenu-cat-title-wrap">
+                                    <i data-lucide="<?php echo getCategoryIcon($cat['slug']); ?>" class="megamenu-cat-icon"></i>
+                                    <span class="megamenu-cat-text"><?php echo htmlspecialchars($cat['name']); ?></span>
                                 </div>
-                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-300"></i>
+                                <i data-lucide="chevron-right" class="megamenu-cat-arrow"></i>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <div class="text-center py-4 text-xs text-gray-400">No categories found</div>
+                        <div style="text-align: center; padding: 16px; font-size: 12px; color: #94a3b8;">No categories found</div>
                     <?php endif; ?>
                 </div>
 
                 <!-- Center Panels: Column 2 (Subcategories) & Column 3 (Featured Items) (50%) -->
-                <div class="w-1/2 flex flex-col relative min-h-[380px]">
+                <div class="lux-megamenu-col-center">
                     <?php foreach ($h_categories as $idx => $cat): ?>
-                        <div id="megamenu-panel-<?php echo $cat['id']; ?>" class="megamenu-panel flex-grow grid grid-cols-2 gap-6 <?php echo $idx === 0 ? '' : 'hidden'; ?>">
+                        <div id="megamenu-panel-<?php echo $cat['id']; ?>" class="megamenu-panel <?php echo $idx === 0 ? '' : 'lux-hidden'; ?>">
                             <!-- Column 2: Subcategories (50% of center) -->
-                            <div class="flex flex-col gap-3 pr-2 border-r border-gray-100">
-                                <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Subcategories &amp; Range</span>
-                                <ul class="flex flex-col gap-2 p-0 list-none m-0">
+                            <div class="lux-megamenu-subcats-col">
+                                <span class="lux-megamenu-col-heading">Subcategories &amp; Range</span>
+                                <ul class="lux-subcat-list">
                                     <?php 
                                     $subcats = getSubcategoriesForCategory($cat['slug'], $cat['name']);
                                     foreach ($subcats as $sc):
                                     ?>
                                         <li>
-                                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="megamenu-subcat-link text-xs text-gray-600 hover:text-luxGold font-medium flex items-center gap-2 text-decoration-none">
-                                                <span class="w-1.5 h-1.5 bg-luxGold/60 rounded-full flex-shrink-0"></span>
-                                                <?php echo htmlspecialchars($sc); ?>
+                                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="megamenu-subcat-link">
+                                                <span class="lux-subcat-dot"></span>
+                                                <span><?php echo htmlspecialchars($sc); ?></span>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="text-[11px] font-bold text-luxGold hover:underline mt-auto pt-3 flex items-center gap-1 text-decoration-none">
-                                    View All <?php echo htmlspecialchars($cat['name']); ?>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="lux-view-all-cat-link">
+                                    <span>View All <?php echo htmlspecialchars($cat['name']); ?></span>
+                                    <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>
                                 </a>
                             </div>
 
                             <!-- Column 3: Featured Products (50% of center) -->
-                            <div class="flex flex-col gap-3">
-                                <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Featured In Collection</span>
-                                <div class="grid grid-cols-1 gap-2.5">
+                            <div class="lux-megamenu-featured-col">
+                                <span class="lux-megamenu-col-heading">Featured In Collection</span>
+                                <div class="lux-featured-prods-grid">
                                     <?php 
                                     $cat_prods = $h_products_by_category[$cat['id']] ?? [];
                                     if (empty($cat_prods)): 
                                     ?>
-                                        <div class="bg-stone-50 border border-gray-100 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                                            <i data-lucide="sparkles" class="w-6 h-6 text-luxGold mb-1.5"></i>
-                                            <span class="text-xs font-bold text-gray-800">Signature Leather</span>
-                                            <span class="text-[10px] text-gray-400">Handcrafted Excellence</span>
+                                        <div class="lux-featured-empty-card">
+                                            <i data-lucide="sparkles" style="width: 22px; height: 22px; color: #c59b27; margin-bottom: 6px;"></i>
+                                            <span style="font-size: 12px; font-weight: 700; color: #1e293b;">Signature Leather</span>
+                                            <span style="font-size: 10px; color: #94a3b8;">Handcrafted Excellence</span>
                                         </div>
                                     <?php else: 
                                         $display_count = 0;
@@ -783,15 +1601,15 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                                             $p_gst = isset($prod['gst_percent']) ? (float)$prod['gst_percent'] : 0;
                                             $p_sale = round($prod['sale_price'] + ($prod['sale_price'] * $p_gst / 100));
                                         ?>
-                                            <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="bg-white border border-gray-150 rounded-xl p-2.5 flex items-center gap-3 hover:border-luxGold transition-all duration-300 hover:shadow-sm text-decoration-none group/item">
-                                                <div class="w-14 h-14 rounded-lg overflow-hidden bg-stone-50 flex items-center justify-center p-1 flex-shrink-0 border border-gray-100">
-                                                    <img src="<?php echo $p_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="max-h-full max-w-full object-contain group-hover/item:scale-105 transition-transform duration-300">
+                                            <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="lux-featured-prod-card">
+                                                <div class="lux-featured-thumb-wrap">
+                                                    <img src="<?php echo $p_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="lux-featured-thumb">
                                                 </div>
-                                                <div class="min-w-0 flex-grow">
-                                                    <h5 class="text-xs font-bold text-gray-800 truncate mb-0.5"><?php echo htmlspecialchars($prod['name']); ?></h5>
-                                                    <span class="text-xs font-extrabold text-luxGold">₹<?php echo number_format($p_sale); ?></span>
+                                                <div class="lux-featured-info">
+                                                    <h5 class="lux-featured-name"><?php echo htmlspecialchars($prod['name']); ?></h5>
+                                                    <span class="lux-featured-price">₹<?php echo number_format($p_sale); ?></span>
                                                 </div>
-                                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover/item:text-luxGold transition-colors flex-shrink-0"></i>
+                                                <i data-lucide="arrow-up-right" class="lux-featured-arrow"></i>
                                             </a>
                                         <?php 
                                             $display_count++;
@@ -805,21 +1623,20 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                 </div>
 
                 <!-- Column 4: Brand Editorial Spotlight (25%) -->
-                <div class="w-1/4 rounded-xl overflow-hidden relative shadow-md flex flex-col justify-between p-5 text-white" style="background: linear-gradient(145deg, #0b0f19 0%, #172236 100%); border: 1px solid rgba(197, 155, 39, 0.25);">
+                <div class="lux-megamenu-col-4">
                     <div>
-                        <span class="bg-luxGold text-white text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-full tracking-widest mb-3 inline-block">Artisanal Heritage</span>
-                        <h4 class="font-serif italic text-lg leading-snug mb-2 text-white">Genuine Handcrafted Leather</h4>
-                        <p class="text-[11px] text-gray-300 leading-relaxed font-light mb-0">Every creation is meticulously finished by master artisans, engineered for generational longevity.</p>
+                        <span class="lux-spotlight-badge">Artisanal Heritage</span>
+                        <h4 class="lux-spotlight-title">Genuine Handcrafted Leather</h4>
+                        <p class="lux-spotlight-desc">Every creation is meticulously finished by master artisans, engineered for generational longevity.</p>
                     </div>
-                    <div class="pt-4 border-t border-gray-700/60 mt-4">
-                        <a href="<?php echo $link_prefix; ?>products.php" class="inline-flex items-center justify-between w-full bg-luxGold hover:bg-white hover:text-darkLux text-white text-[11px] font-bold uppercase px-3.5 py-2 rounded-lg transition-all duration-300 text-decoration-none shadow-sm">
+                    <div class="lux-spotlight-cta-wrap">
+                        <a href="<?php echo $link_prefix; ?>products.php" class="lux-spotlight-btn">
                             <span>Explore Full Shop</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </header>
