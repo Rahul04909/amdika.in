@@ -24,34 +24,44 @@
     /* Custom Navigation */
     .hero-carousel .carousel-control-prev,
     .hero-carousel .carousel-control-next {
-        width: 50px;
-        height: 50px;
-        background: rgba(0, 0, 0, 0.2);
+        width: 46px;
+        height: 46px;
+        background: rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 50%;
         top: 50%;
         transform: translateY(-50%);
         margin: 0 20px;
         opacity: 0;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
     }
 
     .hero-section:hover .carousel-control-prev,
     .hero-section:hover .carousel-control-next {
         opacity: 1;
     }
+    
+    .hero-carousel .carousel-control-prev:hover,
+    .hero-carousel .carousel-control-next:hover {
+        background: rgba(197, 155, 39, 0.85);
+        color: #fff;
+    }
 
     .carousel-indicators [data-bs-target] {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #fff;
-        opacity: 0.5;
-        margin: 0 5px;
+        width: 24px;
+        height: 4px;
+        border-radius: 9999px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border: none;
+        transition: all 0.3s ease;
+        margin: 0 4px;
     }
 
     .carousel-indicators .active {
+        width: 42px;
+        background-color: #c59b27;
         opacity: 1;
-        background-color: var(--accent-gold, #d4a017);
     }
 
     /* Mobile Optimizations */

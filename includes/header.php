@@ -288,9 +288,19 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     <link rel="icon" type="image/png" href="<?php echo $assets_path; ?>images/amdika-logo.png">
 
     <style>
-        /* Luxury overrides */
+        /* Luxury typography & brand tokens */
+        :root {
+            --lux-gold: #c59b27;
+            --lux-gold-hover: #b0871d;
+            --lux-dark: #0b0f19;
+            --lux-slate: #0f172a;
+            --lux-border: #e2e8f0;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
+            background-color: #fcfbf8;
+            color: #1e293b;
         }
         
         /* Sticky bottom nav style */
@@ -298,57 +308,68 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             position: sticky;
             top: 0;
             z-index: 1040;
-            background: #111827; /* Dark Slate default background */
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #0f172a;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sticky-scrolled {
-            background: rgba(17, 24, 39, 0.95) !important; /* Translucent dark slate */
+            background: rgba(15, 23, 42, 0.96) !important;
             backdrop-filter: blur(16px) !important;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
         }
 
         /* Gold underline slide effect */
+        .nav-link-underline {
+            position: relative;
+            color: #f1f5f9 !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            padding: 0 16px;
+            height: 100%;
+            text-decoration: none !important;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link-underline i,
+        .nav-link-underline svg {
+            width: 15px;
+            height: 15px;
+            stroke-width: 2.2;
+            color: #94a3b8;
+            transition: color 0.2s ease, stroke 0.2s ease;
+        }
+
         .nav-link-underline::after {
             content: '';
             position: absolute;
             width: 100%;
             transform: scaleX(0);
             height: 2px;
-            bottom: 12px;
+            bottom: 10px;
             left: 0;
-            background-color: #C89B2C;
+            background-color: var(--lux-gold);
             transform-origin: bottom right;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
+        .nav-link-underline:hover {
+            color: var(--lux-gold) !important;
+        }
+
+        .nav-link-underline:hover i,
+        .nav-link-underline:hover svg {
+            color: var(--lux-gold) !important;
+            stroke: var(--lux-gold) !important;
+        }
+
         .nav-link-underline:hover::after {
             transform: scaleX(1);
             transform-origin: bottom left;
-        }
-
-        /* Ensure bottom header navigation links are strictly white by default and gold on hover */
-        #bottomHeader a.nav-link-underline {
-            color: #ffffff !important;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px; /* Space between icon and text */
-        }
-        #bottomHeader a.nav-link-underline:hover {
-            color: #C89B2C !important;
-        }
-        #bottomHeader a.nav-link-underline i,
-        #bottomHeader a.nav-link-underline svg {
-            color: #ffffff !important;
-            width: 15px;
-            height: 15px;
-            stroke-width: 2.2;
-            transition: color 0.2s ease, stroke 0.2s ease;
-        }
-        #bottomHeader a.nav-link-underline:hover i,
-        #bottomHeader a.nav-link-underline:hover svg {
-            color: #C89B2C !important;
-            stroke: #C89B2C !important;
         }
 
         /* Search suggestions styling */
@@ -358,44 +379,46 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             top: 100%;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 14px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.12);
             z-index: 2000;
             margin-top: 8px;
             display: none;
             overflow: hidden;
-            border: 1px solid rgba(229, 231, 235, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.9);
         }
         .suggestion-item {
             display: flex;
             align-items: center;
             padding: 12px 16px;
             text-decoration: none;
-            border-bottom: 1px solid rgba(243, 244, 246, 0.8);
+            border-bottom: 1px solid rgba(241, 245, 249, 0.9);
             transition: background 0.2s;
         }
         .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover, .active-suggestion { background: rgba(200, 155, 44, 0.05); }
+        .suggestion-item:hover, .active-suggestion { background: rgba(197, 155, 39, 0.06); }
         .suggestion-img {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 8px;
-            object-fit: cover;
+            object-fit: contain;
             margin-right: 14px;
-            background: #f8f8f8;
-            border: 1px solid #f0f0f0;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 2px;
         }
         .suggestion-name {
             font-size: 13px;
             font-weight: 600;
             margin: 0;
-            color: #1F2937;
+            color: #0f172a;
         }
         .suggestion-price {
             font-size: 12px;
-            color: #C89B2C;
+            color: var(--lux-gold);
             font-weight: 700;
             margin: 2px 0 0 0;
         }
@@ -403,20 +426,20 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             display: block;
             padding: 12px;
             text-align: center;
-            background: rgba(200, 155, 44, 0.08);
+            background: rgba(197, 155, 39, 0.08);
             font-size: 13px;
             font-weight: 700;
-            color: #C89B2C;
+            color: var(--lux-gold);
             text-decoration: none !important;
             transition: background 0.2s;
         }
-        .view-all-results:hover { background: rgba(200, 155, 44, 0.12); }
+        .view-all-results:hover { background: rgba(197, 155, 39, 0.15); }
         .no-results { padding: 20px; text-align: center; color: #888; font-size: 14px; }
 
         /* Custom inputs focus */
         .premium-input-group:focus-within {
-            border-color: #C89B2C !important;
-            box-shadow: 0 0 0 3px rgba(200, 155, 44, 0.15) !important;
+            border-color: var(--lux-gold) !important;
+            box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15) !important;
         }
 
         /* Glassmorphism scrollbar */
@@ -427,94 +450,146 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             background: rgba(0, 0, 0, 0.02);
         }
         .scroll-luxury::-webkit-scrollbar-thumb {
-            background: rgba(200, 155, 44, 0.2);
+            background: rgba(197, 155, 39, 0.25);
             border-radius: 10px;
         }
         .scroll-luxury::-webkit-scrollbar-thumb:hover {
-            background: rgba(200, 155, 44, 0.4);
+            background: rgba(197, 155, 39, 0.45);
+        }
+
+        /* MEGA MENU CONTAINER & HOVER BRIDGE */
+        #megaMenuContainer {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            border-top: 2px solid var(--lux-gold);
+            z-index: 1050;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (min-width: 1024px) {
+            #megaMenuContainer {
+                left: 3rem;
+                right: 3rem;
+            }
+        }
+        /* Invisible hover bridge between trigger and mega menu */
+        #megaMenuContainer::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            background: transparent;
+        }
+
+        .megamenu-category-item {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 3px solid transparent;
+        }
+        .megamenu-category-item:hover, .megamenu-category-item.active-category {
+            background: #f8fafc;
+            border-left-color: var(--lux-gold);
+        }
+        .megamenu-category-item.active-category span {
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .megamenu-category-item.active-category [data-lucide] {
+            color: var(--lux-gold) !important;
+        }
+
+        .megamenu-subcat-link {
+            transition: all 0.2s ease;
+        }
+        .megamenu-subcat-link:hover {
+            color: var(--lux-gold) !important;
+            transform: translateX(4px);
         }
     </style>
 </head>
 <body class="bg-[#FCFBF8] text-gray-800">
 
 <header class="relative w-full z-50">
-    <!-- LAYER 1: TOP BAR -->
-    <div class="h-[40px] bg-darkLux text-white text-xs flex items-center justify-between px-4 lg:px-12 border-b border-gray-800">
-        <!-- Left: Free Shipping Msg & Socials -->
-        <div class="flex items-center gap-6">
-            <span class="hidden md:inline-flex items-center gap-2 font-medium tracking-wide">
-                <i data-lucide="truck" class="w-4 h-4 text-luxGold animate-pulse"></i>
-                Complimentary shipping on orders above ₹9,999
+    <!-- LAYER 1: LUXURY TOP ANNOUNCEMENT BAR -->
+    <div class="h-[38px] bg-[#0b0f19] text-white text-xs flex items-center justify-between px-4 lg:px-12 border-b border-gray-800/80">
+        <!-- Left: Compliments & Socials -->
+        <div class="flex items-center gap-5">
+            <span class="inline-flex items-center gap-2 font-medium tracking-wide text-gray-300">
+                <i data-lucide="truck" class="w-3.5 h-3.5 text-luxGold animate-pulse"></i>
+                <span class="hidden sm:inline">Complimentary Express Shipping on orders above</span> 
+                <strong class="text-luxGold">₹9,999</strong>
             </span>
-            <div class="flex items-center gap-3 border-l border-gray-700 pl-6">
-                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
-                    <i class="fa-brands fa-facebook-f"></i>
+            <div class="hidden md:flex items-center gap-3 border-l border-gray-800 pl-5">
+                <a href="https://www.facebook.com/amadikaofficial/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Facebook">
+                    <i class="fa-brands fa-facebook-f text-[11px]"></i>
                 </a>
-                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
-                    <i class="fa-brands fa-instagram"></i>
+                <a href="https://www.instagram.com/amadika.shopping/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Instagram">
+                    <i class="fa-brands fa-instagram text-[11px]"></i>
                 </a>
-                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" class="text-gray-300 hover:text-luxGold transition-colors duration-200 text-decoration-none">
-                    <i class="fa-brands fa-pinterest"></i>
+                <a href="https://in.pinterest.com/amadikashopping/_pins/" target="_blank" class="text-gray-400 hover:text-luxGold transition-colors duration-200 text-decoration-none" title="Pinterest">
+                    <i class="fa-brands fa-pinterest text-[11px]"></i>
                 </a>
             </div>
         </div>
         
-        <!-- Right: Support & Tracking (Wishlist removed) -->
-        <div class="flex items-center gap-5">
-            <a href="tel:+918447616924" class="text-gray-300 hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
+        <!-- Right: Concierge & Order Access -->
+        <div class="flex items-center gap-4 lg:gap-5 text-gray-400">
+            <a href="tel:+918447616924" class="hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
                 <i data-lucide="phone" class="w-3.5 h-3.5 text-luxGold"></i>
-                +91 8447616924
+                <span class="hidden sm:inline">+91 8447616924</span>
             </a>
-            <a href="mailto:support@amadika.in" class="hidden lg:inline-flex text-gray-300 hover:text-luxGold transition-colors duration-200 flex items-center gap-1.5 font-medium text-decoration-none">
-                <i data-lucide="mail" class="w-3.5 h-3.5 text-luxGold"></i>
-                support@amadika.in
-            </a>
-            <span class="hidden md:inline text-gray-700">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
+            <span class="hidden md:inline text-gray-800">|</span>
+            <a href="<?php echo $link_prefix; ?>pages/track-courior/index.php" class="hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none hidden sm:inline">
                 Track Order
             </a>
-            <span class="hidden md:inline text-gray-700">|</span>
-            <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="text-gray-300 hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none">
+            <span class="hidden md:inline text-gray-800">|</span>
+            <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="hover:text-luxGold transition-colors duration-200 font-medium text-decoration-none hidden sm:inline">
                 Our Stores
             </a>
         </div>
     </div>
 
-    <!-- LAYER 2: MIDDLE HEADER -->
-    <div class="bg-white py-4 px-4 lg:px-12 border-b border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)] transition-all duration-300">
+    <!-- LAYER 2: BRAND IDENTITY & ACTION BAR -->
+    <div class="bg-white py-3.5 px-4 lg:px-12 border-b border-gray-150 shadow-[0_2px_15px_rgba(0,0,0,0.02)] transition-all duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <!-- Brand Logo (Left) -->
             <div class="flex-shrink-0">
                 <a href="<?php echo $link_prefix; ?>index.php" class="block">
-                    <img src="<?php echo $assets_path; ?>images/logo.jpeg" alt="Amadika" class="h-10 lg:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105">
+                    <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika Luxury" class="h-9 lg:h-11 w-auto object-contain transition-transform duration-300 hover:scale-[1.02]">
                 </a>
             </div>
 
-            <!-- Premium Search Bar (Center) -->
-            <div class="hidden md:block flex-grow max-w-2xl">
+            <!-- Dribbble-Grade Luxury Search Bar (Center) -->
+            <div class="hidden md:block flex-grow max-w-2xl mx-4">
                 <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="relative">
-                    <div class="flex items-center bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.03)] focus-within:border-luxGold focus-within:ring-2 focus-within:ring-luxGold/15 transition-all duration-300 overflow-hidden h-11">
+                    <div class="flex items-center bg-stone-50/80 border border-gray-200 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] focus-within:border-luxGold focus-within:bg-white focus-within:ring-2 focus-within:ring-luxGold/15 transition-all duration-300 overflow-hidden h-11">
                         <!-- Category Dropdown Select -->
-                        <div class="relative flex-shrink-0 border-r border-gray-200/40">
-                            <select name="category" class="bg-transparent text-xs text-gray-600 font-bold pl-4 pr-8 py-2 appearance-none focus:outline-none cursor-pointer h-full border-0">
+                        <div class="relative flex-shrink-0 border-r border-gray-200">
+                            <select name="category" class="bg-transparent text-xs text-gray-700 font-semibold pl-4 pr-8 py-2 appearance-none focus:outline-none cursor-pointer h-full border-0">
                                 <option value="">All Categories</option>
                                 <?php foreach ($h_categories as $cat): ?>
                                     <option value="<?php echo htmlspecialchars($cat['slug']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                         </div>
                         
                         <!-- Search Input -->
                         <input type="text" 
-                               class="bg-transparent border-0 text-sm pl-4 pr-10 py-2 w-full text-gray-700 focus:outline-none placeholder-gray-400" 
-                               placeholder="Search for premium leather items..." 
+                               class="bg-transparent border-0 text-xs md:text-sm pl-4 pr-10 py-2 w-full text-gray-800 focus:outline-none placeholder-gray-400" 
+                               placeholder="Search handcrafted leather items, bags, trays..." 
                                name="search" 
                                id="headerSearchInput" 
                                autocomplete="off">
                                
                         <!-- Search Action Button -->
-                        <button type="submit" class="bg-darkLux hover:bg-luxGold text-white h-full px-6 flex items-center justify-center transition-colors duration-300 rounded-r-full border-0">
+                        <button type="submit" class="bg-[#0f172a] hover:bg-luxGold text-white h-full px-5 flex items-center justify-center transition-colors duration-300 rounded-r-full border-0">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -523,58 +598,57 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                 </form>
             </div>
 
-            <!-- Action Icons (Right - Wishlist & Compare removed as requested) -->
-            <div class="flex items-center gap-2 lg:gap-5">
-                <!-- Mobile Toggler -->
+            <!-- Action Icons (Right) -->
+            <div class="flex items-center gap-2 lg:gap-4">
+                <!-- Mobile Menu Toggler -->
                 <button onclick="toggleMobileDrawer()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
 
-                <!-- Search for Mobile Trigger -->
+                <!-- Mobile Search Trigger -->
                 <button onclick="toggleMobileSearch()" class="md:hidden p-2 text-darkLux hover:text-luxGold focus:outline-none bg-transparent border-0">
-                    <i data-lucide="search" class="w-5.5 h-5.5"></i>
+                    <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
 
                 <!-- User Account/Auth -->
                 <div class="relative group">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo $link_prefix; ?>user/index.php" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block text-decoration-none" title="My Account">
+                        <a href="<?php echo $link_prefix; ?>user/index.php" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 block text-decoration-none" title="My Account">
                             <i data-lucide="user" class="w-5 h-5"></i>
                         </a>
                     <?php else: ?>
-                        <!-- Trigger Login Modal -->
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block text-decoration-none" title="Login / Register">
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 block text-decoration-none" title="Sign In">
                             <i data-lucide="user" class="w-5 h-5"></i>
                         </a>
                     <?php endif; ?>
                 </div>
 
-                <!-- Shopping Cart Icon (with Hover Mini Cart) -->
+                <!-- Shopping Bag (with Hover Mini Cart) -->
                 <div class="relative group" onmouseenter="loadMiniCart()">
-                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="p-2 text-darkLux hover:text-luxGold transition-colors duration-200 block relative text-decoration-none">
+                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="w-10 h-10 rounded-full flex items-center justify-center text-darkLux hover:text-luxGold hover:bg-stone-50 transition-all duration-200 relative text-decoration-none">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        <span id="headerCartCount" class="absolute -top-1.5 -right-1.5 bg-luxGold text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm"><?php echo $cart_count; ?></span>
+                        <span id="headerCartCount" class="absolute top-1 right-1 bg-luxGold text-white text-[9px] font-extrabold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white shadow-sm leading-none"><?php echo $cart_count; ?></span>
                     </a>
 
                     <!-- Hover Mini Cart Dropdown -->
-                    <div class="absolute right-0 top-full mt-2 w-80 bg-white/95 backdrop-blur-md rounded-xl shadow-luxury border border-borderLight opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 p-4">
+                    <div class="absolute right-0 top-full mt-2 w-80 bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-150 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 p-4">
                         <h6 class="text-xs font-bold text-gray-800 tracking-wider uppercase mb-3 border-b border-gray-100 pb-2 flex items-center justify-between">
-                            <span>Shopping Bag</span>
-                            <span class="text-[10px] text-gray-400 font-semibold normal-case">Hover to preview</span>
+                            <span>Your Shopping Bag</span>
+                            <span class="text-[10px] text-luxGold font-bold normal-case">Live Preview</span>
                         </h6>
                         <!-- Mini Cart Items List -->
                         <div id="miniCartItems" class="max-h-60 overflow-y-auto space-y-3 pr-1 scroll-luxury">
                             <?php if (empty($cart_items)): ?>
                                 <div class="text-center py-6">
-                                    <i data-lucide="shopping-bag" class="mx-auto text-gray-300 w-10 h-10 mb-2"></i>
-                                    <p class="text-xs text-gray-500">Your cart is empty</p>
+                                    <i data-lucide="shopping-bag" class="mx-auto text-gray-300 w-9 h-9 mb-2"></i>
+                                    <p class="text-xs text-gray-500 mb-0">Your bag is currently empty</p>
                                 </div>
                             <?php else: ?>
                                 <?php foreach ($cart_items as $item): 
                                     $img = (strpos($item['featured_image'], 'http') === 0 || strpos($item['featured_image'], '/') === 0) ? $item['featured_image'] : $link_prefix . $item['featured_image'];
                                 ?>
                                     <div class="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                                        <img src="<?php echo $img; ?>" class="w-12 h-12 rounded-lg object-contain border border-gray-100 p-1 flex-shrink-0">
+                                        <img src="<?php echo $img; ?>" class="w-12 h-12 rounded-lg object-contain border border-gray-100 p-1 flex-shrink-0 bg-stone-50">
                                         <div class="flex-grow min-w-0">
                                             <h6 class="text-xs font-semibold text-gray-800 truncate mb-0.5"><?php echo htmlspecialchars($item['name']); ?></h6>
                                             <p class="text-[11px] text-gray-400 mb-0">Qty: <?php echo $item['quantity']; ?></p>
@@ -584,15 +658,15 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
-                        <!-- Mini Cart Subtotal & Action buttons -->
+                        <!-- Subtotal & Actions -->
                         <div class="border-t border-gray-100 pt-3 mt-3">
                             <div class="flex justify-between text-xs font-semibold mb-3">
-                                <span class="text-gray-500">Subtotal</span>
+                                <span class="text-gray-500">Estimated Total</span>
                                 <span id="miniCartSubtotal" class="text-gray-950 font-bold">₹<?php echo number_format($cart_total); ?></span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <a href="<?php echo $link_prefix; ?>cart.php" class="bg-gray-100 text-gray-900 text-center py-2 rounded-lg font-bold text-[11px] hover:bg-gray-200 transition-colors duration-200 text-decoration-none">View Cart</a>
-                                <a href="<?php echo $link_prefix; ?>checkout.php" class="bg-luxGold text-white text-center py-2 rounded-lg font-bold text-[11px] hover:bg-[#b58b27] transition-colors duration-200 text-decoration-none">Checkout</a>
+                                <a href="<?php echo $link_prefix; ?>cart.php" class="bg-stone-100 hover:bg-stone-200 text-gray-900 text-center py-2.5 rounded-xl font-bold text-[11px] transition-colors duration-200 text-decoration-none">View Bag</a>
+                                <a href="<?php echo $link_prefix; ?>checkout.php" class="bg-luxGold hover:bg-[#b0871d] text-white text-center py-2.5 rounded-xl font-bold text-[11px] transition-colors duration-200 text-decoration-none shadow-sm">Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -615,150 +689,134 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     </div>
 
     <!-- LAYER 3: BOTTOM NAVIGATION & MEGA MENU -->
-    <div id="bottomHeader" class="hidden md:block bg-[#111827] border-b border-gray-800 z-[100] relative transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 lg:px-12 h-14">
+    <div id="bottomHeader" class="hidden md:block bg-[#0f172a] border-b border-gray-800 z-[100] relative transition-all duration-300">
+        <!-- Relative bounding container for both nav bar and full-width mega menu -->
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 lg:px-12 h-14 relative">
             
-            <!-- Sticky menu items container -->
             <div class="flex items-center gap-1.5 h-full w-full justify-between">
+                <!-- Navigation Links Left -->
                 <div class="flex items-center gap-1 h-full">
                     <!-- Categories Button Wrapper -->
-                    <div class="relative h-full flex items-center" id="categoriesMenuTrigger">
-                        <button class="bg-luxGold hover:bg-white hover:text-darkLux text-white text-[11px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all duration-300 shadow-sm border-0">
-                            <i data-lucide="menu" class="w-4 h-4"></i>
+                    <div class="h-full flex items-center" id="categoriesMenuTrigger">
+                        <button class="bg-gradient-to-r from-[#c59b27] to-[#b0871d] hover:brightness-105 text-white text-[11px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-lg flex items-center gap-2.5 transition-all duration-300 shadow-sm border-0">
+                            <i data-lucide="layout-grid" class="w-4 h-4"></i>
                             Categories
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-80"></i>
                         </button>
+                    </div>
+                    
+                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline"><i data-lucide="home"></i>Home</a>
+                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline"><i data-lucide="shopping-bag"></i>Shop</a>
+                    <a href="<?php echo $link_prefix; ?>pages/collection/index.php" class="nav-link-underline"><i data-lucide="layers"></i>Collections</a>
+                    <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="nav-link-underline"><i data-lucide="gift"></i>Corporate Gifting</a>
+                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline"><i data-lucide="newspaper"></i>Blogs</a>
+                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline"><i data-lucide="info"></i>About Us</a>
+                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline"><i data-lucide="phone"></i>Contact</a>
+                    <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="nav-link-underline"><i data-lucide="map-pin"></i>Our Stores</a>
+                </div>
+            </div>
 
-                        <!-- MEGA MENU (1200px Grid) -->
-                        <div id="megaMenuContainer" class="absolute left-0 top-full mt-0 w-[1140px] bg-white/95 backdrop-blur-md rounded-b-2xl shadow-luxury border-t border-gray-100 opacity-0 invisible -translate-y-2 transition-all duration-300 z-50 p-6 flex flex-row gap-6" style="left: 0;">
-                            <!-- Column 1: Category Selection Sidebar (width: 1/5) -->
-                            <div class="w-1/4 border-r border-gray-100 pr-4 flex flex-col gap-1.5 max-h-[420px] overflow-y-auto scroll-luxury">
-                                <span class="text-[10px] font-bold tracking-wider text-gray-400 uppercase mb-2 px-3">Explore Categories</span>
-                                <?php if (!empty($h_categories)): ?>
-                                    <?php foreach ($h_categories as $idx => $cat): ?>
-                                        <div class="megamenu-category-item flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-50 <?php echo $idx === 0 ? 'active-category bg-gray-50 border-l-4 border-luxGold pl-1.5 font-bold' : ''; ?>" data-category-id="<?php echo $cat['id']; ?>">
-                                            <div class="flex items-center gap-3">
-                                                <i data-lucide="<?php echo getCategoryIcon($cat['slug']); ?>" class="w-4 h-4 text-gray-500 <?php echo $idx === 0 ? 'text-luxGold' : ''; ?>"></i>
-                                                <span class="text-xs font-semibold text-gray-700"><?php echo htmlspecialchars($cat['name']); ?></span>
-                                            </div>
-                                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400"></i>
-                                        </div>
+            <!-- CONTAINER-BOUNDED DRIBBLE LUXURY MEGA MENU -->
+            <div id="megaMenuContainer" class="opacity-0 invisible -translate-y-2 p-6 flex flex-row gap-6">
+                <!-- Column 1: Category Directory (25%) -->
+                <div class="w-1/4 border-r border-gray-150 pr-4 flex flex-col gap-1.5 max-h-[420px] overflow-y-auto scroll-luxury">
+                    <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase mb-2 px-3">Product Categories</span>
+                    <?php if (!empty($h_categories)): ?>
+                        <?php foreach ($h_categories as $idx => $cat): ?>
+                            <div class="megamenu-category-item flex items-center justify-between p-2.5 rounded-xl cursor-pointer transition-all duration-200 <?php echo $idx === 0 ? 'active-category bg-stone-50 border-l-4 border-luxGold pl-2' : ''; ?>" data-category-id="<?php echo $cat['id']; ?>">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="<?php echo getCategoryIcon($cat['slug']); ?>" class="w-4 h-4 <?php echo $idx === 0 ? 'text-luxGold' : 'text-gray-400'; ?>"></i>
+                                    <span class="text-xs font-semibold text-gray-700"><?php echo htmlspecialchars($cat['name']); ?></span>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-300"></i>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="text-center py-4 text-xs text-gray-400">No categories found</div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Center Panels: Column 2 (Subcategories) & Column 3 (Featured Items) (50%) -->
+                <div class="w-1/2 flex flex-col relative min-h-[380px]">
+                    <?php foreach ($h_categories as $idx => $cat): ?>
+                        <div id="megamenu-panel-<?php echo $cat['id']; ?>" class="megamenu-panel flex-grow grid grid-cols-2 gap-6 <?php echo $idx === 0 ? '' : 'hidden'; ?>">
+                            <!-- Column 2: Subcategories (50% of center) -->
+                            <div class="flex flex-col gap-3 pr-2 border-r border-gray-100">
+                                <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Subcategories &amp; Range</span>
+                                <ul class="flex flex-col gap-2 p-0 list-none m-0">
+                                    <?php 
+                                    $subcats = getSubcategoriesForCategory($cat['slug'], $cat['name']);
+                                    foreach ($subcats as $sc):
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="megamenu-subcat-link text-xs text-gray-600 hover:text-luxGold font-medium flex items-center gap-2 text-decoration-none">
+                                                <span class="w-1.5 h-1.5 bg-luxGold/60 rounded-full flex-shrink-0"></span>
+                                                <?php echo htmlspecialchars($sc); ?>
+                                            </a>
+                                        </li>
                                     <?php endforeach; ?>
-                                <?php else: ?>
-                                    <div class="text-center py-4 text-xs text-gray-400">No categories found</div>
-                                <?php endif; ?>
-                            </div>
-
-                            <!-- Column 2 & 3: Dynamic Subcategories & Featured Products (width: 1.5/2) -->
-                            <div class="flex-grow flex flex-row gap-6 relative min-h-[380px]">
-                                <?php foreach ($h_categories as $idx => $cat): ?>
-                                    <div id="megamenu-panel-<?php echo $cat['id']; ?>" class="megamenu-panel flex-grow flex flex-row gap-6 <?php echo $idx === 0 ? '' : 'hidden'; ?>">
-                                        
-                                        <!-- Column 2: Mapped Subcategories (width: 2/5) -->
-                                        <div class="w-2/5 flex flex-col gap-3">
-                                            <span class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Subcategories</span>
-                                            <ul class="flex flex-col gap-2 p-0 list-none m-0">
-                                                <?php 
-                                                $subcats = getSubcategoriesForCategory($cat['slug'], $cat['name']);
-                                                foreach ($subcats as $sc):
-                                                ?>
-                                                    <li>
-                                                        <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="text-xs text-gray-600 hover:text-luxGold font-semibold hover:pl-1 transition-all duration-200 flex items-center gap-1.5 text-decoration-none">
-                                                            <span class="w-1 h-1 bg-luxGold rounded-full"></span>
-                                                            <?php echo htmlspecialchars($sc); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </div>
-
-                                        <!-- Column 3: Featured Products (width: 3/5) -->
-                                        <div class="w-3/5 flex flex-col gap-3">
-                                            <span class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Featured In This Category</span>
-                                            <div class="grid grid-cols-2 gap-3">
-                                                <?php 
-                                                $cat_prods = $h_products_by_category[$cat['id']] ?? [];
-                                                if (empty($cat_prods)): 
-                                                ?>
-                                                    <!-- Luxury Fallback cards if empty -->
-                                                    <div class="bg-gray-50 border border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center text-center">
-                                                        <i data-lucide="package" class="w-8 h-8 text-gray-300 mb-2"></i>
-                                                        <span class="text-xs font-bold text-gray-700">Signature Leather</span>
-                                                        <span class="text-[10px] text-gray-400 mt-1">Exclusive Collection</span>
-                                                    </div>
-                                                    <div class="bg-gray-50 border border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center text-center">
-                                                        <i data-lucide="sparkles" class="w-8 h-8 text-gray-300 mb-2"></i>
-                                                        <span class="text-xs font-bold text-gray-700">Classic Valet</span>
-                                                        <span class="text-[10px] text-gray-400 mt-1">Premium Standard</span>
-                                                    </div>
-                                                <?php else: 
-                                                    // Display up to 2 featured items
-                                                    $display_count = 0;
-                                                    foreach ($cat_prods as $prod): 
-                                                        if ($display_count >= 2) break;
-                                                        $p_img = (strpos($prod['featured_image'], 'http') === 0 || strpos($prod['featured_image'], '/') === 0) ? $prod['featured_image'] : $link_prefix . $prod['featured_image'];
-                                                    ?>
-                                                        <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="bg-white border border-gray-100 rounded-xl p-3 flex flex-col hover:border-luxGold transition-all duration-300 hover:shadow-sm group/card text-decoration-none">
-                                                            <div class="w-full h-24 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center p-1 mb-2">
-                                                                <img src="<?php echo $p_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="max-h-full max-w-full object-contain group-hover/card:scale-105 transition-transform duration-300">
-                                                            </div>
-                                                            <h5 class="text-xs font-bold text-gray-800 truncate mb-1"><?php echo htmlspecialchars($prod['name']); ?></h5>
-                                                            <span class="text-[11px] font-extrabold text-luxGold">₹<?php echo number_format($prod['sale_price']); ?></span>
-                                                        </a>
-                                                    <?php 
-                                                        $display_count++;
-                                                    endforeach; 
-                                                endif; 
-                                                ?>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <!-- Column 4: Popular Collections (width: 1/5) -->
-                            <div class="w-1/5 border-l border-gray-100 pl-4 flex flex-col gap-3">
-                                <span class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Popular Collections</span>
-                                <ul class="flex flex-col gap-3.5 p-0 list-none m-0">
-                                    <li>
-                                        <a href="<?php echo $link_prefix; ?>products.php" class="text-xs font-bold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">The Heritage Series</a>
-                                        <p class="text-[10px] text-gray-400 mb-0">Signature premium leather products</p>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo $link_prefix; ?>products.php" class="text-xs font-bold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">The Minimalist Living</a>
-                                        <p class="text-[10px] text-gray-400 mb-0">Clean cuts & functional style</p>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo $link_prefix; ?>products.php" class="text-xs font-bold text-gray-700 hover:text-luxGold transition-colors text-decoration-none">The Corporate Suite</a>
-                                        <p class="text-[10px] text-gray-400 mb-0">Refined office accessories</p>
-                                    </li>
                                 </ul>
+                                <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo urlencode($cat['slug']); ?>" class="text-[11px] font-bold text-luxGold hover:underline mt-auto pt-3 flex items-center gap-1 text-decoration-none">
+                                    View All <?php echo htmlspecialchars($cat['name']); ?>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </a>
                             </div>
 
-                            <!-- Column 5: Promotional Banner (width: 1.5/5) -->
-                            <div class="w-1/4 rounded-xl overflow-hidden relative shadow-sm flex flex-col justify-end p-4 text-white min-h-[300px]" style="background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(200,155,44,0.7) 100%), url('<?php echo $assets_path; ?>images/amdika-logo.png') center/contain no-repeat; background-color: #111827;">
-                                <div class="z-10 relative">
-                                    <span class="bg-luxGold text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wider mb-2 inline-block">New Arrivals</span>
-                                    <h4 class="font-serif italic text-lg leading-tight mb-1">Signature Handcrafted Leather</h4>
-                                    <p class="text-[11px] text-gray-200 mb-3 font-medium">Flat 10% Off on Your First Purchase. Elevate your space.</p>
-                                    <a href="<?php echo $link_prefix; ?>products.php" class="inline-flex items-center gap-1.5 bg-luxGold hover:bg-white hover:text-darkLux text-white text-[10px] font-extrabold uppercase px-3 py-1.5 rounded transition-all duration-300 text-decoration-none">
-                                        Shop Now
-                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                    </a>
+                            <!-- Column 3: Featured Products (50% of center) -->
+                            <div class="flex flex-col gap-3">
+                                <span class="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Featured In Collection</span>
+                                <div class="grid grid-cols-1 gap-2.5">
+                                    <?php 
+                                    $cat_prods = $h_products_by_category[$cat['id']] ?? [];
+                                    if (empty($cat_prods)): 
+                                    ?>
+                                        <div class="bg-stone-50 border border-gray-100 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+                                            <i data-lucide="sparkles" class="w-6 h-6 text-luxGold mb-1.5"></i>
+                                            <span class="text-xs font-bold text-gray-800">Signature Leather</span>
+                                            <span class="text-[10px] text-gray-400">Handcrafted Excellence</span>
+                                        </div>
+                                    <?php else: 
+                                        $display_count = 0;
+                                        foreach ($cat_prods as $prod): 
+                                            if ($display_count >= 2) break;
+                                            $p_img = (strpos($prod['featured_image'], 'http') === 0 || strpos($prod['featured_image'], '/') === 0) ? $prod['featured_image'] : $link_prefix . $prod['featured_image'];
+                                            $p_gst = isset($prod['gst_percent']) ? (float)$prod['gst_percent'] : 0;
+                                            $p_sale = round($prod['sale_price'] + ($prod['sale_price'] * $p_gst / 100));
+                                        ?>
+                                            <a href="<?php echo $link_prefix; ?>product/<?php echo $prod['slug']; ?>" class="bg-white border border-gray-150 rounded-xl p-2.5 flex items-center gap-3 hover:border-luxGold transition-all duration-300 hover:shadow-sm text-decoration-none group/item">
+                                                <div class="w-14 h-14 rounded-lg overflow-hidden bg-stone-50 flex items-center justify-center p-1 flex-shrink-0 border border-gray-100">
+                                                    <img src="<?php echo $p_img; ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="max-h-full max-w-full object-contain group-hover/item:scale-105 transition-transform duration-300">
+                                                </div>
+                                                <div class="min-w-0 flex-grow">
+                                                    <h5 class="text-xs font-bold text-gray-800 truncate mb-0.5"><?php echo htmlspecialchars($prod['name']); ?></h5>
+                                                    <span class="text-xs font-extrabold text-luxGold">₹<?php echo number_format($p_sale); ?></span>
+                                                </div>
+                                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover/item:text-luxGold transition-colors flex-shrink-0"></i>
+                                            </a>
+                                        <?php 
+                                            $display_count++;
+                                        endforeach; 
+                                    endif; 
+                                    ?>
                                 </div>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                </div>
 
+                <!-- Column 4: Brand Editorial Spotlight (25%) -->
+                <div class="w-1/4 rounded-xl overflow-hidden relative shadow-md flex flex-col justify-between p-5 text-white" style="background: linear-gradient(145deg, #0b0f19 0%, #172236 100%); border: 1px solid rgba(197, 155, 39, 0.25);">
+                    <div>
+                        <span class="bg-luxGold text-white text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-full tracking-widest mb-3 inline-block">Artisanal Heritage</span>
+                        <h4 class="font-serif italic text-lg leading-snug mb-2 text-white">Genuine Handcrafted Leather</h4>
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-light mb-0">Every creation is meticulously finished by master artisans, engineered for generational longevity.</p>
                     </div>
-                    
-                    <a href="<?php echo $link_prefix; ?>index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="home"></i>Home</a>
-                    <a href="<?php echo $link_prefix; ?>products.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="shopping-bag"></i>Shop</a>
-                    <a href="<?php echo $link_prefix; ?>pages/collection/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="layers"></i>Collections</a>
-                    <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="gift"></i>Corporate Gifting</a>
-                    <a href="<?php echo $link_prefix; ?>blogs.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="newspaper"></i>Blogs</a>
-                    <a href="<?php echo $link_prefix; ?>pages/about-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="info"></i>About Us</a>
-                    <a href="<?php echo $link_prefix; ?>pages/contact-us/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="phone"></i>Contact</a>
-                    <a href="<?php echo $link_prefix; ?>pages/our-stores/index.php" class="nav-link-underline relative text-[13px] font-semibold text-gray-100 hover:text-luxGold transition-colors duration-200 px-4 py-3 h-full flex items-center text-decoration-none"><i data-lucide="map-pin"></i>Our Stores</a>
+                    <div class="pt-4 border-t border-gray-700/60 mt-4">
+                        <a href="<?php echo $link_prefix; ?>products.php" class="inline-flex items-center justify-between w-full bg-luxGold hover:bg-white hover:text-darkLux text-white text-[11px] font-bold uppercase px-3.5 py-2 rounded-lg transition-all duration-300 text-decoration-none shadow-sm">
+                            <span>Explore Full Shop</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -1240,27 +1298,26 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         const menu = document.getElementById('megaMenuContainer');
 
         if (trigger && menu) {
-            // Hover logic for mega menu wrapper
             let leaveTimeout = null;
 
-            trigger.addEventListener('mouseenter', function() {
+            function openMenu() {
                 clearTimeout(leaveTimeout);
-                menu.classList.remove('invisible');
-                menu.classList.remove('opacity-0');
-                menu.classList.remove('-translate-y-2');
-                menu.classList.add('opacity-100');
-                menu.classList.add('translate-y-0');
-            });
+                menu.classList.remove('invisible', 'opacity-0', '-translate-y-2');
+                menu.classList.add('opacity-100', 'translate-y-0');
+            }
 
-            trigger.addEventListener('mouseleave', function() {
+            function closeMenu() {
                 leaveTimeout = setTimeout(() => {
-                    menu.classList.remove('opacity-100');
-                    menu.classList.remove('translate-y-0');
-                    menu.classList.add('opacity-0');
-                    menu.classList.add('-translate-y-2');
-                    menu.classList.add('invisible');
-                }, 150);
-            });
+                    menu.classList.remove('opacity-100', 'translate-y-0');
+                    menu.classList.add('opacity-0', '-translate-y-2', 'invisible');
+                }, 180);
+            }
+
+            trigger.addEventListener('mouseenter', openMenu);
+            trigger.addEventListener('mouseleave', closeMenu);
+
+            menu.addEventListener('mouseenter', openMenu);
+            menu.addEventListener('mouseleave', closeMenu);
         }
 
         catItems.forEach(item => {
@@ -1269,22 +1326,28 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
 
                 // Update styling on category list elements
                 catItems.forEach(i => {
-                    i.classList.remove('active-category', 'bg-gray-50', 'border-l-4', 'border-luxGold', 'pl-1.5', 'font-bold');
+                    i.classList.remove('active-category', 'bg-stone-50', 'border-l-4', 'border-luxGold', 'pl-2', 'font-bold');
                     const icon = i.querySelector('[data-lucide]');
-                    if (icon) icon.classList.remove('text-luxGold');
+                    if (icon) {
+                        icon.classList.remove('text-luxGold');
+                        icon.classList.add('text-gray-400');
+                    }
                 });
                 
-                this.classList.add('active-category', 'bg-gray-50', 'border-l-4', 'border-luxGold', 'pl-1.5', 'font-bold');
+                this.classList.add('active-category', 'bg-stone-50', 'border-l-4', 'border-luxGold', 'pl-2', 'font-bold');
                 const activeIcon = this.querySelector('[data-lucide]');
-                if (activeIcon) activeIcon.classList.add('text-luxGold');
+                if (activeIcon) {
+                    activeIcon.classList.remove('text-gray-400');
+                    activeIcon.classList.add('text-luxGold');
+                }
 
                 // Switch corresponding detail panels
                 panels.forEach(panel => {
                     if (panel.id === 'megamenu-panel-' + targetId) {
                         panel.classList.remove('hidden');
                         gsap.fromTo(panel, 
-                            { opacity: 0, x: 10 }, 
-                            { opacity: 1, x: 0, duration: 0.25, ease: 'power2.out' }
+                            { opacity: 0, x: 8 }, 
+                            { opacity: 1, x: 0, duration: 0.22, ease: 'power2.out' }
                         );
                     } else {
                         panel.classList.add('hidden');
