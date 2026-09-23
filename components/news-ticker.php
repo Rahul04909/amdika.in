@@ -4,6 +4,9 @@
         background: linear-gradient(90deg, #0b0f19 0%, #111827 50%, #0b0f19 100%);
         color: #f8fafc;
         overflow: hidden;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
         padding: 11px 0;
         border-top: 1px solid rgba(197, 155, 39, 0.25);
         border-bottom: 1px solid rgba(197, 155, 39, 0.25);

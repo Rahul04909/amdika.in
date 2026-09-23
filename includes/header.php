@@ -1647,7 +1647,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     <!-- Header -->
     <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-darkLux text-white">
         <div class="flex items-center gap-2">
-            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="h-6 filter brightness-0 invert">
+            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 24px; max-height: 24px; width: auto; max-width: 130px; object-fit: contain; display: block; filter: brightness(0) invert(1);">
         </div>
         <button onclick="toggleMobileDrawer()" class="text-white hover:text-luxGold focus:outline-none">
             <i data-lucide="x" class="w-5 h-5"></i>
@@ -1782,7 +1782,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-luxGold/20 via-transparent to-transparent opacity-60"></div>
                         
                         <div class="relative z-10">
-                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="h-8 filter brightness-0 invert mb-8">
+                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 32px; max-height: 32px; width: auto; max-width: 160px; object-fit: contain; display: block; filter: brightness(0) invert(1); margin-bottom: 24px;">
                             <h3 class="font-serif italic text-2xl font-semibold mb-3 tracking-wide text-luxGold">Join Amadika</h3>
                             <p class="text-gray-300 text-xs leading-relaxed font-light">Access your exclusive Member Dashboard, view Order History, and get personal recommendations.</p>
                         </div>
@@ -1924,7 +1924,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
                         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-luxGold/20 via-transparent to-transparent opacity-60"></div>
                         
                         <div class="relative z-10">
-                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" class="h-8 filter brightness-0 invert mb-8">
+                            <img src="<?php echo $assets_path; ?>images/amdika-logo.png" alt="Amadika" style="height: 32px; max-height: 32px; width: auto; max-width: 160px; object-fit: contain; display: block; filter: brightness(0) invert(1); margin-bottom: 24px;">
                             <h3 class="font-serif italic text-2xl font-semibold mb-3 tracking-wide text-luxGold">Create Account</h3>
                             <p class="text-gray-300 text-xs leading-relaxed font-light">Join the Amadika Luxury Circle to enjoy complementary shipping, private collections, and personalized gifts.</p>
                         </div>
@@ -2119,14 +2119,18 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
 
             function openMenu() {
                 clearTimeout(leaveTimeout);
-                menu.classList.remove('invisible', 'opacity-0', '-translate-y-2');
-                menu.classList.add('opacity-100', 'translate-y-0');
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateY(0)';
+                menu.style.pointerEvents = 'auto';
             }
 
             function closeMenu() {
                 leaveTimeout = setTimeout(() => {
-                    menu.classList.remove('opacity-100', 'translate-y-0');
-                    menu.classList.add('opacity-0', '-translate-y-2', 'invisible');
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateY(-8px)';
+                    menu.style.pointerEvents = 'none';
                 }, 180);
             }
 
@@ -2143,31 +2147,31 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
 
                 // Update styling on category list elements
                 catItems.forEach(i => {
-                    i.classList.remove('active-category', 'bg-stone-50', 'border-l-4', 'border-luxGold', 'pl-2', 'font-bold');
+                    i.classList.remove('active-category');
                     const icon = i.querySelector('[data-lucide]');
                     if (icon) {
-                        icon.classList.remove('text-luxGold');
-                        icon.classList.add('text-gray-400');
+                        icon.style.color = '#94a3b8';
                     }
                 });
                 
-                this.classList.add('active-category', 'bg-stone-50', 'border-l-4', 'border-luxGold', 'pl-2', 'font-bold');
+                this.classList.add('active-category');
                 const activeIcon = this.querySelector('[data-lucide]');
                 if (activeIcon) {
-                    activeIcon.classList.remove('text-gray-400');
-                    activeIcon.classList.add('text-luxGold');
+                    activeIcon.style.color = '#c59b27';
                 }
 
                 // Switch corresponding detail panels
                 panels.forEach(panel => {
                     if (panel.id === 'megamenu-panel-' + targetId) {
-                        panel.classList.remove('hidden');
+                        panel.classList.remove('lux-hidden');
+                        panel.style.display = 'grid';
                         gsap.fromTo(panel, 
                             { opacity: 0, x: 8 }, 
                             { opacity: 1, x: 0, duration: 0.22, ease: 'power2.out' }
                         );
                     } else {
-                        panel.classList.add('hidden');
+                        panel.classList.add('lux-hidden');
+                        panel.style.display = 'none';
                     }
                 });
             });
