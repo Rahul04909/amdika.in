@@ -983,329 +983,13 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         .lux-mini-cart-btn-chk:hover { background: var(--lux-gold-hover); color: #ffffff; }
 
 
-        .lux-megamenu-col-1 {
-            width: 25%;
-            flex-shrink: 0;
-            border-right: 1px solid #f1f5f9;
-            padding-right: 14px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .lux-megamenu-col-heading {
-            display: block;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            padding: 0 8px;
-        }
-        .megamenu-category-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 9px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 3px;
-            border-left: 3px solid transparent;
-        }
-        .megamenu-category-item:hover, .megamenu-category-item.active-category {
-            background: #f8fafc;
-            border-left-color: var(--lux-gold);
-        }
-        .megamenu-cat-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .megamenu-cat-icon {
-            width: 15px;
-            height: 15px;
-            color: #94a3b8;
-            transition: color 0.2s;
-        }
-        .megamenu-category-item.active-category .megamenu-cat-icon,
-        .megamenu-category-item:hover .megamenu-cat-icon {
-            color: var(--lux-gold);
-        }
-        .megamenu-cat-text {
-            font-size: 12px;
-            font-weight: 600;
-            color: #334155;
-            transition: color 0.2s;
-        }
-        .megamenu-category-item.active-category .megamenu-cat-text {
-            color: #0f172a;
-            font-weight: 700;
-        }
-        .megamenu-cat-arrow {
-            width: 13px;
-            height: 13px;
-            color: #cbd5e1;
-        }
 
-        /* CENTER DETAIL PANELS (50%) */
-        .lux-megamenu-col-center {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            min-height: 360px;
-            position: relative;
-        }
-        .megamenu-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-            height: 100%;
-        }
-        .lux-hidden {
-            display: none !important;
-        }
-        .lux-megamenu-subcats-col {
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #f1f5f9;
-            padding-right: 16px;
-        }
-        .lux-subcat-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .megamenu-subcat-link {
-            font-size: 12px;
-            color: #475569;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .megamenu-subcat-link:hover {
-            color: var(--lux-gold);
-            transform: translateX(3px);
-        }
-        .lux-subcat-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background-color: var(--lux-gold);
-            opacity: 0.6;
-            flex-shrink: 0;
-        }
-        .lux-view-all-cat-link {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--lux-gold);
-            text-decoration: none;
-            margin-top: auto;
-            padding-top: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .lux-view-all-cat-link:hover {
-            text-decoration: underline;
-        }
-
-        /* FEATURED PRODUCTS (COLUMN 3) */
-        .lux-megamenu-featured-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .lux-featured-prods-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .lux-featured-prod-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            transition: all 0.25s ease;
-        }
-        .lux-featured-prod-card:hover {
-            border-color: var(--lux-gold);
-            box-shadow: 0 4px 12px rgba(197, 155, 39, 0.1);
-        }
-        .lux-featured-thumb-wrap {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-            padding: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-        .lux-featured-thumb {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.25s ease;
-        }
-        .lux-featured-prod-card:hover .lux-featured-thumb {
-            transform: scale(1.06);
-        }
-        .lux-featured-info {
-            flex-grow: 1;
-            min-width: 0;
-        }
-        .lux-featured-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1e293b;
-            margin: 0 0 3px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .lux-featured-price {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--lux-gold);
-        }
-        .lux-featured-arrow {
-            width: 14px;
-            height: 14px;
-            color: #cbd5e1;
-            flex-shrink: 0;
-            transition: color 0.2s;
-        }
-        .lux-featured-prod-card:hover .lux-featured-arrow {
-            color: var(--lux-gold);
-        }
-        .lux-featured-empty-card {
-            background: #f8fafc;
-            border: 1px dashed #e2e8f0;
-            border-radius: 12px;
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* EDITORIAL SPOTLIGHT (COLUMN 4 - 25%) */
-        .lux-megamenu-col-4 {
-            width: 25%;
-            flex-shrink: 0;
-            border-radius: 14px;
-            padding: 20px;
-            background: linear-gradient(145deg, #0b0f19 0%, #172236 100%);
-            border: 1px solid rgba(197, 155, 39, 0.3);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .lux-spotlight-badge {
-            display: inline-block;
-            background: var(--lux-gold);
-            color: #ffffff;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 3px 8px;
-            border-radius: 9999px;
-            margin-bottom: 12px;
-        }
-        .lux-spotlight-title {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 17px;
-            line-height: 1.3;
-            color: #ffffff;
-            margin: 0 0 8px 0;
-        }
-        .lux-spotlight-desc {
-            font-size: 11px;
-            color: #cbd5e1;
-            line-height: 1.5;
-            margin: 0;
-            font-weight: 300;
-        }
-        .lux-spotlight-cta-wrap {
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            margin-top: 16px;
-        }
-        .lux-spotlight-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background: var(--lux-gold);
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.25s ease;
-        }
-        .lux-spotlight-btn:hover {
-            background: #ffffff;
-            color: #0b0f19;
-        }
 
         /* =========================================================
-           MOBILE RESPONSIVENESS & TOGGLES
+           MOBILE RESPONSIVENESS & UTILITIES
            ========================================================= */
         .lux-show-mobile {
             display: none !important;
-        }
-        .lux-mobile-search-bar {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 10px 16px;
-        }
-        .lux-mobile-search-inner {
-            display: flex;
-            align-items: center;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 9999px;
-            padding: 0 12px;
-            height: 38px;
-        }
-        .lux-mobile-search-input {
-            background: transparent;
-            border: none;
-            width: 100%;
-            font-size: 13px;
-            color: #1e293b;
-            outline: none;
-        }
-        .lux-mobile-toggle-btn {
-            background: transparent;
-            border: none;
-            padding: 4px;
-            color: #1e293b;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         @media (max-width: 991px) {
@@ -1315,20 +999,35 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             .lux-show-mobile {
                 display: flex !important;
             }
-            .lux-mid-bar {
-                padding: 10px 16px;
+            .lux-main-nav {
+                height: 58px;
+                padding: 0 16px;
             }
             .lux-brand-logo-img {
                 height: 30px !important;
                 max-height: 30px !important;
                 max-width: 140px !important;
             }
-            .lux-actions {
-                gap: 8px;
+            .lux-nav-left {
+                flex: 0 0 auto;
+            }
+            .lux-nav-center {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+            .lux-nav-right {
+                flex: 0 0 auto;
+                gap: 4px;
             }
             .lux-icon-btn {
-                width: 34px;
-                height: 34px;
+                width: 36px;
+                height: 36px;
+            }
+            .lux-overlay-search-input {
+                font-size: 15px;
+            }
+            .lux-search-overlay-inner {
+                padding: 18px 16px 16px;
             }
         }
 
