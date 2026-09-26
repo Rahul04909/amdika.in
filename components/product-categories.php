@@ -1,297 +1,315 @@
 <style>
 /* =============================================================
-   Shop By Category — Hidesign Artisanal Circular Bubbles
+   Shop Categories — Modern Editorial Portrait Cards
+   Matching Reference: "Looking For Something Specific? Shop Categories"
    ============================================================= */
 
-.sbc-section {
-    background-color: #fcfbf8;
-    padding: 60px 0 65px;
+.shop-categories-section {
+    background-color: #ffffff;
+    padding: 60px 0 70px;
     position: relative;
-    border-bottom: 1px solid #f0ede8;
+    overflow: hidden;
+    border-bottom: 1px solid #f2eee8;
 }
 
-/* ── Heading ─────────────────────────────────────────────── */
-.sbc-heading {
+.sc-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+}
+
+/* ── Section Heading ───────────────────────────────────────── */
+.sc-heading-wrap {
     text-align: center;
-    margin-bottom: 45px;
+    margin-bottom: 38px;
 }
 
-.sbc-eyebrow {
-    display: block;
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px;
+.sc-heading {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 30px;
     font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #9a6431;
-    margin-bottom: 8px;
+    color: #111111;
+    margin: 0;
+    letter-spacing: -0.2px;
+    line-height: 1.25;
 }
 
-.sbc-heading h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: #1a1614;
-    margin: 0 0 12px;
-    line-height: 1.2;
-}
-
-.sbc-heading .sbc-divider {
-    width: 48px;
-    height: 2px;
-    background-color: #c59b27;
-    margin: 0 auto;
-}
-
-/* ── Slider track ────────────────────────────────────────── */
-.sbc-track-wrap {
+/* ── Track Wrapper & Slider ────────────────────────────────── */
+.sc-track-wrapper {
     position: relative;
-    max-width: 1360px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
 }
 
-.sbc-track {
+.sc-track {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 22px;
     overflow-x: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    padding: 12px 10px 18px;
+    padding: 8px 4px 16px;
 }
 
-.sbc-track::-webkit-scrollbar {
+.sc-track::-webkit-scrollbar {
     display: none;
 }
 
-/* ── Individual bubble item ──────────────────────────────── */
-.sbc-item {
-    flex: 0 0 125px;
+/* ── Category Card Item ────────────────────────────────────── */
+.sc-card {
+    flex: 0 0 205px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     text-decoration: none !important;
     cursor: pointer;
-    transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: transparent;
+    transition: transform 0.35s ease;
 }
 
-.sbc-item:hover {
-    transform: translateY(-6px);
+.sc-card:hover {
+    transform: translateY(-4px);
 }
 
-/* ── Circle image wrapper ────────────────────────────────── */
-.sbc-circle {
-    width: 98px;
-    height: 98px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #ffffff;
-    flex-shrink: 0;
-    margin-bottom: 14px;
-    position: relative;
-    border: 2px solid #eae5dd;
-    box-shadow: 0 4px 14px rgba(28, 25, 23, 0.04);
-    transition: all 0.35s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px;
-}
-
-.sbc-circle-inner {
+/* ── Image Container (Portrait Aspect Ratio) ───────────────── */
+.sc-image-box {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: #f7f5f1;
+    background: #f4f0ea;
+    position: relative;
+    border-radius: 2px;
 }
 
-.sbc-circle img {
+.sc-image-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    object-position: center top;
     display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.sbc-item:hover .sbc-circle {
-    border-color: #c59b27;
-    box-shadow: 0 8px 24px rgba(197, 155, 39, 0.22);
+.sc-card:hover .sc-image-box img {
+    transform: scale(1.05);
 }
 
-.sbc-item:hover .sbc-circle img {
-    transform: scale(1.1);
-}
-
-/* ── Label ───────────────────────────────────────────────── */
-.sbc-label {
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.8px;
-    text-transform: uppercase;
-    color: #1a1614;
-    text-align: center;
+/* ── Label (Left Aligned Under Image) ───────────────────────── */
+.sc-label {
+    margin-top: 14px;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111111;
+    text-align: left;
     line-height: 1.35;
-    width: 100%;
+    transition: color 0.25s ease;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    transition: color 0.25s ease;
+    padding-left: 1px;
 }
 
-.sbc-item:hover .sbc-label {
+.sc-card:hover .sc-label {
     color: #9a6431;
 }
 
-/* ── Arrow nav buttons ───────────────────────────────────── */
-.sbc-nav-btn {
+/* ── Nav Arrow Buttons ─────────────────────────────────────── */
+.sc-nav-btn {
     position: absolute;
-    top: 48%;
+    top: calc(50% - 20px);
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     background: #ffffff;
-    border: 1px solid #eae5dd;
+    border: 1px solid #e5e5e5;
     border-radius: 50%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1a1614;
-    font-size: 13px;
+    color: #111111;
+    font-size: 15px;
     cursor: pointer;
     z-index: 10;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+    opacity: 0;
 }
 
-.sbc-nav-btn:hover {
-    background: #c59b27;
-    border-color: #c59b27;
-    color: #1a1614;
+.sc-track-wrapper:hover .sc-nav-btn {
+    opacity: 1;
 }
 
-.sbc-nav-prev { left: -6px; }
-.sbc-nav-next { right: -6px; }
+.sc-nav-btn:hover {
+    background: #111111;
+    border-color: #111111;
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.06);
+}
 
-/* ── Responsive ──────────────────────────────────────────── */
+.sc-nav-prev { left: -18px; }
+.sc-nav-next { right: -18px; }
+
+/* ── Responsive Styling ────────────────────────────────────── */
+@media (max-width: 1200px) {
+    .sc-card {
+        flex: 0 0 185px;
+    }
+    .sc-heading {
+        font-size: 26px;
+    }
+}
+
 @media (max-width: 991px) {
-    .sbc-section {
-        padding: 48px 0 52px;
+    .shop-categories-section {
+        padding: 48px 0 54px;
     }
-    .sbc-heading h2 {
-        font-size: 27px;
+    .sc-container {
+        padding: 0 24px;
     }
-    .sbc-circle {
-        width: 86px;
-        height: 86px;
+    .sc-card {
+        flex: 0 0 170px;
     }
-    .sbc-item {
-        flex: 0 0 110px;
+    .sc-heading {
+        font-size: 23px;
+        margin-bottom: 28px;
+    }
+    .sc-label {
+        font-size: 14px;
+        margin-top: 12px;
     }
 }
 
 @media (max-width: 768px) {
-    .sbc-section {
-        padding: 38px 0 42px;
+    .shop-categories-section {
+        padding: 38px 0 44px;
     }
-    .sbc-heading {
-        margin-bottom: 28px;
+    .sc-container {
+        padding: 0 16px;
     }
-    .sbc-eyebrow {
-        font-size: 10px;
-        letter-spacing: 2.5px;
+    .sc-heading-wrap {
+        margin-bottom: 22px;
     }
-    .sbc-heading h2 {
-        font-size: 22px;
+    .sc-heading {
+        font-size: 19px;
+        line-height: 1.3;
+        padding: 0 8px;
     }
-    .sbc-circle {
-        width: 76px;
-        height: 76px;
-        margin-bottom: 10px;
+    .sc-track {
+        gap: 14px;
+        padding: 4px 4px 12px;
+        scroll-snap-type: x mandatory;
     }
-    .sbc-item {
-        flex: 0 0 92px;
+    .sc-card {
+        flex: 0 0 148px;
+        scroll-snap-align: start;
     }
-    .sbc-label {
-        font-size: 9.5px;
-        letter-spacing: 1px;
+    .sc-image-box {
+        aspect-ratio: 3 / 4;
+        border-radius: 2px;
     }
-    .sbc-track-wrap {
-        padding: 0 12px;
+    .sc-label {
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 10px;
     }
-    .sbc-nav-btn {
-        display: none;
+    .sc-nav-btn {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .sc-card {
+        flex: 0 0 140px;
+    }
+    .sc-heading {
+        font-size: 18px;
     }
 }
 </style>
 
-<section class="sbc-section">
-    <!-- Heading -->
-    <div class="sbc-heading">
-        <span class="sbc-eyebrow">Discover By Form &amp; Function</span>
-        <h2>Shop By Category</h2>
-        <div class="sbc-divider"></div>
-    </div>
+<section class="shop-categories-section">
+    <div class="sc-container">
+        <!-- Heading matching reference -->
+        <div class="sc-heading-wrap">
+            <h2 class="sc-heading">Looking For Something Specific? Shop Categories</h2>
+        </div>
 
-    <!-- Slider -->
-    <div class="sbc-track-wrap">
-        <!-- Prev Arrow -->
-        <button id="sbcPrev" class="sbc-nav-btn sbc-nav-prev" aria-label="Scroll left">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
+        <!-- Slider Track Wrap -->
+        <div class="sc-track-wrapper">
+            <!-- Prev Arrow -->
+            <button id="scPrev" class="sc-nav-btn sc-nav-prev" aria-label="Scroll categories left">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
 
-        <div id="sbcTrack" class="sbc-track">
-            <?php
-            require_once __DIR__ . '/../database/db_config.php';
-            require_once __DIR__ . '/../includes/image_helper.php';
+            <div id="scTrack" class="sc-track">
+                <?php
+                require_once __DIR__ . '/../database/db_config.php';
+                require_once __DIR__ . '/../includes/image_helper.php';
 
-            $sbc_sql = "SELECT * FROM product_categories ORDER BY created_at ASC";
-            $sbc_result = $conn->query($sbc_sql);
+                $sc_sql = "SELECT * FROM product_categories ORDER BY created_at ASC";
+                $sc_result = $conn->query($sc_sql);
 
-            if ($sbc_result && $sbc_result->num_rows > 0):
-                while ($cat = $sbc_result->fetch_assoc()):
-                    $cat_name = htmlspecialchars($cat['name']);
-                    $cat_slug = htmlspecialchars($cat['slug']);
-                    $img_path = !empty($cat['image']) ? $cat['image'] : 'assets/images/demo-data/product.jpg';
-                    $circle_img = get_resized_image($img_path, 220, 220, 'cover');
-            ?>
-                <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo $cat_slug; ?>"
-                   class="sbc-item"
-                   title="<?php echo $cat_name; ?>">
-                    <div class="sbc-circle">
-                        <div class="sbc-circle-inner">
-                            <img src="<?php echo $circle_img; ?>"
+                if ($sc_result && $sc_result->num_rows > 0):
+                    while ($cat = $sc_result->fetch_assoc()):
+                        $cat_name = htmlspecialchars($cat['name']);
+                        $cat_slug = htmlspecialchars($cat['slug']);
+                        $cid      = intval($cat['id']);
+
+                        // Resolve high-resolution category image with robust fallback
+                        $img_path = '';
+                        if (!empty($cat['image']) && file_exists(__DIR__ . '/../' . $cat['image'])) {
+                            $img_path = $cat['image'];
+                        } else {
+                            // Check latest product in this category
+                            $p_sql = "SELECT featured_image FROM products WHERE category_id = $cid AND featured_image != '' AND featured_image IS NOT NULL ORDER BY id DESC LIMIT 1";
+                            $p_res = $conn->query($p_sql);
+                            if ($p_res && $p_row = $p_res->fetch_assoc()) {
+                                if (!empty($p_row['featured_image']) && file_exists(__DIR__ . '/../' . $p_row['featured_image'])) {
+                                    $img_path = $p_row['featured_image'];
+                                }
+                            }
+                        }
+
+                        if (empty($img_path)) {
+                            $img_path = 'assets/images/demo-data/product.jpg';
+                        }
+
+                        // Generate 3:4 portrait image
+                        $portrait_img = get_resized_image($img_path, 420, 560, 'cover');
+                ?>
+                    <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo $cat_slug; ?>"
+                       class="sc-card"
+                       title="<?php echo $cat_name; ?>">
+                        <div class="sc-image-box">
+                            <img src="<?php echo $portrait_img; ?>"
                                  alt="<?php echo $cat_name; ?>"
                                  loading="lazy">
                         </div>
-                    </div>
-                    <span class="sbc-label"><?php echo $cat_name; ?></span>
-                </a>
-            <?php
-                endwhile;
-            endif;
-            ?>
-        </div>
+                        <span class="sc-label"><?php echo $cat_name; ?></span>
+                    </a>
+                <?php
+                    endwhile;
+                endif;
+                ?>
+            </div>
 
-        <!-- Next Arrow -->
-        <button id="sbcNext" class="sbc-nav-btn sbc-nav-next" aria-label="Scroll right">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
+            <!-- Next Arrow -->
+            <button id="scNext" class="sc-nav-btn sc-nav-next" aria-label="Scroll categories right">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
 </section>
 
 <script>
 (function () {
-    const track = document.getElementById('sbcTrack');
-    const prev  = document.getElementById('sbcPrev');
-    const next  = document.getElementById('sbcNext');
+    const track = document.getElementById('scTrack');
+    const prev  = document.getElementById('scPrev');
+    const next  = document.getElementById('scNext');
     if (!track) return;
 
-    const SCROLL_AMT = 360;
+    const SCROLL_AMT = 450;
 
     prev && prev.addEventListener('click', () => {
         track.scrollBy({ left: -SCROLL_AMT, behavior: 'smooth' });

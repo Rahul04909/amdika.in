@@ -6,7 +6,7 @@
 <!-- Hero Editorial Lifestyle Carousel -->
 <?php include 'components/hero.php'; ?>
 
-<!-- Shop By Category Circular Bubbles -->
+<!-- Shop By Category Portrait Cards -->
 <?php include 'components/product-categories.php'; ?>
 
 <!-- Iconic Creations & Bestsellers Slider -->
