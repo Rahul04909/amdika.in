@@ -1,6 +1,42 @@
 <?php
 require_once 'database/db_config.php';
 
+// Determine root-relative Base Path dynamically before any media/URL processing
+$current_script = $_SERVER['SCRIPT_NAME'];
+if (strpos($current_script, '/user/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/user/') + 1);
+} elseif (strpos($current_script, '/pages/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/pages/') + 1);
+} elseif (strpos($current_script, '/api/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/api/') + 1);
+} elseif (strpos($current_script, '/admin/') !== false) {
+    $base_path = substr($current_script, 0, strpos($current_script, '/admin/') + 1);
+} else {
+    $base_path = dirname($current_script);
+    if ($base_path === DIRECTORY_SEPARATOR || $base_path === '\\' || $base_path === '/') {
+        $base_path = '/';
+    } else {
+        $base_path = rtrim(str_replace('\\', '/', $base_path), '/') . '/';
+    }
+}
+$assets_path = $base_path . 'assets/';
+$link_prefix = $base_path;
+
+/**
+ * Normalizes asset paths so they always resolve from root correctly on rewritten URLs (/product/slug)
+ */
+function normalize_product_image_url($img, $prefix = '/') {
+    if (empty($img)) {
+        return rtrim($prefix, '/') . '/assets/images/amdika-logo.png';
+    }
+    if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) {
+        return $img;
+    }
+    $clean = preg_replace('#^(\.\./|\./)+#', '', trim($img));
+    $clean = ltrim($clean, '/');
+    return rtrim($prefix, '/') . '/' . $clean;
+}
+
 // Get Product Slug
 $slug = isset($_GET['slug']) ? $conn->real_escape_string($_GET['slug']) : '';
 
@@ -86,13 +122,13 @@ if (empty($gallery)) {
 
 // Normalize paths with link prefix
 $gallery = array_map(function($img) use ($link_prefix) {
-    return (strpos($img, 'http') === 0 || strpos($img, '/') === 0) ? $img : $link_prefix . $img;
+    return normalize_product_image_url($img, $link_prefix);
 }, $gallery);
 
 // Current Page URL & Assets for SEO / Social Share
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
 $curr_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$first_image_full = (strpos($gallery[0], 'http') === 0) ? $gallery[0] : $protocol . "://" . $_SERVER['HTTP_HOST'] . $gallery[0];
+$first_image_full = (strpos($gallery[0], 'http') === 0) ? $gallery[0] : rtrim($protocol . "://" . $_SERVER['HTTP_HOST'], '/') . $gallery[0];
 
 // Dynamic SEO Setup
 $page_title = (!empty($product['seo_title']) ? $product['seo_title'] : $product['name']) . " | Amadika Luxury";
@@ -1475,7 +1511,7 @@ body {
                             <?php endif; ?>
                         </div>
 
-                        <img src="<?php echo $gallery[0]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="lp-main-img" id="mainHeroImage">
+                        <img src="<?php echo $gallery[0]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="lp-main-img" id="mainHeroImage" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
                         
                         <div class="lp-zoom-hint">
                             <i class="fas fa-search-plus"></i> Tap to expand
@@ -1486,7 +1522,7 @@ body {
                     <div class="lp-thumbs-row" id="thumbnailsTrack">
                         <?php foreach ($gallery as $idx => $img): ?>
                             <div class="lp-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="switchHeroImage('<?php echo $img; ?>', this, <?php echo $idx; ?>)">
-                                <img src="<?php echo $img; ?>" alt="Thumbnail <?php echo $idx + 1; ?>">
+                                <img src="<?php echo $img; ?>" alt="Thumbnail <?php echo $idx + 1; ?>" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -1569,12 +1605,23 @@ body {
                                      data-id="<?php echo $v['color_id']; ?>"
                                      data-name="<?php echo htmlspecialchars($v['color_name']); ?>"
                                      data-price="<?php echo $v['price']; ?>"
-                                     data-image="<?php echo $v['image_path']; ?>"
-                                     data-gallery='<?php echo htmlspecialchars($v['gallery_images'], ENT_QUOTES, 'UTF-8'); ?>'
+                                     data-image="<?php echo !empty($v['image_path']) ? normalize_product_image_url($v['image_path'], $link_prefix) : ''; ?>"
+                                     data-gallery='<?php 
+                                         $v_gal = [];
+                                         if (!empty($v['gallery_images'])) {
+                                             $v_decoded = json_decode($v['gallery_images'], true);
+                                             if (is_array($v_decoded)) {
+                                                 foreach($v_decoded as $gimg) {
+                                                     if (!empty($gimg)) $v_gal[] = normalize_product_image_url($gimg, $link_prefix);
+                                                 }
+                                             }
+                                         }
+                                         echo htmlspecialchars(json_encode($v_gal), ENT_QUOTES, 'UTF-8'); 
+                                     ?>'
                                      onclick="selectVariantColor(this)">
                                     <div class="lp-swatch-circle" style="background-color: <?php echo $v['hex_code']; ?>;">
                                         <?php if (!empty($v['image_path'])): ?>
-                                            <img src="<?php echo (strpos($v['image_path'], 'http') === 0 || strpos($v['image_path'], '/') === 0) ? $v['image_path'] : $link_prefix . $v['image_path']; ?>" alt="<?php echo htmlspecialchars($v['color_name']); ?>">
+                                            <img src="<?php echo normalize_product_image_url($v['image_path'], $link_prefix); ?>" alt="<?php echo htmlspecialchars($v['color_name']); ?>" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
                                         <?php endif; ?>
                                     </div>
                                     <span class="lp-swatch-name"><?php echo htmlspecialchars($v['color_name']); ?></span>
@@ -1804,8 +1851,8 @@ body {
                             <p class="text-secondary small mb-2"><?php echo nl2br(htmlspecialchars($row['message'])); ?></p>
                             <?php if (!empty($row['image'])): ?>
                                 <div class="mt-2 mb-2">
-                                    <img src="<?php echo (strpos($row['image'], 'http') === 0 || strpos($row['image'], '/') === 0) ? $row['image'] : $link_prefix . $row['image']; ?>" 
-                                         alt="Review Image" style="max-height: 85px; border-radius: 6px; border: 1px solid #ddd; object-fit: cover;">
+                                    <img src="<?php echo normalize_product_image_url($row['image'], $link_prefix); ?>" 
+                                         alt="Review Image" style="max-height: 85px; border-radius: 6px; border: 1px solid #ddd; object-fit: cover;" onerror="this.style.display='none';">
                                 </div>
                             <?php endif; ?>
                             <div class="text-muted" style="font-size: 11px;">
@@ -1924,8 +1971,7 @@ body {
         </div>
         <div class="row g-3">
             <?php while ($rp = $rel_res->fetch_assoc()):
-                $rp_img = !empty($rp['featured_image']) ? $rp['featured_image'] : 'assets/images/amdika-logo.png';
-                $rp_img = (strpos($rp_img, 'http') === 0 || strpos($rp_img, '/') === 0) ? $rp_img : $link_prefix . $rp_img;
+                $rp_img = !empty($rp['featured_image']) ? normalize_product_image_url($rp['featured_image'], $link_prefix) : normalize_product_image_url('assets/images/amdika-logo.png', $link_prefix);
                 $rp_gst = isset($rp['gst_percent']) ? (float)$rp['gst_percent'] : 0;
                 $rp_sale = round($rp['sale_price'] + ($rp['sale_price'] * $rp_gst / 100));
                 $rp_mrp = round($rp['mrp'] + ($rp['mrp'] * $rp_gst / 100));
@@ -1933,7 +1979,7 @@ body {
             <div class="col-6 col-md-3">
                 <div class="card h-100 border rounded-4 overflow-hidden shadow-sm" style="transition: transform 0.2s;">
                     <a href="<?php echo $link_prefix; ?>product/<?php echo $rp['slug']; ?>" class="d-block bg-light text-center p-3" style="height: 180px;">
-                        <img src="<?php echo $rp_img; ?>" alt="<?php echo htmlspecialchars($rp['name']); ?>" class="w-100 h-100 object-fit-contain">
+                        <img src="<?php echo $rp_img; ?>" alt="<?php echo htmlspecialchars($rp['name']); ?>" class="w-100 h-100 object-fit-contain" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
                     </a>
                     <div class="card-body p-3 d-flex flex-direction-column justify-content-between">
                         <div>
@@ -1961,7 +2007,7 @@ body {
 <div class="lp-mobile-sticky-bar" id="mobileStickyBar">
     <div class="lp-mobile-bar-inner">
         <div class="lp-mobile-bar-info">
-            <img src="<?php echo $gallery[0]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="lp-mobile-bar-thumb" id="mobileBarThumb">
+            <img src="<?php echo $gallery[0]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="lp-mobile-bar-thumb" id="mobileBarThumb" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
             <div class="lp-mobile-bar-details">
                 <p class="lp-mobile-bar-title"><?php echo htmlspecialchars($product['name']); ?></p>
                 <p class="lp-mobile-bar-price" id="mobileBarPrice">₹<?php echo number_format($sale); ?></p>
@@ -1977,13 +2023,13 @@ body {
 <div id="lpLightboxModal" class="lp-lightbox-modal" onclick="if(event.target === this) closeLightbox();">
     <span class="lp-lightbox-close" onclick="closeLightbox()">&times;</span>
     <button class="lp-lightbox-nav lp-lightbox-prev" onclick="prevLightbox()"><i class="fas fa-chevron-left"></i></button>
-    <img id="lightboxImage" src="<?php echo $gallery[0]; ?>" alt="Product Enlarged" class="lp-lightbox-img">
+    <img id="lightboxImage" src="<?php echo $gallery[0]; ?>" alt="Product Enlarged" class="lp-lightbox-img" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
     <button class="lp-lightbox-nav lp-lightbox-next" onclick="nextLightbox()"><i class="fas fa-chevron-right"></i></button>
 </div>
 
 <!-- Social Proof Live Toast -->
 <div class="lp-social-proof-toast" id="socialProofToast">
-    <img src="<?php echo $gallery[0]; ?>" alt="Recent Purchase" class="lp-toast-thumb" id="toastProductThumb">
+    <img src="<?php echo $gallery[0]; ?>" alt="Recent Purchase" class="lp-toast-thumb" id="toastProductThumb" onerror="this.onerror=null; this.src='<?php echo $link_prefix; ?>assets/images/amdika-logo.png';">
     <div class="lp-toast-text">
         <span class="fw-bold text-dark" id="toastBuyerName">Rajesh from Mumbai</span> just purchased this item
         <div class="text-muted" style="font-size: 10px;">Verified Order • 12 mins ago</div>
@@ -2095,10 +2141,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Switch Hero Image from Thumbnail Strip
 function switchHeroImage(src, element, index) {
     if (!src) return;
-    const fullSrc = (src.startsWith('http') || src.startsWith('/')) ? src : linkPrefix + src;
+    const fullSrc = (src.startsWith('http') || src.startsWith('/')) 
+        ? src 
+        : ((linkPrefix ? linkPrefix.replace(/\/+$/, '') + '/' : '/') + src.replace(/^(\.\.\/|\.\/|\/)+/, ''));
     
-    document.getElementById('mainHeroImage').src = fullSrc;
-    document.getElementById('lightboxImage').src = fullSrc;
+    const mainImg = document.getElementById('mainHeroImage');
+    if (mainImg) mainImg.src = fullSrc;
+    const lbImg = document.getElementById('lightboxImage');
+    if (lbImg) lbImg.src = fullSrc;
     activeGalleryIndex = index;
 
     document.querySelectorAll('.lp-thumb-item').forEach(el => el.classList.remove('active'));
@@ -2153,6 +2203,8 @@ function selectVariantColor(element) {
         variantGallery.unshift(mainVarImg);
     }
 
+    variantGallery = variantGallery.filter(img => img && img.trim() !== '');
+
     if (variantGallery.length > 0) {
         updateGalleryStrip(variantGallery);
     }
@@ -2160,7 +2212,12 @@ function selectVariantColor(element) {
 
 // Update Thumbnails Strip Dynamically
 function updateGalleryStrip(images) {
-    currentGallery = images.map(img => (img.startsWith('http') || img.startsWith('/')) ? img : linkPrefix + img);
+    currentGallery = images.map(img => {
+        if (!img) return '';
+        if (img.startsWith('http') || img.startsWith('/')) return img;
+        return (linkPrefix ? linkPrefix.replace(/\/+$/, '') + '/' : '/') + img.replace(/^(\.\.\/|\.\/|\/)+/, '');
+    }).filter(img => img !== '');
+
     const track = document.getElementById('thumbnailsTrack');
     if (!track) return;
     track.innerHTML = '';
@@ -2169,13 +2226,18 @@ function updateGalleryStrip(images) {
         const thumb = document.createElement('div');
         thumb.className = `lp-thumb-item ${idx === 0 ? 'active' : ''}`;
         thumb.onclick = function() { switchHeroImage(img, this, idx); };
-        thumb.innerHTML = `<img src="${img}" alt="Thumb">`;
+        thumb.innerHTML = `<img src="${img}" alt="Thumb" onerror="this.onerror=null; this.src='${linkPrefix}assets/images/amdika-logo.png';">`;
         track.appendChild(thumb);
     });
 
     if (currentGallery.length > 0) {
-        document.getElementById('mainHeroImage').src = currentGallery[0];
-        document.getElementById('lightboxImage').src = currentGallery[0];
+        const mainImg = document.getElementById('mainHeroImage');
+        if (mainImg) {
+            mainImg.src = currentGallery[0];
+            mainImg.onerror = function() { this.onerror = null; this.src = linkPrefix + 'assets/images/amdika-logo.png'; };
+        }
+        const lbImg = document.getElementById('lightboxImage');
+        if (lbImg) lbImg.src = currentGallery[0];
         const mobileThumb = document.getElementById('mobileBarThumb');
         if (mobileThumb) mobileThumb.src = currentGallery[0];
     }
