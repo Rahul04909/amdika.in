@@ -1707,117 +1707,100 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
     lucide.createIcons();
 
     // Sticky Bottom Header scroll transitions (position remains sticky in CSS to prevent layout shift/flickering)
+    // Sticky header background state on scroll
     window.addEventListener('scroll', function() {
-        const bottomHeader = document.getElementById('bottomHeader');
-        if (!bottomHeader) return;
-        if (window.scrollY > 10) {
-            if (!bottomHeader.classList.contains('sticky-scrolled')) {
-                bottomHeader.classList.add('sticky-scrolled');
-            }
+        const header = document.querySelector('.lux-main-header');
+        if (!header) return;
+        if (window.scrollY > 25) {
+            header.classList.add('scrolled');
         } else {
-            bottomHeader.classList.remove('sticky-scrolled');
+            header.classList.remove('scrolled');
         }
-    });
+    }, { passive: true });
 
-    // Mobile Search expandable block
-    function toggleMobileSearch() {
-        const bar = document.getElementById('mobileSearchBar');
-        if (bar.classList.contains('hidden')) {
-            bar.classList.remove('hidden');
-            gsap.fromTo(bar, {height: 0, opacity: 0}, {height: 'auto', opacity: 1, duration: 0.3, ease: 'power2.out'});
+    // Luxury Slide-down Search Overlay Toggle
+    function toggleSearchOverlay() {
+        const overlay = document.getElementById('luxSearchOverlay');
+        const backdrop = document.getElementById('luxSearchBackdrop');
+        const input = document.getElementById('headerSearchInput');
+        const suggestions = document.getElementById('searchSuggestions');
+        if (!overlay) return;
+
+        const isOpen = overlay.classList.contains('open');
+        if (isOpen) {
+            overlay.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('open');
+            if (suggestions) suggestions.style.display = 'none';
+            document.body.style.overflow = '';
         } else {
-            gsap.to(bar, {height: 0, opacity: 0, duration: 0.2, ease: 'power2.in', onComplete: () => bar.classList.add('hidden')});
+            overlay.classList.add('open');
+            if (backdrop) backdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                if (input) {
+                    input.focus();
+                    input.select();
+                }
+            }, 120);
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
     }
 
-    // Mobile Navigation slide drawer
+    // Compatibility alias for mobile search trigger
+    function toggleMobileSearch() {
+        toggleSearchOverlay();
+    }
+
+    // Close search overlay on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('luxSearchOverlay');
+            if (overlay && overlay.classList.contains('open')) {
+                toggleSearchOverlay();
+            }
+        }
+    });
+
+    // Mobile / Desktop Side Drawer toggle
     function toggleMobileDrawer() {
         const overlay = document.getElementById('mobileDrawerOverlay');
         const drawer = document.getElementById('mobileDrawer');
-        if (drawer.classList.contains('-left-80')) {
-            overlay.classList.remove('pointer-events-none');
-            gsap.to(overlay, {opacity: 1, duration: 0.3});
+        if (!drawer) return;
+        
+        if (drawer.classList.contains('-left-80') || !drawer.classList.contains('left-0')) {
+            if (overlay) {
+                overlay.classList.remove('pointer-events-none');
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(overlay, {opacity: 1, duration: 0.25});
+                } else {
+                    overlay.style.opacity = '1';
+                }
+            }
             drawer.classList.remove('-left-80');
             drawer.classList.add('left-0');
-            gsap.fromTo(drawer, {x: -100}, {x: 0, duration: 0.4, ease: 'power3.out'});
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(drawer, {x: -80}, {x: 0, duration: 0.35, ease: 'power3.out'});
+            }
+            document.body.style.overflow = 'hidden';
         } else {
-            overlay.classList.add('pointer-events-none');
-            gsap.to(overlay, {opacity: 0, duration: 0.2});
+            if (overlay) {
+                overlay.classList.add('pointer-events-none');
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(overlay, {opacity: 0, duration: 0.2});
+                } else {
+                    overlay.style.opacity = '0';
+                }
+            }
             drawer.classList.remove('left-0');
             drawer.classList.add('-left-80');
+            document.body.style.overflow = '';
+        }
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     }
-
-    // Mega Menu dynamic tab changes and animations
-    document.addEventListener('DOMContentLoaded', function() {
-        const catItems = document.querySelectorAll('.megamenu-category-item');
-        const panels = document.querySelectorAll('.megamenu-panel');
-        const trigger = document.getElementById('categoriesMenuTrigger');
-        const menu = document.getElementById('megaMenuContainer');
-
-        if (trigger && menu) {
-            let leaveTimeout = null;
-
-            function openMenu() {
-                clearTimeout(leaveTimeout);
-                menu.style.opacity = '1';
-                menu.style.visibility = 'visible';
-                menu.style.transform = 'translateY(0)';
-                menu.style.pointerEvents = 'auto';
-            }
-
-            function closeMenu() {
-                leaveTimeout = setTimeout(() => {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateY(-8px)';
-                    menu.style.pointerEvents = 'none';
-                }, 180);
-            }
-
-            trigger.addEventListener('mouseenter', openMenu);
-            trigger.addEventListener('mouseleave', closeMenu);
-
-            menu.addEventListener('mouseenter', openMenu);
-            menu.addEventListener('mouseleave', closeMenu);
-        }
-
-        catItems.forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                const targetId = this.getAttribute('data-category-id');
-
-                // Update styling on category list elements
-                catItems.forEach(i => {
-                    i.classList.remove('active-category');
-                    const icon = i.querySelector('[data-lucide]');
-                    if (icon) {
-                        icon.style.color = '#94a3b8';
-                    }
-                });
-                
-                this.classList.add('active-category');
-                const activeIcon = this.querySelector('[data-lucide]');
-                if (activeIcon) {
-                    activeIcon.style.color = '#c59b27';
-                }
-
-                // Switch corresponding detail panels
-                panels.forEach(panel => {
-                    if (panel.id === 'megamenu-panel-' + targetId) {
-                        panel.classList.remove('lux-hidden');
-                        panel.style.display = 'grid';
-                        gsap.fromTo(panel, 
-                            { opacity: 0, x: 8 }, 
-                            { opacity: 1, x: 0, duration: 0.22, ease: 'power2.out' }
-                        );
-                    } else {
-                        panel.classList.add('lux-hidden');
-                        panel.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
 
     // --- AUTHENTICATION SCRIPTS ---
     const AUTH_URL = '<?php echo $link_prefix; ?>includes/auth_actions.php';

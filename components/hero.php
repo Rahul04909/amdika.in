@@ -132,7 +132,7 @@
             <!-- Slide 1 -->
             <div class="carousel-item active" data-bs-interval="5000">
                 <?php
-                $heroSrc1 = 'assets/images/hero/new-hero.png';
+                $heroSrc1 = 'assets/images/hero/luxary-hero-banner-1.jpg';
                 $desktopHero1 = get_resized_image($heroSrc1, 1920, 700);
                 $mobileHero1 = get_resized_image($heroSrc1, 800, 450, 'contain');
                 ?>
