@@ -1083,147 +1083,204 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         </div>
     </div>
 
-    <!-- LAYER 2: BRAND IDENTITY & ACTION BAR -->
-    <div class="lux-mid-bar">
-        <div class="lux-mid-container">
-            <!-- Mobile Menu Toggle (Mobile only) -->
-            <button onclick="toggleMobileDrawer()" class="lux-mobile-toggle-btn lux-show-mobile" type="button" aria-label="Open Navigation">
-                <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
-            </button>
+    <!-- LAYER 2: HIDESIGN-INSPIRED CENTERED LUXURY NAVBAR -->
+    <div class="lux-main-header">
+        <div class="lux-main-nav">
+            <!-- Left: Desktop Navigation / Mobile Hamburger Toggle -->
+            <div class="lux-nav-left">
+                <!-- Mobile Menu Hamburger (Visible on Mobile only) -->
+                <button type="button" onclick="toggleMobileDrawer()" class="lux-icon-btn lux-show-mobile" aria-label="Open Navigation">
+                    <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+                </button>
 
-            <!-- Brand Logo (Left on Desktop, Centered on Mobile) -->
-            <div class="lux-logo-wrap">
-                <a href="<?php echo $link_prefix; ?>index.php" class="lux-brand-link">
+                <!-- Desktop Nav Links (Hidden on Mobile) -->
+                <div class="lux-nav-left-links lux-hide-mobile">
+                    <!-- Shop All -->
+                    <div class="lux-nav-item-wrap">
+                        <a href="<?php echo $link_prefix; ?>products.php" class="lux-nav-link">Shop All</a>
+                    </div>
+
+                    <!-- Category: Bags -->
+                    <div class="lux-nav-item-wrap lux-has-dropdown">
+                        <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_bags_cat['slug']) ? urlencode($nav_bags_cat['slug']) : 'bags'; ?>" class="lux-nav-link">
+                            Bags
+                            <i data-lucide="chevron-down" class="lux-nav-arrow"></i>
+                        </a>
+                        <div class="lux-dropdown-menu">
+                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_bags_cat['slug']) ? urlencode($nav_bags_cat['slug']) : 'bags'; ?>" class="lux-dropdown-item font-semibold text-luxGold">All Bags</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=office+bag" class="lux-dropdown-item">Office & Laptop Bags</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=backpack" class="lux-dropdown-item">Leather Backpacks</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=duffel" class="lux-dropdown-item">Travel Duffels</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=sleeve" class="lux-dropdown-item">Laptop Sleeves</a>
+                        </div>
+                    </div>
+
+                    <!-- Category: Office & Desk -->
+                    <div class="lux-nav-item-wrap lux-has-dropdown">
+                        <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_office_cat['slug']) ? urlencode($nav_office_cat['slug']) : 'desk-organizers'; ?>" class="lux-nav-link">
+                            Office & Desk
+                            <i data-lucide="chevron-down" class="lux-nav-arrow"></i>
+                        </a>
+                        <div class="lux-dropdown-menu">
+                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_office_cat['slug']) ? urlencode($nav_office_cat['slug']) : 'desk-organizers'; ?>" class="lux-dropdown-item font-semibold text-luxGold">All Desk Accessories</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=organizer" class="lux-dropdown-item">Desk Organizers</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=pen" class="lux-dropdown-item">Pen Holders</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=tray" class="lux-dropdown-item">Document & Valet Trays</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=mat" class="lux-dropdown-item">Desk Mats & Pads</a>
+                        </div>
+                    </div>
+
+                    <!-- Category: Accessories -->
+                    <div class="lux-nav-item-wrap lux-has-dropdown">
+                        <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_accessories_cat['slug']) ? urlencode($nav_accessories_cat['slug']) : 'accessories'; ?>" class="lux-nav-link">
+                            Accessories
+                            <i data-lucide="chevron-down" class="lux-nav-arrow"></i>
+                        </a>
+                        <div class="lux-dropdown-menu">
+                            <a href="<?php echo $link_prefix; ?>products.php?category=<?php echo !empty($nav_accessories_cat['slug']) ? urlencode($nav_accessories_cat['slug']) : 'accessories'; ?>" class="lux-dropdown-item font-semibold text-luxGold">All Accessories</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=wallet" class="lux-dropdown-item">Leather Wallets</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=card" class="lux-dropdown-item">Card Holders</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=coaster" class="lux-dropdown-item">Coasters & Sets</a>
+                            <a href="<?php echo $link_prefix; ?>products.php?search=laundry" class="lux-dropdown-item">Laundry & Storage</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center: Amadika Brand Logo (Guaranteed Geometric Center) -->
+            <div class="lux-nav-center">
+                <a href="<?php echo $link_prefix; ?>index.php" class="lux-brand-link" aria-label="Amadika Home">
                     <img src="<?php echo $assets_path; ?>images/amdika-logo.png" 
-                         alt="Amadika Luxury" 
+                         alt="Amadika" 
                          class="lux-brand-logo-img" 
-                         style="height: 38px; max-height: 38px; width: auto; max-width: 200px; object-fit: contain; display: block;" 
+                         style="height: 38px; max-height: 38px; width: auto; max-width: 220px; object-fit: contain; display: block;" 
                          loading="eager">
                 </a>
             </div>
 
-            <!-- Center Search Bar (Desktop only) -->
-            <div class="lux-search-wrapper lux-hide-mobile">
-                <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="lux-search-form">
-                    <div class="lux-search-box">
-                        <!-- Category Select -->
-                        <div class="lux-search-select-wrap">
-                            <select name="category" class="lux-search-cat-select">
-                                <option value="">All Categories</option>
-                                <?php foreach ($h_categories as $cat): ?>
-                                    <option value="<?php echo htmlspecialchars($cat['slug']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <i data-lucide="chevron-down" class="lux-select-arrow"></i>
-                        </div>
-
-                        <!-- Search Input -->
-                        <input type="text" 
-                               class="lux-search-input" 
-                               placeholder="Search handcrafted leather accessories, bags, trays..." 
-                               name="search" 
-                               id="headerSearchInput" 
-                               autocomplete="off">
-                               
-                        <!-- Search Button -->
-                        <button type="submit" class="lux-search-btn" aria-label="Search">
-                            <i data-lucide="search" style="width: 16px; height: 16px;"></i>
-                        </button>
+            <!-- Right: Secondary Nav Links + Action Icons -->
+            <div class="lux-nav-right">
+                <!-- Desktop Right Links -->
+                <div class="lux-nav-right-links lux-hide-mobile">
+                    <div class="lux-nav-item-wrap">
+                        <a href="<?php echo $link_prefix; ?>pages/collection/index.php" class="lux-nav-link">Collections</a>
                     </div>
-                    <!-- Search Suggestions Dropdown -->
-                    <div id="searchSuggestions" class="search-suggestions-box"></div>
-                </form>
-            </div>
-
-            <!-- Actions (Right) -->
-            <div class="lux-actions">
-                <!-- Mobile Search Trigger -->
-                <button onclick="toggleMobileSearch()" class="lux-icon-btn lux-show-mobile" type="button" aria-label="Search">
-                    <i data-lucide="search" style="width: 18px; height: 18px;"></i>
-                </button>
-
-                <!-- Phone Helpline Pill (Desktop) -->
-                <a href="tel:+918447616924" class="lux-helpline-pill lux-hide-mobile">
-                    <i data-lucide="phone-call" style="width: 13px; height: 13px; color: #c59b27;"></i>
-                    <span>Helpline</span>
-                </a>
-
-                <!-- User Auth Profile -->
-                <div class="lux-action-group">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo $link_prefix; ?>user/index.php" class="lux-icon-btn" title="My Account">
-                            <i data-lucide="user" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    <?php else: ?>
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="lux-icon-btn" title="Sign In">
-                            <i data-lucide="user" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    <?php endif; ?>
+                    <div class="lux-nav-item-wrap">
+                        <a href="<?php echo $link_prefix; ?>corprate-gift.php" class="lux-nav-link">Gifting</a>
+                    </div>
                 </div>
 
-                <!-- Shopping Cart (with Hover Mini Cart) -->
-                <div class="lux-action-group lux-cart-group" onmouseenter="loadMiniCart()">
-                    <a href="javascript:void(0)" onclick="openCartSidebar()" class="lux-icon-btn" title="Cart">
-                        <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
-                        <span id="headerCartCount" class="lux-cart-badge"><?php echo $cart_count; ?></span>
-                    </a>
+                <!-- 4 Action Icons (Search, User, Cart, Menu) -->
+                <div class="lux-action-icons">
+                    <!-- 1. Search Icon Trigger -->
+                    <button type="button" onclick="toggleSearchOverlay()" class="lux-icon-btn" aria-label="Search" title="Search">
+                        <i data-lucide="search" style="width: 19px; height: 19px;"></i>
+                    </button>
 
-                    <!-- Hover Mini Cart Dropdown -->
-                    <div class="lux-mini-cart-dropdown">
-                        <div class="lux-mini-cart-header">
-                            <span class="lux-mini-cart-title">Shopping Bag</span>
-                            <span class="lux-mini-cart-subtitle">Live Preview</span>
-                        </div>
-                        <!-- Mini Cart Items -->
-                        <div id="miniCartItems" class="lux-mini-cart-items scroll-luxury">
-                            <?php if (empty($cart_items)): ?>
-                                <div style="text-align: center; padding: 24px 0;">
-                                    <i data-lucide="shopping-bag" style="width: 32px; height: 32px; margin: 0 auto 8px; color: #cbd5e1; display: block;"></i>
-                                    <p style="font-size: 12px; color: #64748b; margin: 0;">Your bag is currently empty</p>
-                                </div>
-                            <?php else: ?>
-                                <?php foreach ($cart_items as $item): 
-                                    $img = (strpos($item['featured_image'], 'http') === 0 || strpos($item['featured_image'], '/') === 0) ? $item['featured_image'] : $link_prefix . $item['featured_image'];
-                                ?>
-                                    <div class="lux-mini-cart-item">
-                                        <img src="<?php echo $img; ?>" class="lux-mini-cart-thumb" alt="<?php echo htmlspecialchars($item['name']); ?>">
-                                        <div class="lux-mini-cart-info">
-                                            <h6 class="lux-mini-cart-name"><?php echo htmlspecialchars($item['name']); ?></h6>
-                                            <p class="lux-mini-cart-qty">Qty: <?php echo $item['quantity']; ?></p>
-                                        </div>
-                                        <span class="lux-mini-cart-price">₹<?php echo number_format($item['display_price']); ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </div>
-                        <!-- Subtotal & Actions -->
-                        <div class="lux-mini-cart-footer">
-                            <div class="lux-mini-cart-total-row">
-                                <span>Estimated Total</span>
-                                <span id="miniCartSubtotal" class="lux-mini-cart-total-val">₹<?php echo number_format($cart_total); ?></span>
+                    <!-- 2. User Profile / Sign In -->
+                    <div class="lux-action-group">
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <a href="<?php echo $link_prefix; ?>user/index.php" class="lux-icon-btn" title="My Account" aria-label="Account">
+                                <i data-lucide="user" style="width: 19px; height: 19px;"></i>
+                            </a>
+                        <?php else: ?>
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginModal" class="lux-icon-btn" title="Sign In" aria-label="Sign In">
+                                <i data-lucide="user" style="width: 19px; height: 19px;"></i>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- 3. Shopping Cart (with count badge and hover mini cart) -->
+                    <div class="lux-action-group lux-cart-group" onmouseenter="loadMiniCart()">
+                        <a href="javascript:void(0)" onclick="openCartSidebar()" class="lux-icon-btn" title="Shopping Bag" aria-label="Cart">
+                            <i data-lucide="shopping-bag" style="width: 19px; height: 19px;"></i>
+                            <span id="headerCartCount" class="lux-cart-badge"><?php echo $cart_count; ?></span>
+                        </a>
+
+                        <!-- Hover Mini Cart Dropdown -->
+                        <div class="lux-mini-cart-dropdown">
+                            <div class="lux-mini-cart-header">
+                                <span class="lux-mini-cart-title">Shopping Bag</span>
+                                <span class="lux-mini-cart-subtitle">Live Preview</span>
                             </div>
-                            <div class="lux-mini-cart-btn-row">
-                                <a href="<?php echo $link_prefix; ?>cart.php" class="lux-mini-cart-btn-view">View Bag</a>
-                                <a href="<?php echo $link_prefix; ?>checkout.php" class="lux-mini-cart-btn-chk">Checkout</a>
+                            <div id="miniCartItems" class="lux-mini-cart-items scroll-luxury">
+                                <?php if (empty($cart_items)): ?>
+                                    <div style="text-align: center; padding: 24px 0;">
+                                        <i data-lucide="shopping-bag" style="width: 32px; height: 32px; margin: 0 auto 8px; color: #cbd5e1; display: block;"></i>
+                                        <p style="font-size: 12px; color: #64748b; margin: 0;">Your bag is currently empty</p>
+                                    </div>
+                                <?php else: ?>
+                                    <?php foreach ($cart_items as $item): 
+                                        $img = (strpos($item['featured_image'], 'http') === 0 || strpos($item['featured_image'], '/') === 0) ? $item['featured_image'] : $link_prefix . $item['featured_image'];
+                                    ?>
+                                        <div class="lux-mini-cart-item">
+                                            <img src="<?php echo $img; ?>" class="lux-mini-cart-thumb" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                                            <div class="lux-mini-cart-info">
+                                                <h6 class="lux-mini-cart-name"><?php echo htmlspecialchars($item['name']); ?></h6>
+                                                <p class="lux-mini-cart-qty">Qty: <?php echo $item['quantity']; ?></p>
+                                            </div>
+                                            <span class="lux-mini-cart-price">₹<?php echo number_format($item['display_price']); ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="lux-mini-cart-footer">
+                                <div class="lux-mini-cart-total-row">
+                                    <span>Estimated Total</span>
+                                    <span id="miniCartSubtotal" class="lux-mini-cart-total-val">₹<?php echo number_format($cart_total); ?></span>
+                                </div>
+                                <div class="lux-mini-cart-btn-row">
+                                    <a href="<?php echo $link_prefix; ?>cart.php" class="lux-mini-cart-btn-view">View Bag</a>
+                                    <a href="<?php echo $link_prefix; ?>checkout.php" class="lux-mini-cart-btn-chk">Checkout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- 4. Hamburger Menu Drawer Toggle (Desktop & Mobile) -->
+                    <button type="button" onclick="toggleMobileDrawer()" class="lux-icon-btn lux-hide-mobile" aria-label="Open Directory Menu" title="Menu">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</header>
 
-    <!-- MOBILE EXPANDABLE SEARCH BAR -->
-    <div id="mobileSearchBar" class="lux-mobile-search-bar" style="display: none;">
-        <form action="<?php echo $link_prefix; ?>products.php" method="GET">
-            <div class="lux-mobile-search-inner">
-                <i data-lucide="search" style="width: 16px; height: 16px; color: #94a3b8; flex-shrink: 0; margin-right: 8px;"></i>
-                <input type="text" class="lux-mobile-search-input" placeholder="Search handcrafted leather products..." name="search">
+<!-- LUXURY SLIDE-DOWN SEARCH OVERLAY -->
+<div id="luxSearchBackdrop" class="lux-search-backdrop" onclick="toggleSearchOverlay()"></div>
+<div id="luxSearchOverlay" class="lux-search-overlay">
+    <div class="lux-search-overlay-inner">
+        <form action="<?php echo $link_prefix; ?>products.php" method="GET" id="headerSearchForm" class="lux-search-form">
+            <div class="lux-search-input-wrap">
+                <i data-lucide="search" style="width: 20px; height: 20px; color: #1a1614; flex-shrink: 0; margin-right: 10px;"></i>
+                <input type="text" 
+                       name="search" 
+                       id="headerSearchInput" 
+                       class="lux-overlay-search-input" 
+                       placeholder="Search handcrafted leather bags, wallets, desk sets, accessories..." 
+                       autocomplete="off">
+                <button type="submit" class="lux-search-action-btn" aria-label="Submit Search">
+                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                </button>
+                <button type="button" class="lux-search-action-btn" onclick="toggleSearchOverlay()" aria-label="Close Search">
+                    <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+            <!-- Live Suggestions Dropdown Container -->
+            <div id="searchSuggestions" class="search-suggestions-box"></div>
+            <!-- Trending Search Tags -->
+            <div class="lux-search-tags">
+                <span class="lux-search-tags-label">Trending:</span>
+                <a href="<?php echo $link_prefix; ?>products.php?search=bag" class="lux-search-tag-pill">Laptop Bags</a>
+                <a href="<?php echo $link_prefix; ?>products.php?search=wallet" class="lux-search-tag-pill">Leather Wallets</a>
+                <a href="<?php echo $link_prefix; ?>products.php?search=organizer" class="lux-search-tag-pill">Desk Organizers</a>
+                <a href="<?php echo $link_prefix; ?>products.php?search=tray" class="lux-search-tag-pill">Valet Trays</a>
+                <a href="<?php echo $link_prefix; ?>products.php?search=coaster" class="lux-search-tag-pill">Coaster Sets</a>
             </div>
         </form>
     </div>
-
-</header>
+</div>
 
 <!-- MOBILE SLIDE DRAWER MENU -->
 <div id="mobileDrawerOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1100] opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMobileDrawer()"></div>
