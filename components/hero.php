@@ -1,32 +1,50 @@
 <?php require_once __DIR__ . '/../includes/image_helper.php'; ?>
 <style>
-    /* --- Clean Luxury Hero Carousel (Pure Slides) --- */
+    /* --- Clean Luxury Hero Carousel (Pure Full-Width Slides) --- */
     .hero-section {
         position: relative;
         overflow: hidden;
         margin-top: 0;
+        width: 100%;
+        max-width: 100%;
         background-color: #12100e;
+    }
+
+    .hero-carousel {
+        width: 100%;
+        position: relative;
+    }
+
+    .hero-carousel .carousel-inner {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
     }
 
     .hero-carousel .carousel-item {
         position: relative;
         background-color: #12100e;
-        max-height: 650px;
+        width: 100%;
     }
 
     .hero-carousel .carousel-item a {
         display: block;
         width: 100%;
-        height: 100%;
+        line-height: 0;
+        text-decoration: none;
+    }
+
+    .hero-carousel .carousel-item picture {
+        display: block;
+        width: 100%;
+        line-height: 0;
     }
 
     .hero-carousel .carousel-item img {
         width: 100%;
+        max-width: 100%;
         height: auto;
-        max-height: 650px;
         display: block;
-        object-fit: cover;
-        object-position: center top;
         transition: transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -65,19 +83,20 @@
 
     /* Indicators */
     .hero-carousel .carousel-indicators {
-        bottom: 20px;
+        bottom: 24px;
         margin-bottom: 0;
         z-index: 5;
+        gap: 6px;
     }
 
     .hero-carousel .carousel-indicators [data-bs-target] {
         width: 28px;
         height: 3px;
         border-radius: 2px;
-        background-color: rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, 0.45);
         border: none;
         transition: all 0.3s ease;
-        margin: 0 4px;
+        margin: 0;
     }
 
     .hero-carousel .carousel-indicators .active {
@@ -88,24 +107,14 @@
 
     /* Mobile Optimizations */
     @media (max-width: 768px) {
-        .hero-carousel .carousel-item {
-            max-height: none;
-            min-height: 200px;
-        }
-
-        .hero-carousel .carousel-item img {
-            object-fit: contain;
-            height: auto;
-            max-height: none;
-        }
-
         .hero-carousel .carousel-control-prev,
         .hero-carousel .carousel-control-next {
             display: none;
         }
 
         .hero-carousel .carousel-indicators {
-            bottom: 10px;
+            bottom: 12px;
+            gap: 4px;
         }
 
         .hero-carousel .carousel-indicators [data-bs-target] {
@@ -133,13 +142,13 @@
             <div class="carousel-item active" data-bs-interval="5000">
                 <?php
                 $heroSrc1 = 'assets/images/hero/luxary-hero-banner-1.jpg';
-                $desktopHero1 = get_resized_image($heroSrc1, 1920, 700);
-                $mobileHero1 = get_resized_image($heroSrc1, 800, 450, 'contain');
+                $desktopHero1 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc1;
+                $mobileHero1 = $desktopHero1;
                 ?>
                 <a href="products.php" title="Amadika Premium Leather Collection">
                     <picture>
                         <source media="(max-width: 768px)" srcset="<?php echo $mobileHero1; ?>">
-                        <img src="<?php echo $desktopHero1; ?>" alt="Amadika Premium Leather Collection">
+                        <img src="<?php echo $desktopHero1; ?>" alt="Amadika Premium Leather Collection" width="1024" height="572" fetchpriority="high" loading="eager">
                     </picture>
                 </a>
             </div>
@@ -148,13 +157,13 @@
             <div class="carousel-item" data-bs-interval="5000">
                 <?php
                 $heroSrc2 = 'assets/images/hero/banner-2.png';
-                $desktopHero2 = get_resized_image($heroSrc2, 1920, 700);
-                $mobileHero2 = get_resized_image($heroSrc2, 800, 450, 'contain');
+                $desktopHero2 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc2;
+                $mobileHero2 = $desktopHero2;
                 ?>
                 <a href="products.php" title="Amadika Executive Leather Collection">
                     <picture>
                         <source media="(max-width: 768px)" srcset="<?php echo $mobileHero2; ?>">
-                        <img src="<?php echo $desktopHero2; ?>" alt="Amadika Executive Leather Collection">
+                        <img src="<?php echo $desktopHero2; ?>" alt="Amadika Executive Leather Collection" loading="lazy">
                     </picture>
                 </a>
             </div>
@@ -163,13 +172,13 @@
             <div class="carousel-item" data-bs-interval="5000">
                 <?php
                 $heroSrc3 = 'assets/images/hero/banner-3.png';
-                $desktopHero3 = get_resized_image($heroSrc3, 1920, 700);
-                $mobileHero3 = get_resized_image($heroSrc3, 800, 450, 'contain');
+                $desktopHero3 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc3;
+                $mobileHero3 = $desktopHero3;
                 ?>
                 <a href="products.php" title="Amadika Handcrafted Leather Store">
                     <picture>
                         <source media="(max-width: 768px)" srcset="<?php echo $mobileHero3; ?>">
-                        <img src="<?php echo $desktopHero3; ?>" alt="Amadika Handcrafted Leather Store">
+                        <img src="<?php echo $desktopHero3; ?>" alt="Amadika Handcrafted Leather Store" loading="lazy">
                     </picture>
                 </a>
             </div>
