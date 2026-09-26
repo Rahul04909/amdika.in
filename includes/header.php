@@ -42,6 +42,25 @@ if (isset($conn)) {
     }
 }
 
+// Category helper matching for top navigation
+$nav_bags_cat = null;
+$nav_office_cat = null;
+$nav_accessories_cat = null;
+
+if (!empty($h_categories)) {
+    foreach ($h_categories as $c) {
+        $c_slug = strtolower($c['slug']);
+        $c_name = strtolower($c['name']);
+        if (!$nav_bags_cat && (strpos($c_slug, 'bag') !== false || strpos($c_name, 'bag') !== false)) {
+            $nav_bags_cat = $c;
+        } elseif (!$nav_office_cat && (strpos($c_slug, 'organizer') !== false || strpos($c_slug, 'office') !== false || strpos($c_slug, 'desk') !== false || strpos($c_name, 'organizer') !== false || strpos($c_name, 'desk') !== false)) {
+            $nav_office_cat = $c;
+        } elseif (!$nav_accessories_cat && (strpos($c_slug, 'accessor') !== false || strpos($c_slug, 'wallet') !== false || strpos($c_slug, 'coaster') !== false || strpos($c_slug, 'tray') !== false || strpos($c_name, 'accessor') !== false || strpos($c_name, 'wallet') !== false)) {
+            $nav_accessories_cat = $c;
+        }
+    }
+}
+
 // Fetch products for Mega Menu featured section (grouped by category)
 $h_products_by_category = [];
 if (isset($conn) && !empty($h_categories)) {
@@ -403,34 +422,146 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         }
 
         /* =========================================================
-           LAYER 2: MAIN BRAND IDENTITY & SEARCH ACTION BAR
+           LAYER 2: HIDESIGN-INSPIRED CENTERED LUXURY NAVBAR
            ========================================================= */
-        .lux-mid-bar {
-            background-color: #ffffff !important;
-            padding: 12px clamp(16px, 4vw, 48px);
-            border-bottom: 1px solid #e2e8f0;
+        .lux-main-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ebe6df;
             width: 100%;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1025;
+            transition: box-shadow 0.25s ease;
         }
-        .lux-mid-container {
-            max-width: 1320px;
-            margin: 0 auto;
+        .lux-main-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        .lux-main-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            height: 72px;
+            padding: 0 clamp(16px, 3.5vw, 48px);
+            max-width: 1440px;
+            margin: 0 auto;
             width: 100%;
+            box-sizing: border-box;
+            position: relative;
         }
 
-        /* BRAND LOGO CONSTRAINTS (STRICT FIX FOR HUGE LOGO) */
-        .lux-logo-wrap {
-            flex-shrink: 0;
+        /* Left Navigation Links */
+        .lux-nav-left {
             display: flex;
             align-items: center;
+            gap: clamp(16px, 2.2vw, 32px);
+            flex: 1 1 0;
+        }
+        .lux-nav-left-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(14px, 2vw, 28px);
+            height: 72px;
+        }
+        .lux-nav-item-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .lux-nav-link {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #1a1614;
+            text-decoration: none !important;
+            letter-spacing: 0.3px;
+            padding: 6px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+        .lux-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 18px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--lux-gold);
+            transition: width 0.25s ease;
+        }
+        .lux-nav-link:hover {
+            color: var(--lux-gold);
+        }
+        .lux-nav-link:hover::after {
+            width: 100%;
+        }
+        .lux-nav-arrow {
+            width: 12px;
+            height: 12px;
+            opacity: 0.55;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+        .lux-has-dropdown:hover .lux-nav-arrow {
+            transform: rotate(180deg);
+            opacity: 1;
+            color: var(--lux-gold);
+        }
+
+        /* Dropdown Menus */
+        .lux-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 215px;
+            background: #ffffff;
+            border: 1px solid #ebe6df;
+            border-radius: 10px;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(6px);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1035;
+            pointer-events: none;
+        }
+        .lux-has-dropdown:hover .lux-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .lux-dropdown-item {
+            display: block;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            text-decoration: none !important;
+            transition: all 0.18s ease;
+        }
+        .lux-dropdown-item:hover {
+            background: #f8fafc;
+            color: var(--lux-gold);
+            padding-left: 22px;
+        }
+
+        /* Center Brand Logo (Absolute geometric center) */
+        .lux-nav-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0 16px;
         }
         .lux-brand-link {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             text-decoration: none;
             line-height: 1;
         }
@@ -438,7 +569,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             height: 38px !important;
             max-height: 38px !important;
             width: auto !important;
-            max-width: 200px !important;
+            max-width: 220px !important;
             object-fit: contain !important;
             display: block !important;
             transition: transform 0.25s ease;
@@ -447,93 +578,136 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
             transform: scale(1.02);
         }
 
-        /* CENTER SEARCH BAR */
-        .lux-search-wrapper {
-            flex: 1 1 540px;
-            max-width: 560px;
-            margin: 0 16px;
-            position: relative;
-        }
-        .lux-search-form {
-            position: relative;
-            width: 100%;
-            margin: 0;
-        }
-        .lux-search-box {
+        /* Right Navigation & Action Icons */
+        .lux-nav-right {
             display: flex;
             align-items: center;
-            background: #f8fafc;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 9999px;
-            height: 42px;
-            overflow: hidden;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            justify-content: flex-end;
+            gap: clamp(14px, 1.8vw, 24px);
+            flex: 1 1 0;
         }
-        .lux-search-box:focus-within {
-            border-color: var(--lux-gold);
+        .lux-nav-right-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(14px, 2vw, 26px);
+            height: 72px;
+        }
+        .lux-action-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 4px;
+        }
+
+        /* =========================================================
+           SLIDE-DOWN LUXURY SEARCH OVERLAY
+           ========================================================= */
+        .lux-search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.14);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            z-index: 1060;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .lux-search-select-wrap {
+        .lux-search-overlay.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .lux-search-overlay-inner {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 24px 20px 20px;
             position: relative;
-            flex-shrink: 0;
-            border-right: 1px solid #e2e8f0;
-            height: 100%;
+        }
+        .lux-search-input-wrap {
             display: flex;
             align-items: center;
+            border-bottom: 2px solid #1a1614;
+            padding-bottom: 8px;
+            position: relative;
         }
-        .lux-search-cat-select {
-            background: transparent;
-            border: none;
-            padding: 0 26px 0 14px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #475569;
-            height: 100%;
-            cursor: pointer;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        .lux-select-arrow {
-            position: absolute;
-            right: 8px;
-            width: 12px;
-            height: 12px;
-            color: #94a3b8;
-            pointer-events: none;
-        }
-        .lux-search-input {
-            background: transparent;
-            border: none;
-            padding: 0 16px;
-            font-size: 13px;
-            color: #1e293b;
+        .lux-overlay-search-input {
             flex-grow: 1;
-            width: 100%;
-            outline: none;
-            height: 100%;
-        }
-        .lux-search-input::placeholder {
-            color: #94a3b8;
-        }
-        .lux-search-btn {
-            background: var(--lux-navy);
             border: none;
-            color: #ffffff;
-            width: 44px;
-            height: 100%;
+            outline: none;
+            font-size: 18px;
+            font-family: 'Outfit', sans-serif;
+            color: #1a1614;
+            background: transparent;
+            padding: 0 10px;
+        }
+        .lux-overlay-search-input::placeholder {
+            color: #94a3b8;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        .lux-search-action-btn {
+            background: transparent;
+            border: none;
+            color: #1a1614;
+            cursor: pointer;
+            padding: 6px 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            border-radius: 0 9999px 9999px 0;
-            flex-shrink: 0;
+            transition: color 0.2s;
         }
-        .lux-search-btn:hover {
+        .lux-search-action-btn:hover {
+            color: var(--lux-gold);
+        }
+        .lux-search-tags {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            margin-top: 14px;
+            font-size: 12px;
+        }
+        .lux-search-tags-label {
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .lux-search-tag-pill {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 9999px;
+            padding: 4px 12px;
+            color: #475569;
+            text-decoration: none !important;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .lux-search-tag-pill:hover {
             background: var(--lux-gold);
+            color: #ffffff;
+            border-color: var(--lux-gold);
+        }
+        .lux-search-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1055;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .lux-search-backdrop.open {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* SEARCH SUGGESTIONS */
@@ -808,158 +982,7 @@ src="https://www.facebook.com/tr?id=924772080401082&ev=PageView&noscript=1"
         }
         .lux-mini-cart-btn-chk:hover { background: var(--lux-gold-hover); color: #ffffff; }
 
-        /* =========================================================
-           LAYER 3: BOTTOM NAVIGATION & MEGA MENU
-           ========================================================= */
-        .lux-bottom-bar {
-            background-color: #0f172a !important;
-            border-bottom: 1px solid #1e293b;
-            height: 50px;
-            position: sticky;
-            top: 0;
-            z-index: 1030;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-        .sticky-scrolled {
-            background: rgba(15, 23, 42, 0.98) !important;
-            backdrop-filter: blur(12px) !important;
-            -webkit-backdrop-filter: blur(12px) !important;
-            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.3) !important;
-        }
-        .lux-bottom-container {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 0 clamp(16px, 4vw, 48px);
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            box-sizing: border-box;
-        }
-        .lux-bottom-nav-left {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            gap: 8px;
-        }
-        .lux-cat-trigger-wrap {
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-        .lux-cat-trigger-btn {
-            background: linear-gradient(135deg, #c59b27 0%, #b0871d 100%);
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            height: 36px;
-            padding: 0 16px;
-            border-radius: 8px;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(197, 155, 39, 0.25);
-            transition: all 0.25s ease;
-        }
-        .lux-cat-trigger-btn:hover {
-            filter: brightness(1.08);
-            transform: translateY(-1px);
-        }
-        .lux-nav-links {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            gap: 2px;
-        }
-        .lux-nav-item {
-            color: #e2e8f0 !important;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 0 13px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none !important;
-            position: relative;
-            transition: color 0.2s ease;
-        }
-        .lux-nav-item i, .lux-nav-item svg {
-            width: 14px;
-            height: 14px;
-            color: #94a3b8;
-            transition: color 0.2s ease;
-        }
-        .lux-nav-item:hover {
-            color: var(--lux-gold) !important;
-        }
-        .lux-nav-item:hover i, .lux-nav-item:hover svg {
-            color: var(--lux-gold) !important;
-        }
-        .lux-nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: 6px;
-            left: 13px;
-            right: 13px;
-            height: 2px;
-            background: var(--lux-gold);
-            transform: scaleX(0);
-            transition: transform 0.25s ease;
-        }
-        .lux-nav-item:hover::after {
-            transform: scaleX(1);
-        }
-        .lux-bottom-nav-right {
-            display: flex;
-            align-items: center;
-        }
-        .lux-trust-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #94a3b8;
-            letter-spacing: 0.3px;
-        }
 
-        /* =========================================================
-           DRIBBLE LUXURY MEGA MENU CONTAINER
-           ========================================================= */
-        #megaMenuContainer {
-            position: absolute;
-            top: 100%;
-            left: clamp(16px, 4vw, 48px);
-            right: clamp(16px, 4vw, 48px);
-            background: #ffffff;
-            border-radius: 0 0 16px 16px;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
-            border-top: 2px solid var(--lux-gold);
-            z-index: 1050;
-            padding: 24px;
-            display: flex;
-            flex-direction: row;
-            gap: 24px;
-            box-sizing: border-box;
-            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        /* Invisible hover bridge */
-        #megaMenuContainer::before {
-            content: '';
-            position: absolute;
-            top: -14px;
-            left: 0;
-            right: 0;
-            height: 16px;
-            background: transparent;
-        }
         .lux-megamenu-col-1 {
             width: 25%;
             flex-shrink: 0;
