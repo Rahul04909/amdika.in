@@ -141,7 +141,7 @@
             <!-- Slide 1 -->
             <div class="carousel-item active" data-bs-interval="5000">
                 <?php
-                $heroSrc1 = 'assets/images/hero/hero-3.jpg';
+                $heroSrc1 = 'assets\images\hero\banner-2.png';
                 $desktopHero1 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc1;
                 $mobileHero1 = $desktopHero1;
                 ?>
@@ -171,7 +171,7 @@
             <!-- Slide 3 -->
             <div class="carousel-item" data-bs-interval="5000">
                 <?php
-                $heroSrc3 = 'assets/images/hero/hero-3.jpg';
+                $heroSrc3 = 'assets\images\hero\new-hero.png';
                 $desktopHero3 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc3;
                 $mobileHero3 = $desktopHero3;
                 ?>
