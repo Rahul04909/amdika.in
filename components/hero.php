@@ -156,7 +156,7 @@
             <!-- Slide 2 -->
             <div class="carousel-item" data-bs-interval="5000">
                 <?php
-                $heroSrc2 = 'assets/images/hero/hero-3.jpg';
+                $heroSrc2 = 'assets\images\hero\banner-3.png';
                 $desktopHero2 = (isset($link_prefix) ? $link_prefix : '') . $heroSrc2;
                 $mobileHero2 = $desktopHero2;
                 ?>
